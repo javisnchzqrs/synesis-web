@@ -543,6 +543,7 @@
     datos.email = email.value.trim();
     try { localStorage.setItem('synesis_email', datos.email); } catch (e) {}
     datos.tipo = "auditoria";
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_cuestionario_enviado', angulo: anguloActual }); } catch (e) {}
     datos.angulo = anguloActual;
 
     // Construir ID y URL predecible
