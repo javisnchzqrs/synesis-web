@@ -541,6 +541,7 @@
     if (!email.value.trim() || !email.value.includes('@')) { markError(email); return; }
     datos.deseo = deseo.value.trim();
     datos.email = email.value.trim();
+    try { localStorage.setItem('synesis_email', datos.email); } catch (e) {}
     datos.tipo = "auditoria";
     datos.angulo = anguloActual;
 

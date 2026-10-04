@@ -13,7 +13,9 @@
     var q = new URLSearchParams(location.search);
     var config = { layout: "month_view" };
     if (q.get('nombre')) config.name = q.get('nombre');
-    if (q.get('email')) config.email = q.get('email');
+    var emailGuardado = '';
+    try { emailGuardado = localStorage.getItem('synesis_email') || ''; } catch (e) {}
+    if (q.get('email') || emailGuardado) config.email = q.get('email') || emailGuardado;
     Cal("inline", {
       elementOrSelector: "#cal-inline",
       calLink: "metodo-synesis/charla-con-paloma",
