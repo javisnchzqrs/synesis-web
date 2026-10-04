@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tu vídeo — Método Synesis</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --verde-salvia: #8FAF9A;
+    --verde-salvia-dark: #6d9278;
+    --beige: #F3EDE4;
+    --beige-dark: #EDE4D7;
+    --antracita: #3A3A3A;
+    --terracota: #D08770;
+    --verde-claro: #E4EFE8;
+    --blanco: #F9F9F9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background-color: var(--beige);
+    color: var(--antracita);
+    min-height: 100vh;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--beige);
+    border-bottom: 1px solid rgba(58,58,58,0.08);
+  }
+  .navbar-logo { height: 32px !important; width: auto !important; max-width: 160px; display: block; }
+
+  /* ── HERO / VSL ── */
+  .vsl-hero {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 64px 24px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .vsl-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--verde-salvia);
+    margin-bottom: 20px;
+  }
+
+  .vsl-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 600;
+    line-height: 1.15;
+    color: var(--antracita);
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    max-width: 720px;
+  }
+  .vsl-title em { font-style: italic; font-weight: 300; color: var(--terracota); }
+
+  .vsl-wrap {
+    width: 100%;
+    max-width: 760px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(58,58,58,0.18);
+    background: var(--antracita);
+    position: relative;
+    aspect-ratio: 16/9;
+  }
+  .vsl-wrap wistia-player { display: block; width: 100%; height: 100%; }
+
+  /* ── CTA BLOQUE ── */
+  .vsl-cta-block {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+    margin-bottom: 100px;
+  }
+
+  .analisis-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 19px 48px;
+    border-radius: 50px;
+    border: none;
+    text-decoration: none;
+    letter-spacing: 0.01em;
+    transition: background 0.3s ease, transform 0.15s, color 0.3s ease;
+  }
+
+  .analisis-cta.locked {
+    background: rgba(58,58,58,0.15);
+    color: rgba(58,58,58,0.45);
+    cursor: not-allowed;
+  }
+  .analisis-cta.locked .analisis-cta-arrow { display: none; }
+
+  .analisis-cta.unlocked {
+    background: var(--verde-salvia);
+    color: var(--blanco);
+    cursor: pointer;
+    animation: ctaPop 0.5s ease;
+  }
+  .analisis-cta.unlocked:hover { background: var(--verde-salvia-dark); transform: translateY(-2px); }
+
+  .analisis-cta-arrow { width: 18px; height: 18px; }
+
+  @keyframes ctaPop {
+    0% { transform: scale(0.96); }
+    60% { transform: scale(1.03); }
+    100% { transform: scale(1); }
+  }
+
+  .cta-caption {
+    font-size: 13px;
+    font-weight: 300;
+    color: #8a8a8a;
+    text-align: center;
+  }
+
+  /* ── QUÉ VAS A ENTENDER ── */
+  .entender-section {
+    padding: 100px 40px 108px;
+    background: var(--beige-dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--verde-salvia);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(26px, 3.4vw, 40px);
+    font-weight: 600;
+    color: var(--antracita);
+    text-align: center;
+    line-height: 1.15;
+    max-width: 620px;
+    margin-bottom: 56px;
+    letter-spacing: -0.02em;
+  }
+  .section-title em { font-style: italic; font-weight: 300; color: var(--terracota); }
+
+  .entender-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .entender-card {
+    background: var(--blanco);
+    border-radius: 20px;
+    padding: 36px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-shadow: 0 4px 20px rgba(58,58,58,0.05);
+  }
+
+  .entender-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: var(--verde-claro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .entender-card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--antracita);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+  }
+
+  .entender-card-body {
+    font-size: 14.5px;
+    font-weight: 300;
+    color: #6B6B6B;
+    line-height: 1.6;
+  }
+
+  /* ── FAQ ── */
+  .faq-section {
+    padding: 100px 40px 108px;
+    background: var(--beige);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .faq-list {
+    max-width: 720px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .faq-item {
+    background: var(--blanco);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(58,58,58,0.06);
+  }
+
+  .faq-q {
+    width: 100%;
+    padding: 22px 26px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--antracita);
+    background: none;
+    border: none;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .faq-q:hover { background: rgba(143,175,154,0.05); }
+
+  .faq-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    color: var(--verde-salvia);
+  }
+  .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .faq-a-inner {
+    padding: 0 26px 24px;
+    font-size: 15px;
+    font-weight: 300;
+    color: #6B6B6B;
+    line-height: 1.65;
+  }
+
+  /* ── CTA FINAL ── */
+  .cta-final-section {
+    padding: 100px 40px 120px;
+    background: var(--verde-salvia);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cta-final-title {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 600;
+    color: #ffffff;
+    line-height: 1.15;
+    max-width: 580px;
+    margin-bottom: 40px;
+    letter-spacing: -0.02em;
+  }
+  .cta-final-title em { font-style: italic; font-weight: 300; color: var(--beige); }
+
+  .cta-final-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .analisis-cta.dark.locked {
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.6);
+  }
+  .analisis-cta.dark.unlocked {
+    background: var(--antracita);
+    color: var(--blanco);
+  }
+  .analisis-cta.dark.unlocked:hover { background: #222; }
+
+  .cta-caption.on-green { color: rgba(255,255,255,0.75); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--beige);
+    padding: 40px 40px 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+  .footer-logo { height: 26px !important; width: auto !important; max-width: 140px; display: block; opacity: 0.7; }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+  .footer-links a { font-size: 13px; color: #8a8a8a; text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--antracita); }
+  .footer-copy { font-size: 12px; color: #b0a8a0; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 860px) {
+    .navbar { padding: 16px 20px; }
+    .vsl-hero { padding: 48px 20px 0; }
+    .vsl-title { font-size: clamp(24px, 7vw, 34px); margin-bottom: 32px; }
+    .analisis-cta { width: 100%; max-width: 360px; }
+    .vsl-cta-block { margin-bottom: 80px; }
+
+    .entender-section { padding: 72px 24px 80px; }
+    .entender-cards { grid-template-columns: 1fr; gap: 16px; }
+
+    .faq-section { padding: 72px 24px 80px; }
+    .cta-final-section { padding: 72px 24px 100px; }
+  }
+</style>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<link rel="icon" href="/media/fotos/isotipo-192.png">
+<link rel="apple-touch-icon" href="/media/fotos/isotipo-180.png">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8LQ6VT3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <img decoding="async" src="/media/fotos/logo-principal.svg" alt="Synesis" class="navbar-logo">
+</nav>
+
+<!-- HERO / VSL -->
+<section class="vsl-hero">
+  <span class="vsl-eyebrow">Tu vídeo · 6-7 minutos</span>
+  <h1 class="vsl-title">La razón por la que <em>ninguna técnica</em> te está funcionando en las rabietas de tu hijo.</h1>
+
+  <!-- VSL -->
+  <div class="vsl-wrap" id="vslWrap">
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/r5h7ny8cgt.js" async type="module"></script>
+    <wistia-player media-id="r5h7ny8cgt" aspect="1.7777777777777777"></wistia-player>
+  </div>
+
+  <!-- CTA principal -->
+  <div class="vsl-cta-block">
+    <a class="analisis-cta cta locked" id="cta-analisis-rabietas" href="#">
+      <span class="cta-text">Quiero mi análisis</span>
+      <svg class="analisis-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <p class="cta-caption">Sigue viendo el vídeo para poder solicitar tu análisis.</p>
+  </div>
+</section>
+
+<!-- QUÉ VAS A ENTENDER -->
+<section class="entender-section">
+  <span class="section-eyebrow">Tu análisis personalizado</span>
+  <h2 class="section-title">Qué vas a entender con <em>tu análisis</em></h2>
+  <div class="entender-cards">
+    <div class="entender-card">
+      <div class="entender-icon">🎯</div>
+      <h3 class="entender-card-title">Qué está pasando de verdad en vuestras escenas</h3>
+      <p class="entender-card-body">Sabrás cuál de las tres piezas —tú, tu hijo, o la relación entre los dos— está pesando más en vuestra situación concreta. Y por qué las tres son distintas en cada familia.</p>
+    </div>
+    <div class="entender-card">
+      <div class="entender-icon">⏳</div>
+      <h3 class="entender-card-title">Qué está aprendiendo tu hijo mientras el patrón se repite</h3>
+      <p class="entender-card-body">Verás qué se está grabando en él con cada escena —no como recuerdo consciente, sino como forma de estar en el mundo—, y por qué la ventana para cambiarlo con menos esfuerzo se está cerrando.</p>
+    </div>
+    <div class="entender-card">
+      <div class="entender-icon">🌱</div>
+      <h3 class="entender-card-title">Por dónde empezar el cambio en vuestro caso</h3>
+      <p class="entender-card-body">Sabrás cuál es la primera pieza que hay que mover en vuestra situación concreta, y qué haría Paloma si estuvierais sentadas frente a frente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section">
+  <span class="section-eyebrow">Dudas rápidas</span>
+  <h2 class="section-title">Preguntas <em>frecuentes</em></h2>
+  <div class="faq-list">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Es realmente gratis?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Sí. No te vamos a pedir datos de pago ni te vamos a cobrar nada al final. Es un análisis que preparamos gratis porque cada familia es distinta y el vídeo no puede hablarte de vuestro caso concreto.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Cuánto voy a tardar?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">Contestar el cuestionario te lleva entre 2 y 3 minutos. Y verás tu análisis en la misma pantalla en cuanto lo envíes, en menos de un minuto.</div></div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        ¿Y si no me convence lo que reciba?
+        <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="faq-a"><div class="faq-a-inner">No pasa nada. El análisis es para que veas si esto puede ayudarte. Si al leerlo sientes que no es para vosotras, ahí termina. No hay pasos automáticos ni compromisos.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final-section">
+  <h2 class="cta-final-title">Tu caso es único. <em>Tu análisis también.</em></h2>
+  <div class="cta-final-block">
+    <a class="analisis-cta dark cta locked" id="cta-analisis-rabietas-final" href="#">
+      <span class="cta-text">Quiero mi análisis</span>
+      <svg class="analisis-cta-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <p class="cta-caption on-green">Sigue viendo el vídeo para poder solicitar tu análisis.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <img decoding="async" src="/media/fotos/logo-principal.svg" alt="Synesis" class="footer-logo">
+  <div class="footer-links">
+    <a href="https://metodosynesis.com/politica-de-privacidad" target="_blank">Política de privacidad</a>
+    <a href="https://metodosynesis.com/aviso-legal" target="_blank">Aviso legal</a>
+  </div>
+  <p class="footer-copy">© 2026 Método Synesis · Paloma Robles</p>
+</footer>
+
+<script>
+  const URL_CUESTIONARIO = '/cuestionario/?angulo=rabietas';
+  const TIEMPO_DESBLOQUEO = 270; // 4:30 en segundos
+
+  /* ── FAQ ACORDEÓN ── */
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const answer = item.querySelector('.faq-a');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if (!isOpen) {
+      item.classList.add('open');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  }
+
+  /* ── DESBLOQUEO DEL CTA POR VÍDEO ── */
+  function desbloquearCTA() {
+    document.querySelectorAll('.analisis-cta').forEach(function(cta) {
+      cta.classList.remove('locked');
+      cta.classList.add('unlocked');
+      cta.setAttribute('href', URL_CUESTIONARIO);
+    });
+    document.querySelectorAll('.cta-caption').forEach(function(cap) {
+      cap.textContent = 'Es gratis. Lo verás en pantalla en unos minutos.';
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const interval = setInterval(function() {
+      const player = document.querySelector("wistia-player");
+      if (!player) return;
+      const t = player.currentTime || 0;
+      if (t >= TIEMPO_DESBLOQUEO) {
+        desbloquearCTA();
+        clearInterval(interval);
+      }
+    }, 1000);
+  });
+</script>
+
+</body>
+</html>

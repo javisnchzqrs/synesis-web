@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserva tu llamada — Método Synesis</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<script type="text/javascript">
+  (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; typeof namespace === "string" ? (cal.ns[namespace] = api) && p(api, ar) : p(cal, ar); return; } p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+  Cal("init", {origin:"https://cal.com"});
+  (function () {
+    // Si llegan nombre y email en la URL, se rellenan solos en el formulario de Cal.com
+    var q = new URLSearchParams(location.search);
+    var config = { layout: "month_view" };
+    if (q.get('nombre')) config.name = q.get('nombre');
+    if (q.get('email')) config.email = q.get('email');
+    Cal("inline", {
+      elementOrSelector: "#cal-inline",
+      calLink: "metodo-synesis/charla-con-paloma",
+      layout: "month_view",
+      config: config
+    });
+  })();
+  Cal("ui", {
+    "styles": {"branding": {"brandColor": "#8FAF9A"}},
+    "hideEventTypeDetails": false,
+    "layout": "month_view"
+  });
+</script>
+<style>
+  :root {
+    --verde-salvia: #8FAF9A;
+    --beige: #F3EDE4;
+    --antracita: #3A3A3A;
+    --terracota: #D08770;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--beige);
+    color: var(--antracita);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--beige);
+    border-bottom: 1px solid rgba(58,58,58,0.08);
+  }
+  .navbar-logo { height: 32px; width: auto; display: block; }
+
+  /* ── INTRO ── */
+  .intro {
+    text-align: center;
+    padding: 48px 24px 0;
+  }
+  .intro p {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 400;
+    color: var(--antracita);
+    opacity: 0.7;
+  }
+
+  /* ── CALENDARIO ── */
+  .calendario-wrap {
+    flex: 1;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 24px 24px 48px;
+  }
+  #cal-inline {
+    width: 100%;
+    min-height: 700px;
+    border: none;
+  }
+
+  @media (max-width: 600px) {
+    .navbar { padding: 16px 20px; }
+    .intro { padding: 32px 20px 0; }
+    .calendario-wrap { padding: 16px 16px 40px; }
+  }
+</style>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<link rel="icon" href="/media/fotos/isotipo-192.png">
+<link rel="apple-touch-icon" href="/media/fotos/isotipo-180.png">
+<meta name="robots" content="noindex, nofollow">
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W8LQ6VT3" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <img class="navbar-logo" src="/media/fotos/logo-principal.svg" alt="Synesis">
+</nav>
+
+<!-- INTRO -->
+<div class="intro">
+  <p>Elige el momento que mejor te venga.</p>
+</div>
+
+<!-- CALENDARIO (Cal.com) -->
+<div class="calendario-wrap">
+  <div id="cal-inline" style="width:100%;min-height:700px;overflow:scroll"></div>
+</div>
+
+</body>
+</html>
