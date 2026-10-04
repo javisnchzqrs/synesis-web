@@ -140,7 +140,7 @@ function paginas(){
 
   return [
   {t:'Apertura',html:`<div class="wrap apertura">
-      <div class="rev"><div class="portrait"><img src="/media/fotos/paloma-robles-p.png" alt="Paloma Robles"></div>
+      <div class="rev"><div class="portrait"><img src="/media/fotos/paloma-recurso.jpg" alt="Paloma Robles"></div>
       <p class="firma"><b>Paloma Robles</b>Educadora infantil y guía familiar</p></div>
       <div><p class="hola rev" style="--r:.15s">Hola, ${p}.</p>
       <h1 class="h1 rev" style="--r:.3s">Hoy decidimos qué pasa con <em>${h}</em>.</h1></div></div>`,
