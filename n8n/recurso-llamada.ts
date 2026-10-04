@@ -219,7 +219,7 @@ const montarEnlace = node({
         "const caso = {\n" +
         "  rol: rol,\n" +
         "  p: d.nombre || '',\n" +
-        "  h: ia.h || 'tu peque',\n" +
+        "  h: (ia.h && ia.h.toLowerCase() !== 'tu peque') ? ia.h : 'tu peque',\n" +
         "  e: Math.min(12, Math.max(1, parseInt(ia.e, 10) || 3)),\n" +
         "  g: ia.g === 'a' ? 'a' : 'o',\n" +
         "  ang: ang,\n" +
