@@ -187,7 +187,7 @@ const montarEnlace = node({
     parameters: {
       mode: 'runOnceForEachItem',
       language: 'javaScript',
-      jsCode: 
+      jsCode:
         "const d = $('Preparar datos del caso').item.json;\n" +
         "const r = $json;\n" +
         "let texto = '';\n" +
@@ -198,6 +198,22 @@ const montarEnlace = node({
         "let ia = {};\n" +
         "const m = texto.match(/\\{[\\s\\S]*\\}/);\n" +
         "if (m) { try { ia = JSON.parse(m[0]); } catch (e) { ia = {}; } }\n" +
+        "const LISTAS = {\n" +
+        "  rabietas: ['Estalla por cualquier cosa','Se tira al suelo y grita','No puede calmarse cuando se enfada','Llora de forma desproporcionada'],\n" +
+        "  obedece: ['Me ignora cuando le hablo','Hay que repetírselo todo mil veces','Solo hace caso si grito o amenazo'],\n" +
+        "  pega: ['Nos pega a nosotros (sus padres)','Pega a otros niños','Pega a otros adultos (profes, familia)','Se pega o se hace daño a sí mismo'],\n" +
+        "  generico: ['Rabietas e intensidad emocional','No escucha ni obedece','Se opone y lo discute todo','Peleas en las transiciones','Pega o muerde cuando se frustra']\n" +
+        "};\n" +
+        "const REACC = ['Acabo gritando aunque no quiero','Me bloqueo y no sé qué hacer','Cedo para que pare','Intento razonar pero no funciona'];\n" +
+        "const norm = function (s) { return (s || '').toLowerCase().replace(/\\s*\\(.*?\\)\\s*/g, ' ').replace(/\\s+/g, ' ').trim(); };\n" +
+        "let ang = '', sit = '';\n" +
+        "Object.keys(LISTAS).forEach(function (k) { LISTAS[k].forEach(function (o) { if (!sit && norm(o) === norm(d.sitOpcion)) { ang = k; sit = o; } }); });\n" +
+        "if (!sit) {\n" +
+        "  ang = LISTAS[ia.ang] ? ia.ang : (LISTAS[d.angulo] ? d.angulo : 'generico');\n" +
+        "  sit = LISTAS[ang].indexOf(ia.sit) >= 0 ? ia.sit : LISTAS[ang][0];\n" +
+        "}\n" +
+        "let rea = REACC.filter(function (o) { return norm(o) === norm(d.reaccion); })[0] || '';\n" +
+        "if (!rea) rea = REACC.indexOf(ia.rea) >= 0 ? ia.rea : '';\n" +
         "const q = (d.quien || '').toLowerCase();\n" +
         "const rol = q.indexOf('amb') === 0 ? 'ambos' : (q === 'padre' ? 'padre' : 'madre');\n" +
         "const caso = {\n" +
@@ -206,9 +222,9 @@ const montarEnlace = node({
         "  h: ia.h || 'tu peque',\n" +
         "  e: Math.min(12, Math.max(1, parseInt(ia.e, 10) || 3)),\n" +
         "  g: ia.g === 'a' ? 'a' : 'o',\n" +
-        "  ang: ['rabietas', 'obedece', 'pega', 'generico'].indexOf(ia.ang) >= 0 ? ia.ang : 'generico',\n" +
-        "  sit: ia.sit || d.sitOpcion || '',\n" +
-        "  rea: ia.rea || d.reaccion || '',\n" +
+        "  ang: ang,\n" +
+        "  sit: sit,\n" +
+        "  rea: rea,\n" +
         "  sie: d.siente || '',\n" +
         "  cre: d.cree || '',\n" +
         "  des: d.deseo || '',\n" +
