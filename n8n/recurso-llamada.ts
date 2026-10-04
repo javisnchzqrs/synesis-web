@@ -29,7 +29,7 @@ const normalizar = node({
           { id: 'evento', name: 'evento', value: expr('{{ $json.body?.triggerEvent ?? $json.triggerEvent ?? "" }}'), type: 'string' },
           { id: 'email', name: 'email', value: expr('{{ ($json.body?.payload?.responses?.email?.value ?? $json.body?.payload?.attendees?.[0]?.email ?? "").trim().toLowerCase() }}'), type: 'string' },
           { id: 'nombre', name: 'nombre', value: expr('{{ $json.body?.payload?.responses?.name?.value ?? $json.body?.payload?.attendees?.[0]?.name ?? "" }}'), type: 'string' },
-          { id: 'quien', name: 'quien', value: expr('{{ $json.body?.payload?.responses?.["quien-asiste"]?.value ?? "Madre" }}'), type: 'string' },
+          { id: 'quien', name: 'quien', value: expr("{{ Object.entries($json.body?.payload?.responses ?? {}).filter(e => (e[0] + ' ' + (e[1]?.label ?? '')).toLowerCase().includes('asist')).map(e => e[1]?.value).find(v => v) ?? 'Madre' }}"), type: 'string' },
           { id: 'inicio', name: 'inicio', value: expr('{{ $json.body?.payload?.startTime ?? "" }}'), type: 'string' }
         ]
       }
