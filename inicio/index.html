@@ -41,7 +41,7 @@
       "name": "Paloma Robles",
       "jobTitle": "Educadora infantil",
       "worksFor": { "@id": "https://metodosynesis.com/#organizacion" },
-      "image": "https://app.metodosynesis.com/media/fotos/paloma-robles-p.png"
+      "image": "https://app.metodosynesis.com/media/fotos/home-paloma.jpg"
     },
     {
       "@type": "Course",
@@ -189,6 +189,17 @@
   .tarjeta p { color: var(--suave); font-size: 16px; }
   .tarjeta .formato { margin-top: auto; padding-top: 18px; font-size: 14px; color: var(--salvia-txt); font-weight: 600; }
 
+  .tarjeta { padding-top: 0; overflow: hidden; }
+  .tarjeta-media { margin: 0 -30px 24px; aspect-ratio: 16 / 9; background: var(--beige); }
+  .tarjeta-media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .videos-fam { display: flex; justify-content: center; gap: 22px; margin-top: 48px; flex-wrap: wrap; }
+  .videos-fam figure { margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .videos-fam video { display: block; height: min(70vh, 560px); aspect-ratio: 9 / 16; max-width: 100%; border-radius: 24px; background: #1f2621; object-fit: contain; box-shadow: var(--sombra); }
+  .videos-fam figcaption { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--suave); }
+  .videos-fam figcaption b { color: var(--antracita); }
+  .av { width: 32px; height: 32px; border-radius: 50%; background: var(--verde-claro); color: var(--salvia-txt); display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+  @media (max-width: 640px) { .videos-fam { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; scroll-snap-type: x mandatory; margin-left: -20px; margin-right: -20px; padding: 0 20px 8px; } .videos-fam figure { scroll-snap-align: center; flex: 0 0 78%; } .videos-fam video { height: auto; width: 100%; } }
+
   /* Comparativa */
   .comparativa { margin-top: 48px; display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
   .opcion { background: var(--blanco); border-radius: var(--radio); padding: 26px 22px; }
@@ -316,7 +327,7 @@
           <a class="enlace-sec" href="#metodo">Ver cómo funciona</a>
         </div>
         <div class="confianza">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><b>+150 familias</b> acompañadas</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><b>+80 familias</b> acompañadas</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Con <b>Paloma Robles</b>, educadora infantil</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg>Sin juicios y sin fórmulas mágicas</span>
         </div>
@@ -382,7 +393,23 @@
     </div>
   </section>
 
-  <!-- 4. EL MÉTODO · visual (el camino) + tangible + beneficio en cada paso -->
+  <!-- 4. COMPARATIVA · contraste con lo que ya ha probado -->
+  <section class="comparar" id="diferencia" style="padding-top:0">
+    <div class="contenedor">
+      <div class="centrado">
+        <span class="eyebrow">Si ya has probado otras cosas</span>
+        <h2>No te falta información. <em>Te falta un método que lo una todo.</em></h2>
+      </div>
+      <div class="comparativa">
+        <div class="opcion"><h3>Libros de crianza</h3><ul><li>Mucha teoría</li><li>Te dicen qué, pero no cómo en tu caso</li><li>Se olvidan en el momento de la rabieta</li></ul></div>
+        <div class="opcion"><h3>Cuentas de Instagram</h3><ul><li>Consejos sueltos y a veces contradictorios</li><li>Funcionan dos días</li><li>Más culpa que claridad</li></ul></div>
+        <div class="opcion"><h3>Terapia familiar</h3><ul><li class="si">Acompañamiento profundo</li><li>Cara y lenta para el día a día</li><li>Más barreras para empezar</li></ul></div>
+        <div class="opcion destacada"><h3>Método Synesis</h3><ul><li class="si">Un método completo: tú, tu peque y vuestra relación</li><li class="si">Herramientas para hoy, no solo teoría</li><li class="si">Alguien que mira tu caso contigo</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EL MÉTODO · visual (el camino) + tangible + beneficio en cada paso -->
   <section class="metodo" id="metodo">
     <div class="contenedor">
       <div class="centrado">
@@ -427,7 +454,7 @@
     </div>
   </section>
 
-  <!-- 5. QUÉ INCLUYE · tangible, beneficio primero y formato después -->
+  <!-- 6. QUÉ INCLUYE · tangible, beneficio primero y formato después -->
   <section class="incluye" id="incluye">
     <div class="contenedor">
       <div class="centrado">
@@ -437,19 +464,19 @@
       </div>
       <div class="tendras">
         <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="15" height="14" rx="2"/><path d="m22 8-5 4 5 4V8z"/></svg></div>
+          <div class="tarjeta-media"><video data-src="https://app.metodosynesis.com/media/videos/plataforma.mov" muted loop playsinline preload="none" aria-label="Así son los vídeos del programa"></video></div>
           <h3>Entender sin sacar tiempo que no tienes</h3>
           <p>Vídeos cortos que puedes ver en una siesta o en un trayecto. Interiorizas la crianza respetuosa sin dejar de poner límites, a tu ritmo.</p>
           <span class="formato">Vídeos cortos · cuando quieras</span>
         </article>
         <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15l2 2 4-4"/></svg></div>
+          <div class="tarjeta-media"><video data-src="https://app.metodosynesis.com/media/videos/recursos.mov" muted loop playsinline preload="none" aria-label="Así son los recursos prácticos"></video></div>
           <h3>Saber qué hacer hoy mismo</h3>
           <p>Recursos prácticos para llevarlo a casa desde el primer día: qué decir, qué hacer y qué evitar en los momentos que más te cuestan.</p>
           <span class="formato">Recursos prácticos · desde el día 1</span>
         </article>
         <article class="tarjeta">
-          <div class="icono"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <div class="tarjeta-media"><video data-src="https://app.metodosynesis.com/media/videos/sesiones-1a1.mov" muted loop playsinline preload="none" aria-label="Así es una sesión uno a uno"></video></div>
           <h3>Que alguien mire tu caso</h3>
           <p>Cada familia es distinta. Paloma te acompaña uno a uno para adaptar todo a tu peque y a tu situación, con la atención y el cariño que merece.</p>
           <span class="formato">Acompañamiento uno a uno</span>
@@ -458,26 +485,11 @@
     </div>
   </section>
 
-  <!-- 6. COMPARATIVA · contraste con lo que ya ha probado -->
-  <section class="comparar" id="diferencia" style="padding-top:0">
-    <div class="contenedor">
-      <div class="centrado">
-        <span class="eyebrow">Si ya has probado otras cosas</span>
-        <h2>No te falta información. <em>Te falta un método que lo una todo.</em></h2>
-      </div>
-      <div class="comparativa">
-        <div class="opcion"><h3>Libros de crianza</h3><ul><li>Mucha teoría</li><li>Te dicen qué, pero no cómo en tu caso</li><li>Se olvidan en el momento de la rabieta</li></ul></div>
-        <div class="opcion"><h3>Cuentas de Instagram</h3><ul><li>Consejos sueltos y a veces contradictorios</li><li>Funcionan dos días</li><li>Más culpa que claridad</li></ul></div>
-        <div class="opcion"><h3>Terapia familiar</h3><ul><li class="si">Acompañamiento profundo</li><li>Cara y lenta para el día a día</li><li>Más barreras para empezar</li></ul></div>
-        <div class="opcion destacada"><h3>Método Synesis</h3><ul><li class="si">Un método completo: tú, tu peque y vuestra relación</li><li class="si">Herramientas para hoy, no solo teoría</li><li class="si">Alguien que mira tu caso contigo</li></ul></div>
-      </div>
-    </div>
-  </section>
 
   <!-- 7. LO QUE GANA TU PEQUE · emoción y egocentrismo (su hijo es parte de su "yo") -->
   <section class="peque" id="tu-peque" style="background:var(--blanco)">
     <div class="contenedor">
-      <img src="https://app.metodosynesis.com/media/fotos/home-abrazo.png" alt="Una madre abraza a su hija" width="700" height="700" loading="lazy">
+      <img src="https://app.metodosynesis.com/media/fotos/home-abrazo.jpg" alt="Una madre abraza a su hija" width="700" height="700" loading="lazy">
       <div>
         <span class="eyebrow">Y lo que gana tu peque</span>
         <h2>Entre los 2 y los 6 años aprende a gestionar lo que siente. <em>Y lo aprende de ti.</em></h2>
@@ -491,23 +503,37 @@
     </div>
   </section>
 
-  <!-- 8. PALOMA · emoción y confianza -->
-  <section class="paloma" id="paloma" style="background:var(--beige)">
+  <!-- 8. TESTIMONIOS · prueba social real, en su voz -->
+  <section class="testimonios" id="familias">
     <div class="contenedor">
-      <img src="https://app.metodosynesis.com/media/fotos/paloma-robles-p.png" alt="Paloma Robles, educadora infantil y creadora del Método Synesis" width="600" height="750" loading="lazy">
+      <div class="centrado">
+        <span class="eyebrow">Otras familias</span>
+        <h2>Estaban donde estás tú. <em>Escúchalo de ellas.</em></h2>
+      </div>
+      <div class="videos-fam">
+        <figure><video src="https://app.metodosynesis.com/media/videos/testimonio-paula.mp4#t=0.5" controls playsinline preload="metadata"></video><figcaption><span class="av">P</span><span><b>Paula</b> · peque de 4 años</span></figcaption></figure>
+        <figure><video src="https://app.metodosynesis.com/media/videos/testimonio-alba.mp4#t=0.5" controls playsinline preload="metadata"></video><figcaption><span class="av">A</span><span><b>Alba</b> · peque de 3 años</span></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. PALOMA · emoción y confianza -->
+  <section class="paloma" id="paloma" style="background:var(--blanco)">
+    <div class="contenedor">
+      <img src="https://app.metodosynesis.com/media/fotos/home-paloma.jpg" alt="Paloma Robles, educadora infantil y creadora del Método Synesis" width="600" height="750" loading="lazy">
       <div>
         <span class="eyebrow">Quién está detrás</span>
         <h2>Hola, soy Paloma.</h2>
         <blockquote>«Creo en la crianza que construye, no en la que rompe. Y sé que se puede hacer diferente.»</blockquote>
         <p>Soy educadora infantil. En la escuela infantil, muchas familias me abrían su corazón: sus dudas, sus miedos, sus días de agobio. Y casi siempre lo que necesitaban era lo mismo: entender qué estaba pasando y una forma distinta de mirarlo.</p>
         <p>He visto a niñas y niños florecer cuando se sienten respetados, acompañados y vistos. Y he visto a madres y padres pasar de la culpa a la calma cuando por fin entendían a su peque. Por eso creé Synesis: para que tú también puedas vivirlo.</p>
-        <div class="datos-paloma"><span>Educadora infantil</span><span>Inspirada en Reggio Emilia y Montessori</span><span>+150 familias acompañadas</span></div>
+        <div class="datos-paloma"><span>Educadora infantil</span><span>Inspirada en Reggio Emilia y Montessori</span><span>+80 familias acompañadas</span></div>
       </div>
     </div>
   </section>
 
-  <!-- 9. PREGUNTAS · objeciones (y SEO) -->
-  <section class="preguntas" id="preguntas" style="background:var(--blanco)">
+  <!-- 10. PREGUNTAS · objeciones (y SEO) -->
+  <section class="preguntas" id="preguntas" style="background:var(--beige)">
     <div class="contenedor">
       <div class="centrado">
         <span class="eyebrow">Preguntas frecuentes</span>
@@ -524,7 +550,7 @@
     </div>
   </section>
 
-  <!-- 10. CIERRE · final (lo último que se recuerda), emoción y contraste -->
+  <!-- 11. CIERRE · final (lo último que se recuerda), emoción y contraste -->
   <section class="cierre">
     <div class="contenedor">
       <h2>Dentro de un año tu peque seguirá teniendo días difíciles. <em>La diferencia es cómo los viviréis los dos.</em></h2>
@@ -577,6 +603,19 @@
         try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_home_cta', posicion: i }); } catch (e) {}
       });
     });
+
+    // Vídeos de formato: se cargan y reproducen solo cuando se ven
+    var auto = document.querySelectorAll('video[data-src]');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          var v = e.target;
+          if (e.isIntersecting) { if (!v.src) v.src = v.dataset.src; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+          else if (v.src) v.pause();
+        });
+      }, { rootMargin: '200px 0px' });
+      auto.forEach(function (v) { io.observe(v); });
+    } else { auto.forEach(function (v) { v.src = v.dataset.src; }); }
 
     // Barra fija en móvil al pasar el hero
     var barra = document.getElementById('barraMovil');
