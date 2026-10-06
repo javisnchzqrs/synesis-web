@@ -424,6 +424,13 @@
     ]
   };
 
+  // Si llega desde la L1 genérica con su email en el enlace, se rellena para no tener que escribirlo otra vez
+  document.addEventListener('DOMContentLoaded', function () {
+    const em = new URLSearchParams(window.location.search).get('email');
+    const campo = document.getElementById('q_email');
+    if (em && campo && !campo.value) campo.value = em;
+  });
+
   function detectarAngulo() {
     const params = new URLSearchParams(window.location.search);
     let a = (params.get('angulo') || '').toLowerCase().trim();

@@ -742,7 +742,7 @@
       const response = await fetch('https://n8n.metodosynesis.com/webhook/captacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, timestamp: new Date().toISOString() }, leerUTMs()))
+        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, sesion: (function () { try { return sessionStorage.getItem('synesis_sesion') || ''; } catch (e) { return ''; } })(), timestamp: new Date().toISOString() }, leerUTMs()))
       });
       // Una respuesta HTTP correcta confirma aceptación por el endpoint.
       // No confirma por sí sola que todo el escenario de Make haya terminado.
