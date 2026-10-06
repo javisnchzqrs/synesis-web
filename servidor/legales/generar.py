@@ -112,7 +112,7 @@ pagina('politica-de-privacidad', 'Política de privacidad', 'Cómo tratamos tus 
 <ul>
   <li><strong>Datos de contacto</strong> que nos das en los formularios: nombre, email y teléfono.</li>
   <li><strong>Respuestas al cuestionario</strong> sobre tu situación familiar, que pueden incluir información sobre tu peque (por ejemplo, su nombre de pila, su edad y cómo se comporta en ciertas situaciones). Te pedimos que no incluyas datos de salud ni otra información sensible que no sea necesaria.</li>
-  <li><strong>Datos de la llamada</strong>: fecha y hora de la reserva y, si la llamada se graba (siempre te avisamos antes), la grabación, su transcripción y un resumen.</li>
+  <li><strong>Datos de la llamada</strong>: fecha y hora de la reserva y, si la llamada se graba (te lo indicamos al reservar y al empezar), la grabación, su transcripción y un resumen, que usamos solo internamente para preparar tu acompañamiento y nunca se publican ni se ceden.</li>
   <li><strong>Datos de clienta o cliente</strong>: los necesarios para darte acceso al programa y gestionar el pago.</li>
   <li><strong>Datos de navegación</strong>: origen de la visita (por ejemplo, desde qué anuncio o red social llegas), qué páginas y vídeos ves y, si lo aceptas, los que recogen las cookies de analítica y marketing.</li>
 </ul>
