@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Semaforo Emocional · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+#sem-emo {
+  --verde:#8FAF9A; --beige:#F3EDE4; --antracita:#3A3A3A;
+  --terracota:#D08770; --verde-claro:#E4EFE8; --blanco:#FFFFFF;
+  --sombra:rgba(58,58,58,0.07);
+  --rojo:#E07070; --rojo-claro:#FDE8E8;
+  --naranja:#E09A50; --naranja-claro:#FDF0E0;
+  --verde-sem:#6AAF80; --verde-sem-claro:#E0F2E8;
+  font-family:'DM Sans',sans-serif;
+  color:var(--antracita);
+  background:var(--beige);
+  padding:0 0 80px;
+  max-width:680px;
+  margin:0 auto;
+}
+#sem-emo * { box-sizing:border-box; margin:0; padding:0; }
+#sem-emo .s { display:none; }
+#sem-emo .s.on { display:block; animation:semFade .45s ease; }
+@keyframes semFade { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+#sem-emo .hd { padding:28px 28px 0; display:flex; align-items:center; justify-content:space-between; margin-bottom:32px; }
+#sem-emo .logo { font-family:'Playfair Display',serif; font-size:17px; display:flex; align-items:center; gap:6px; }
+#sem-emo .logo-dot { width:6px;height:6px;background:var(--verde);border-radius:50%; }
+#sem-emo .badge { font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);background:var(--verde-claro);padding:5px 12px;border-radius:20px; }
+#sem-emo .body { padding:0 28px; }
+
+#sem-emo .eyebrow { font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--verde);margin-bottom:10px;display:block; }
+#sem-emo .h1 { font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,36px);line-height:1.2;margin-bottom:14px; }
+#sem-emo .h1 em { font-style:italic;color:var(--verde); }
+#sem-emo .lead { font-size:15px;line-height:1.75;color:#6a6a6a;margin-bottom:24px; }
+
+/* CEREBRO VISUAL - PANTALLA INTRO */
+#sem-emo .cerebro-visual { display:flex;flex-direction:column;gap:0;margin-bottom:28px;border-radius:18px;overflow:hidden;box-shadow:0 4px 20px var(--sombra); }
+#sem-emo .cerebro-capa { padding:18px 22px;display:flex;align-items:center;gap:14px; }
+#sem-emo .cerebro-capa-icon { width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
+#sem-emo .cerebro-capa-body { flex:1; }
+#sem-emo .cerebro-capa-nombre { font-size:13px;font-weight:600;margin-bottom:2px; }
+#sem-emo .cerebro-capa-desc { font-size:12px;line-height:1.5;opacity:.85; }
+#sem-emo .cerebro-capa.racional { background:var(--verde-sem-claro);color:#2a5a3a; }
+#sem-emo .cerebro-capa.racional .cerebro-capa-icon { background:var(--verde-sem);color:#fff; }
+#sem-emo .cerebro-capa.emocional { background:var(--naranja-claro);color:#6a3a10; }
+#sem-emo .cerebro-capa.emocional .cerebro-capa-icon { background:var(--naranja);color:#fff; }
+#sem-emo .cerebro-capa.reptiliano { background:var(--rojo-claro);color:#5a1a1a; }
+#sem-emo .cerebro-capa.reptiliano .cerebro-capa-icon { background:var(--rojo);color:#fff; }
+#sem-emo .obras-banner { background:var(--antracita);color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px; }
+#sem-emo .obras-banner-icon { font-size:20px;flex-shrink:0; }
+#sem-emo .obras-banner-text { font-size:13px;line-height:1.5; }
+#sem-emo .obras-banner-text strong { color:var(--verde); }
+
+/* BOTÓN */
+#sem-emo .btn { display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--verde);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:16px 36px;border-radius:50px;border:none;cursor:pointer;transition:all .22s;width:100%;margin-top:4px; }
+#sem-emo .btn:hover { background:#7a9e85;transform:translateY(-2px);box-shadow:0 8px 24px rgba(143,175,154,.4); }
+#sem-emo .btn-ghost { display:inline-flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#8a8a8a;font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 24px;border-radius:50px;border:1.5px solid #DDD8D0;cursor:pointer;transition:all .2s;width:100%;margin-top:10px; }
+#sem-emo .btn-ghost:hover { border-color:var(--antracita);color:var(--antracita); }
+#sem-emo .back { display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#8a8a8a;cursor:pointer;margin-bottom:24px;padding:8px 0;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s; }
+#sem-emo .back:hover { color:var(--antracita); }
+
+/* CATEGORÍAS */
+#sem-emo .cats { display:flex;flex-direction:column;gap:12px; }
+#sem-emo .cat-card { background:var(--blanco);border-radius:16px;padding:18px 20px;cursor:pointer;border:2px solid transparent;transition:all .22s;box-shadow:0 2px 10px var(--sombra);display:flex;align-items:center;gap:14px; }
+#sem-emo .cat-card:hover { border-color:var(--verde);transform:translateX(4px); }
+#sem-emo .cat-icon { width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0; }
+#sem-emo .cat-body { flex:1; }
+#sem-emo .cat-title { font-size:14px;font-weight:600;margin-bottom:3px; }
+#sem-emo .cat-desc { font-size:12px;color:#8a8a8a;line-height:1.4; }
+#sem-emo .cat-arrow { font-size:20px;color:#C8C2B8; }
+
+/* SITUACIONES */
+#sem-emo .sits { display:flex;flex-direction:column;gap:10px; }
+#sem-emo .sit-card { background:var(--blanco);border-radius:14px;padding:16px 18px;cursor:pointer;border:1.5px solid #E8E2D9;transition:all .2s;box-shadow:0 1px 6px var(--sombra);display:flex;align-items:center;gap:12px; }
+#sem-emo .sit-card:hover { border-color:var(--verde);background:var(--verde-claro); }
+#sem-emo .sit-emoji { font-size:22px;width:36px;text-align:center;flex-shrink:0; }
+#sem-emo .sit-nombre { font-size:14px;font-weight:500;color:var(--antracita); }
+#sem-emo .sit-arrow { font-size:16px;color:#C8C2B8;margin-left:auto;flex-shrink:0; }
+
+/* DECODIFICACIÓN */
+#sem-emo .semaforo-display { display:flex;flex-direction:column;gap:0;border-radius:18px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 24px var(--sombra); }
+#sem-emo .sem-capa { padding:20px 22px;transition:all .3s; }
+#sem-emo .sem-capa.activa { padding:24px 22px; }
+#sem-emo .sem-capa.inactiva { opacity:.4; }
+#sem-emo .sem-capa-top { display:flex;align-items:center;gap:12px;margin-bottom:0; }
+#sem-emo .sem-capa-top.open { margin-bottom:12px; }
+#sem-emo .sem-dot { width:14px;height:14px;border-radius:50%;flex-shrink:0; }
+#sem-emo .sem-capa-nombre { font-size:13px;font-weight:700;letter-spacing:.5px; }
+#sem-emo .sem-capa-emoji { font-size:20px;margin-left:auto; }
+#sem-emo .sem-capa-texto { font-size:13px;line-height:1.7; }
+#sem-emo .sem-racional { background:var(--verde-sem-claro);color:#2a5a3a; }
+#sem-emo .sem-emocional { background:var(--naranja-claro);color:#6a3a10; }
+#sem-emo .sem-reptiliano { background:var(--rojo-claro);color:#5a1a1a; }
+
+/* ANÁLISIS CARD */
+#sem-emo .analisis-card { background:var(--blanco);border-radius:16px;padding:24px 22px;margin-bottom:14px;box-shadow:0 2px 10px var(--sombra); }
+#sem-emo .analisis-label { font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);margin-bottom:10px;display:block; }
+#sem-emo .analisis-titulo { font-family:'Playfair Display',serif;font-size:17px;margin-bottom:10px;line-height:1.4; }
+#sem-emo .analisis-texto { font-size:14px;line-height:1.75;color:#5a5a5a; }
+#sem-emo .analisis-texto p { margin-bottom:12px; }
+#sem-emo .analisis-texto p:last-child { margin-bottom:0; }
+
+/* QUÉ NECESITA */
+#sem-emo .necesita-card { background:var(--verde-claro);border-radius:16px;padding:22px;margin-bottom:14px;border:1.5px solid rgba(143,175,154,.4); }
+#sem-emo .necesita-label { font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);margin-bottom:10px;display:block; }
+#sem-emo .necesita-list { list-style:none;display:flex;flex-direction:column;gap:8px;padding:0; }
+#sem-emo .necesita-list li { display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.6;color:#3a5a45; }
+#sem-emo .necesita-list li::before { content:''; width:6px;height:6px;background:var(--verde);border-radius:50%;flex-shrink:0;margin-top:7px; }
+
+/* QUÉ EVITAR */
+#sem-emo .evitar-card { background:var(--rojo-claro);border-radius:16px;padding:22px;margin-bottom:14px;border:1.5px solid rgba(224,112,112,.3); }
+#sem-emo .evitar-label { font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--rojo);margin-bottom:10px;display:block; }
+#sem-emo .evitar-list { list-style:none;display:flex;flex-direction:column;gap:8px;padding:0; }
+#sem-emo .evitar-list li { display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.6;color:#5a2a2a; }
+#sem-emo .evitar-list li::before { content:'✕'; font-size:10px;font-weight:700;color:var(--rojo);flex-shrink:0;margin-top:3px; }
+
+/* CONEXIÓN CEREBRAL */
+#sem-emo .conexion-card { background:var(--antracita);border-radius:16px;padding:22px;margin-bottom:14px; }
+#sem-emo .conexion-label { font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);margin-bottom:10px;display:block; }
+#sem-emo .conexion-texto { font-size:14px;line-height:1.75;color:#d0d0d0; }
+#sem-emo .conexion-texto strong { color:var(--verde); }
+
+/* FRASE FINAL */
+#sem-emo .frase-final { background:linear-gradient(135deg,var(--verde-claro),#fff);border-radius:16px;padding:22px;border:1.5px solid rgba(143,175,154,.4);text-align:center;margin-bottom:14px; }
+#sem-emo .frase-final p { font-family:'Playfair Display',serif;font-size:16px;color:var(--antracita);font-style:italic;line-height:1.6; }
+
+/* BREADCRUMB */
+#sem-emo .breadcrumb { display:flex;align-items:center;gap:6px;font-size:12px;color:#9a9a9a;margin-bottom:20px;flex-wrap:wrap; }
+#sem-emo .breadcrumb span { color:var(--verde);cursor:pointer; }
+#sem-emo .breadcrumb span:hover { text-decoration:underline; }
+
+@media(max-width:600px){
+  #sem-emo .hd,#sem-emo .body { padding-left:18px;padding-right:18px; }
+}
+body, .elementor-widget-container, .elementor-widget-html, .elementor-column-wrap, .elementor-column, .elementor-section {
+  background-color: #F3EDE4 !important;
+}
+</style>
+<div id="sem-emo">
+<!-- S0: INTRO -->
+<div class="s on" id="se-s0">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/><span class="badge">Bloque del Niño</span></div>
+<div class="body">
+<span class="eyebrow">El cerebro de tu hijo/a</span>
+<h1 class="h1">El semáforo<br/><em>emocional</em></h1>
+<p class="lead">Cuando tu hijo/a tiene una conducta difícil, no está haciéndolo a propósito. Su cerebro está reaccionando exactamente como está diseñado para hacerlo a esta edad. Este recurso te ayuda a entender qué está pasando dentro.</p>
+<div class="cerebro-visual">
+<div class="cerebro-capa racional">
+<div class="cerebro-capa-icon">🧠</div>
+<div class="cerebro-capa-body">
+<div class="cerebro-capa-nombre">Cerebro racional</div>
+<div class="cerebro-capa-desc">Razona, empatiza, toma decisiones. El más moderno. En los niños de 2 a 6 años, está en construcción.</div>
+</div>
+</div>
+<div class="cerebro-capa emocional">
+<div class="cerebro-capa-icon">💛</div>
+<div class="cerebro-capa-body">
+<div class="cerebro-capa-nombre">Cerebro emocional</div>
+<div class="cerebro-capa-desc">Siente con intensidad. Distingue lo agradable de lo desagradable. En la infancia, lleva la voz cantante.</div>
+</div>
+</div>
+<div class="cerebro-capa reptiliano">
+<div class="cerebro-capa-icon">⚡</div>
+<div class="cerebro-capa-body">
+<div class="cerebro-capa-nombre">Cerebro reptiliano</div>
+<div class="cerebro-capa-desc">El más antiguo. Supervivencia, instinto, reacción inmediata. Se activa ante cualquier amenaza o frustración.</div>
+</div>
+</div>
+<div class="obras-banner">
+<span class="obras-banner-icon">🚧</span>
+<span class="obras-banner-text">En los niños de 2 a 6 años, el cerebro racional <strong>está en obras</strong>. No pueden razonar cuando están en plena emoción. Primero hay que calmarlos. El razonamiento viene después.</span>
+</div>
+</div>
+<button class="btn" onclick="seGo('se-s1')">Decodificar una conducta →</button>
+</div>
+</div>
+<!-- S1: CATEGORÍAS -->
+<div class="s" id="se-s1">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="seGo('se-s0')">← Volver</button>
+<h2 style="font-family:'Playfair Display',serif;font-size:22px;margin-bottom:8px;">¿Qué está pasando ahora mismo?</h2>
+<p class="lead">Elige la situación que más se parezca a lo que estás viviendo.</p>
+<div class="cats">
+<div class="cat-card" onclick="seCategoria('desbordamiento')">
+<div class="cat-icon" style="background:#FDE8E8;">🌋</div>
+<div class="cat-body">
+<div class="cat-title">Desbordamiento total</div>
+<div class="cat-desc">Rabieta, llanto intenso, gritos, tirarse al suelo, pegar o morder</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="seCategoria('resistencia')">
+<div class="cat-icon" style="background:#FDF0E0;">🚫</div>
+<div class="cat-body">
+<div class="cat-title">Resistencia y negativa</div>
+<div class="cat-desc">No quiere recoger, ducharse, apagar la tele, irse a la cama, comer</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="seCategoria('transicion')">
+<div class="cat-icon" style="background:#E0EEF8;">⏱️</div>
+<div class="cat-body">
+<div class="cat-title">Dificultad en las transiciones</div>
+<div class="cat-desc">No quiere irse del parque, cambiar de actividad, dejar de jugar</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="seCategoria('independencia')">
+<div class="cat-icon" style="background:#E8F8E8;">💪</div>
+<div class="cat-body">
+<div class="cat-title">Quiero hacerlo yo solo/a</div>
+<div class="cat-desc">Se frustra si le ayudas, insiste en hacerlo solo aunque no pueda</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="seCategoria('conducta')">
+<div class="cat-icon" style="background:#F8EEF8;">🤔</div>
+<div class="cat-body">
+<div class="cat-title">Conductas que no entiendo</div>
+<div class="cat-desc">No me escucha, me ignora, hace lo contrario de lo que le pido</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+</div>
+</div>
+</div>
+<!-- S2: SITUACIONES -->
+<div class="s" id="se-s2">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<div class="breadcrumb">
+<span onclick="seGo('se-s1')">← Categorías</span>
+<span style="color:#C8C2B8;cursor:default;">›</span>
+<span id="se-cat-nombre" style="color:#9a9a9a;cursor:default;"></span>
+</div>
+<h2 style="font-family:'Playfair Display',serif;font-size:20px;margin-bottom:8px;">¿Cuál se parece más?</h2>
+<p style="font-size:14px;color:#6a6a6a;margin-bottom:20px;line-height:1.6;">Elige la situación concreta para entender qué está pasando en el cerebro de tu hijo/a.</p>
+<div class="sits" id="se-sits-lista"></div>
+</div>
+</div>
+<!-- S3: DECODIFICACIÓN -->
+<div class="s" id="se-s3">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<div class="breadcrumb">
+<span onclick="seGo('se-s1')">← Categorías</span>
+<span style="color:#C8C2B8;cursor:default;">›</span>
+<span id="se-bread-cat" onclick="seGo('se-s2')"></span>
+<span style="color:#C8C2B8;cursor:default;">›</span>
+<span id="se-bread-sit" style="color:#9a9a9a;cursor:default;"></span>
+</div>
+<div id="se-resultado"></div>
+<button class="btn-ghost" onclick="seGo('se-s1')">Decodificar otra situación →</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+
+  var catActual = '';
+
+  var categorias = {
+    desbordamiento: { nombre:'Desbordamiento total' },
+    resistencia: { nombre:'Resistencia y negativa' },
+    transicion: { nombre:'Dificultad en transiciones' },
+    independencia: { nombre:'Quiero hacerlo yo solo/a' },
+    conducta: { nombre:'Conductas que no entiendo' }
+  };
+
+  var situaciones = {
+    desbordamiento: [
+      { emoji:'😭', nombre:'Llanto intenso sin parar' },
+      { emoji:'🌋', nombre:'Rabieta en el suelo' },
+      { emoji:'😤', nombre:'Gritos muy fuertes' },
+      { emoji:'👊', nombre:'Pega o empuja' },
+      { emoji:'😬', nombre:'Muerde' },
+      { emoji:'🏃', nombre:'Sale corriendo y no atiende' },
+    ],
+    resistencia: [
+      { emoji:'📺', nombre:'No quiere apagar la tele' },
+      { emoji:'🛁', nombre:'No quiere ducharse o bañarse' },
+      { emoji:'🧸', nombre:'No quiere recoger los juguetes' },
+      { emoji:'🛏️', nombre:'No quiere irse a la cama' },
+      { emoji:'🍽️', nombre:'No quiere comer o sentarse a la mesa' },
+      { emoji:'👗', nombre:'No quiere vestirse o desvestirse' },
+    ],
+    transicion: [
+      { emoji:'🛝', nombre:'No quiere irse del parque' },
+      { emoji:'🎮', nombre:'No quiere dejar de jugar' },
+      { emoji:'👋', nombre:'No quiere despedirse o irse de casa de alguien' },
+      { emoji:'🏫', nombre:'No quiere entrar al cole o la guardería' },
+      { emoji:'🔄', nombre:'Le cuesta cambiar de una actividad a otra' },
+      { emoji:'⏰', nombre:'Se desespera cuando le dices "ahora no, luego"' },
+    ],
+    independencia: [
+      { emoji:'👟', nombre:'Quiere ponerse los zapatos solo aunque no pueda' },
+      { emoji:'🥤', nombre:'Quiere servirse la bebida solo' },
+      { emoji:'🚪', nombre:'Quiere abrir la puerta solo' },
+      { emoji:'🙅', nombre:'Se frustra y llora si le ayudas sin que lo pida' },
+      { emoji:'😡', nombre:'Se enfada mucho si algo no le sale como quería' },
+      { emoji:'🔁', nombre:'Insiste en repetirlo una y otra vez hasta que sale' },
+    ],
+    conducta: [
+      { emoji:'🙉', nombre:'Parece que no me escucha cuando le llamo' },
+      { emoji:'↩️', nombre:'Hace lo contrario de lo que le pido' },
+      { emoji:'😶', nombre:'Me ignora completamente' },
+      { emoji:'🤷', nombre:'No entiende lo que le explico aunque se lo repito' },
+      { emoji:'😬', nombre:'Dice que no a todo sin escuchar' },
+      { emoji:'⚡', nombre:'Reacciona de forma exagerada ante cosas pequeñas' },
+    ]
+  };
+
+  // DATOS DE CADA SITUACIÓN
+  var datos = {
+
+    // DESBORDAMIENTO
+    'llanto': {
+      sit: 'Llanto intenso sin parar',
+      activo: 'emocional',
+      que_pasa: 'El cerebro emocional de tu hijo/a ha tomado el control completamente. Está sintiendo algo muy intenso, ya sea tristeza, frustración, miedo o decepción, y su cerebro racional todavía no tiene la capacidad de gestionar esa emoción. El llanto es la única forma que tiene de expresar lo que le desborda por dentro.',
+      conexion: 'Cada vez que respondes con calma ante su llanto, estás creando una conexión neuronal que le enseña que las emociones se pueden sostener. Tu voz tranquila, tu mirada suave y tu presencia física son literalmente arquitectura cerebral en construcción.',
+      necesita: ['Presencia física cercana, sin hablar demasiado', 'Una voz tranquila y suave que le regule desde fuera', 'Que valides lo que siente: "Veo que estás muy triste"', 'Tiempo. No puedes acelerar el proceso emocional', 'Que no le pidas que pare o que se calme'],
+      evitar: ['Razonar o explicar mientras llora', 'Decirle "ya está, no es para tanto"', 'Ignorarlo para que pare solo', 'Enfadarte o elevar el tono', 'Darle lo que pedía justo cuando llora'],
+      frase: '"Cuando llora, no te está manipulando. Te está diciendo que necesita que estés ahí."'
+    },
+    'rabieta': {
+      sit: 'Rabieta en el suelo',
+      activo: 'reptiliano',
+      que_pasa: 'El cerebro reptiliano ha activado el modo supervivencia. Tu hijo/a ha perdido el acceso al cerebro racional por completo. En este momento no puede escuchar, no puede razonar y no puede controlarse. No es una decisión, es una respuesta neurológica automática ante una frustración que su cerebro percibe como una amenaza.',
+      conexion: 'Cómo gestionas estos momentos deja huella en su cerebro. Si tú te mantienes en calma, le estás co-regulando y construyendo conexiones que con el tiempo le ayudarán a regularse solo/a.',
+      necesita: ['Que te quedes cerca sin hablar ni tocar si no lo pide', 'Silencio y calma de tu parte. Tu estado regula el suyo', 'Espacio seguro para que pase la ola emocional', 'Una vez calmado/a, una palabra de conexión: "¿Mejor?"', 'Si hay peligro, moverle sin hablar y sin enfadarte'],
+      evitar: ['Hablar, explicar o razonar durante la rabieta', 'Amenazar o contar hasta tres', 'Subirte a su nivel de activación', 'Ceder para que pare', 'Dejarlo solo/a sin supervisión'],
+      frase: '"La rabieta no es el problema. Es la señal de que su cerebro aún está aprendiendo a gestionar la frustración."'
+    },
+    'gritos': {
+      sit: 'Gritos muy fuertes',
+      activo: 'reptiliano',
+      que_pasa: 'Los gritos son la expresión máxima de un sistema nervioso desbordado. El cerebro reptiliano está en alerta máxima y está liberando tensión de la única forma que sabe. No tiene mala intención. Literalmente no puede hacerlo de otra manera en este momento.',
+      conexion: 'Tu respuesta en este momento crea una conexión directa. Si respondes con calma, su cerebro aprende que los momentos intensos se pueden sostener. Si respondes con más volumen, el sistema nervioso escala aún más.',
+      necesita: ['Que bajes tu propia voz para invitarle a bajar la suya', 'Presencia tranquila sin confrontar', 'Que no interpretes los gritos como un ataque personal', 'Espacio si necesita moverse para liberar tensión'],
+      evitar: ['Gritar más que él/ella para que pare', 'Amenazar con consecuencias en ese momento', 'Tomártelo como algo personal', 'Pedir que "hable bien" mientras sigue desbordado/a'],
+      frase: '"Un niño que grita no necesita que le griten de vuelta. Necesita que alguien le muestre cómo se baja el volumen."'
+    },
+    'pega': {
+      sit: 'Pega o empuja',
+      activo: 'reptiliano',
+      que_pasa: 'Pegar es una respuesta impulsiva del cerebro reptiliano. No hay intención de hacer daño, hay desbordamiento emocional que sale por el cuerpo porque el cerebro todavía no tiene las herramientas verbales o emocionales para gestionarlo de otra manera. Es más frecuente entre los 2 y 4 años.',
+      conexion: 'Cómo reaccionas ante los golpes enseña más de lo que crees. Tu calma mientras pones el límite es una lección neurológica: "Las emociones son válidas, pero no todas las acciones lo son."',
+      necesita: ['Un límite claro y calmado: "No se pega. Puedes enfadarte pero no golpear"', 'Que nombres su emoción: "Estás muy enfadado/a"', 'Alternativas físicas para liberar tensión si las necesita', 'Que el límite sea consistente sin ser punitivo'],
+      evitar: ['Pegarle de vuelta "para que sepa cómo duele"', 'Gritar o humillar', 'Largos sermones sobre por qué está mal', 'Ignorarlo sin poner el límite'],
+      frase: '"Pegar no es maldad. Es un cerebro pequeño que todavía no sabe qué hacer con una emoción grande."'
+    },
+    'muerde': {
+      sit: 'Muerde',
+      activo: 'reptiliano',
+      que_pasa: 'Morder es una de las conductas más arcaicas del cerebro reptiliano. Aparece cuando el niño/a está muy frustrado/a, desbordado/a o como forma de exploración sensorial. Es especialmente común entre 1 y 3 años y suele disminuir con el desarrollo del lenguaje, que ofrece otras formas de expresión.',
+      conexion: 'Cada vez que el niño/a aprende a usar palabras para expresar lo que siente, se reducen las conductas físicas como morder. El lenguaje emocional que construyes con él/ella ahora es la mejor prevención.',
+      necesita: ['Límite inmediato, claro y sin drama: "No se muerde"', 'Distancia física si hay riesgo de repetición', 'Ayuda para nombrar lo que siente', 'Observar en qué contextos ocurre para anticiparse'],
+      evitar: ['Morderle de vuelta', 'Reírse o restarle importancia', 'Reaccionar con alarma exagerada que lo refuerza', 'Etiquetarle de "malo/a" o "morderor/a"'],
+      frase: '"Morder es lenguaje antes de tener lenguaje. Dale palabras y el mordisco desaparece."'
+    },
+    'corre': {
+      sit: 'Sale corriendo y no atiende',
+      activo: 'reptiliano',
+      que_pasa: 'Salir corriendo es la respuesta de huida del cerebro reptiliano. Ante algo que percibe como amenaza, ya sea un límite, una emoción o una situación que no entiende, el instinto de supervivencia activa el movimiento. Tampoco es desobediencia consciente.',
+      conexion: 'La conexión que construyes en los momentos de calma es la que funciona en los momentos de activación. Un niño/a que se siente seguro/a contigo tiene menos necesidad de huir.',
+      necesita: ['Seguridad física antes que nada', 'Que te acerques con calma sin perseguirle como un juego', 'Una voz tranquila que invite a volver', 'Comprender qué lo detonó para trabajarlo en frío'],
+      evitar: ['Gritar su nombre repetidamente en tono de alarma', 'Convertirlo en un juego de persecución', 'Enfadarte cuando vuelve', 'Largas explicaciones justo al cogerle'],
+      frase: '"Un niño que huye está buscando seguridad, no libertad. Tu calma es el ancla que le devuelve."'
+    },
+
+    // RESISTENCIA
+    'tele': {
+      sit: 'No quiere apagar la tele',
+      activo: 'emocional',
+      que_pasa: 'La pantalla activa el sistema de recompensa del cerebro emocional de forma muy intensa. Cuando la apagas, percibe una pérdida real y su cerebro reacciona con resistencia o malestar. No es capricho, es una respuesta neurológica ante algo que le generaba placer.',
+      conexion: 'Las transiciones necesitan tiempo y anticipación. Cada vez que avisas con tiempo, le estás enseñando a su cerebro que los cambios no son amenazas.',
+      necesita: ['Avisos previos con tiempo: "En 5 minutos apagamos"', 'Un ritual de cierre: "Decimos adiós a los dibujos"', 'Ofrecer una actividad de transición atractiva', 'Coherencia en el límite una vez puesto'],
+      evitar: ['Apagar de golpe sin avisar', 'Ceder si protesta para ganar paz', 'Enfadarte ante su reacción', 'Usar la tele como premio o castigo'],
+      frase: '"El problema no es la tele. Es que nadie le ha enseñado a despedirse de lo que le gusta."'
+    },
+    'ducha': {
+      sit: 'No quiere ducharse o bañarse',
+      activo: 'emocional',
+      que_pasa: 'El baño implica una interrupción de la actividad que está haciendo y a veces sensaciones físicas (temperatura, agua en la cara) que pueden ser incómodas. El cerebro emocional registra esto como algo desagradable y se resiste.',
+      conexion: 'Los rituales de higiene se aprenden a través de la repetición y la conexión emocional positiva. Lo que siente durante el baño contigo crea asociaciones en su memoria emocional.',
+      necesita: ['Anticipación: avisar antes de que toque', 'Convertirlo en algo lúdico: juguetes, canciones', 'Darle cierta autonomía dentro (elegir el champú, el orden)', 'Mantener el límite con calma si se resiste'],
+      evitar: ['Discutir argumentando por qué hay que ducharse', 'Forzarlo con prisa y sin aviso', 'Convertirlo en una batalla de poder', 'Hacerlo siempre de malos modos porque "siempre protesta"'],
+      frase: '"Si el baño siempre es una pelea, algo en el entorno o en la anticipación se puede cambiar."'
+    },
+    'recoger': {
+      sit: 'No quiere recoger los juguetes',
+      activo: 'emocional',
+      que_pasa: 'Recoger implica despedirse del juego, algo que el cerebro emocional vive como una pérdida. Además requiere autocontrol y motivación, dos funciones del cerebro racional que todavía están en construcción.',
+      conexion: 'Recoger junto a él/ella, al menos al principio, no es hacerlo por él/ella. Es construir el hábito desde la conexión y el ejemplo.',
+      necesita: ['Hacerlo como parte de un ritual, no como castigo', 'Participar al principio: "Recogemos juntos"', 'Canciones o juegos para que sea más atractivo', 'Anticipación: "Cuando terminemos esto, recogemos"'],
+      evitar: ['Exigirlo cuando ya está muy cansado/a', 'Hacerlo tú siempre porque es más rápido', 'Amenazar con tirar los juguetes', 'Convertirlo en una discusión'],
+      frase: '"Un niño que no recoge no es desordenado. Es un niño que todavía no tiene el hábito construido."'
+    },
+    'dormir': {
+      sit: 'No quiere irse a la cama',
+      activo: 'emocional',
+      que_pasa: 'Irse a la cama implica separación, oscuridad y el fin de la estimulación del día. El cerebro emocional registra todo eso como algo potencialmente amenazante. El miedo a perderse algo (FOMO infantil) también es real en esta etapa.',
+      conexion: 'El ritual de sueño que construyes ahora deja huella profunda. La calma con la que acompañas este momento le enseña que la noche es segura.',
+      necesita: ['Un ritual consistente y predecible cada noche', 'Tiempo de desaceleración antes de la cama (sin pantallas)', 'Conexión emocional previa: cuento, conversación tranquila', 'Que el límite sea claro pero acompañado de afecto'],
+      evitar: ['Cambiar el ritual cada día según el cansancio del adulto', 'Pantallas justo antes de dormir', 'Amenazar con consecuencias para que se duerma', 'Ceder y quedarte más tiempo cada vez'],
+      frase: '"Resistirse a dormir no es manipulación. Es un cerebro emocional que no quiere perder la conexión contigo."'
+    },
+    'comer': {
+      sit: 'No quiere comer o sentarse a la mesa',
+      activo: 'emocional',
+      que_pasa: 'La alimentación en la infancia está cargada de componentes emocionales y sensoriales. El cerebro emocional regula el apetito, la aversión a texturas o sabores y la necesidad de autonomía. Forzar la comida activa el cerebro reptiliano y convierte la mesa en un campo de batalla.',
+      conexion: 'La relación emocional que construyas con la comida ahora definirá su relación con la alimentación durante años. Comer tranquilo/a junto a adultos tranquilos es una de las mejores experiencias que puedes ofrecerle.',
+      necesita: ['Ambiente tranquilo sin presión ni vigilancia excesiva', 'Respeto por su apetito real (varía día a día)', 'Variedad sin obligación de probar todo', 'Que vea a los adultos comer con placer'],
+      evitar: ['Obligar, presionar o hacer aviones con la cuchara', 'Convertir la comida en premio o castigo', 'Hacer comentarios sobre lo que come o no come', 'Cocinar cosas distintas "porque no come lo normal"'],
+      frase: '"La mesa no es un examen. Es un espacio de conexión. Cuando hay paz, suele aparecer el apetito."'
+    },
+    'vestirse': {
+      sit: 'No quiere vestirse o desvestirse',
+      activo: 'emocional',
+      que_pasa: 'Vestirse interrumpe lo que estaba haciendo y puede implicar sensaciones físicas que le resultan incómodas (texturas, temperatura). También puede ser una forma de afirmar su autonomía: quiere hacerlo a su ritmo o a su manera.',
+      conexion: 'Cada mañana es una oportunidad de conexión o de conflicto. El tono emocional con el que empieza el día deja huella en cómo transcurre el resto.',
+      necesita: ['Tiempo real para vestirse sin prisas cuando sea posible', 'Participación: dejarle elegir algo (el color, el orden)', 'Anticipación la noche anterior si hay prisa por la mañana', 'Validar si hay alguna incomodidad sensorial específica'],
+      evitar: ['Vestirle tú mientras protesta si puede intentarlo', 'Las prisas que generan más resistencia', 'Discutir sobre la ropa elegida por él/ella', 'Convertirlo en batalla todos los días'],
+      frase: '"Las mañanas difíciles empiezan la noche anterior. La anticipación cambia el inicio del día."'
+    },
+
+    // TRANSICIÓN
+    'parque': {
+      sit: 'No quiere irse del parque',
+      activo: 'emocional',
+      que_pasa: 'El parque activa el sistema de placer y exploración del cerebro emocional de forma muy potente. Salir de golpe supone una pérdida brusca que el cerebro no puede procesar bien sin preparación. Además, los niños/as no tienen noción del tiempo, así que "cinco minutos" no significa nada para ellos.',
+      conexion: 'Los avisos con referencia visual o concreta en lugar de temporal crean conexiones más eficaces. "Cuando des tres vueltas más a la rampa, nos vamos" funciona mejor que "en cinco minutos".',
+      necesita: ['Avisos progresivos y concretos antes de salir', 'Una actividad o destino atractivo al que ir después', 'Ritual de despedida del parque: "Adiós tobogán"', 'Coherencia: que realmente os vayáis cuando dices'],
+      evitar: ['Decir "nos vamos" cinco veces sin irse', 'Marcharse de golpe sin avisar', 'Prometer volver mañana si no es seguro', 'Ceder y quedar más tiempo cada vez que protesta'],
+      frase: '"Un niño que no quiere irse del parque no es rebelde. Es un cerebro que vive en el presente y no entiende el futuro."'
+    },
+    'jugar': {
+      sit: 'No quiere dejar de jugar',
+      activo: 'emocional',
+      que_pasa: 'El juego es el trabajo del niño/a. Cuando está jugando, el cerebro emocional está plenamente comprometido con lo que hace. Interrumpirlo bruscamente es como si alguien te cortara una conversación importante a mitad de frase.',
+      conexion: 'Respetar su proceso de juego, aunque a veces no sea posible, construye confianza y le enseña que sus cosas importan.',
+      necesita: ['Reconocer lo que está haciendo antes de pedir que pare', 'Tiempo real de transición con avisos', 'Darle cierre al juego si es posible: "¿Dónde dejamos esto?"', 'Explicación concreta de lo que viene después'],
+      evitar: ['Interrumpir de golpe sin aviso', 'Minimizar su juego: "Eso no es importante"', 'Recoger sus cosas mientras protesta', 'Prometerte que "solo un momento más" y luego no cumplirlo'],
+      frase: '"Para un niño, su juego es tan serio como tu trabajo. Interrumpirlo merece el mismo respeto."'
+    },
+    'despedirse': {
+      sit: 'No quiere despedirse o irse de casa de alguien',
+      activo: 'emocional',
+      que_pasa: 'Las despedidas implican separación, y el cerebro emocional las procesa como pérdidas. En la infancia, la separación de personas o lugares seguros activa el sistema de apego y puede generar ansiedad real.',
+      conexion: 'Los rituales de despedida predecibles y cariñosos reducen la ansiedad de separación. Saber cómo acaba algo hace que sea menos amenazante.',
+      necesita: ['Ritual claro y consistente de despedida', 'Anticipación: avisar antes de que llegue el momento', 'Que la despedida sea breve pero cariñosa', 'Confianza en que tú vas a estar bien y que volveréis'],
+      evitar: ['Irse a escondidas para evitar el llanto', 'Prolongar la despedida por el llanto', 'Prometer volver pronto si no es cierto', 'Transmitir tu propia ansiedad ante la separación'],
+      frase: '"Las despedidas difíciles no son capricho. Son amor que todavía no sabe cómo soltarse."'
+    },
+    'cole': {
+      sit: 'No quiere entrar al cole o la guardería',
+      activo: 'emocional',
+      que_pasa: 'La separación de la figura de apego activa el sistema de alarma del cerebro emocional. Es una respuesta completamente normal y adaptativa. No significa que algo vaya mal en el cole, significa que el vínculo contigo es fuerte y seguro.',
+      conexion: 'La calma y la seguridad con la que tú te vas define cómo procesa él/ella la separación. Si tú transmites confianza, su cerebro empieza a aprender que la separación es segura.',
+      necesita: ['Despedida breve, cariñosa y segura (no prolongada)', 'Que confíes en que lo van a cuidar', 'Un ritual de llegada consistente con el cole', 'Reconectar emocionalmente cuando lo recoges'],
+      evitar: ['Quedarte más tiempo porque llora', 'Transmitir inseguridad o culpa al dejarlo', 'Irte a escondidas', 'Comparar con otros niños que "entran bien"'],
+      frase: '"Un niño que llora al separarse no tiene un problema. Tiene un apego seguro. Eso es exactamente lo que necesitaba construir."'
+    },
+    'cambio': {
+      sit: 'Le cuesta cambiar de una actividad a otra',
+      activo: 'emocional',
+      que_pasa: 'La flexibilidad cognitiva, la capacidad de cambiar de tarea o foco, depende del cerebro racional, que está en construcción. El cerebro emocional vive profundamente en lo que está haciendo ahora y el cambio le supone un coste real.',
+      conexion: 'Dar tiempo y anticipación para los cambios construye en el cerebro del niño/a la capacidad de transición. Con el tiempo y la práctica, esta habilidad se desarrolla.',
+      necesita: ['Avisos progresivos: primero lejos, luego cerca', 'Explicar qué viene después de forma atractiva', 'Validar que le cuesta: "Ya sé que ahora estás a tope con esto"', 'Paciencia real, no urgencia fingida'],
+      evitar: ['Exigir cambios inmediatos sin preparación', 'Impacientarte ante su dificultad', 'Saltarte los avisos cuando tienes prisa', 'Decirle que "es fácil" o que "no pasa nada"'],
+      frase: '"Los cambios le cuestan porque vive en el presente. La anticipación es el puente entre el ahora y lo que viene."'
+    },
+    'esperar': {
+      sit: 'Se desespera cuando le dices "ahora no, luego"',
+      activo: 'emocional',
+      que_pasa: 'Los niños/as de 2 a 6 años no tienen una comprensión real del tiempo. "Luego", "mañana" o "en un momento" son conceptos abstractos que el cerebro emocional no puede procesar. Para ellos/as, "luego" puede sentirse como "nunca".',
+      conexion: 'Usar referencias concretas y visuales en lugar de temporales construye la comprensión del tiempo de forma gradual y reduce la frustración.',
+      necesita: ['Referencias concretas en lugar de temporales: "Cuando acabe de cocinar"', 'Cumplir lo que prometes cuando llega el momento', 'Validar su impaciencia: "Ya sé que quieres ahora"', 'Anticipación visual si es posible'],
+      evitar: ['"Luego" como forma de aplazar sin cumplir', 'Enfadarte por su impaciencia (es neurológica)', 'Prometer sin intención de cumplir', 'Darle el "no" sin explicación alternativa'],
+      frase: '"Para un niño de tres años, el tiempo no existe. "Luego" suena exactamente igual que "nunca"."'
+    },
+
+    // INDEPENDENCIA
+    'zapatos': {
+      sit: 'Quiere ponerse los zapatos solo aunque no pueda',
+      activo: 'emocional',
+      que_pasa: 'Esta etapa se llama etapa de autonomía y es completamente normal y sana entre los 2 y 4 años. El cerebro emocional está impulsando la necesidad de sentirse capaz e independiente. Es una señal de desarrollo saludable, no de terquedad.',
+      conexion: 'Cada vez que le dejas intentarlo, aunque tarde, estás construyendo conexiones de autoconfianza en su cerebro. Cada vez que lo haces tú "porque es más rápido", esas conexiones no se crean.',
+      necesita: ['Tiempo real para que lo intente sin presión', 'Que observes sin intervenir hasta que pida ayuda', 'Reconocimiento del esfuerzo: "Lo has intentado con mucha fuerza"', 'Ofrecer ayuda parcial, no total: "¿Te ayudo con este?"'],
+      evitar: ['Hacerlo tú porque tarda demasiado', 'Quitarle el zapato de las manos sin preguntar', 'Reírte de sus intentos aunque sea con ternura', 'Decirle "ya lo hago yo que lo haces mal"'],
+      frase: '"Dejarte ayudar es lo más difícil que puedes hacer a veces. Pero es lo más valioso para su desarrollo."'
+    },
+    'bebida': {
+      sit: 'Quiere servirse la bebida solo',
+      activo: 'emocional',
+      que_pasa: 'Querer hacer cosas del mundo adulto es una necesidad evolutiva de esta etapa. El cerebro emocional busca sentirse útil, capaz y parte del mundo. Que se derrame es parte del aprendizaje, no un fracaso.',
+      conexion: 'El entorno que preparas facilita o dificulta su autonomía. Una jarrita a su tamaño no es un lujo, es una inversión en su desarrollo.',
+      necesita: ['Recipiente adaptado a su tamaño y fuerza', 'Espacio para equivocarse sin drama', 'Que normalices el derrame: "Se ha caído, lo limpiamos"', 'Reconocimiento cuando lo consigue'],
+      evitar: ['Quitarle la jarra porque "lo va a tirar"', 'Hacer un drama si se derrama', 'No dejarle intentarlo por comodidad del adulto', 'Hacerlo siempre tú aunque tenga ganas de intentarlo'],
+      frase: '"Un vaso de agua derramado es el precio de un niño que aprende que puede. Merece la pena."'
+    },
+    'puerta': {
+      sit: 'Quiere abrir la puerta solo',
+      activo: 'emocional',
+      que_pasa: 'Las puertas, los botones, los interruptores son objetos del mundo adulto que fascinan a esta edad. Querer manejarlos es parte de la exploración y del impulso de autonomía del cerebro emocional.',
+      conexion: 'Cada pequeña conquista del entorno construye autoconfianza. Facilitar estas experiencias cuando es seguro es una de las formas más sencillas de apoyar su desarrollo.',
+      necesita: ['Que esperes a que lo intente si hay tiempo', 'Que le expliques cómo funciona si no puede', 'Ayuda parcial si la necesita: "Te ayudo con la llave"', 'Reconocimiento cuando lo consigue'],
+      evitar: ['Abrirla siempre tú sin darle la oportunidad', 'Impacientarte si tarda', 'Reírte si no puede', 'Ignorar su necesidad de participar'],
+      frase: '"Cada puerta que abre solo/a es una pequeña victoria para su cerebro en desarrollo."'
+    },
+    'ayuda': {
+      sit: 'Se frustra y llora si le ayudas sin que lo pida',
+      activo: 'emocional',
+      que_pasa: 'Ayudar sin que lo pida es, para su cerebro emocional, una invasión de su espacio de autonomía. Siente que le estás diciendo "no puedes" aunque tu intención sea la contraria. Su frustración es una señal de que necesita más confianza en sus capacidades.',
+      conexion: 'Esperar a que pida ayuda, aunque te cueste, construye en su cerebro la conciencia de sus propios límites y la confianza para pedir cuando los necesita.',
+      necesita: ['Que esperes a que pida ayuda antes de ofrecerla', 'Observar sin intervenir', 'Preguntar: "¿Quieres que te ayude o lo intentas tú?"', 'Respetar su respuesta aunque diga que no'],
+      evitar: ['Anticiparte siempre a sus necesidades', 'Ayudar por comodidad del adulto', 'Interpretar su llanto como que necesita que lo hagas tú', 'Sentirte rechazado/a cuando dice que no a tu ayuda'],
+      frase: '"No te necesita menos porque no quiera tu ayuda. Te necesita diferente: presente pero sin adelantarte."'
+    },
+    'frustra': {
+      sit: 'Se enfada mucho si algo no le sale como quería',
+      activo: 'emocional',
+      que_pasa: 'La tolerancia a la frustración es una habilidad del cerebro racional que se desarrolla con el tiempo y la experiencia. A esta edad, cuando algo no sale como espera, el cerebro emocional reacciona con intensidad porque todavía no tiene los recursos para gestionarlo.',
+      conexion: 'Estar presente sin resolver le enseña a su cerebro que puede tolerar la incomodidad. Cada vez que supera una pequeña frustración con tu apoyo, esa capacidad crece.',
+      necesita: ['Validación de su frustración: "Es muy difícil, entiendo que te enfades"', 'Presencia sin soluciones inmediatas', 'Tiempo para intentarlo de nuevo si quiere', 'Modelar cómo te enfrentas tú a las dificultades'],
+      evitar: ['Resolver el problema para que no llore', 'Decirle "no es para tanto"', 'Impacientarte ante su reacción', 'Quitarle el objeto o la tarea cuando se frustra'],
+      frase: '"La frustración no es el problema. Es el entrenamiento. Tu presencia tranquila es el gimnasio."'
+    },
+    'repite': {
+      sit: 'Insiste en repetirlo una y otra vez hasta que sale',
+      activo: 'emocional',
+      que_pasa: 'La repetición es el mecanismo de aprendizaje del cerebro infantil. Cuando algo le genera satisfacción o supone un reto, el cerebro emocional quiere volver a esa experiencia una y otra vez para consolidar la conexión neuronal. Es exactamente como aprende.',
+      conexion: 'Cada repetición es literalmente una sinapsis consolidándose en su cerebro. La insistencia que a veces nos agota es, neurológicamente, el aprendizaje en acción.',
+      necesita: ['Tiempo y espacio para repetir cuando es posible', 'Que comprendas que no es terquedad sino aprendizaje', 'Apoyo cuando se frustra en el proceso', 'Celebración genuina cuando lo consigue'],
+      evitar: ['Interrumpir por impaciencia del adulto', 'Decirle "ya está bien, lo has hecho muchas veces"', 'Quitarle el objeto o la tarea', 'Interpretar la insistencia como capricho'],
+      frase: '"Un niño que repite sin parar no está siendo pesado. Está aprendiendo exactamente como tiene que aprender."'
+    },
+
+    // CONDUCTA
+    'noescucha': {
+      sit: 'Parece que no me escucha cuando le llamo',
+      activo: 'emocional',
+      que_pasa: 'Cuando un niño/a está completamente absorbido en una actividad, su cerebro emocional está en foco total. La capacidad de cambiar la atención voluntariamente depende del cerebro racional, que está en obras. No es desobediencia, es que literalmente no ha registrado tu voz.',
+      conexion: 'Cada vez que te acercas físicamente en lugar de llamar desde lejos, creas una conexión más efectiva y refuerzas el vínculo. La proximidad física es la forma más directa de llegar a su cerebro.',
+      necesita: ['Que te acerques físicamente y contactes antes de hablar', 'Contacto visual antes de dar la instrucción', 'Una instrucción simple y concreta, no una lista', 'Anticipación antes de necesitar su atención'],
+      evitar: ['Llamarle repetidamente desde otra habitación', 'Interpretar el no responder como desobediencia', 'Aumentar el volumen cada vez que no responde', 'Reprender por no escuchar sin haber garantizado la atención'],
+      frase: '"No te ignora. Su cerebro está en otro lugar. Para llegar a él, primero tienes que ir tú hasta donde está."'
+    },
+    'contrario': {
+      sit: 'Hace lo contrario de lo que le pido',
+      activo: 'emocional',
+      que_pasa: 'Entre los 2 y 4 años el "no" y la oposición son herramientas de construcción de identidad. El cerebro emocional está descubriendo que tiene voluntad propia y la está ejerciendo. Es incómodo para el adulto pero es exactamente lo que tiene que pasar.',
+      conexion: 'Cómo respondes a su "no" le enseña cómo relacionarse con la autoridad. La calma con límites firmes construye seguridad. La guerra de poder construye más resistencia.',
+      necesita: ['Que entiendas que el "no" es desarrollo, no ataque', 'Opciones dentro del límite: "¿Te lavas los dientes antes o después del cuento?"', 'Instrucciones en positivo: "Pon los zapatos aquí" en lugar de "no los dejes ahí"', 'Coherencia sin confrontación'],
+      evitar: ['Entrar en guerra de poder', 'Ceder siempre ante el "no"', 'Poner demasiados límites a la vez', 'Tomártelo como una falta de respeto personal'],
+      frase: '"Un niño que dice que no a todo está descubriendo que existe. Es la primera vez que lo sabe."'
+    },
+    'ignora': {
+      sit: 'Me ignora completamente',
+      activo: 'emocional',
+      que_pasa: 'El foco atencional de un niño/a pequeño/a es unitario y total. Cuando está absorto en algo, el cerebro emocional bloquea los estímulos externos que percibe como interrupciones. No hay intención de ignorar, hay inmersión total en lo que está haciendo.',
+      conexion: 'La forma en que captas su atención importa tanto como lo que le dices. Entrar en su mundo antes de pedirle algo crea una conexión neuronal más efectiva.',
+      necesita: ['Contacto físico suave antes de hablar (una mano en el hombro)', 'Esperar a que te mire antes de hablar', 'Entrar en su juego un momento antes de pedir algo', 'Instrucciones breves y directas'],
+      evitar: ['Hablar desde lejos esperando respuesta', 'Repetir la misma instrucción elevando el tono', 'Interpretar el silencio como desprecio', 'Interrumpir de golpe sin preparar la transición'],
+      frase: '"Para llegar a su cerebro, primero tienes que conectar con lo que está viviendo. Luego, pide."'
+    },
+    'noentiende': {
+      sit: 'No entiende lo que le explico aunque se lo repito',
+      activo: 'emocional',
+      que_pasa: 'El procesamiento del lenguaje complejo depende del cerebro racional. A esta edad, las instrucciones largas, las explicaciones abstractas o los razonamientos múltiples superan la capacidad de procesamiento de su cerebro. No es que no quiera entender, es que todavía no puede.',
+      conexion: 'Cada instrucción simple y concreta que usa bien construye en su cerebro la confianza en su propio entendimiento. Las instrucciones complejas que no puede seguir construyen frustración.',
+      necesita: ['Instrucciones de un solo paso a la vez', 'Lenguaje concreto y visual, no abstracto', 'Que le muestres mientras le dices', 'Verificar que ha entendido: "¿Qué vas a hacer primero?"'],
+      evitar: ['Explicaciones largas y razonadas mientras está activado/a', 'Dar varias instrucciones seguidas', 'Repetir exactamente lo mismo si no ha funcionado', 'Concluir que "no entiende nada"'],
+      frase: '"Si no te entiende, el problema no es él/ella. Es que la instrucción tiene demasiadas partes para su cerebro de ahora."'
+    },
+    'noatodo': {
+      sit: 'Dice que no a todo sin escuchar',
+      activo: 'emocional',
+      que_pasa: 'El "no" automático es una de las manifestaciones más claras de la etapa de autonomía. El cerebro emocional ha aprendido que decir "no" le da poder y control sobre su entorno, algo que necesita profundamente en esta etapa. Es un paso necesario en el desarrollo de la identidad.',
+      conexion: 'Cómo manejas su "no" sistemático define cómo aprende a usar su voluntad. Respetarla dentro de los límites adecuados construye seguridad. Reprimirla construye sumisión o más resistencia.',
+      necesita: ['Que no conviertas cada "no" en un conflicto', 'Opciones reales entre las que elegir', 'Anticipación de lo que va a ocurrir', 'Reconocer cuándo su "no" es válido y respetarlo'],
+      evitar: ['Batallar por cada negativa', 'Ceder siempre para evitar el conflicto', 'Interpretar el "no" como falta de respeto', 'Usar el "porque lo digo yo" como único argumento'],
+      frase: '"El niño que dice no a todo está practicando tener voz. No le quites la voz. Enséñale a usarla."'
+    },
+    'exagerada': {
+      sit: 'Reacciona de forma exagerada ante cosas pequeñas',
+      activo: 'emocional',
+      que_pasa: 'Lo que para el adulto es pequeño, para el cerebro emocional del niño/a es enorme. Su sistema nervioso tiene un umbral de activación mucho más bajo y su capacidad de regulación es mínima. No exagera a propósito. Siente de verdad con esa intensidad.',
+      conexion: 'Validar sus emociones aunque te parezcan desproporcionadas construye en su cerebro la conciencia emocional. Minimizarlas construye desconexión entre lo que siente y lo que puede expresar.',
+      necesita: ['Validación sin minimizar: "Entiendo que eso te ha molestado mucho"', 'Que no compares su reacción con lo que debería ser', 'Presencia tranquila que regule desde fuera', 'Tiempo para que la emoción se procese'],
+      evitar: ['"No es para tanto", "eso es una tontería"', 'Reírse de la intensidad de su reacción', 'Enfadarte porque te parece exagerado', 'Comparar con otros niños que "no hacen eso"'],
+      frase: '"Para su cerebro, no hay emociones pequeñas. Todas son grandes. Tu trabajo es acompañarlas, no reducirlas."'
+    }
+  };
+
+  // MAPA SITUACIÓN → CLAVE DE DATOS
+  var mapaClaves = {
+    'Llanto intenso sin parar':'llanto',
+    'Rabieta en el suelo':'rabieta',
+    'Gritos muy fuertes':'gritos',
+    'Pega o empuja':'pega',
+    'Muerde':'muerde',
+    'Sale corriendo y no atiende':'corre',
+    'No quiere apagar la tele':'tele',
+    'No quiere ducharse o bañarse':'ducha',
+    'No quiere recoger los juguetes':'recoger',
+    'No quiere irse a la cama':'dormir',
+    'No quiere comer o sentarse a la mesa':'comer',
+    'No quiere vestirse o desvestirse':'vestirse',
+    'No quiere irse del parque':'parque',
+    'No quiere dejar de jugar':'jugar',
+    'No quiere despedirse o irse de casa de alguien':'despedirse',
+    'No quiere entrar al cole o la guardería':'cole',
+    'Le cuesta cambiar de una actividad a otra':'cambio',
+    'Se desespera cuando le dices "ahora no, luego"':'esperar',
+    'Quiere ponerse los zapatos solo aunque no pueda':'zapatos',
+    'Quiere servirse la bebida solo':'bebida',
+    'Quiere abrir la puerta solo':'puerta',
+    'Se frustra y llora si le ayudas sin que lo pida':'ayuda',
+    'Se enfada mucho si algo no le sale como quería':'frustra',
+    'Insiste en repetirlo una y otra vez hasta que sale':'repite',
+    'Parece que no me escucha cuando le llamo':'noescucha',
+    'Hace lo contrario de lo que le pido':'contrario',
+    'Me ignora completamente':'ignora',
+    'No entiende lo que le explico aunque se lo repito':'noentiende',
+    'Dice que no a todo sin escuchar':'noatodo',
+    'Reacciona de forma exagerada ante cosas pequeñas':'exagerada'
+  };
+
+  var coloresCerebro = {
+    racional: { bg:'var(--verde-sem-claro)', color:'#2a5a3a', dot:'var(--verde-sem)', nombre:'Cerebro racional', desc:'La parte racional está bloqueada. No hay acceso al razonamiento ni al autocontrol.' },
+    emocional: { bg:'var(--naranja-claro)', color:'#6a3a10', dot:'var(--naranja)', nombre:'Cerebro emocional', desc:'El cerebro emocional lleva la voz cantante. Las emociones son intensas y reales.' },
+    reptiliano: { bg:'var(--rojo-claro)', color:'#5a1a1a', dot:'var(--rojo)', nombre:'Cerebro reptiliano', desc:'En modo supervivencia. El instinto ha tomado el control. Razonar ahora no funciona.' }
+  };
+
+  // NAVEGACIÓN
+  window.seGo = function(id) {
+    document.querySelectorAll('#sem-emo .s').forEach(function(s){ s.classList.remove('on'); });
+    document.getElementById(id).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // CATEGORÍA
+  window.seCategoria = function(cat) {
+    catActual = cat;
+    document.getElementById('se-cat-nombre').textContent = categorias[cat].nombre;
+    var sits = situaciones[cat];
+    var html = '';
+    sits.forEach(function(s){
+      html += '<div class="sit-card" onclick="seSituacion(\''+s.nombre.replace(/'/g,"\\'")+'\')">';
+      html += '<span class="sit-emoji">'+s.emoji+'</span>';
+      html += '<span class="sit-nombre">'+s.nombre+'</span>';
+      html += '<span class="sit-arrow">›</span>';
+      html += '</div>';
+    });
+    document.getElementById('se-sits-lista').innerHTML = html;
+    seGo('se-s2');
+  };
+
+  // SITUACIÓN
+  window.seSituacion = function(nombre) {
+    var clave = mapaClaves[nombre];
+    if(!clave || !datos[clave]) return;
+    var d = datos[clave];
+    var cerebro = coloresCerebro[d.activo];
+
+    document.getElementById('se-bread-cat').textContent = categorias[catActual].nombre;
+    document.getElementById('se-bread-sit').textContent = nombre;
+
+    // SEMÁFORO
+    var capas = ['racional','emocional','reptiliano'];
+    var semHtml = '<div class="semaforo-display">';
+    capas.forEach(function(c){
+      var info = coloresCerebro[c];
+      var activa = c === d.activo;
+      semHtml += '<div class="sem-capa sem-'+c+' '+(activa?'activa':'inactiva')+'">';
+      semHtml += '<div class="sem-capa-top '+(activa?'open':'')+'">';
+      semHtml += '<div class="sem-dot" style="background:'+info.dot+'"></div>';
+      semHtml += '<span class="sem-capa-nombre">'+info.nombre+'</span>';
+      if(activa) semHtml += '<span class="sem-capa-emoji">⚡ Activo ahora</span>';
+      semHtml += '</div>';
+      if(activa) semHtml += '<div class="sem-capa-texto">'+info.desc+'</div>';
+      semHtml += '</div>';
+    });
+    semHtml += '</div>';
+
+    var html = semHtml;
+
+    // QUÉ PASA
+    html += '<div class="analisis-card">';
+    html += '<span class="analisis-label">Qué está pasando en su cerebro</span>';
+    html += '<h3 class="analisis-titulo">'+d.sit+'</h3>';
+    html += '<div class="analisis-texto"><p>'+d.que_pasa+'</p></div>';
+    html += '</div>';
+
+    // QUÉ NECESITA
+    html += '<div class="necesita-card">';
+    html += '<span class="necesita-label">✓ Qué necesita de ti ahora</span>';
+    html += '<ul class="necesita-list">';
+    d.necesita.forEach(function(n){ html += '<li>'+n+'</li>'; });
+    html += '</ul></div>';
+
+    // QUÉ EVITAR
+    html += '<div class="evitar-card">';
+    html += '<span class="evitar-label">Qué evitar en este momento</span>';
+    html += '<ul class="evitar-list">';
+    d.evitar.forEach(function(e){ html += '<li>'+e+'</li>'; });
+    html += '</ul></div>';
+
+    // CONEXIÓN
+    html += '<div class="conexion-card">';
+    html += '<span class="conexion-label">🧠 La conexión que estás construyendo</span>';
+    html += '<p class="conexion-texto">'+d.conexion+'</p>';
+    html += '</div>';
+
+    // FRASE
+    html += '<div class="frase-final"><p>'+d.frase+'</p></div>';
+
+    document.getElementById('se-resultado').innerHTML = html;
+    seGo('se-s3');
+  };
+
+})();
+</script>
+</body>
+</html>

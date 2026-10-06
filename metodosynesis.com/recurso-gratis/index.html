@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Recurso Gratis · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+/* ============================================================
+   VARIABLES Y RESET
+   ============================================================ */
+#syn-exp {
+  --verde:#8FAF9A; --beige:#F3EDE4; --antracita:#3A3A3A;
+  --terracota:#D08770; --verde-claro:#E4EFE8; --verde-medio:#C8DDD0;
+  --blanco:#FFFFFF;
+  --rojo:#E07070; --rojo-claro:#FDE8E8;
+  --naranja:#E09A50; --naranja-claro:#FDF0E0;
+  --verde-sem:#6AAF80; --verde-sem-claro:#E0F2E8;
+  --sombra:rgba(58,58,58,0.07);
+  font-family:'DM Sans',sans-serif;
+  color:var(--antracita);
+  background:var(--beige);
+  padding:0 0 80px;
+  max-width:640px;
+  margin:0 auto;
+}
+#syn-exp * { box-sizing:border-box; margin:0; padding:0; }
+#syn-exp .screen { display:none; }
+#syn-exp .screen.on { display:block; animation:expFade .4s ease; }
+@keyframes expFade { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+#syn-exp .hd {
+  padding:24px 28px 0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:28px;
+}
+
+/* ============================================================
+   BARRA DE PROGRESO (4 píldoras)
+   ============================================================ */
+#syn-exp .progress-bar {
+  display:flex;
+  align-items:center;
+  gap:0;
+  padding:0 28px;
+  margin-bottom:32px;
+}
+#syn-exp .prog-pill {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  position:relative;
+  cursor:default;
+}
+#syn-exp .prog-pill::after {
+  content:'';
+  position:absolute;
+  top:11px;
+  left:calc(50% + 14px);
+  right:calc(-50% + 14px);
+  height:2px;
+  background:#DDD8D0;
+  z-index:0;
+  transition:background .4s;
+}
+#syn-exp .prog-pill:last-child::after { display:none; }
+#syn-exp .prog-pill.done::after { background:var(--verde); }
+#syn-exp .prog-dot {
+  width:22px; height:22px;
+  border-radius:50%;
+  border:2px solid #DDD8D0;
+  background:var(--beige);
+  z-index:1;
+  display:flex; align-items:center; justify-content:center;
+  font-size:10px;
+  transition:all .35s;
+  position:relative;
+}
+#syn-exp .prog-pill.active .prog-dot {
+  border-color:var(--verde);
+  background:var(--verde);
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 0 0 4px rgba(143,175,154,.2);
+}
+#syn-exp .prog-pill.done .prog-dot {
+  border-color:var(--verde);
+  background:var(--verde);
+  color:#fff;
+}
+#syn-exp .prog-label {
+  font-size:9px;
+  font-weight:500;
+  letter-spacing:.8px;
+  text-transform:uppercase;
+  color:#aaa;
+  transition:color .3s;
+  white-space:nowrap;
+}
+#syn-exp .prog-pill.active .prog-label { color:var(--verde); font-weight:600; }
+#syn-exp .prog-pill.done .prog-label { color:var(--verde-medio); }
+
+/* ============================================================
+   BODY
+   ============================================================ */
+#syn-exp .body { padding:0 28px; }
+
+/* ============================================================
+   TIPOGRAFÍA
+   ============================================================ */
+#syn-exp .eyebrow {
+  font-size:10px; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--verde);
+  margin-bottom:8px; display:block;
+}
+#syn-exp .h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(26px,5vw,36px);
+  line-height:1.2; margin-bottom:14px;
+}
+#syn-exp .h1 em { font-style:italic; color:var(--verde); }
+#syn-exp .h2 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,4vw,26px);
+  line-height:1.3; margin-bottom:10px;
+}
+#syn-exp .lead {
+  font-size:15px; line-height:1.75;
+  color:#6a6a6a; margin-bottom:28px;
+}
+
+/* ============================================================
+   BOTONES
+   ============================================================ */
+#syn-exp .btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px; background:var(--verde); color:#fff;
+  font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+  padding:16px 36px; border-radius:50px; border:none;
+  cursor:pointer; transition:all .22s; width:100%;
+  overflow:visible; position:relative;
+}
+#syn-exp .btn:hover { background:#7a9e85; transform:translateY(-2px); box-shadow:0 8px 24px rgba(143,175,154,.4); }
+#syn-exp .btn-dark {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:8px; background:var(--antracita); color:#fff;
+  font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500;
+  padding:16px 36px; border-radius:50px; border:none;
+  cursor:pointer; transition:all .25s; width:100%;
+  text-decoration:none;
+}
+#syn-exp .btn-dark:hover { background:#222; transform:translateY(-2px); box-shadow:0 10px 28px rgba(58,58,58,.22); }
+#syn-exp .btn-ghost {
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:6px; background:transparent; color:#8a8a8a;
+  font-family:'DM Sans',sans-serif; font-size:14px;
+  padding:12px 24px; border-radius:50px;
+  border:1.5px solid #DDD8D0; cursor:pointer;
+  transition:all .2s; width:100%; margin-top:10px;
+}
+#syn-exp .btn-ghost:hover { border-color:var(--antracita); color:var(--antracita); }
+#syn-exp .back {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:13px; color:#8a8a8a; cursor:pointer;
+  margin-bottom:24px; padding:8px 0;
+  background:none; border:none;
+  font-family:'DM Sans',sans-serif; transition:color .2s;
+}
+#syn-exp .back:hover { color:var(--antracita); }
+
+/* BADGE NOTIFICACIÓN */
+#syn-exp .notif-badge {
+  position:absolute; top:-9px; right:-9px;
+  width:22px; height:22px;
+  background:#E8413A; color:#fff;
+  font-size:12px; font-weight:700;
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10;
+  box-shadow:0 2px 8px rgba(232,65,58,.45);
+  animation:notifPop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes notifPop { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+
+/* ============================================================
+   PANTALLA DE BIENVENIDA
+   ============================================================ */
+#syn-exp .hero-icon {
+  width:88px; height:88px; background:var(--blanco);
+  border-radius:50%; margin:0 auto 28px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:38px;
+  box-shadow:0 4px 28px rgba(143,175,154,.25);
+  animation:pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100%{box-shadow:0 4px 28px rgba(143,175,154,.25)}
+  50%{box-shadow:0 4px 44px rgba(143,175,154,.5)}
+}
+#syn-exp .phases-preview {
+  display:flex; flex-direction:column; gap:10px;
+  margin-bottom:32px;
+}
+#syn-exp .phase-row {
+  background:var(--blanco);
+  border-radius:14px; padding:16px 18px;
+  display:flex; align-items:center; gap:14px;
+  box-shadow:0 2px 10px var(--sombra);
+}
+#syn-exp .phase-num {
+  width:32px; height:32px; border-radius:50%;
+  background:var(--verde-claro);
+  display:flex; align-items:center; justify-content:center;
+  font-size:13px; font-weight:700; color:var(--verde);
+  flex-shrink:0;
+}
+#syn-exp .phase-info { flex:1; }
+#syn-exp .phase-title { font-size:14px; font-weight:600; margin-bottom:2px; }
+#syn-exp .phase-desc { font-size:12px; color:#8a8a8a; line-height:1.4; }
+
+/* ============================================================
+   RESPIRACIÓN
+   ============================================================ */
+#syn-exp .breath-wrap { display:flex; flex-direction:column; align-items:center; padding:10px 0; }
+#syn-exp .breath-title { font-family:'Playfair Display',serif; font-size:clamp(20px,4vw,26px); margin-bottom:8px; text-align:center; }
+#syn-exp .breath-sub { font-size:14px; color:#6a6a6a; text-align:center; margin-bottom:32px; line-height:1.6; max-width:400px; }
+#syn-exp .ring-wrap { position:relative; width:220px; height:220px; margin-bottom:24px; }
+#syn-exp .ring-outer { position:absolute; inset:0; border-radius:50%; background:var(--verde-claro); transition:transform 4s ease-in-out; }
+#syn-exp .ring-mid { position:absolute; width:170px; height:170px; border-radius:50%; background:rgba(143,175,154,.35); top:50%; left:50%; transform:translate(-50%,-50%); transition:transform 4s ease-in-out; }
+#syn-exp .ring-inner { position:absolute; width:120px; height:120px; border-radius:50%; background:var(--verde); top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; justify-content:center; transition:transform 4s ease-in-out; gap:2px; }
+#syn-exp .ring-count { font-size:36px; font-weight:300; color:#fff; font-family:'DM Sans',sans-serif; line-height:1; }
+#syn-exp .ring-label { font-size:11px; color:rgba(255,255,255,.85); letter-spacing:.5px; }
+#syn-exp .breath-phase { font-size:18px; font-weight:500; color:var(--verde); text-align:center; min-height:28px; margin-bottom:6px; transition:opacity .4s; }
+#syn-exp .breath-instr { font-size:13px; color:#8a8a8a; text-align:center; margin-bottom:20px; line-height:1.5; min-height:36px; }
+#syn-exp .rounds { display:flex; gap:8px; margin-bottom:24px; }
+#syn-exp .rdot { width:10px; height:10px; border-radius:50%; background:#DDD8D0; transition:background .4s; }
+#syn-exp .rdot.done { background:var(--verde); }
+#syn-exp .rdot.now { background:var(--terracota); }
+
+/* ============================================================
+   NOMBRA LO QUE SIENTES
+   ============================================================ */
+#syn-exp .chips { display:flex; flex-direction:column; gap:9px; margin-bottom:24px; }
+#syn-exp .chips-group-label {
+  font-size:10px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:#aaa;
+  margin:6px 0 4px; display:block;
+}
+#syn-exp .chip {
+  background:var(--blanco); border:1.5px solid #E8E2D9;
+  border-radius:14px; padding:14px 18px;
+  cursor:pointer; transition:all .2s;
+  display:flex; align-items:center; gap:12px;
+  box-shadow:0 1px 6px var(--sombra);
+}
+#syn-exp .chip:hover { border-color:var(--verde); background:var(--verde-claro); }
+#syn-exp .chip.picked { border-color:var(--verde); background:var(--verde-claro); }
+#syn-exp .chip.picked .chip-circle { background:var(--verde); border-color:var(--verde); }
+#syn-exp .chip.picked .chip-circle::after { opacity:1; }
+#syn-exp .chip-circle {
+  width:20px; height:20px; min-width:20px;
+  border-radius:50%; border:2px solid #C8C2B8;
+  flex-shrink:0; position:relative; transition:all .2s;
+}
+#syn-exp .chip-circle::after {
+  content:''; width:8px; height:8px;
+  background:#fff; border-radius:50%;
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  opacity:0; transition:opacity .2s;
+}
+#syn-exp .chip-emoji { font-size:18px; flex-shrink:0; }
+#syn-exp .chip-text { font-size:14px; line-height:1.4; }
+
+/* CARTA EMOCIONAL */
+#syn-exp .carta {
+  display:none; background:var(--blanco);
+  border-radius:20px; padding:28px 24px;
+  margin-bottom:18px;
+  box-shadow:0 4px 24px rgba(143,175,154,.2);
+  border:2px solid var(--verde-claro);
+}
+#syn-exp .carta.show { display:block; animation:expFade .5s ease; }
+#syn-exp .carta-top { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+#syn-exp .carta-avatar { width:40px; height:40px; background:var(--verde-claro); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+#syn-exp .carta-from { font-size:13px; color:#8a8a8a; }
+#syn-exp .carta-from strong { display:block; font-size:14px; color:var(--antracita); font-weight:500; }
+#syn-exp .carta-divider { height:1px; background:var(--verde-claro); margin-bottom:18px; }
+#syn-exp .carta-body { font-size:14px; line-height:1.85; color:#3a3a3a; }
+#syn-exp .carta-body p { margin-bottom:12px; }
+#syn-exp .carta-body p:last-child { margin-bottom:0; }
+#syn-exp .carta-firma { margin-top:18px; padding-top:14px; border-top:1px solid var(--verde-claro); display:flex; align-items:center; gap:8px; }
+#syn-exp .carta-firma-dot { width:7px; height:7px; background:var(--verde); border-radius:50%; }
+#syn-exp .carta-firma-text { font-family:'Playfair Display',serif; font-size:13px; color:var(--verde); font-style:italic; }
+
+/* ============================================================
+   INTRO BLOQUE NIÑO/A
+   ============================================================ */
+#syn-exp .intro-niño-icon {
+  width:80px; height:80px;
+  background:var(--verde-claro); border-radius:50%;
+  margin:0 auto 24px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px;
+}
+#syn-exp .estado-pill {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--blanco); border:1.5px solid var(--verde-claro);
+  border-radius:50px; padding:8px 16px;
+  font-size:13px; color:#5a5a5a;
+  margin-bottom:24px;
+}
+#syn-exp .estado-pill-dot { width:8px; height:8px; background:var(--verde); border-radius:50%; flex-shrink:0; }
+
+/* ============================================================
+   SEMÁFORO — INTRO CATEGORÍAS
+   ============================================================ */
+#syn-exp .semaforo-mini {
+  display:flex; flex-direction:column; gap:0;
+  border-radius:16px; overflow:hidden;
+  margin-bottom:28px;
+  box-shadow:0 4px 20px var(--sombra);
+}
+#syn-exp .sem-mini-capa {
+  padding:14px 18px;
+  display:flex; align-items:center; gap:12px;
+  transition:opacity .3s;
+}
+#syn-exp .sem-mini-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+#syn-exp .sem-mini-nombre { font-size:13px; font-weight:600; }
+#syn-exp .sem-mini-desc { font-size:12px; opacity:.8; margin-left:4px; }
+#syn-exp .sem-mini-capa.racional { background:var(--verde-sem-claro); color:#2a5a3a; }
+#syn-exp .sem-mini-capa.emocional { background:var(--naranja-claro); color:#6a3a10; }
+#syn-exp .sem-mini-capa.reptiliano { background:var(--rojo-claro); color:#5a1a1a; }
+
+/* ============================================================
+   CATEGORÍAS
+   ============================================================ */
+#syn-exp .cats { display:flex; flex-direction:column; gap:11px; }
+#syn-exp .cat-card {
+  background:var(--blanco); border-radius:16px;
+  padding:17px 18px; cursor:pointer;
+  border:2px solid transparent; transition:all .22s;
+  box-shadow:0 2px 10px var(--sombra);
+  display:flex; align-items:center; gap:14px;
+}
+#syn-exp .cat-card:hover { border-color:var(--verde); transform:translateX(4px); }
+#syn-exp .cat-icon { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0; }
+#syn-exp .cat-body { flex:1; }
+#syn-exp .cat-title { font-size:14px; font-weight:600; margin-bottom:3px; }
+#syn-exp .cat-desc { font-size:12px; color:#8a8a8a; line-height:1.4; }
+#syn-exp .cat-arrow { font-size:20px; color:#C8C2B8; }
+
+/* ============================================================
+   SITUACIONES
+   ============================================================ */
+#syn-exp .sits-hint {
+  background:var(--blanco);
+  border-radius:12px; padding:14px 16px;
+  font-size:13px; color:#6a6a6a; line-height:1.6;
+  margin-bottom:18px;
+  border-left:3px solid var(--verde);
+}
+#syn-exp .sits { display:flex; flex-direction:column; gap:9px; }
+#syn-exp .sit-card {
+  background:var(--blanco); border-radius:13px;
+  padding:15px 17px; cursor:pointer;
+  border:1.5px solid #E8E2D9; transition:all .2s;
+  box-shadow:0 1px 6px var(--sombra);
+  display:flex; align-items:center; gap:12px;
+}
+#syn-exp .sit-card:hover { border-color:var(--verde); background:var(--verde-claro); }
+#syn-exp .sit-emoji { font-size:20px; width:32px; text-align:center; flex-shrink:0; }
+#syn-exp .sit-nombre { font-size:14px; font-weight:500; color:var(--antracita); }
+#syn-exp .sit-arrow { font-size:16px; color:#C8C2B8; margin-left:auto; flex-shrink:0; }
+
+/* ============================================================
+   DECODIFICACIÓN — RESULTADO
+   ============================================================ */
+#syn-exp .semaforo-resultado {
+  display:flex; flex-direction:column; gap:0;
+  border-radius:18px; overflow:hidden;
+  margin-bottom:16px;
+  box-shadow:0 4px 24px var(--sombra);
+}
+#syn-exp .sem-capa { padding:18px 20px; transition:all .3s; }
+#syn-exp .sem-capa.activa { padding:22px 20px; }
+#syn-exp .sem-capa.inactiva { opacity:.32; }
+#syn-exp .sem-capa-top { display:flex; align-items:center; gap:10px; }
+#syn-exp .sem-capa-top.open { margin-bottom:10px; }
+#syn-exp .sem-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; }
+#syn-exp .sem-nombre { font-size:12px; font-weight:700; letter-spacing:.5px; }
+#syn-exp .sem-activo-badge {
+  margin-left:auto;
+  font-size:10px; font-weight:600;
+  letter-spacing:.8px; text-transform:uppercase;
+  background:rgba(0,0,0,.1); padding:3px 8px; border-radius:20px;
+}
+#syn-exp .sem-desc { font-size:13px; line-height:1.6; font-weight:400; }
+#syn-exp .sem-racional { background:var(--verde-sem-claro); color:#2a5a3a; }
+#syn-exp .sem-emocional { background:var(--naranja-claro); color:#6a3a10; }
+#syn-exp .sem-reptiliano { background:var(--rojo-claro); color:#5a1a1a; }
+
+/* FRASE QUÉ PASA */
+#syn-exp .que-pasa-card {
+  background:var(--blanco); border-radius:16px;
+  padding:22px 20px; margin-bottom:14px;
+  box-shadow:0 2px 10px var(--sombra);
+}
+#syn-exp .que-pasa-label {
+  font-size:10px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--verde);
+  margin-bottom:8px; display:block;
+}
+#syn-exp .que-pasa-texto { font-size:14px; line-height:1.75; color:#4a4a4a; }
+
+/* QUÉ HACER — PASOS VISUALES */
+#syn-exp .pasos-card {
+  background:var(--verde-claro);
+  border-radius:16px; padding:20px;
+  margin-bottom:14px;
+  border:1.5px solid rgba(143,175,154,.4);
+}
+#syn-exp .pasos-label {
+  font-size:10px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--verde);
+  margin-bottom:14px; display:block;
+}
+#syn-exp .pasos-list { display:flex; flex-direction:column; gap:10px; }
+#syn-exp .paso {
+  display:flex; align-items:flex-start; gap:12px;
+  background:rgba(255,255,255,.7);
+  border-radius:12px; padding:12px 14px;
+}
+#syn-exp .paso-num {
+  width:26px; height:26px; min-width:26px;
+  border-radius:50%; background:var(--verde);
+  color:#fff; font-size:12px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+#syn-exp .paso-text { font-size:13px; line-height:1.6; color:#3a5a45; }
+
+/* QUÉ EVITAR */
+#syn-exp .evitar-card {
+  background:var(--rojo-claro);
+  border-radius:16px; padding:20px;
+  margin-bottom:14px;
+  border:1.5px solid rgba(224,112,112,.25);
+}
+#syn-exp .evitar-label {
+  font-size:10px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--rojo);
+  margin-bottom:12px; display:block;
+}
+#syn-exp .evitar-list { display:flex; flex-direction:column; gap:8px; }
+#syn-exp .evitar-item {
+  display:flex; align-items:flex-start; gap:10px;
+  font-size:13px; line-height:1.55; color:#5a2a2a;
+}
+#syn-exp .evitar-x {
+  width:20px; height:20px; min-width:20px;
+  border-radius:50%; background:var(--rojo);
+  color:#fff; font-size:10px; font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0; margin-top:1px;
+}
+
+/* FRASE CONEXIÓN */
+#syn-exp .conexion-frase {
+  background:var(--antracita);
+  border-radius:14px; padding:18px 20px;
+  margin-bottom:14px;
+  display:flex; align-items:flex-start; gap:12px;
+}
+#syn-exp .conexion-icon { font-size:20px; flex-shrink:0; margin-top:2px; }
+#syn-exp .conexion-texto {
+  font-size:13px; line-height:1.7; color:#d0d0d0;
+}
+#syn-exp .conexion-texto strong { color:var(--verde); }
+
+/* FRASE FINAL */
+#syn-exp .frase-paloma {
+  background:linear-gradient(135deg,var(--verde-claro),#fff);
+  border-radius:14px; padding:20px 22px;
+  border:1.5px solid rgba(143,175,154,.4);
+  margin-bottom:14px;
+  text-align:center;
+}
+#syn-exp .frase-paloma p {
+  font-family:'Playfair Display',serif;
+  font-size:15px; color:var(--antracita);
+  font-style:italic; line-height:1.65;
+}
+
+/* ============================================================
+   PANTALLA RESUMEN + CTA
+   ============================================================ */
+#syn-exp .resumen-hero {
+  background:var(--verde);
+  border-radius:22px; padding:28px 24px;
+  margin-bottom:18px; text-align:center;
+  color:#fff;
+}
+#syn-exp .resumen-hero-icon { font-size:40px; margin-bottom:12px; display:block; }
+#syn-exp .resumen-hero-titulo {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(20px,4vw,26px);
+  margin-bottom:8px; font-style:italic;
+}
+#syn-exp .resumen-hero-sub { font-size:13px; opacity:.85; line-height:1.6; }
+
+#syn-exp .resumen-recuerdos {
+  display:flex; flex-direction:column; gap:10px;
+  margin-bottom:18px;
+}
+#syn-exp .recuerdo-item {
+  background:var(--blanco);
+  border-radius:14px; padding:16px 18px;
+  display:flex; align-items:flex-start; gap:12px;
+  box-shadow:0 2px 10px var(--sombra);
+}
+#syn-exp .recuerdo-icon {
+  width:36px; height:36px; min-width:36px;
+  border-radius:50%; background:var(--verde-claro);
+  display:flex; align-items:center; justify-content:center;
+  font-size:16px; flex-shrink:0;
+}
+#syn-exp .recuerdo-body { flex:1; }
+#syn-exp .recuerdo-fase {
+  font-size:9px; font-weight:700; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--verde);
+  margin-bottom:3px; display:block;
+}
+#syn-exp .recuerdo-texto { font-size:13px; line-height:1.55; color:#4a4a4a; }
+
+/* CTA PALOMA */
+#syn-exp .cta-paloma {
+  background:var(--blanco);
+  border-radius:22px; padding:28px 24px;
+  margin-bottom:14px;
+  box-shadow:0 6px 32px rgba(143,175,154,.22);
+  border:1.5px solid var(--verde-claro);
+  text-align:center;
+}
+#syn-exp .cta-paloma-avatar {
+  width:68px; height:68px;
+  border-radius:50%; object-fit:cover;
+  border:3px solid var(--verde-claro);
+  box-shadow:0 4px 16px rgba(143,175,154,.3);
+  margin:0 auto 14px; display:block;
+}
+#syn-exp .cta-paloma-label {
+  font-size:10px; font-weight:600; letter-spacing:1.8px;
+  text-transform:uppercase; color:var(--verde);
+  margin-bottom:12px; display:block;
+}
+#syn-exp .cta-paloma-msg {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(15px,3.5vw,19px);
+  line-height:1.5; color:var(--antracita);
+  margin-bottom:10px; font-style:italic;
+}
+#syn-exp .cta-paloma-sub {
+  font-size:13px; line-height:1.7;
+  color:#6a6a6a; margin-bottom:22px;
+}
+#syn-exp .cta-nota-libre {
+  font-size:11px; color:#aaa;
+  margin-top:10px; display:block;
+}
+
+/* ============================================================
+   BREADCRUMB
+   ============================================================ */
+#syn-exp .breadcrumb {
+  display:flex; align-items:center; gap:6px;
+  font-size:12px; color:#9a9a9a;
+  margin-bottom:18px; flex-wrap:wrap;
+}
+#syn-exp .breadcrumb span.link { color:var(--verde); cursor:pointer; }
+#syn-exp .breadcrumb span.link:hover { text-decoration:underline; }
+
+@media(max-width:600px){
+  #syn-exp .hd,#syn-exp .body { padding-left:18px; padding-right:18px; }
+  #syn-exp .progress-bar { padding:0 18px; }
+  #syn-exp .prog-label { font-size:8px; }
+}
+
+body,.elementor-widget-container,.elementor-widget-html,
+.elementor-column-wrap,.elementor-column,.elementor-section {
+  background-color:#F3EDE4 !important;
+}
+</style>
+<div id="syn-exp">
+<!-- ============================================================
+       PANTALLA 0: BIENVENIDA
+       ============================================================ -->
+<div class="screen on" id="exp-s0">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="body" style="text-align:center;">
+<div class="hero-icon">🌿</div>
+<span class="eyebrow">Experiencia completa</span>
+<h1 class="h1">Aplica el método<br/><em>en tres pasos</em></h1>
+<p class="lead">En los próximos minutos vas a entenderte mejor a ti mismo/a, entender qué le pasa a tu hijo/a, y descubrir cómo actuar en esos momentos difíciles.</p>
+<div class="phases-preview">
+<div class="phase-row">
+<div class="phase-num">1</div>
+<div class="phase-info">
+<div class="phase-title">Yo</div>
+<div class="phase-desc">Regúlate primero. Desde la calma, todo cambia.</div>
+</div>
+</div>
+<div class="phase-row">
+<div class="phase-num">2</div>
+<div class="phase-info">
+<div class="phase-title">Mi hijo/a</div>
+<div class="phase-desc">Entiende qué está pasando en su cabeza cuando explota.</div>
+</div>
+</div>
+<div class="phase-row">
+<div class="phase-num">3</div>
+<div class="phase-info">
+<div class="phase-title">Nosotros/as</div>
+<div class="phase-desc">Qué hacer (y qué no hacer) en ese momento concreto.</div>
+</div>
+</div>
+</div>
+<button class="btn" onclick="expGo('exp-s1');expSetProg(1)">Empezar →</button>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 1: RESPIRACIÓN
+       ============================================================ -->
+<div class="screen" id="exp-s1">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-1"></div>
+<div class="body">
+<div class="breath-wrap">
+<span class="eyebrow" style="text-align:center;display:block;">Fase 1 · Yo</span>
+<h2 class="breath-title">La pausa consciente</h2>
+<p class="breath-sub">Para ver la situación con claridad, primero necesitas estar tranquilo/a. Cuatro rondas de respiración para bajar el nivel de activación y volver a ti.</p>
+<div class="ring-wrap">
+<div class="ring-outer" id="exp-outer"></div>
+<div class="ring-mid" id="exp-mid"></div>
+<div class="ring-inner" id="exp-inner">
+<span class="ring-count" id="exp-count">·</span>
+<span class="ring-label" id="exp-rlabel"></span>
+</div>
+</div>
+<div class="breath-phase" id="exp-phase">Pulsa para empezar</div>
+<div class="breath-instr" id="exp-instr">Cierra los ojos si puedes.<br/>Deja que todo tu cuerpo se afloje.</div>
+<div class="rounds" id="exp-rounds">
+<div class="rdot"></div><div class="rdot"></div><div class="rdot"></div><div class="rdot"></div>
+</div>
+<button class="btn" id="exp-bbtn" onclick="expBreathStart()">Empezar →</button>
+</div>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 2: NOMBRA LO QUE SIENTES
+       ============================================================ -->
+<div class="screen" id="exp-s2">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-2"></div>
+<div class="body">
+<span class="eyebrow">Fase 1 · Yo</span>
+<h2 class="h2">¿Cómo estás hoy?</h2>
+<p class="lead" style="margin-bottom:18px;">Ponerle nombre a lo que sientes ya ayuda. ¿Cuál de estas se parece más a tu momento de ahora?</p>
+<div class="chips" id="exp-chips">
+<span class="chips-group-label">Bien o tranquilo/a</span>
+<div class="chip" onclick="expPick(this,'tranquila')"><div class="chip-circle"></div><span class="chip-emoji">😌</span><span class="chip-text">Estoy tranquilo/a hoy</span></div>
+<div class="chip" onclick="expPick(this,'bien')"><div class="chip-circle"></div><span class="chip-emoji">🙂</span><span class="chip-text">Estoy bien, es un día normal</span></div>
+<div class="chip" onclick="expPick(this,'energia')"><div class="chip-circle"></div><span class="chip-emoji">✨</span><span class="chip-text">Estoy con energía y ganas</span></div>
+<div class="chip" onclick="expPick(this,'buendia')"><div class="chip-circle"></div><span class="chip-emoji">🌟</span><span class="chip-text">Ha sido un buen día</span></div>
+<span class="chips-group-label" style="margin-top:8px;">Con dificultades</span>
+<div class="chip" onclick="expPick(this,'cansada')"><div class="chip-circle"></div><span class="chip-emoji">😮‍💨</span><span class="chip-text">Estoy cansado/a</span></div>
+<div class="chip" onclick="expPick(this,'maldia')"><div class="chip-circle"></div><span class="chip-emoji">😔</span><span class="chip-text">He tenido un mal día</span></div>
+<div class="chip" onclick="expPick(this,'nopuedo')"><div class="chip-circle"></div><span class="chip-emoji">😞</span><span class="chip-text">No puedo más</span></div>
+<div class="chip" onclick="expPick(this,'malgeneral')"><div class="chip-circle"></div><span class="chip-emoji">😕</span><span class="chip-text">Me siento mal</span></div>
+<div class="chip" onclick="expPick(this,'malhumor')"><div class="chip-circle"></div><span class="chip-emoji">😤</span><span class="chip-text">Estoy muy malhumorado/a</span></div>
+<div class="chip" onclick="expPick(this,'nosalio')"><div class="chip-circle"></div><span class="chip-emoji">😩</span><span class="chip-text">Hoy no me ha salido bien nada</span></div>
+<div class="chip" onclick="expPick(this,'trabajo')"><div class="chip-circle"></div><span class="chip-emoji">💼</span><span class="chip-text">He discutido en el trabajo</span></div>
+<div class="chip" onclick="expPick(this,'pareja')"><div class="chip-circle"></div><span class="chip-emoji">💬</span><span class="chip-text">He discutido con mi pareja</span></div>
+</div>
+<button class="btn" id="exp-nbtn" onclick="expReveal()" style="display:none;">Ver mi mensaje →</button>
+<div class="carta" id="exp-carta">
+<div class="carta-top">
+<div class="carta-avatar"><img alt="Paloma" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/PalomaRobles-P.png" style="width:100%;height:100%;border-radius:50%;object-fit:cover;"/></div>
+<div class="carta-from"><strong>De Paloma</strong>Un mensaje para ti</div>
+</div>
+<div class="carta-divider"></div>
+<div class="carta-body" id="exp-carta-body"></div>
+<div class="carta-firma"><div class="carta-firma-dot"></div><span class="carta-firma-text">Synesis · Método de crianza consciente</span></div>
+</div>
+<div id="exp-nfin-wrap" style="display:none; position:relative; width:100%;">
+<button class="btn" onclick="expGo('exp-s3');expSetProg(2)" style="width:100%;">Entender a mi hijo/a →</button>
+</div>
+<button class="btn-ghost" id="exp-nreset" onclick="expResetNombra()" style="display:none;">Elegir otro estado →</button>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 3: INTRO BLOQUE NIÑO/A
+       ============================================================ -->
+<div class="screen" id="exp-s3">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-3"></div>
+<div class="body" style="text-align:center;">
+<div class="intro-niño-icon">🧒</div>
+<span class="eyebrow">Fase 2 · Mi hijo/a</span>
+<h2 class="h2" style="text-align:center;">¿Qué pasa por su cabeza<br/><em style="font-family:'Playfair Display',serif;color:var(--verde);">en esos momentos?</em></h2>
+<p class="lead" style="text-align:center;">Cuando tu hijo/a tiene una conducta difícil, no lo hace a propósito. Su cerebro reacciona de forma automática. Aquí verás exactamente qué parte se activa y por qué.</p>
+<div class="semaforo-mini">
+<div class="sem-mini-capa racional">
+<div class="sem-mini-dot" style="background:var(--verde-sem);"></div>
+<span class="sem-mini-nombre">Cerebro racional</span>
+</div>
+<div class="sem-mini-capa emocional">
+<div class="sem-mini-dot" style="background:var(--naranja);"></div>
+<span class="sem-mini-nombre">Cerebro emocional</span>
+</div>
+<div class="sem-mini-capa reptiliano">
+<div class="sem-mini-dot" style="background:var(--rojo);"></div>
+<span class="sem-mini-nombre">Cerebro de supervivencia</span>
+</div>
+</div>
+<p style="font-size:13px;color:#8a8a8a;margin-bottom:28px;line-height:1.6;text-align:center;">Cuando elijas la situación de tu hijo/a, verás cuál de estos tres está al mando. Y lo que eso significa para ti.</p>
+<button class="btn" onclick="expGo('exp-s4');expSetProg(2)" style="text-align:center;">Elegir la situación →</button>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 4: CATEGORÍAS
+       ============================================================ -->
+<div class="screen" id="exp-s4">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-4"></div>
+<div class="body">
+<button class="back" onclick="expGo('exp-s3')">← Volver</button>
+<span class="eyebrow">Fase 2 · Mi hijo/a</span>
+<h2 class="h2">¿Qué tipo de situación es?</h2>
+<p class="lead" style="margin-bottom:20px;">Elige la que más se repite en vuestro día a día, aunque ahora mismo no esté pasando.</p>
+<div class="cats">
+<div class="cat-card" onclick="expCategoria('desbordamiento')">
+<div class="cat-icon" style="background:#FDE8E8;">🌋</div>
+<div class="cat-body">
+<div class="cat-title">Desbordamiento total</div>
+<div class="cat-desc">Rabieta, llanto intenso, gritos, tirarse al suelo, pegar o morder</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="expCategoria('resistencia')">
+<div class="cat-icon" style="background:#FDF0E0;">🚫</div>
+<div class="cat-body">
+<div class="cat-title">Resistencia y negativa</div>
+<div class="cat-desc">No quiere recoger, ducharse, apagar la tele, irse a la cama, comer</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="expCategoria('transicion')">
+<div class="cat-icon" style="background:#E0EEF8;">⏱️</div>
+<div class="cat-body">
+<div class="cat-title">Dificultad en las transiciones</div>
+<div class="cat-desc">No quiere irse del parque, cambiar de actividad, dejar de jugar</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="expCategoria('independencia')">
+<div class="cat-icon" style="background:#E8F8E8;">💪</div>
+<div class="cat-body">
+<div class="cat-title">Quiero hacerlo yo solo/a</div>
+<div class="cat-desc">Se frustra si le ayudas, insiste en hacerlo solo/a aunque no pueda</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+<div class="cat-card" onclick="expCategoria('conducta')">
+<div class="cat-icon" style="background:#F8EEF8;">🤔</div>
+<div class="cat-body">
+<div class="cat-title">Conductas que no entiendo</div>
+<div class="cat-desc">No me escucha, me ignora, hace lo contrario de lo que le pido</div>
+</div>
+<span class="cat-arrow">›</span>
+</div>
+</div>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 5: SITUACIONES
+       ============================================================ -->
+<div class="screen" id="exp-s5">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-5"></div>
+<div class="body">
+<div class="breadcrumb">
+<span class="link" onclick="expGo('exp-s4')">← Categorías</span>
+<span style="color:#C8C2B8;">›</span>
+<span id="exp-cat-nombre" style="color:#9a9a9a;"></span>
+</div>
+<span class="eyebrow">Fase 2 · Mi hijo/a</span>
+<h2 class="h2">¿Cuál se parece más?</h2>
+<div class="sits-hint">Elige la situación más parecida a lo que suele pasar. No tiene que ser exacta.</div>
+<div class="sits" id="exp-sits-lista"></div>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 6: DECODIFICACIÓN
+       ============================================================ -->
+<div class="screen" id="exp-s6">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-6"></div>
+<div class="body">
+<div class="breadcrumb">
+<span class="link" onclick="expGo('exp-s4')">← Categorías</span>
+<span style="color:#C8C2B8;">›</span>
+<span class="link" id="exp-bread-cat" onclick="expGo('exp-s5')"></span>
+<span style="color:#C8C2B8;">›</span>
+<span id="exp-bread-sit" style="color:#9a9a9a;font-size:11px;"></span>
+</div>
+<div id="exp-resultado-niño"></div>
+<div id="exp-s6-fin-wrap" style="display:none;position:relative;width:100%;">
+<button class="btn" onclick="expGo('exp-s7');expSetProg(3)" style="width:100%;">Ver cómo actuar →</button>
+</div>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 7: NOSOTROS/AS — PROTOCOLO DE ACCIÓN
+       ============================================================ -->
+<div class="screen" id="exp-s7">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-7"></div>
+<div class="body">
+<span class="eyebrow">Fase 3 · Nosotros/as</span>
+<h2 class="h2">Cómo actuar<br/><em style="font-family:'Playfair Display',serif;color:var(--verde);">en este momento</em></h2>
+<p style="font-size:14px;color:#6a6a6a;margin-bottom:20px;line-height:1.6;">Lo que puedes hacer ahora mismo, paso a paso.</p>
+<div id="exp-resultado-nosotros"></div>
+<div id="exp-s7-fin-wrap" style="display:none;position:relative;width:100%;margin-top:8px;">
+<button class="btn" onclick="expGo('exp-s8');expSetProg(4)" style="width:100%;">Ver mi resumen →</button>
+</div>
+</div>
+</div>
+<!-- ============================================================
+       PANTALLA 8: RESUMEN + CTA
+       ============================================================ -->
+<div class="screen" id="exp-s8">
+<div class="hd">
+<img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/>
+</div>
+<div class="progress-bar" id="exp-prog-8"></div>
+<div class="body">
+<div class="resumen-hero">
+<span class="resumen-hero-icon">✨</span>
+<h2 class="resumen-hero-titulo">Lo que te llevas hoy</h2>
+<p class="resumen-hero-sub">Tres cosas que ahora sabes y que antes no sabías poner en palabras.</p>
+</div>
+<div class="resumen-recuerdos" id="exp-resumen-items"></div>
+<div class="cta-paloma">
+<img alt="Paloma Robles" class="cta-paloma-avatar" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/PalomaRobles-P.png"/>
+<span class="cta-paloma-label">Un mensaje de Paloma</span>
+<p class="cta-paloma-msg">«Lo que acabas de vivir es solo el principio de lo que puedes aprender.»</p>
+<p class="cta-paloma-sub">En la llamada gratuita te cuento cómo el Método Synesis te da las herramientas para aplicar esto cada día, en cada situación. Si aun no tienes la tuya, puedes reservar aquí</p>
+<a class="btn-dark" href="https://metodosynesis.com/reserva-llamada/" target="_blank">Reservar mi llamada →</a>
+<span class="cta-nota-libre">Gratuita · Sin compromiso · 30 minutos</span>
+</div>
+</div>
+</div>
+</div><!-- #syn-exp -->
+<script>
+(function(){
+
+/* ============================================================
+   ESTADO GLOBAL
+   ============================================================ */
+var estado = {
+  nombreEstado: '',     // clave del estado emocional elegido
+  estadoLabel: '',      // texto legible del estado
+  catActual: '',
+  catLabel: '',
+  sitLabel: '',
+  datosNiño: null       // objeto completo de la situación elegida
+};
+
+/* ============================================================
+   NAVEGACIÓN Y PROGRESO
+   ============================================================ */
+window.expGo = function(id) {
+  document.querySelectorAll('#syn-exp .screen').forEach(function(s){ s.classList.remove('on'); });
+  document.getElementById(id).classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+// Renderiza la barra de progreso en todos los contenedores de la pantalla activa
+var FASES = [
+  {label:'Yo'},
+  {label:'Mi hijo/a'},
+  {label:'Nosotros/as'},
+  {label:'Resumen'}
+];
+
+window.expSetProg = function(faseProg) {
+  // faseProg: 1=Yo, 2=Mi hijo/a, 3=Nosotros/as, 4=Resumen
+  var html = '';
+  FASES.forEach(function(f,i){
+    var n = i+1;
+    var cls = n < faseProg ? 'done' : (n === faseProg ? 'active' : '');
+    html += '<div class="prog-pill '+cls+'">';
+    html += '<div class="prog-dot">'+(n < faseProg ? '✓' : n)+'</div>';
+    html += '<span class="prog-label">'+f.label+'</span>';
+    html += '</div>';
+  });
+  // actualizar todos los contenedores de progreso de la pantalla activa
+  document.querySelectorAll('[id^="exp-prog-"]').forEach(function(el){
+    el.innerHTML = html;
+  });
+};
+
+// Inicializar barra en paso 1
+expSetProg(1);
+
+/* ============================================================
+   RESPIRACIÓN
+   ============================================================ */
+var bRunning=false, bRound=0, bTOs=[];
+var phases=[
+  {name:'Inhala',instr:'Llena el abdomen de aire despacio',dur:4,sIn:1.18,sOut:1.13},
+  {name:'Sostén',instr:'Retén el aire, siente tu cuerpo en calma',dur:4,sIn:1.18,sOut:1.13},
+  {name:'Exhala',instr:'Suelta el aire y con él toda la tensión',dur:6,sIn:1,sOut:1}
+];
+
+window.expBreathReset = function(){
+  bRunning=false; bRound=0;
+  bTOs.forEach(clearTimeout); bTOs=[];
+  var g=function(id){return document.getElementById(id);};
+  ['exp-outer','exp-mid','exp-inner'].forEach(function(id){
+    var e=g(id); if(!e)return;
+    e.style.transition='none'; e.style.transform='';
+    if(id==='exp-inner') e.style.transform='translate(-50%,-50%)';
+  });
+  if(g('exp-count')) g('exp-count').textContent='·';
+  if(g('exp-rlabel')) g('exp-rlabel').textContent='';
+  if(g('exp-phase')) g('exp-phase').textContent='Pulsa para empezar';
+  if(g('exp-instr')) g('exp-instr').innerHTML='Cierra los ojos si puedes.<br>Deja que todo tu cuerpo se afloje.';
+  if(g('exp-bbtn')){ g('exp-bbtn').textContent='Empezar →'; g('exp-bbtn').onclick=expBreathStart; g('exp-bbtn').style.display='flex'; }
+  document.querySelectorAll('#exp-rounds .rdot').forEach(function(d){ d.className='rdot'; });
+};
+
+window.expBreathStart = function(){
+  if(bRunning) return;
+  bRunning=true;
+  var btn=document.getElementById('exp-bbtn');
+  if(btn) btn.style.display='none';
+  bRound=0; doRound();
+};
+
+function doRound(){
+  if(bRound>=4){ endBreath(); return; }
+  updateDots(bRound);
+  var t=0;
+  phases.forEach(function(ph){
+    var dur=ph.dur;
+    bTOs.push(setTimeout(function(){
+      setPhase(ph.name,ph.instr);
+      animRings(ph.sIn,ph.sOut,dur);
+      countDown(dur);
+    },t*1000));
+    t+=dur;
+  });
+  bTOs.push(setTimeout(function(){ bRound++; doRound(); },t*1000));
+}
+
+function setPhase(name,instr){
+  var p=document.getElementById('exp-phase');
+  var i=document.getElementById('exp-instr');
+  if(p) p.textContent=name;
+  if(i) i.textContent=instr;
+}
+
+function animRings(sIn,sOut,dur){
+  var outer=document.getElementById('exp-outer');
+  var mid=document.getElementById('exp-mid');
+  var inner=document.getElementById('exp-inner');
+  var t=dur+'s ease-in-out';
+  if(outer){outer.style.transition='transform '+t; outer.style.transform='scale('+sOut+')';}
+  if(mid){mid.style.transition='transform '+t; mid.style.transform='translate(-50%,-50%) scale('+sIn+')';}
+  if(inner){inner.style.transition='transform '+t; inner.style.transform='translate(-50%,-50%) scale('+sIn+')';}
+}
+
+function countDown(secs){
+  var c=document.getElementById('exp-count');
+  var elapsed=0;
+  if(c) c.textContent=secs;
+  var iv=setInterval(function(){
+    elapsed++;
+    if(c) c.textContent=secs-elapsed;
+    if(elapsed>=secs) clearInterval(iv);
+  },1000);
+  bTOs.push(iv);
+}
+
+function updateDots(r){
+  var dots=document.querySelectorAll('#exp-rounds .rdot');
+  dots.forEach(function(d,i){
+    d.className='rdot';
+    if(i<r) d.classList.add('done');
+    else if(i===r) d.classList.add('now');
+  });
+}
+
+function endBreath(){
+  bRunning=false;
+  document.querySelectorAll('#exp-rounds .rdot').forEach(function(d){ d.className='rdot done'; });
+  var p=document.getElementById('exp-phase');
+  var i=document.getElementById('exp-instr');
+  var c=document.getElementById('exp-count');
+  var btn=document.getElementById('exp-bbtn');
+  if(p) p.textContent='Bien hecho ✓';
+  if(i) i.textContent='Tu sistema nervioso acaba de recibir una señal de calma.';
+  if(c) c.textContent='✓';
+  if(btn){
+    btn.innerHTML='Ahora, ¿cómo estás? →';
+    btn.style.position='relative';
+    btn.style.display='flex';
+    btn.onclick=function(){ expGo('exp-s2'); expSetProg(1); };
+  }
+}
+
+/* ============================================================
+   NOMBRA LO QUE SIENTES
+   ============================================================ */
+var mensajes={
+  tranquila:{
+    label:'Estoy tranquilo/a hoy',
+    texto:'<p>Qué bien que estés en ese lugar hoy. La calma que sientes ahora es exactamente el estado desde el que mejor puedes conectar con tu hijo/a.</p><p>Aprovecha este momento para explorar el recurso sin prisa, sin urgencia. Aprenderás más cuando estás tranquilo/a que cuando estás en medio de la tormenta.</p><p>Desde aquí, todo lo que aprendas hoy se va a quedar contigo de verdad.</p>'
+  },
+  bien:{
+    label:'Estoy bien, es un día normal',
+    texto:'<p>Un día normal es un día perfecto para parar un momento y hacer este recorrido.</p><p>No hacen falta las crisis para aprender. De hecho, los momentos tranquilos son los mejores para practicar, para reflexionar y para prepararse.</p><p>Sigue adelante con calma. Hoy puedes aprovechar bien todo lo que viene.</p>'
+  },
+  energia:{
+    label:'Estoy con energía y ganas',
+    texto:'<p>Esa energía se nota, y es un regalo. Úsala bien hoy.</p><p>Cuando estamos con ganas, nuestra capacidad de absorber información nueva y de conectar ideas es mucho mayor. Es el momento ideal para aprender algo que puedas aplicar esta misma semana.</p><p>Adelante, que hoy va a ser un buen recorrido.</p>'
+  },
+  buendia:{
+    label:'Ha sido un buen día',
+    texto:'<p>Me alegro mucho. Los buenos días también merecen ser reconocidos.</p><p>¿Sabes qué ha pasado para que haya sido un buen día? A veces esa pregunta pequeña nos enseña más de lo que esperamos sobre nosotros/as mismos/as y sobre nuestra familia.</p><p>Sigue con ese estado. Lo que viene a continuación va a tener mucho más sentido desde aquí.</p>'
+  },
+  cansada:{
+    label:'Estoy cansado/a',
+    texto:'<p>No siempre tienes que estar al cien por cien. Y está bien así.</p><p>Siéntete orgulloso/a de todo lo que has podido hacer hoy, por pequeño que sea. Cualquier paso que des, aunque parezca mínimo, es un paso hacia adelante. Eso tiene valor.</p><p>Permítete estar cansado/a. Hay momentos en que lo más valioso que puedes hacer es recargarte, sin culpa, sin exigencia.</p><p>Descansa. Mañana serás tú de nuevo.</p>'
+  },
+  maldia:{
+    label:'He tenido un mal día',
+    texto:'<p>Hay días que simplemente no salen como uno espera. Y eso no dice nada malo de ti.</p><p>Lo mejor que puedes hacer ahora es enfocar tu energía en lo que todavía puedes controlar, y soltar lo que ya pasó.</p><p>Todavía quedan horas, o si no, mañana es otro día. Deja ir este día. Ya hiciste suficiente.</p>'
+  },
+  nopuedo:{
+    label:'No puedo más',
+    texto:'<p>No podemos ser superhéroes todo el tiempo. Somos humanos/as, y tenemos todo el derecho a agotarnos.</p><p>Permítete hoy descansar de verdad. Y si puedes, cuéntaselo a alguien de confianza para que puedan sostenerte un momento mientras tú das un paso atrás.</p><p>Recuerda: si tú estás bien, tus hijos e hijas también estarán mejor. Cuidarte es cuidarles.</p>'
+  },
+  malgeneral:{
+    label:'Me siento mal',
+    texto:'<p>Antes de nada, pregúntate: ¿de dónde viene esto? ¿Ha pasado algo que no esperabas?</p><p>Identificarlo, ponerle nombre, ya ayuda a bajar la intensidad de lo que sientes. Nombrar regula. Eso es exactamente lo que acabas de hacer.</p><p>No te exijas más hoy. Ya es suficiente con estar.</p>'
+  },
+  malhumor:{
+    label:'Estoy muy malhumorado/a',
+    texto:'<p>Cuando el malhumor aparece, suele ser una señal de que algo por dentro está pidiendo atención.</p><p>Intenta pensar de dónde viene ese estrés, aunque sea brevemente. Y después, regálate un momento para ti.</p><p>Vuelve a ti primero. Desde ahí todo se gestiona mejor.</p>'
+  },
+  nosalio:{
+    label:'Hoy no me ha salido bien nada',
+    texto:'<p>Hay días así. Días en que nada encaja, nada fluye, nada sale como querías. Y son agotadores.</p><p>Lo que importa no es que todo salga bien, sino que puedas seguir adelante. Mañana es otro día.</p><p>Intenta respirar, regálate un ratito para hacer algo que te guste, aunque sea pequeño. Te lo mereces.</p>'
+  },
+  trabajo:{
+    label:'He discutido en el trabajo',
+    texto:'<p>El trabajo puede llevarnos a niveles de estrés muy altos. Pero hay algo importante que puedes hacer ahora mismo: dejarlo fuera de casa.</p><p>Las personas que te esperan en casa no tienen nada que ver con lo que ha pasado. Pon un límite simbólico entre el trabajo y tu hogar. Respira antes de entrar.</p><p>En casa eres otra cosa. En casa eres tú.</p>'
+  },
+  pareja:{
+    label:'He discutido con mi pareja',
+    texto:'<p>Las discusiones con la pareja duelen de una forma especial. Pueden dejarte con mucha energía acumulada sin saber qué hacer con ella.</p><p>Recuerda que lo importante no es tener razón. Lo importante es arreglarlo. Desde la calma, todo se puede resolver.</p><p>Respira primero. Luego habla.</p>'
+  }
+};
+
+var pickedEstado = null;
+
+window.expPick = function(el, key) {
+  document.querySelectorAll('#exp-chips .chip').forEach(function(c){ c.classList.remove('picked'); });
+  el.classList.add('picked');
+  pickedEstado = key;
+  var btn=document.getElementById('exp-nbtn');
+  if(btn) btn.style.display='flex';
+};
+
+window.expReveal = function(){
+  if(!pickedEstado) return;
+  var m=mensajes[pickedEstado];
+  estado.nombreEstado = pickedEstado;
+  estado.estadoLabel = m.label;
+  var body=document.getElementById('exp-carta-body');
+  var carta=document.getElementById('exp-carta');
+  var fin=document.getElementById('exp-nfin-wrap');
+  var reset=document.getElementById('exp-nreset');
+  var nbtn=document.getElementById('exp-nbtn');
+  if(body) body.innerHTML=m.texto;
+  if(carta) carta.classList.add('show');
+  if(fin) fin.style.display='block';
+  if(reset) reset.style.display='flex';
+  if(nbtn) nbtn.style.display='none';
+  setTimeout(function(){ if(carta) carta.scrollIntoView({behavior:'smooth',block:'start'}); },100);
+};
+
+window.expResetNombra = function(){
+  pickedEstado=null;
+  document.querySelectorAll('#exp-chips .chip').forEach(function(c){ c.classList.remove('picked'); });
+  var carta=document.getElementById('exp-carta');
+  var fin=document.getElementById('exp-nfin-wrap');
+  var reset=document.getElementById('exp-nreset');
+  var nbtn=document.getElementById('exp-nbtn');
+  if(carta) carta.classList.remove('show');
+  if(fin) fin.style.display='none';
+  if(reset) reset.style.display='none';
+  if(nbtn) nbtn.style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+/* ============================================================
+   DATOS SITUACIONES NIÑO/A
+   ============================================================ */
+var categorias = {
+  desbordamiento:{ nombre:'Desbordamiento total' },
+  resistencia:{ nombre:'Resistencia y negativa' },
+  transicion:{ nombre:'Dificultad en transiciones' },
+  independencia:{ nombre:'Quiero hacerlo yo solo/a' },
+  conducta:{ nombre:'Conductas que no entiendo' }
+};
+
+var situaciones = {
+  desbordamiento:[
+    {emoji:'😭',nombre:'Llanto intenso sin parar'},
+    {emoji:'🌋',nombre:'Rabieta en el suelo'},
+    {emoji:'😤',nombre:'Gritos muy fuertes'},
+    {emoji:'👊',nombre:'Pega o empuja'},
+    {emoji:'😬',nombre:'Muerde'},
+    {emoji:'🏃',nombre:'Sale corriendo y no atiende'}
+  ],
+  resistencia:[
+    {emoji:'📺',nombre:'No quiere apagar la tele'},
+    {emoji:'🛁',nombre:'No quiere ducharse o bañarse'},
+    {emoji:'🧸',nombre:'No quiere recoger los juguetes'},
+    {emoji:'🛏️',nombre:'No quiere irse a la cama'},
+    {emoji:'🍽️',nombre:'No quiere comer o sentarse a la mesa'},
+    {emoji:'👗',nombre:'No quiere vestirse o desvestirse'}
+  ],
+  transicion:[
+    {emoji:'🛝',nombre:'No quiere irse del parque'},
+    {emoji:'🎮',nombre:'No quiere dejar de jugar'},
+    {emoji:'👋',nombre:'No quiere despedirse o irse de casa de alguien'},
+    {emoji:'🏫',nombre:'No quiere entrar al cole o la guardería'},
+    {emoji:'🔄',nombre:'Le cuesta cambiar de una actividad a otra'},
+    {emoji:'⏰',nombre:'Se desespera cuando le dices "ahora no, luego"'}
+  ],
+  independencia:[
+    {emoji:'👟',nombre:'Quiere ponerse los zapatos solo/a aunque no pueda'},
+    {emoji:'🥤',nombre:'Quiere servirse la bebida solo/a'},
+    {emoji:'🚪',nombre:'Quiere abrir la puerta solo/a'},
+    {emoji:'🙅',nombre:'Se frustra y llora si le ayudas sin que lo pida'},
+    {emoji:'😡',nombre:'Se enfada mucho si algo no le sale como quería'},
+    {emoji:'🔁',nombre:'Insiste en repetirlo una y otra vez hasta que sale'}
+  ],
+  conducta:[
+    {emoji:'🙉',nombre:'Parece que no me escucha cuando le llamo'},
+    {emoji:'↩️',nombre:'Hace lo contrario de lo que le pido'},
+    {emoji:'😶',nombre:'Me ignora completamente'},
+    {emoji:'🤷',nombre:'No entiende lo que le explico aunque se lo repito'},
+    {emoji:'😬',nombre:'Dice que no a todo sin escuchar'},
+    {emoji:'⚡',nombre:'Reacciona de forma exagerada ante cosas pequeñas'}
+  ]
+};
+
+var mapaClaves={
+  'Llanto intenso sin parar':'llanto','Rabieta en el suelo':'rabieta',
+  'Gritos muy fuertes':'gritos','Pega o empuja':'pega','Muerde':'muerde',
+  'Sale corriendo y no atiende':'corre','No quiere apagar la tele':'tele',
+  'No quiere ducharse o bañarse':'ducha','No quiere recoger los juguetes':'recoger',
+  'No quiere irse a la cama':'dormir','No quiere comer o sentarse a la mesa':'comer',
+  'No quiere vestirse o desvestirse':'vestirse','No quiere irse del parque':'parque',
+  'No quiere dejar de jugar':'jugar',
+  'No quiere despedirse o irse de casa de alguien':'despedirse',
+  'No quiere entrar al cole o la guardería':'cole',
+  'Le cuesta cambiar de una actividad a otra':'cambio',
+  'Se desespera cuando le dices "ahora no, luego"':'esperar',
+  'Quiere ponerse los zapatos solo/a aunque no pueda':'zapatos',
+  'Quiere servirse la bebida solo/a':'bebida','Quiere abrir la puerta solo/a':'puerta',
+  'Se frustra y llora si le ayudas sin que lo pida':'ayuda',
+  'Se enfada mucho si algo no le sale como quería':'frustra',
+  'Insiste en repetirlo una y otra vez hasta que sale':'repite',
+  'Parece que no me escucha cuando le llamo':'noescucha',
+  'Hace lo contrario de lo que le pido':'contrario','Me ignora completamente':'ignora',
+  'No entiende lo que le explico aunque se lo repito':'noentiende',
+  'Dice que no a todo sin escuchar':'noatodo',
+  'Reacciona de forma exagerada ante cosas pequeñas':'exagerada'
+};
+
+var coloresCerebro={
+  racional:{bg:'var(--verde-sem-claro)',color:'#2a5a3a',dot:'var(--verde-sem)',nombre:'Cerebro racional',desc:'La parte racional está bloqueada. No hay acceso al razonamiento ni al autocontrol.'},
+  emocional:{bg:'var(--naranja-claro)',color:'#6a3a10',dot:'var(--naranja)',nombre:'Cerebro emocional',desc:'El cerebro emocional lleva la voz cantante. Las emociones son intensas y reales.'},
+  reptiliano:{bg:'var(--rojo-claro)',color:'#5a1a1a',dot:'var(--rojo)',nombre:'Cerebro de supervivencia',desc:'En modo supervivencia. El instinto ha tomado el control. Razonar ahora no funciona.'}
+};
+
+var datos={
+  llanto:{sit:'Llanto intenso sin parar',activo:'emocional',que_pasa:'Está sintiendo algo muy grande por dentro, tristeza, frustración o decepción, y todavía no tiene la capacidad de gestionarlo. El llanto es la única forma que tiene de expresar lo que le desborda.',necesita:['Presencia cercana, sin hablar demasiado','Voz tranquila y suave: tu calma le regula','Validar lo que siente: "Veo que estás muy triste"','Tiempo. No puedes acelerar el proceso emocional'],evitar:['Razonar o explicar mientras llora','Decirle "ya está, no es para tanto"','Ignorarlo/a para que pare solo/a'],conexion:'Cada vez que respondes con calma, estás construyendo en su cerebro la capacidad de tolerar emociones intensas.',frase:'"Cuando llora, no te está manipulando. Te está diciendo que necesita que estés ahí."'},
+  rabieta:{sit:'Rabieta en el suelo',activo:'reptiliano',que_pasa:'Ha perdido el acceso al cerebro racional por completo. No puede escuchar, no puede razonar y no puede controlarse. No es una decisión: es una respuesta automática ante una frustración que su cerebro percibe como una amenaza.',necesita:['Quédate cerca sin hablar ni tocar si no lo pide','Silencio y calma. Tu estado regula el suyo','Espera a que pase la ola emocional','Una vez calmado/a: "¿Mejor?"'],evitar:['Hablar, explicar o razonar durante la rabieta','Amenazar o contar hasta tres','Ceder para que pare'],conexion:'Si te mantienes en calma, estás co-regulando su sistema nervioso. Cada vez que lo haces, le enseñas a regularse solo/a.',frase:'"La rabieta no es el problema. Es la señal de que su cerebro aún está aprendiendo a gestionar la frustración."'},
+  gritos:{sit:'Gritos muy fuertes',activo:'reptiliano',que_pasa:'Su sistema nervioso está desbordado y está liberando tensión de la única forma que sabe. No tiene mala intención. Literalmente no puede hacerlo de otra manera en este momento.',necesita:['Baja tu propia voz: eso le invita a bajar la suya','Presencia tranquila sin confrontar','No interpretes los gritos como un ataque personal'],evitar:['Gritar más que él/ella para que pare','Amenazar con consecuencias en ese momento','Pedirle que "hable bien" mientras sigue desbordado/a'],conexion:'Si respondes con calma, su cerebro aprende que los momentos intensos se pueden sostener.',frase:'"Un niño/a que grita no necesita que le griten de vuelta. Necesita que alguien le muestre cómo se baja el volumen."'},
+  pega:{sit:'Pega o empuja',activo:'reptiliano',que_pasa:'No hay intención de hacer daño. Hay desbordamiento emocional que sale por el cuerpo porque el cerebro todavía no tiene las herramientas para gestionarlo de otra manera.',necesita:['Límite claro y calmado: "No se pega. Puedes enfadarte pero no golpear"','Nombra su emoción: "Estás muy enfadado/a"','Sé consistente sin ser punitivo/a'],evitar:['Pegarle de vuelta "para que sepa cómo duele"','Largos sermones sobre por qué está mal','Ignorarlo/a sin poner el límite'],conexion:'Tu calma mientras pones el límite es una lección neurológica: las emociones son válidas, pero no todas las acciones lo son.',frase:'"Pegar no es maldad. Es un cerebro pequeño que todavía no sabe qué hacer con una emoción grande."'},
+  muerde:{sit:'Muerde',activo:'reptiliano',que_pasa:'Morder aparece cuando está muy frustrado/a o como exploración sensorial. Es especialmente común entre 1 y 3 años y disminuye cuando el lenguaje le da otras formas de expresión.',necesita:['Límite inmediato, claro y sin drama: "No se muerde"','Distancia física si hay riesgo de repetición','Ayúdale a nombrar lo que siente'],evitar:['Morderle de vuelta','Reírse o restarle importancia','Etiquetarle de "malo/a"'],conexion:'Cada vez que le das palabras para expresar lo que siente, reduces las conductas físicas como morder.',frase:'"Morder es lenguaje antes de tener lenguaje. Dale palabras y el mordisco desaparece."'},
+  corre:{sit:'Sale corriendo y no atiende',activo:'reptiliano',que_pasa:'El instinto de huida se ha activado. Ante algo que percibe como amenaza, ya sea un límite o una emoción, el cerebro activa el movimiento de forma automática. No es desobediencia consciente.',necesita:['Seguridad física ante todo','Acércate con calma, sin perseguirle como un juego','Una voz tranquila que invite a volver'],evitar:['Gritar su nombre repetidamente en tono de alarma','Convertirlo en un juego de persecución','Enfadarte cuando vuelve'],conexion:'La conexión que construyes en los momentos de calma es la que funciona en los momentos de activación.',frase:'"Un niño/a que huye está buscando seguridad, no libertad. Tu calma es el ancla que le devuelve."'},
+  tele:{sit:'No quiere apagar la tele',activo:'emocional',que_pasa:'La pantalla activa el sistema de placer de forma muy intensa. Cuando la apagas, percibe una pérdida real. No es capricho, es una respuesta ante algo que le generaba bienestar.',necesita:['Avisos previos con tiempo: "En 5 minutos apagamos"','Un ritual de cierre: "Decimos adiós a los dibujos"','Ofrece una actividad de transición atractiva'],evitar:['Apagar de golpe sin avisar','Ceder si protesta para ganar paz','Usar la tele como premio o castigo'],conexion:'Cada vez que avisas con tiempo, enseñas a su cerebro que los cambios no son amenazas.',frase:'"El problema no es la tele. Es que nadie le ha enseñado a despedirse de lo que le gusta."'},
+  ducha:{sit:'No quiere ducharse o bañarse',activo:'emocional',que_pasa:'El baño interrumpe lo que estaba haciendo y puede implicar sensaciones físicas que le resultan incómodas. El cerebro emocional registra esto como algo desagradable y se resiste.',necesita:['Avisa antes de que toque','Conviértelo en algo lúdico: juguetes, canciones','Dale cierta autonomía: que elija el champú o el orden'],evitar:['Discutir argumentando por qué hay que ducharse','Forzarlo con prisa y sin aviso','Convertirlo en una batalla de poder'],conexion:'Los rituales de higiene se aprenden a través de la repetición y la conexión emocional positiva.',frase:'"Si el baño siempre es una pelea, algo en el entorno o en la anticipación se puede cambiar."'},
+  recoger:{sit:'No quiere recoger los juguetes',activo:'emocional',que_pasa:'Recoger implica despedirse del juego, algo que el cerebro emocional vive como una pérdida. Además requiere autocontrol, una función que todavía está en construcción.',necesita:['Hazlo como parte de un ritual, no como castigo','Participa al principio: "Recogemos juntos/as"','Canciones o juegos para que sea más atractivo'],evitar:['Exigirlo cuando ya está muy cansado/a','Hacerlo tú siempre porque es más rápido','Amenazar con tirar los juguetes'],conexion:'Recoger junto a él/ella no es hacerlo por él/ella. Es construir el hábito desde la conexión.',frase:'"Un niño/a que no recoge no es desordenado/a. Es un niño/a que todavía no tiene el hábito construido."'},
+  dormir:{sit:'No quiere irse a la cama',activo:'emocional',que_pasa:'Irse a la cama implica separación y el fin de la estimulación del día. El cerebro emocional registra eso como algo potencialmente amenazante.',necesita:['Un ritual consistente y predecible cada noche','Tiempo de desaceleración antes: sin pantallas','Conexión emocional previa: cuento, conversación tranquila'],evitar:['Cambiar el ritual cada día según tu cansancio','Pantallas justo antes de dormir','Ceder y quedarte más tiempo cada vez'],conexion:'La calma con la que acompañas este momento le enseña que la noche es segura.',frase:'"Resistirse a dormir no es manipulación. Es un cerebro emocional que no quiere perder la conexión contigo."'},
+  comer:{sit:'No quiere comer o sentarse a la mesa',activo:'emocional',que_pasa:'La alimentación está llena de componentes emocionales y sensoriales. Forzar la comida activa el cerebro de supervivencia y convierte la mesa en un campo de batalla.',necesita:['Ambiente tranquilo sin presión ni vigilancia excesiva','Respeta su apetito real, varía día a día','Que vea a los adultos comer con placer'],evitar:['Obligar, presionar o hacer aviones con la cuchara','Convertir la comida en premio o castigo','Hacer comentarios sobre lo que come o no come'],conexion:'La relación emocional que construyas con la comida ahora definirá su relación con la alimentación durante años.',frase:'"La mesa no es un examen. Es un espacio de conexión. Cuando hay paz, suele aparecer el apetito."'},
+  vestirse:{sit:'No quiere vestirse o desvestirse',activo:'emocional',que_pasa:'Vestirse interrumpe lo que estaba haciendo y puede implicar sensaciones físicas incómodas. También puede ser una forma de afirmar su autonomía.',necesita:['Tiempo real para vestirse sin prisas','Deja que elija algo: el color, el orden','Anticipa la noche anterior si hay prisa por la mañana'],evitar:['Las prisas que generan más resistencia','Vestirle tú mientras protesta si puede intentarlo','Convertirlo en batalla todos los días'],conexion:'El tono emocional con el que empieza el día deja huella en cómo transcurre el resto.',frase:'"Las mañanas difíciles empiezan la noche anterior. La anticipación cambia el inicio del día."'},
+  parque:{sit:'No quiere irse del parque',activo:'emocional',que_pasa:'Salir de golpe supone una pérdida brusca que el cerebro no puede procesar sin preparación. Además, los niños/as no tienen noción del tiempo.',necesita:['Avisos progresivos y concretos antes de salir','Una actividad o destino atractivo al que ir después','Ritual de despedida del parque: "Adiós tobogán"'],evitar:['Decir "nos vamos" varias veces sin irse','Marcharse de golpe sin avisar','Ceder y quedar más tiempo cada vez que protesta'],conexion:'Los avisos con referencia concreta en lugar de temporal crean conexiones más eficaces en su cerebro.',frase:'"Un niño/a que no quiere irse del parque no es rebelde. Es un cerebro que vive en el presente y no entiende el futuro."'},
+  jugar:{sit:'No quiere dejar de jugar',activo:'emocional',que_pasa:'El juego es el trabajo del niño/a. Interrumpirlo bruscamente es como si alguien te cortara una conversación importante a mitad de frase.',necesita:['Reconoce lo que está haciendo antes de pedir que pare','Avisos con tiempo','Darle cierre al juego: "¿Dónde dejamos esto?"'],evitar:['Interrumpir de golpe sin aviso','Minimizar su juego: "Eso no es importante"','Recoger sus cosas mientras protesta'],conexion:'Respetar su proceso de juego construye confianza y le enseña que sus cosas importan.',frase:'"Para un niño/a, su juego es tan serio como tu trabajo. Interrumpirlo merece el mismo respeto."'},
+  despedirse:{sit:'No quiere despedirse o irse de casa de alguien',activo:'emocional',que_pasa:'Las despedidas implican separación, y el cerebro emocional las procesa como pérdidas. La separación de personas o lugares seguros activa el sistema de apego.',necesita:['Ritual claro y consistente de despedida','Avisa antes de que llegue el momento','Que la despedida sea breve pero cariñosa'],evitar:['Irte a escondidas para evitar el llanto','Prolongar la despedida por el llanto','Transmitir tu propia ansiedad ante la separación'],conexion:'Los rituales de despedida predecibles reducen la ansiedad. Saber cómo acaba algo hace que sea menos amenazante.',frase:'"Las despedidas difíciles no son capricho. Son amor que todavía no sabe cómo soltarse."'},
+  cole:{sit:'No quiere entrar al cole o la guardería',activo:'emocional',que_pasa:'La separación de la figura de apego activa el sistema de alarma del cerebro emocional. Es una respuesta completamente normal. No significa que algo vaya mal en el cole.',necesita:['Despedida breve, cariñosa y segura, no prolongada','Transmite confianza en que lo van a cuidar','Reconecta emocionalmente cuando lo recoges'],evitar:['Quedarte más tiempo porque llora','Transmitir inseguridad o culpa al dejarlo/a','Irte a escondidas'],conexion:'La calma y la seguridad con la que te vas define cómo procesa él/ella la separación.',frase:'"Un niño/a que llora al separarse no tiene un problema. Tiene un apego seguro. Eso es exactamente lo que necesitaba construir."'},
+  cambio:{sit:'Le cuesta cambiar de una actividad a otra',activo:'emocional',que_pasa:'La flexibilidad para cambiar de tarea depende del cerebro racional, que está en obras. El cerebro emocional vive profundamente en lo que está haciendo y el cambio le supone un coste real.',necesita:['Avisos progresivos: primero lejos, luego cerca','Explica qué viene después de forma atractiva','Valida que le cuesta: "Ya sé que estás a tope con esto"'],evitar:['Exigir cambios inmediatos sin preparación','Saltarte los avisos cuando tienes prisa','Decirle que "es fácil" o que "no pasa nada"'],conexion:'Con tiempo y práctica, esta habilidad se desarrolla. La anticipación es el puente.',frase:'"Los cambios le cuestan porque vive en el presente. La anticipación es el puente entre el ahora y lo que viene."'},
+  esperar:{sit:'Se desespera cuando le dices "ahora no, luego"',activo:'emocional',que_pasa:'"Luego", "mañana" o "en un momento" son conceptos abstractos que el cerebro emocional no puede procesar. Para él/ella, "luego" puede sentirse como "nunca".',necesita:['Referencias concretas en lugar de temporales: "Cuando acabe de cocinar"','Cumple lo que prometes cuando llega el momento','Valida su impaciencia: "Ya sé que quieres ahora"'],evitar:['"Luego" como forma de aplazar sin cumplir','Enfadarte por su impaciencia, es neurológica','Prometer sin intención de cumplir'],conexion:'Usar referencias concretas construye la comprensión del tiempo de forma gradual y reduce la frustración.',frase:'"Para un niño/a de tres años, el tiempo no existe. \"Luego\" suena exactamente igual que \"nunca\"."'},
+  zapatos:{sit:'Quiere ponerse los zapatos solo/a aunque no pueda',activo:'emocional',que_pasa:'Es la etapa de autonomía, completamente normal y sana entre los 2 y 4 años. El cerebro emocional impulsa la necesidad de sentirse capaz e independiente. Es una señal de desarrollo saludable.',necesita:['Tiempo real para que lo intente sin presión','Observa sin intervenir hasta que pida ayuda','Ofrece ayuda parcial, no total: "¿Te ayudo con este?"'],evitar:['Hacerlo tú porque tarda demasiado','Quitarle el zapato de las manos sin preguntar','Decirle "ya lo hago yo que lo haces mal"'],conexion:'Cada vez que le dejas intentarlo, aunque tarde, estás construyendo conexiones de autoconfianza en su cerebro.',frase:'"Dejarte ayudar es lo más difícil que puedes hacer a veces. Pero es lo más valioso para su desarrollo."'},
+  bebida:{sit:'Quiere servirse la bebida solo/a',activo:'emocional',que_pasa:'Querer hacer cosas del mundo adulto es una necesidad evolutiva de esta etapa. El cerebro emocional busca sentirse útil y capaz. Que se derrame es parte del aprendizaje.',necesita:['Recipiente adaptado a su tamaño y fuerza','Espacio para equivocarse sin drama','Normaliza el derrame: "Se ha caído, lo limpiamos"'],evitar:['Quitarle la jarra porque "lo va a tirar"','Hacer un drama si se derrama','No dejarle intentarlo por comodidad del adulto'],conexion:'El entorno que preparas facilita o dificulta su autonomía. Una jarrita a su tamaño es una inversión en su desarrollo.',frase:'"Un vaso de agua derramado es el precio de un niño/a que aprende que puede. Merece la pena."'},
+  puerta:{sit:'Quiere abrir la puerta solo/a',activo:'emocional',que_pasa:'Las puertas y los objetos del mundo adulto fascinan a esta edad. Querer manejarlos es parte de la exploración y del impulso de autonomía.',necesita:['Espera a que lo intente si hay tiempo','Explícale cómo funciona si no puede','Ayuda parcial si la necesita: "Te ayudo con la llave"'],evitar:['Abrirla siempre tú sin darle la oportunidad','Impacientarte si tarda','Ignorar su necesidad de participar'],conexion:'Cada pequeña conquista del entorno construye autoconfianza.',frase:'"Cada puerta que abre solo/a es una pequeña victoria para su cerebro en desarrollo."'},
+  ayuda:{sit:'Se frustra y llora si le ayudas sin que lo pida',activo:'emocional',que_pasa:'Ayudar sin que lo pida es, para su cerebro emocional, una invasión de su espacio de autonomía. Siente que le estás diciendo "no puedes", aunque tu intención sea la contraria.',necesita:['Espera a que pida ayuda antes de ofrecerla','Pregunta: "¿Quieres que te ayude o lo intentas tú?"','Respeta su respuesta aunque diga que no'],evitar:['Anticiparte siempre a sus necesidades','Ayudar por comodidad del adulto','Sentirte rechazado/a cuando dice que no a tu ayuda'],conexion:'Esperar a que pida ayuda construye en su cerebro la conciencia de sus propios límites y la confianza para pedirla.',frase:'"No te necesita menos porque no quiera tu ayuda. Te necesita diferente: presente pero sin adelantarte."'},
+  frustra:{sit:'Se enfada mucho si algo no le sale como quería',activo:'emocional',que_pasa:'La tolerancia a la frustración se desarrolla con el tiempo y la experiencia. A esta edad, el cerebro emocional reacciona con intensidad porque todavía no tiene los recursos para gestionarlo.',necesita:['Valida su frustración: "Es muy difícil, entiendo que te enfades"','Presencia sin soluciones inmediatas','Modela cómo te enfrentas tú a las dificultades'],evitar:['Resolver el problema para que no llore','Decirle "no es para tanto"','Quitarle el objeto cuando se frustra'],conexion:'Estar presente sin resolver le enseña a su cerebro que puede tolerar la incomodidad. Cada vez que lo supera, esa capacidad crece.',frase:'"La frustración no es el problema. Es el entrenamiento. Tu presencia tranquila es el gimnasio."'},
+  repite:{sit:'Insiste en repetirlo una y otra vez hasta que sale',activo:'emocional',que_pasa:'La repetición es el mecanismo de aprendizaje del cerebro infantil. Cuando algo le supone un reto, el cerebro emocional quiere volver a esa experiencia para consolidar la conexión. Es exactamente como aprende.',necesita:['Tiempo y espacio para repetir cuando es posible','Comprende que no es terquedad sino aprendizaje','Celebra genuinamente cuando lo consigue'],evitar:['Interrumpir por impaciencia del adulto','Decirle "ya está bien, lo has hecho muchas veces"','Interpretar la insistencia como capricho'],conexion:'Cada repetición es una sinapsis consolidándose en su cerebro. Lo que a veces nos agota es, neurológicamente, el aprendizaje en acción.',frase:'"Un niño/a que repite sin parar no está siendo pesado/a. Está aprendiendo exactamente como tiene que aprender."'},
+  noescucha:{sit:'Parece que no me escucha cuando le llamo',activo:'emocional',que_pasa:'Cuando está completamente absorbido/a en algo, el cerebro emocional está en foco total. La capacidad de cambiar la atención voluntariamente depende del cerebro racional, que está en obras. No es desobediencia.',necesita:['Acércate físicamente y contacta antes de hablar','Espera a que te mire antes de dar la instrucción','Una sola instrucción simple y concreta'],evitar:['Llamarle repetidamente desde otra habitación','Interpretar el no responder como desobediencia','Aumentar el volumen cada vez que no responde'],conexion:'La proximidad física es la forma más directa de llegar a su cerebro. Cada vez que te acercas en lugar de llamar, creas una conexión más efectiva.',frase:'"No te ignora. Su cerebro está en otro lugar. Para llegar a él, primero tienes que ir tú hasta donde está."'},
+  contrario:{sit:'Hace lo contrario de lo que le pido',activo:'emocional',que_pasa:'Entre los 2 y 4 años el "no" y la oposición son herramientas de construcción de identidad. El cerebro emocional está descubriendo que tiene voluntad propia y la está ejerciendo. Es incómodo para el adulto pero es exactamente lo que tiene que pasar.',necesita:['Entiende que el "no" es desarrollo, no ataque','Opciones dentro del límite: "¿Te lavas los dientes antes o después del cuento?"','Instrucciones en positivo: "Pon los zapatos aquí" en lugar de "no los dejes ahí"'],evitar:['Entrar en guerra de poder','Ceder siempre ante el "no"','Tomártelo como una falta de respeto personal'],conexion:'Cómo respondes a su "no" le enseña cómo relacionarse con la autoridad. La calma con límites firmes construye seguridad.',frase:'"El \"no\" no es contra ti. Es la forma en que está aprendiendo que tiene voz propia."'},
+  ignora:{sit:'Me ignora completamente',activo:'emocional',que_pasa:'El foco atencional a esta edad es unitario y total. Cuando está absorto/a en algo, el cerebro emocional bloquea los estímulos externos que percibe como interrupciones. No hay intención de ignorar.',necesita:['Contacto físico suave antes de hablar: una mano en el hombro','Entra en su juego un momento antes de pedir algo','Instrucciones breves y directas'],evitar:['Hablar desde lejos esperando respuesta','Repetir la misma instrucción elevando el tono','Interpretar el silencio como desprecio'],conexion:'Entrar en su mundo antes de pedirle algo crea una conexión neuronal más efectiva.',frase:'"Para llegar a su cerebro, primero tienes que conectar con lo que está viviendo. Luego, pide."'},
+  noentiende:{sit:'No entiende lo que le explico aunque se lo repito',activo:'emocional',que_pasa:'Las instrucciones largas y los razonamientos múltiples superan la capacidad de procesamiento de su cerebro. No es que no quiera entender, es que todavía no puede.',necesita:['Instrucciones de un solo paso a la vez','Lenguaje concreto y visual, no abstracto','Muéstrale mientras le dices'],evitar:['Explicaciones largas mientras está activado/a','Dar varias instrucciones seguidas','Repetir exactamente lo mismo si no ha funcionado'],conexion:'Cada instrucción simple que puede seguir construye confianza en su propio entendimiento.',frase:'"Si no te entiende, el problema no es él/ella. Es que la instrucción tiene demasiadas partes para su cerebro de ahora."'},
+  noatodo:{sit:'Dice que no a todo sin escuchar',activo:'emocional',que_pasa:'El "no" automático es la manifestación más clara de la etapa de autonomía. El cerebro emocional ha aprendido que decir "no" le da control sobre su entorno, algo que necesita profundamente en esta etapa.',necesita:['No conviertas cada "no" en un conflicto','Opciones reales entre las que elegir','Reconoce cuándo su "no" es válido y respétalo'],evitar:['Batallar por cada negativa','Ceder siempre para evitar el conflicto','Usar el "porque lo digo yo" como único argumento'],conexion:'Cómo manejas su "no" sistemático define cómo aprende a usar su voluntad. Respetarla dentro de los límites adecuados construye seguridad.',frase:'"El niño/a que dice no a todo está practicando tener voz. No le quites la voz. Enséñale a usarla."'},
+  exagerada:{sit:'Reacciona de forma exagerada ante cosas pequeñas',activo:'emocional',que_pasa:'Lo que para el adulto es pequeño, para el cerebro emocional del niño/a es enorme. Su sistema nervioso tiene un umbral de activación mucho más bajo y su capacidad de regulación es mínima. No exagera a propósito. Siente de verdad con esa intensidad.',necesita:['Valida sin minimizar: "Entiendo que eso te ha molestado mucho"','No compares su reacción con lo que debería ser','Presencia tranquila que regule desde fuera'],evitar:['"No es para tanto", "eso es una tontería"','Reírte de la intensidad de su reacción','Comparar con otros niños/as que "no hacen eso"'],conexion:'Validar sus emociones aunque te parezcan desproporcionadas construye en su cerebro la conciencia emocional.',frase:'"Para su cerebro, no hay emociones pequeñas. Todas son grandes. Tu trabajo es acompañarlas, no reducirlas."'}
+};
+
+/* ============================================================
+   CATEGORÍAS Y SITUACIONES
+   ============================================================ */
+window.expCategoria = function(cat){
+  estado.catActual = cat;
+  estado.catLabel = categorias[cat].nombre;
+  document.getElementById('exp-cat-nombre').textContent = categorias[cat].nombre;
+  var sits = situaciones[cat];
+  var html = '';
+  sits.forEach(function(s){
+    html += '<div class="sit-card" onclick="expSituacion(\''+s.nombre.replace(/'/g,"\\'")+'\')">';
+    html += '<span class="sit-emoji">'+s.emoji+'</span>';
+    html += '<span class="sit-nombre">'+s.nombre+'</span>';
+    html += '<span class="sit-arrow">›</span>';
+    html += '</div>';
+  });
+  document.getElementById('exp-sits-lista').innerHTML = html;
+  expGo('exp-s5'); expSetProg(2);
+};
+
+window.expSituacion = function(nombre){
+  var clave = mapaClaves[nombre];
+  if(!clave || !datos[clave]) return;
+  var d = datos[clave];
+  estado.sitLabel = nombre;
+  estado.datosNiño = d;
+
+  document.getElementById('exp-bread-cat').textContent = estado.catLabel;
+  document.getElementById('exp-bread-sit').textContent = nombre;
+
+  // SEMÁFORO
+  var capas = ['racional','emocional','reptiliano'];
+  var semHtml = '<div class="semaforo-resultado">';
+  capas.forEach(function(c){
+    var info = coloresCerebro[c];
+    var activa = c === d.activo;
+    semHtml += '<div class="sem-capa sem-'+c+' '+(activa?'activa':'inactiva')+'">';
+    semHtml += '<div class="sem-capa-top '+(activa?'open':'')+'">';
+    semHtml += '<div class="sem-dot" style="background:'+info.dot+'"></div>';
+    semHtml += '<span class="sem-nombre">'+info.nombre+'</span>';
+    if(activa) semHtml += '<span class="sem-activo-badge">⚡ Activo ahora</span>';
+    semHtml += '</div>';
+    if(activa) semHtml += '<div class="sem-desc">'+info.desc+'</div>';
+    semHtml += '</div>';
+  });
+  semHtml += '</div>';
+
+  // QUÉ PASA
+  var html = semHtml;
+  html += '<div class="que-pasa-card">';
+  html += '<span class="que-pasa-label">Qué está pasando</span>';
+  html += '<p class="que-pasa-texto">'+d.que_pasa+'</p>';
+  html += '</div>';
+
+  document.getElementById('exp-resultado-niño').innerHTML = html;
+
+  // MOSTRAR botón continuar a Nosotros
+  var finWrap = document.getElementById('exp-s6-fin-wrap');
+  if(finWrap) finWrap.style.display = 'block';
+
+  expGo('exp-s6'); expSetProg(2);
+};
+
+/* ============================================================
+   PANTALLA 7: NOSOTROS/AS
+   ============================================================ */
+// Se rellena cuando se llega desde S6
+document.getElementById('exp-s7').addEventListener = undefined; // evitar duplicados
+
+function renderNosotros(){
+  var d = estado.datosNiño;
+  if(!d) return;
+
+  // PASOS
+  var html = '<div class="pasos-card">';
+  html += '<span class="pasos-label">✓ Qué hacer ahora</span>';
+  html += '<div class="pasos-list">';
+  d.necesita.forEach(function(n,i){
+    html += '<div class="paso">';
+    html += '<div class="paso-num">'+(i+1)+'</div>';
+    html += '<span class="paso-text">'+n+'</span>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  // EVITAR
+  html += '<div class="evitar-card">';
+  html += '<span class="evitar-label">Qué evitar</span>';
+  html += '<div class="evitar-list">';
+  d.evitar.forEach(function(e){
+    html += '<div class="evitar-item">';
+    html += '<div class="evitar-x">✕</div>';
+    html += '<span>'+e+'</span>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  // CONEXIÓN — frase destacada
+  html += '<div class="conexion-frase">';
+  html += '<span class="conexion-icon">🧠</span>';
+  html += '<p class="conexion-texto">'+d.conexion+'</p>';
+  html += '</div>';
+
+  // FRASE PALOMA
+  html += '<div class="frase-paloma"><p>'+d.frase+'</p></div>';
+
+  document.getElementById('exp-resultado-nosotros').innerHTML = html;
+
+  // Mostrar botón continuar a resumen
+  var finWrap = document.getElementById('exp-s7-fin-wrap');
+  if(finWrap) finWrap.style.display = 'block';
+}
+
+// Interceptar cuando se llega a S7 para renderizar contenido
+var origExpGo = window.expGo;
+window.expGo = function(id){
+  origExpGo(id);
+  if(id === 'exp-s7') renderNosotros();
+  if(id === 'exp-s8') renderResumen();
+};
+
+/* ============================================================
+   PANTALLA 8: RESUMEN DINÁMICO
+   ============================================================ */
+function renderResumen(){
+  var items = [];
+
+  // Item 1: estado del adulto
+  if(estado.estadoLabel){
+    items.push({
+      icon:'🌿',
+      fase:'Tú',
+      texto:'Te identificaste como: <strong>'+estado.estadoLabel+'</strong>. Nombrar lo que sientes es el primer paso para no proyectarlo en tu hijo/a.'
+    });
+  }
+
+  // Item 2: situación del niño/a
+  if(estado.datosNiño){
+    var d = estado.datosNiño;
+    var cerebroActivo = coloresCerebro[d.activo].nombre;
+    items.push({
+      icon:'🧒',
+      fase:'Tu hijo/a',
+      texto:'Cuando ocurre <strong>"'+estado.sitLabel+'"</strong>, su <strong>'+cerebroActivo.toLowerCase()+'</strong> está al mando. No es una decisión. Es una respuesta automática que no puede controlar.'
+    });
+  }
+
+  // Item 3: cómo debe actuar ella (las dos primeras acciones del protocolo)
+  if(estado.datosNiño && estado.datosNiño.necesita.length > 0){
+    var acciones = estado.datosNiño.necesita.slice(0,2);
+    var accionesHtml = acciones.map(function(a){ return '<strong>'+a+'</strong>'; }).join('. Y: ');
+    items.push({
+      icon:'💡',
+      fase:'Cómo actuar',
+      texto: 'En ese momento, lo más importante: '+accionesHtml+'.'
+    });
+  }
+
+  var html = '';
+  items.forEach(function(item){
+    html += '<div class="recuerdo-item">';
+    html += '<div class="recuerdo-icon">'+item.icon+'</div>';
+    html += '<div class="recuerdo-body">';
+    html += '<span class="recuerdo-fase">'+item.fase+'</span>';
+    html += '<p class="recuerdo-texto">'+item.texto+'</p>';
+    html += '</div></div>';
+  });
+
+  document.getElementById('exp-resumen-items').innerHTML = html;
+}
+
+/* ============================================================
+   REINICIAR
+   ============================================================ */
+window.expReiniciar = function(){
+  estado = { nombreEstado:'', estadoLabel:'', catActual:'', catLabel:'', sitLabel:'', datosNiño:null };
+  pickedEstado = null;
+  expBreathReset();
+  expResetNombra();
+  document.getElementById('exp-s6-fin-wrap').style.display = 'none';
+  document.getElementById('exp-s7-fin-wrap').style.display = 'none';
+  expGo('exp-s4');
+  expSetProg(2);
+};
+
+})();
+</script>
+</body>
+</html>

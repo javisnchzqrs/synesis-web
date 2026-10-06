@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Anticipacion y Cuidado · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+#plan-reg { --verde:#8FAF9A; --beige:#F3EDE4; --antracita:#3A3A3A; --terracota:#D08770; --verde-claro:#E4EFE8; --blanco:#FFFFFF; --sombra:rgba(58,58,58,0.07); font-family:'DM Sans',sans-serif; color:var(--antracita); background:var(--beige); padding:0 0 80px; max-width:660px; margin:0 auto; }
+#plan-reg * { box-sizing:border-box; margin:0; padding:0; }
+#plan-reg .s { display:none; }
+#plan-reg .s.on { display:block; animation:pFade .45s ease; }
+@keyframes pFade { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+#plan-reg .hd { padding:28px 28px 0; display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
+#plan-reg .logo { font-family:'Playfair Display',serif; font-size:17px; display:flex; align-items:center; gap:6px; }
+#plan-reg .logo-dot { width:6px;height:6px;background:var(--verde);border-radius:50%; }
+#plan-reg .badge { font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);background:var(--verde-claro);padding:5px 12px;border-radius:20px; }
+#plan-reg .body { padding:0 28px; }
+
+/* PROGRESS */
+#plan-reg .prog-wrap { height:4px; background:var(--verde-claro); border-radius:2px; margin-bottom:32px; }
+#plan-reg .prog-fill { height:100%; background:var(--verde); border-radius:2px; transition:width .5s ease; }
+
+/* TIPOGRAFÍA */
+#plan-reg .h1 { font-family:'Playfair Display',serif; font-size:clamp(26px,5vw,38px); line-height:1.2; margin-bottom:16px; }
+#plan-reg .h1 em { font-style:italic; color:var(--verde); }
+#plan-reg .h2 { font-family:'Playfair Display',serif; font-size:clamp(20px,4vw,26px); line-height:1.3; margin-bottom:10px; }
+#plan-reg .lead { font-size:15px; line-height:1.75; color:#6a6a6a; margin-bottom:28px; }
+#plan-reg .step-label { font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--verde); margin-bottom:10px; display:block; }
+
+/* INTRO CARD */
+#plan-reg .intro-card { background:var(--blanco); border-radius:16px; padding:24px 26px; margin-bottom:28px; border-left:4px solid var(--verde); box-shadow:0 2px 12px var(--sombra); }
+#plan-reg .intro-card p { font-size:14px; line-height:1.75; color:#5a5a5a; font-style:italic; }
+
+/* PREGUNTA */
+#plan-reg .q-block { background:var(--blanco); border-radius:16px; padding:24px 26px; margin-bottom:16px; box-shadow:0 2px 10px var(--sombra); }
+#plan-reg .q-title { font-size:15px; font-weight:600; color:var(--antracita); margin-bottom:16px; line-height:1.5; }
+#plan-reg .q-hint { font-size:12px; color:#9a9a9a; margin-bottom:14px; font-style:italic; }
+
+/* OPCIONES MULTI */
+#plan-reg .opts { display:flex; flex-direction:column; gap:8px; }
+#plan-reg .opt { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; border-radius:10px; border:1.5px solid #E8E2D9; cursor:pointer; transition:all .2s; background:var(--blanco); }
+#plan-reg .opt:hover { border-color:var(--verde); background:var(--verde-claro); }
+#plan-reg .opt.sel { border-color:var(--verde); background:var(--verde-claro); }
+#plan-reg .opt-box { width:18px; height:18px; min-width:18px; border-radius:4px; border:2px solid #C8C2B8; margin-top:2px; transition:all .2s; position:relative; flex-shrink:0; }
+#plan-reg .opt.sel .opt-box { background:var(--verde); border-color:var(--verde); }
+#plan-reg .opt.sel .opt-box::after { content:'✓'; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#fff; font-size:11px; font-weight:700; }
+#plan-reg .opt-text { font-size:13px; line-height:1.5; color:var(--antracita); padding-top:1px; }
+
+/* OPCIONES SINGLE (radio) */
+#plan-reg .opt-radio .opt-box { border-radius:50%; }
+#plan-reg .opt-radio.sel .opt-box::after { content:''; width:7px; height:7px; background:#fff; border-radius:50%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+
+/* SLIDER */
+#plan-reg .slider-wrap { padding:8px 0; }
+#plan-reg .slider-labels { display:flex; justify-content:space-between; font-size:11px; color:#9a9a9a; margin-bottom:8px; }
+#plan-reg input[type=range] { width:100%; -webkit-appearance:none; height:6px; border-radius:3px; background:linear-gradient(to right, var(--verde) 0%, var(--verde) 50%, #E8E2D9 50%, #E8E2D9 100%); outline:none; cursor:pointer; }
+#plan-reg input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:var(--verde); box-shadow:0 2px 8px rgba(143,175,154,.4); cursor:pointer; }
+#plan-reg .slider-val { text-align:center; font-size:13px; font-weight:500; color:var(--verde); margin-top:8px; }
+
+/* BOTONES */
+#plan-reg .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--verde); color:#fff; font-family:'DM Sans',sans-serif; font-size:15px; font-weight:500; padding:16px 36px; border-radius:50px; border:none; cursor:pointer; transition:all .22s; width:100%; margin-top:8px; }
+#plan-reg .btn:hover { background:#7a9e85; transform:translateY(-2px); box-shadow:0 8px 24px rgba(143,175,154,.4); }
+#plan-reg .btn:disabled { background:#C5D5CB; cursor:not-allowed; transform:none; box-shadow:none; }
+#plan-reg .btn-ghost { display:inline-flex; align-items:center; justify-content:center; gap:6px; background:transparent; color:#8a8a8a; font-family:'DM Sans',sans-serif; font-size:14px; padding:12px 24px; border-radius:50px; border:1.5px solid #DDD8D0; cursor:pointer; transition:all .2s; width:100%; margin-top:10px; }
+#plan-reg .btn-ghost:hover { border-color:var(--antracita); color:var(--antracita); }
+#plan-reg .back { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:#8a8a8a; cursor:pointer; margin-bottom:24px; padding:8px 0; background:none; border:none; font-family:'DM Sans',sans-serif; transition:color .2s; }
+#plan-reg .back:hover { color:var(--antracita); }
+#plan-reg .val-msg { display:none; background:#FFF3EE; border:1px solid var(--terracota); color:var(--terracota); font-size:13px; padding:10px 14px; border-radius:8px; margin-top:10px; }
+#plan-reg .val-msg.show { display:block; }
+
+/* PLAN */
+#plan-reg .plan-hero { background:var(--blanco); border-radius:20px; padding:32px 28px; margin-bottom:20px; box-shadow:0 4px 24px var(--sombra); text-align:center; }
+#plan-reg .plan-hero-icon { width:72px; height:72px; background:var(--verde-claro); border-radius:50%; margin:0 auto 18px; display:flex; align-items:center; justify-content:center; font-size:32px; }
+#plan-reg .plan-section { background:var(--blanco); border-radius:16px; padding:24px 26px; margin-bottom:14px; box-shadow:0 2px 10px var(--sombra); }
+#plan-reg .plan-section-label { font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--verde); margin-bottom:12px; display:block; }
+#plan-reg .plan-section h3 { font-family:'Playfair Display',serif; font-size:17px; margin-bottom:10px; line-height:1.4; }
+#plan-reg .plan-list { list-style:none; display:flex; flex-direction:column; gap:8px; padding:0; }
+#plan-reg .plan-list li { display:flex; align-items:flex-start; gap:10px; font-size:14px; line-height:1.6; color:#5a5a5a; }
+#plan-reg .plan-list li::before { content:''; width:6px; height:6px; background:var(--verde); border-radius:50%; flex-shrink:0; margin-top:7px; }
+#plan-reg .plan-signal { display:flex; align-items:center; gap:10px; padding:10px 14px; background:var(--verde-claro); border-radius:10px; font-size:13px; color:#3a5a45; margin-bottom:8px; }
+#plan-reg .plan-signal-icon { font-size:18px; flex-shrink:0; }
+#plan-reg .plan-frase { background:#FFF8F5; border-left:4px solid var(--terracota); border-radius:0 10px 10px 0; padding:14px 18px; font-size:14px; color:#5a5a5a; font-style:italic; margin-bottom:10px; line-height:1.6; }
+#plan-reg .plan-dias { display:grid; grid-template-columns:repeat(7,1fr); gap:6px; margin-top:10px; }
+#plan-reg .plan-dia { background:var(--verde-claro); border-radius:10px; padding:10px 6px; text-align:center; }
+#plan-reg .plan-dia-nombre { font-size:10px; font-weight:600; color:var(--verde); letter-spacing:.5px; margin-bottom:6px; }
+#plan-reg .plan-dia-momento { font-size:11px; color:#3a5a45; line-height:1.4; }
+#plan-reg .plan-compromiso { background:linear-gradient(135deg,var(--verde-claro),#fff); border-radius:16px; padding:24px; text-align:center; border:2px solid rgba(143,175,154,.4); margin-bottom:14px; }
+#plan-reg .plan-compromiso p { font-family:'Playfair Display',serif; font-size:16px; line-height:1.7; color:var(--antracita); font-style:italic; }
+#plan-reg .print-btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; background:var(--antracita); color:#fff; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:500; padding:14px 28px; border-radius:50px; border:none; cursor:pointer; transition:all .22s; width:100%; margin-top:4px; }
+#plan-reg .print-btn:hover { background:#555; }
+
+@media(max-width:600px){ #plan-reg .hd,#plan-reg .body{padding-left:18px;padding-right:18px;} #plan-reg .plan-dias{grid-template-columns:repeat(4,1fr);} }
+@media print { #plan-reg .btn,#plan-reg .btn-ghost,#plan-reg .back,#plan-reg .print-btn,#plan-reg .hd{display:none!important;} #plan-reg .s{display:block!important;} #plan-reg{background:#fff;} }
+body, .elementor-widget-container, .elementor-widget-html, .elementor-column-wrap, .elementor-column, .elementor-section {
+  background-color: #F3EDE4 !important;
+}
+</style>
+<div id="plan-reg">
+<!-- S0: BIENVENIDA -->
+<div class="s on" id="pr-s0">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/><span class="badge">Bloque del Adulto</span></div>
+<div class="body">
+<span class="step-label">Autoconocimiento y cuidado</span>
+<h1 class="h1">Tu plan de<br/><em>regulación personal</em></h1>
+<p class="lead">Antes de poder acompañar a tu hijo o hija desde la calma, necesitas conocerte a ti. Este test te ayuda a identificar cuándo y cómo pierdes el control, y te genera un plan personalizado de autocuidado para las próximas semanas.</p>
+<div class="intro-card">
+<p>No hay respuestas correctas ni incorrectas. Responde con honestidad, desde lo que realmente vives en el día a día. Cuanto más sincero/a seas, más útil será tu plan.</p>
+</div>
+<button class="btn" onclick="prGo('pr-s1')">Empezar el test →</button>
+</div>
+</div>
+<!-- S1: SITUACIONES -->
+<div class="s" id="pr-s1">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="prGo('pr-s0')">← Volver</button>
+<div class="prog-wrap"><div class="prog-fill" style="width:25%"></div></div>
+<span class="step-label">Paso 1 de 4 — Tus situaciones</span>
+<h2 class="h2">¿En qué momentos pierdes el control con más frecuencia?</h2>
+<p class="lead">Selecciona todas las que reconozcas. Cuantas más identifiques, mejor podrás anticiparte.</p>
+<div class="q-block">
+<p class="q-hint">Puedes seleccionar varias opciones</p>
+<div class="opts" id="pr-sits">
+<div class="opt" onclick="prToggle(this,'sit','rabietas')"><div class="opt-box"></div><span class="opt-text">Las rabietas y llantos intensos</span></div>
+<div class="opt" onclick="prToggle(this,'sit','gritos')"><div class="opt-box"></div><span class="opt-text">Los gritos o tirarse al suelo</span></div>
+<div class="opt" onclick="prToggle(this,'sit','rutinas')"><div class="opt-box"></div><span class="opt-text">Las rutinas del día a día (baño, cena, dormir)</span></div>
+<div class="opt" onclick="prToggle(this,'sit','mananas')"><div class="opt-box"></div><span class="opt-text">Las mañanas con prisas</span></div>
+<div class="opt" onclick="prToggle(this,'sit','parque')"><div class="opt-box"></div><span class="opt-text">Salir del parque o terminar una actividad</span></div>
+<div class="opt" onclick="prToggle(this,'sit','noobedecer')"><div class="opt-box"></div><span class="opt-text">Cuando no obedece o dice que no</span></div>
+<div class="opt" onclick="prToggle(this,'sit','solonosolo')"><div class="opt-box"></div><span class="opt-text">Cuando quiere hacer las cosas solo/a y no puede</span></div>
+<div class="opt" onclick="prToggle(this,'sit','repetir')"><div class="opt-box"></div><span class="opt-text">Cuando tengo que repetir las cosas muchas veces</span></div>
+</div>
+</div>
+<div class="val-msg" id="pr-val-1">Selecciona al menos una situación para continuar.</div>
+<button class="btn" onclick="prNext(1)">Siguiente →</button>
+</div>
+</div>
+<!-- S2: SEÑALES CORPORALES -->
+<div class="s" id="pr-s2">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="prGo('pr-s1')">← Volver</button>
+<div class="prog-wrap"><div class="prog-fill" style="width:50%"></div></div>
+<span class="step-label">Paso 2 de 4 — Tu cuerpo</span>
+<h2 class="h2">¿Qué señales sientes en el cuerpo cuando te estás desbordando?</h2>
+<p class="lead">Tu cuerpo avisa antes de que explotes. Aprender a reconocer estas señales es el primer paso para poder parar a tiempo.</p>
+<div class="q-block">
+<p class="q-hint">Selecciona todas las que reconozcas en ti</p>
+<div class="opts" id="pr-señales">
+<div class="opt" onclick="prToggle(this,'señal','pecho')"><div class="opt-box"></div><span class="opt-text">Dolor o presión en el pecho</span></div>
+<div class="opt" onclick="prToggle(this,'señal','cabeza')"><div class="opt-box"></div><span class="opt-text">Dolor de cabeza o tensión en las sienes</span></div>
+<div class="opt" onclick="prToggle(this,'señal','cuello')"><div class="opt-box"></div><span class="opt-text">Tensión o rigidez en el cuello</span></div>
+<div class="opt" onclick="prToggle(this,'señal','manos')"><div class="opt-box"></div><span class="opt-text">Tensión o puños apretados en las manos</span></div>
+<div class="opt" onclick="prToggle(this,'señal','mandibula')"><div class="opt-box"></div><span class="opt-text">Mandíbula apretada o rechinar de dientes</span></div>
+<div class="opt" onclick="prToggle(this,'señal','hombros')"><div class="opt-box"></div><span class="opt-text">Hombros encogidos o tensos</span></div>
+<div class="opt" onclick="prToggle(this,'señal','ceño')"><div class="opt-box"></div><span class="opt-text">Ceño fruncido o expresión tensa</span></div>
+<div class="opt" onclick="prToggle(this,'señal','irritable')"><div class="opt-box"></div><span class="opt-text">Irascibilidad, todo me molesta</span></div>
+</div>
+</div>
+<div class="val-msg" id="pr-val-2">Selecciona al menos una señal para continuar.</div>
+<button class="btn" onclick="prNext(2)">Siguiente →</button>
+</div>
+</div>
+<!-- S3: FRASES INTERNAS -->
+<div class="s" id="pr-s3">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="prGo('pr-s2')">← Volver</button>
+<div class="prog-wrap"><div class="prog-fill" style="width:75%"></div></div>
+<span class="step-label">Paso 3 de 4 — Tu voz interna</span>
+<h2 class="h2">¿Qué frases te dices cuando pierdes el control?</h2>
+<p class="lead">El diálogo interno en los momentos difíciles dice mucho sobre cómo te estás tratando. Reconocerlo es el primer paso para cambiarlo.</p>
+<div class="q-block">
+<p class="q-hint">Selecciona las que más reconozcas</p>
+<div class="opts" id="pr-frases">
+<div class="opt" onclick="prToggle(this,'frase','nopuedo')"><div class="opt-box"></div><span class="opt-text">"No puedo más"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','siempreigual')"><div class="opt-box"></div><span class="opt-text">"Siempre igual"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','noescucha')"><div class="opt-box"></div><span class="opt-text">"No me escucha nunca"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','gritar')"><div class="opt-box"></div><span class="opt-text">"Siempre tengo que gritar para que me haga caso"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','amenazar')"><div class="opt-box"></div><span class="opt-text">"No funciona si no amenazo"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','paciencia')"><div class="opt-box"></div><span class="opt-text">"No tengo paciencia, no sirvo para esto"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','peorpadre')"><div class="opt-box"></div><span class="opt-text">"Soy el peor padre / la peor madre"</span></div>
+<div class="opt" onclick="prToggle(this,'frase','nolegusta')"><div class="opt-box"></div><span class="opt-text">"No me gusta cómo soy en estos momentos"</span></div>
+</div>
+</div>
+<div class="val-msg" id="pr-val-3">Selecciona al menos una frase para continuar.</div>
+<button class="btn" onclick="prNext(3)">Siguiente →</button>
+</div>
+</div>
+<!-- S4: AUTOCUIDADO -->
+<div class="s" id="pr-s4">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="prGo('pr-s3')">← Volver</button>
+<div class="prog-wrap"><div class="prog-fill" style="width:90%"></div></div>
+<span class="step-label">Paso 4 de 4 — Tu autocuidado</span>
+<h2 class="h2">¿Qué actividades te ayudan a recargar energía?</h2>
+<p class="lead">Tu plan de autocuidado tiene que estar hecho de cosas que de verdad te gusten y puedas hacer. Selecciona las que más conecten contigo.</p>
+<div class="q-block">
+<p class="q-hint">Elige entre 3 y 6 opciones</p>
+<div class="opts" id="pr-cuidados">
+<div class="opt" onclick="prToggle(this,'cuidado','pasear')"><div class="opt-box"></div><span class="opt-text">Pasear o salir al aire libre</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','deporte')"><div class="opt-box"></div><span class="opt-text">Hacer deporte o correr</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','leer')"><div class="opt-box"></div><span class="opt-text">Leer</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','musica')"><div class="opt-box"></div><span class="opt-text">Escuchar música</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','silencio')"><div class="opt-box"></div><span class="opt-text">Estar en silencio o descansar sin hacer nada</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','serie')"><div class="opt-box"></div><span class="opt-text">Ver una serie o película</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','creativo')"><div class="opt-box"></div><span class="opt-text">Actividades creativas (pintar, coser, manualidades)</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','amigos')"><div class="opt-box"></div><span class="opt-text">Quedar con amigos o amigas</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','escribir')"><div class="opt-box"></div><span class="opt-text">Escribir o llevar un diario</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','respirar')"><div class="opt-box"></div><span class="opt-text">Respiración o meditación</span></div>
+<div class="opt" onclick="prToggle(this,'cuidado','cuidado')"><div class="opt-box"></div><span class="opt-text">Rutinas de cuidado personal (baño, cremas, etc.)</span></div>
+</div>
+</div>
+<div class="q-block" style="margin-top:16px;">
+<p class="q-title">¿En qué momento del día puedes dedicarte ese ratito?</p>
+<p class="q-hint">Selecciona el que más se ajuste a tu realidad</p>
+<div class="opts" id="pr-momento">
+<div class="opt opt-radio" onclick="prSingle(this,'momento','manana')"><div class="opt-box"></div><span class="opt-text">Por la mañana, antes de que empiece el día</span></div>
+<div class="opt opt-radio" onclick="prSingle(this,'momento','mediodia')"><div class="opt-box"></div><span class="opt-text">Al mediodía, en el descanso del trabajo</span></div>
+<div class="opt opt-radio" onclick="prSingle(this,'momento','tarde')"><div class="opt-box"></div><span class="opt-text">A media tarde, cuando los niños están en el cole</span></div>
+<div class="opt opt-radio" onclick="prSingle(this,'momento','noche')"><div class="opt-box"></div><span class="opt-text">Por la noche, cuando los niños ya duermen</span></div>
+<div class="opt opt-radio" onclick="prSingle(this,'momento','variable')"><div class="opt-box"></div><span class="opt-text">Varía según el día, no tengo un momento fijo</span></div>
+</div>
+</div>
+<div class="val-msg" id="pr-val-4">Selecciona al menos una actividad y un momento del día.</div>
+<button class="btn" onclick="prNext(4)">Ver mi plan personalizado →</button>
+</div>
+</div>
+<!-- S5: PLAN -->
+<div class="s" id="pr-s5">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<div class="prog-wrap"><div class="prog-fill" style="width:100%"></div></div>
+<div id="pr-plan-contenido"></div>
+<button class="print-btn" onclick="window.print()">🖨 Imprimir o guardar como PDF</button>
+<button class="btn-ghost" onclick="prReiniciar()" style="margin-top:10px;">Repetir el test →</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+
+  var datos = { sit:[], señal:[], frase:[], cuidado:[], momento:'' };
+
+  // NAVEGACIÓN
+  window.prGo = function(id) {
+    document.querySelectorAll('#plan-reg .s').forEach(function(s){ s.classList.remove('on'); });
+    document.getElementById(id).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // TOGGLE MULTI
+  window.prToggle = function(el, cat, val) {
+    el.classList.toggle('sel');
+    var arr = datos[cat];
+    var idx = arr.indexOf(val);
+    if(idx>-1) arr.splice(idx,1); else arr.push(val);
+  };
+
+  // SINGLE
+  window.prSingle = function(el, cat, val) {
+    var group = el.closest('.opts');
+    group.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+    el.classList.add('sel');
+    datos[cat] = val;
+  };
+
+  // VALIDAR Y AVANZAR
+  window.prNext = function(step) {
+    var val = document.getElementById('pr-val-'+step);
+    var ok = false;
+    if(step===1) ok = datos.sit.length > 0;
+    if(step===2) ok = datos.señal.length > 0;
+    if(step===3) ok = datos.frase.length > 0;
+    if(step===4) ok = datos.cuidado.length > 0 && datos.momento !== '';
+    if(!ok){ if(val) val.classList.add('show'); return; }
+    if(val) val.classList.remove('show');
+    if(step===4){ prGenerarPlan(); prGo('pr-s5'); }
+    else prGo('pr-s'+(step+1));
+  };
+
+  // TEXTOS
+  var sitTextos = {
+    rabietas:'las rabietas y llantos intensos', gritos:'los gritos y tirarse al suelo',
+    rutinas:'las rutinas del día a día', mananas:'las mañanas con prisas',
+    parque:'salir del parque o terminar actividades', noobedecer:'cuando no obedece o dice que no',
+    solonosolo:'cuando quiere hacer las cosas solo/a y no puede', repetir:'cuando hay que repetir las cosas muchas veces'
+  };
+  var señalTextos = {
+    pecho:'Dolor o presión en el pecho', cabeza:'Dolor de cabeza o tensión en las sienes',
+    cuello:'Tensión en el cuello', manos:'Tensión o puños apretados',
+    mandibula:'Mandíbula apretada', hombros:'Hombros encogidos o tensos',
+    ceño:'Ceño fruncido', irritable:'Irascibilidad generalizada'
+  };
+  var señalIconos = {
+    pecho:'💛', cabeza:'🧠', cuello:'😤', manos:'✊', mandibula:'😬', hombros:'🙆', ceño:'😠', irritable:'⚡'
+  };
+  var fraseTextos = {
+    nopuedo:'"No puedo más"', siempreigual:'"Siempre igual"',
+    noescucha:'"No me escucha nunca"', gritar:'"Siempre tengo que gritar"',
+    amenazar:'"No funciona si no amenazo"', paciencia:'"No tengo paciencia, no sirvo para esto"',
+    peorpadre:'"Soy el peor padre / la peor madre"', nolegusta:'"No me gusta cómo soy en estos momentos"'
+  };
+  var fraseRespuestas = {
+    nopuedo:'Esta frase aparece cuando el cuerpo ya está en rojo. Es una señal para parar, no para seguir. Si la escuchas, es el momento de activar tu plan.',
+    siempreigual:'Cuando todo parece igual, el cerebro está en modo automático. Eso es exactamente el piloto automático del que hablamos en el vídeo.',
+    noescucha:'Tu hijo/a no te ignora a propósito. Su cerebro todavía está aprendiendo. Esta frase te avisa de que necesitas bajar el ritmo.',
+    gritar:'Si gritar se ha convertido en el recurso habitual, es señal de que el umbral de tolerancia está muy bajo. Tu plan de autocuidado está aquí para ayudarte a subirlo.',
+    amenazar:'Amenazar funciona a corto plazo pero genera más tensión. Esta frase te avisa de que necesitas más herramientas, y las estás construyendo.',
+    paciencia:'La paciencia no es una cualidad innata, es una capacidad que se entrena. Y se entrena cuidándote. Estás en el camino correcto.',
+    peorpadre:'Esta frase es culpa, no realidad. El hecho de que te importe tanto ya dice mucho de ti. Los peores padres y madres no se hacen esta pregunta.',
+    nolegusta:'No gustarte a ti mismo/a en esos momentos es una señal de conciencia, no de fracaso. Es el punto de partida del cambio.'
+  };
+  var cuidadoTextos = {
+    pasear:'Pasear al aire libre', deporte:'Deporte o running', leer:'Lectura',
+    musica:'Música', silencio:'Silencio y descanso', serie:'Serie o película',
+    creativo:'Actividad creativa', amigos:'Tiempo con amistades', escribir:'Escritura o diario',
+    respirar:'Respiración o meditación', cuidado:'Rutina de cuidado personal'
+  };
+  var momentoTextos = {
+    manana:'por la mañana antes de que empiece el día',
+    mediodia:'al mediodía en el descanso',
+    tarde:'a media tarde',
+    noche:'por la noche cuando los niños duermen',
+    variable:'en el momento del día que puedas'
+  };
+  var dias = ['L','M','X','J','V','S','D'];
+  var diasNombre = ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'];
+
+  // GENERAR PLAN
+  window.prGenerarPlan = function() {
+    var c = datos.cuidado;
+    var m = datos.momento;
+    var sits = datos.sit;
+    var señales = datos.señal;
+    var frases = datos.frase;
+
+    // Asignar actividades a días
+    var planSemanal = [];
+    for(var i=0; i<7; i++){
+      planSemanal.push(c[i % c.length]);
+    }
+
+    // Nivel de intensidad basado en nº de señales
+    var intensidad = señales.length <= 2 ? 'moderado' : señales.length <= 5 ? 'medio' : 'alto';
+    var intensidadTexto = intensidad==='moderado' ? 'moderado' : intensidad==='medio' ? 'medio-alto' : 'alto';
+
+    var html = '';
+
+    // HERO
+    html += '<div class="plan-hero">';
+    html += '<div class="plan-hero-icon">🌿</div>';
+    html += '<span class="step-label">Tu plan personalizado</span>';
+    html += '<h2 class="h2" style="margin-bottom:12px;">Aquí está tu mapa de regulación</h2>';
+    html += '<p style="font-size:14px;color:#6a6a6a;line-height:1.7;">Este plan está hecho a partir de lo que tú mismo/a has identificado. Guárdalo, imprímelo y tenlo cerca. No es un objetivo de perfección, es una guía de conciencia.</p>';
+    html += '</div>';
+
+    // BLOQUE 1: TUS DISPARADORES
+    html += '<div class="plan-section">';
+    html += '<span class="plan-section-label">Tus situaciones de desbordamiento</span>';
+    html += '<h3>Cuando estas situaciones aparezcan, tu sistema nervioso se activará. Ya lo sabes. Eso te da ventaja.</h3>';
+    html += '<ul class="plan-list">';
+    sits.forEach(function(s){ html += '<li>'+sitTextos[s]+'</li>'; });
+    html += '</ul>';
+    html += '<p style="font-size:13px;color:#8a8a8a;margin-top:14px;line-height:1.6;font-style:italic;">Anticípate: antes de que llegue alguna de estas situaciones, haz una respiración consciente. Solo una. Eso ya cambia el punto de partida.</p>';
+    html += '</div>';
+
+    // BLOQUE 2: TUS SEÑALES
+    html += '<div class="plan-section">';
+    html += '<span class="plan-section-label">Tus señales de alerta</span>';
+    html += '<h3>Tu cuerpo avisa antes de que explotes. Tu nivel de activación es <strong>'+intensidadTexto+'</strong>. Estas son tus señales:</h3>';
+    señales.forEach(function(s){
+      html += '<div class="plan-signal"><span class="plan-signal-icon">'+señalIconos[s]+'</span><span>'+señalTextos[s]+'</span></div>';
+    });
+    html += '<p style="font-size:13px;color:#8a8a8a;margin-top:14px;line-height:1.6;font-style:italic;">Cuando notes cualquiera de estas señales, es el momento de parar. No después. Ahora.</p>';
+    html += '</div>';
+
+    // BLOQUE 3: TUS FRASES
+    html += '<div class="plan-section">';
+    html += '<span class="plan-section-label">Tu voz interna</span>';
+    html += '<h3>Estas son las frases que aparecen en tu piloto automático. Reconocerlas ya las desactiva un poco.</h3>';
+    frases.forEach(function(f){
+      html += '<div class="plan-frase">'+fraseTextos[f]+'</div>';
+      html += '<p style="font-size:13px;color:#6a6a6a;margin-bottom:14px;line-height:1.6;">'+fraseRespuestas[f]+'</p>';
+    });
+    html += '</div>';
+
+    // BLOQUE 4: PLAN SEMANAL
+    html += '<div class="plan-section">';
+    html += '<span class="plan-section-label">Tu plan semanal de autocuidado</span>';
+    html += '<h3>Una actividad para cada día, '+momentoTextos[m]+'.</h3>';
+    html += '<p style="font-size:13px;color:#8a8a8a;margin-bottom:14px;line-height:1.6;font-style:italic;">No se trata de cumplirlo perfectamente. Se trata de intentarlo. Cada día que te cuidas es un día que cuidas también a tu hijo/a.</p>';
+    html += '<div class="plan-dias">';
+    for(var d=0; d<7; d++){
+      html += '<div class="plan-dia">';
+      html += '<div class="plan-dia-nombre">'+dias[d]+'</div>';
+      html += '<div class="plan-dia-momento">'+cuidadoTextos[planSemanal[d]]+'</div>';
+      html += '</div>';
+    }
+    html += '</div></div>';
+
+    // BLOQUE 5: PROTOCOLO DE EMERGENCIA
+    html += '<div class="plan-section">';
+    html += '<span class="plan-section-label">Tu protocolo de emergencia</span>';
+    html += '<h3>Cuando notes tus señales de alerta, sigue estos pasos:</h3>';
+    html += '<ul class="plan-list">';
+    html += '<li><strong>Para.</strong> No hables, no actúes. Solo para.</li>';
+    html += '<li><strong>Respira.</strong> Una respiración profunda. Inhala 4 segundos, exhala 6.</li>';
+    html += '<li><strong>Nómbralo.</strong> Di en voz baja cómo te sientes: "Estoy agotado/a", "Estoy frustrado/a".</li>';
+    html += '<li><strong>Baja la mirada.</strong> Recuerda: el comportamiento de tu hijo/a no es un ataque personal, es su cerebro aprendiendo.</li>';
+    html += '<li><strong>Pide tiempo.</strong> Si puedes, date un minuto de distancia antes de responder.</li>';
+    html += '</ul></div>';
+
+    // COMPROMISO
+    html += '<div class="plan-compromiso">';
+    html += '<p>"Me comprometo a cuidarme, no como un lujo sino como una necesidad. Porque cuando estoy bien, puedo dar lo mejor de mí a quienes más quiero."</p>';
+    html += '</div>';
+
+    document.getElementById('pr-plan-contenido').innerHTML = html;
+  };
+
+  window.prReiniciar = function() {
+    datos = { sit:[], señal:[], frase:[], cuidado:[], momento:'' };
+    document.querySelectorAll('#plan-reg .opt.sel').forEach(function(o){ o.classList.remove('sel'); });
+    prGo('pr-s0');
+  };
+
+})();
+</script>
+</body>
+</html>

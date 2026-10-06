@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Carta Personal · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+#carta-syn {
+  --verde:#8FAF9A; --beige:#F3EDE4; --antracita:#3A3A3A;
+  --terracota:#D08770; --verde-claro:#E4EFE8; --blanco:#FFFFFF;
+  --sombra:rgba(58,58,58,0.07);
+  font-family:'DM Sans',sans-serif;
+  color:var(--antracita);
+  background:var(--beige);
+  padding:0 0 80px;
+  max-width:660px;
+  margin:0 auto;
+}
+#carta-syn * { box-sizing:border-box; margin:0; padding:0; }
+#carta-syn .s { display:none; }
+#carta-syn .s.on { display:block; animation:synFade .5s ease; }
+@keyframes synFade { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+#carta-syn .hd { padding:28px 28px 0; display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
+#carta-syn .logo { font-family:'Playfair Display',serif; font-size:17px; display:flex; align-items:center; gap:6px; }
+#carta-syn .logo-dot { width:6px;height:6px;background:var(--verde);border-radius:50%; }
+#carta-syn .badge { font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);background:var(--verde-claro);padding:5px 12px;border-radius:20px; }
+#carta-syn .body { padding:0 28px; }
+
+/* PROGRESS */
+#carta-syn .prog { height:3px;background:var(--verde-claro);border-radius:2px;margin-bottom:32px; }
+#carta-syn .prog-fill { height:100%;background:var(--verde);border-radius:2px;transition:width .6s ease; }
+
+/* TIPOGRAFÍA */
+#carta-syn .eyebrow { font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--verde);margin-bottom:10px;display:block; }
+#carta-syn .h1 { font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,38px);line-height:1.2;margin-bottom:16px; }
+#carta-syn .h1 em { font-style:italic;color:var(--verde); }
+#carta-syn .h2 { font-family:'Playfair Display',serif;font-size:clamp(18px,3.5vw,24px);line-height:1.3;margin-bottom:10px; }
+#carta-syn .lead { font-size:15px;line-height:1.75;color:#6a6a6a;margin-bottom:24px; }
+#carta-syn .step-num { font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--verde);margin-bottom:8px;display:block; }
+
+#carta-syn .intro-card { background:var(--blanco);border-radius:16px;padding:24px 26px;margin-bottom:28px;border-left:4px solid var(--verde);box-shadow:0 2px 12px var(--sombra); }
+#carta-syn .intro-card p { font-size:14px;line-height:1.75;color:#5a5a5a;font-style:italic; }
+
+/* OPCIONES */
+#carta-syn .opts { display:flex;flex-direction:column;gap:10px;margin-bottom:6px; }
+#carta-syn .opt { display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:14px;border:1.5px solid #E8E2D9;cursor:pointer;transition:all .22s;background:var(--blanco);box-shadow:0 1px 6px var(--sombra); }
+#carta-syn .opt:hover { border-color:var(--verde);background:var(--verde-claro);transform:translateX(3px); }
+#carta-syn .opt.sel { border-color:var(--verde);background:var(--verde-claro); }
+#carta-syn .opt-circle { width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid #C8C2B8;flex-shrink:0;margin-top:2px;transition:all .2s;position:relative; }
+#carta-syn .opt.sel .opt-circle { background:var(--verde);border-color:var(--verde); }
+#carta-syn .opt.sel .opt-circle::after { content:'';width:7px;height:7px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%); }
+#carta-syn .opt-content { flex:1; }
+#carta-syn .opt-title { font-size:14px;font-weight:500;color:var(--antracita);margin-bottom:3px;line-height:1.4; }
+#carta-syn .opt-desc { font-size:12px;color:#8a8a8a;line-height:1.5; }
+
+/* BLOQUE PREGUNTA */
+#carta-syn .q-block { background:var(--blanco);border-radius:16px;padding:24px 26px;margin-bottom:20px;box-shadow:0 2px 10px var(--sombra); }
+#carta-syn .q-label { font-size:15px;font-weight:600;color:var(--antracita);margin-bottom:6px;line-height:1.5; }
+#carta-syn .q-sub { font-size:12px;color:#9a9a9a;margin-bottom:14px;font-style:italic; }
+
+/* BOTONES */
+#carta-syn .btn { display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--verde);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:16px 36px;border-radius:50px;border:none;cursor:pointer;transition:all .22s;width:100%;margin-top:8px; }
+#carta-syn .btn:hover { background:#7a9e85;transform:translateY(-2px);box-shadow:0 8px 24px rgba(143,175,154,.4); }
+#carta-syn .btn-ghost { display:inline-flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#8a8a8a;font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 24px;border-radius:50px;border:1.5px solid #DDD8D0;cursor:pointer;transition:all .2s;width:100%;margin-top:10px; }
+#carta-syn .btn-ghost:hover { border-color:var(--antracita);color:var(--antracita); }
+#carta-syn .back { display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#8a8a8a;cursor:pointer;margin-bottom:24px;padding:8px 0;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s; }
+#carta-syn .back:hover { color:var(--antracita); }
+#carta-syn .val-msg { display:none;background:#FFF3EE;border:1px solid var(--terracota);color:var(--terracota);font-size:13px;padding:10px 14px;border-radius:8px;margin-top:10px; }
+#carta-syn .val-msg.show { display:block; }
+
+/* CARTA */
+#carta-syn .carta-wrap { background:var(--blanco);border-radius:20px;overflow:hidden;box-shadow:0 6px 32px rgba(58,58,58,.1);margin-bottom:20px; }
+#carta-syn .carta-top { background:var(--verde);padding:24px 28px;display:flex;align-items:center;gap:14px; }
+#carta-syn .carta-avatar { width:48px;height:48px;background:rgba(255,255,255,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0; }
+#carta-syn .carta-from { flex:1; }
+#carta-syn .carta-nombre { font-family:'Playfair Display',serif;font-size:16px;color:#fff;font-weight:600;margin-bottom:2px; }
+#carta-syn .carta-sub { font-size:11px;color:rgba(255,255,255,.8);letter-spacing:.5px; }
+#carta-syn .carta-fecha { font-size:11px;color:rgba(255,255,255,.7); }
+#carta-syn .carta-body { padding:32px 28px; }
+#carta-syn .carta-saludo { font-family:'Playfair Display',serif;font-size:18px;color:var(--antracita);margin-bottom:24px;font-style:italic; }
+#carta-syn .carta-texto { font-size:15px;line-height:2;color:#3a3a3a; }
+#carta-syn .carta-texto p { margin-bottom:20px; }
+#carta-syn .carta-texto p:last-child { margin-bottom:0; }
+#carta-syn .carta-firma-wrap { padding:20px 28px 28px;border-top:1px solid var(--verde-claro); }
+#carta-syn .carta-firma { font-family:'Playfair Display',serif;font-size:15px;color:var(--verde);font-style:italic;margin-bottom:4px; }
+#carta-syn .carta-firma-sub { font-size:11px;color:#9a9a9a;letter-spacing:.5px;text-transform:uppercase; }
+
+/* PERFIL BADGE */
+#carta-syn .perfil-badge { display:inline-flex;align-items:center;gap:8px;background:var(--verde-claro);border-radius:50px;padding:8px 16px;font-size:12px;font-weight:500;color:#3a5a45;margin-bottom:20px; }
+
+@media(max-width:600px){
+  #carta-syn .hd,#carta-syn .body { padding-left:18px;padding-right:18px; }
+  #carta-syn .carta-body,#carta-syn .carta-top,#carta-syn .carta-firma-wrap { padding-left:20px;padding-right:20px; }
+}
+@media print {
+  #carta-syn .hd,#carta-syn .btn,#carta-syn .btn-ghost,#carta-syn .back,
+  #carta-syn .prog,#carta-syn .eyebrow,#carta-syn h2,#carta-syn .perfil-badge { display:none!important; }
+  #carta-syn { background:#fff;padding:0; }
+  #carta-syn .carta-wrap { box-shadow:none; }
+}
+body, .elementor-widget-container, .elementor-widget-html, .elementor-column-wrap, .elementor-column, .elementor-section {
+  background-color: #F3EDE4 !important;
+}
+</style>
+<div id="carta-syn">
+<!-- S0: BIENVENIDA -->
+<div class="s on" id="cs-s0">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/><span class="badge">Bloque del Adulto</span></div>
+<div class="body">
+<span class="eyebrow">Recurso emocional</span>
+<h1 class="h1">La carta que<br/><em>nadie te escribió</em></h1>
+<p class="lead">Hay cosas que necesitabas escuchar y nadie te dijo. Responde unas preguntas sobre cómo estás viviendo la crianza y recibirás una carta escrita para ti.</p>
+<div class="intro-card">
+<p>No hay respuestas buenas ni malas. Cuanto más sincero/a seas, más conectará con lo que estás viviendo. Tómate el tiempo que necesites.</p>
+</div>
+<button class="btn" onclick="csGo('cs-s1')">Empezar →</button>
+</div>
+</div>
+<!-- S1: PREGUNTA 1 -->
+<div class="s" id="cs-s1">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="csGo('cs-s0')">← Volver</button>
+<div class="prog"><div class="prog-fill" style="width:20%"></div></div>
+<span class="step-num">Pregunta 1 de 4</span>
+<h2 class="h2">¿Cuál es el momento del día con tu hijo/a que más te cuesta ahora mismo?</h2>
+<p class="lead">Piensa en el día de hoy, o en la semana. ¿Qué momento aparece primero en tu cabeza?</p>
+<div class="q-block">
+<p class="q-sub">Elige la opción que más se acerque</p>
+<div class="opts" id="cs-opts1">
+<div class="opt" onclick="csSel(this,1,'mananas')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Las mañanas o las rutinas</div><div class="opt-desc">Las prisas, que no coopera, que todo se convierte en batalla</div></div>
+</div>
+<div class="opt" onclick="csSel(this,1,'rabietas')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Las rabietas o los momentos de desbordamiento</div><div class="opt-desc">Los llantos, los gritos, tirarse al suelo, perder el control</div></div>
+</div>
+<div class="opt" onclick="csSel(this,1,'limites')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Cuando no obedece o dice que no</div><div class="opt-desc">Repetir las cosas mil veces sin que pase nada</div></div>
+</div>
+<div class="opt" onclick="csSel(this,1,'noche')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">El final del día, la hora de dormir</div><div class="opt-desc">Cuando ya no queda energía y aún queda mucho por delante</div></div>
+</div>
+<div class="opt" onclick="csSel(this,1,'todo')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Cualquier momento puede estallar</div><div class="opt-desc">Siento que estoy en tensión constante, sin saber cuándo va a explotar</div></div>
+</div>
+</div>
+</div>
+<div class="val-msg" id="cs-val-1">Por favor, elige una opción para continuar.</div>
+<button class="btn" onclick="csNext(1)">Siguiente →</button>
+</div>
+</div>
+<!-- S2: PREGUNTA 2 -->
+<div class="s" id="cs-s2">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="csGo('cs-s1')">← Volver</button>
+<div class="prog"><div class="prog-fill" style="width:40%"></div></div>
+<span class="step-num">Pregunta 2 de 4</span>
+<h2 class="h2">¿Cómo sueles reaccionar cuando pierdes el control?</h2>
+<p class="lead">Sin juicio. Todos reaccionamos de alguna manera. ¿Cuál es la tuya?</p>
+<div class="q-block">
+<p class="q-sub">Elige la que más te identifique</p>
+<div class="opts" id="cs-opts2">
+<div class="opt" onclick="csSel(this,2,'grito')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Levanto la voz o reacciono de golpe</div><div class="opt-desc">Y después me siento fatal por ello</div></div>
+</div>
+<div class="opt" onclick="csSel(this,2,'cedo')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Cedo para que todo pare cuanto antes</div><div class="opt-desc">Evito el conflicto aunque sepa que no es lo correcto</div></div>
+</div>
+<div class="opt" onclick="csSel(this,2,'bloqueo')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Me bloqueo y no sé qué hacer</div><div class="opt-desc">No sé si lo estoy haciendo bien ni cómo actuar</div></div>
+</div>
+<div class="opt" onclick="csSel(this,2,'exijo')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Me frustro porque espero más de él/ella</div><div class="opt-desc">Me desespera que no lo entienda o que no pueda hacerlo</div></div>
+</div>
+<div class="opt" onclick="csSel(this,2,'automatico')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Actúo en modo automático y luego me reconozco</div><div class="opt-desc">Repito cosas que viví de pequeño/a y no quería repetir</div></div>
+</div>
+</div>
+</div>
+<div class="val-msg" id="cs-val-2">Por favor, elige una opción para continuar.</div>
+<button class="btn" onclick="csNext(2)">Siguiente →</button>
+</div>
+</div>
+<!-- S3: PREGUNTA 3 -->
+<div class="s" id="cs-s3">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="csGo('cs-s2')">← Volver</button>
+<div class="prog"><div class="prog-fill" style="width:60%"></div></div>
+<span class="step-num">Pregunta 3 de 4</span>
+<h2 class="h2">¿Qué frase te dices a ti mismo/a cuando sientes que lo has hecho mal?</h2>
+<p class="lead">Esa voz interna que aparece justo después. ¿Cómo suena?</p>
+<div class="q-block">
+<p class="q-sub">La que más resuena en ti</p>
+<div class="opts" id="cs-opts3">
+<div class="opt" onclick="csSel(this,3,'nopuedo')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">"No puedo más. Siempre igual."</div><div class="opt-desc">Agotamiento profundo, sensación de que nada cambia</div></div>
+</div>
+<div class="opt" onclick="csSel(this,3,'nosé')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">"No sé si lo estoy haciendo bien."</div><div class="opt-desc">Duda constante, falta de criterio o seguridad</div></div>
+</div>
+<div class="opt" onclick="csSel(this,3,'repito')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">"Estoy haciendo lo mismo que viví de pequeño/a."</div><div class="opt-desc">Me veo repitiendo y no sé cómo parar</div></div>
+</div>
+<div class="opt" onclick="csSel(this,3,'limite')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">"No sé cómo poner límites sin que todo explote."</div><div class="opt-desc">Evito el conflicto porque no sé cómo sostenerlo</div></div>
+</div>
+<div class="opt" onclick="csSel(this,3,'dificil')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">"No entiendo por qué le cuesta tanto."</div><div class="opt-desc">Me frustra que no pueda o no quiera hacer lo que espero</div></div>
+</div>
+</div>
+</div>
+<div class="val-msg" id="cs-val-3">Por favor, elige una opción para continuar.</div>
+<button class="btn" onclick="csNext(3)">Siguiente →</button>
+</div>
+</div>
+<!-- S4: PREGUNTA 4 -->
+<div class="s" id="cs-s4">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="csGo('cs-s3')">← Volver</button>
+<div class="prog"><div class="prog-fill" style="width:80%"></div></div>
+<span class="step-num">Pregunta 4 de 4</span>
+<h2 class="h2">¿Cómo describes la crianza en este momento?</h2>
+<p class="lead">La última. La más importante. La primera que te venga.</p>
+<div class="q-block">
+<p class="q-sub">Elige la que más conecte con cómo te sientes ahora mismo</p>
+<div class="opts" id="cs-opts4">
+<div class="opt" onclick="csSel(this,4,'agotado')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Con mucho amor, pero también con mucho agotamiento</div><div class="opt-desc">Quiero hacerlo bien pero estoy al límite</div></div>
+</div>
+<div class="opt" onclick="csSel(this,4,'perdido')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Con mucha información pero sin saber qué hacer</div><div class="opt-desc">Leo, escucho, pruebo... pero nada acaba de encajar</div></div>
+</div>
+<div class="opt" onclick="csSel(this,4,'culpa')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Con culpa. Sintiéndome que no llego.</div><div class="opt-desc">Me comparo, me exijo, me juzgo demasiado</div></div>
+</div>
+<div class="opt" onclick="csSel(this,4,'conflicto')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Como una lucha constante</div><div class="opt-desc">Todo se convierte en negociación, conflicto o tensión</div></div>
+</div>
+<div class="opt" onclick="csSel(this,4,'patron')">
+<div class="opt-circle"></div>
+<div class="opt-content"><div class="opt-title">Queriendo hacerlo diferente a como me criaron</div><div class="opt-desc">Sé lo que no quiero repetir pero no sé cómo hacerlo distinto</div></div>
+</div>
+</div>
+</div>
+<div class="val-msg" id="cs-val-4">Por favor, elige una opción para continuar.</div>
+<button class="btn" onclick="csNext(4)">Ver mi carta →</button>
+</div>
+</div>
+<!-- S5: CARTA -->
+<div class="s" id="cs-s5">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<div class="prog"><div class="prog-fill" style="width:100%"></div></div>
+<span class="eyebrow">Tu carta personal</span>
+<h2 class="h2" style="margin-bottom:8px;">Esto es lo que necesitabas leer</h2>
+<p style="font-size:14px;color:#6a6a6a;margin-bottom:20px;line-height:1.6;">Léela con calma. Sin prisa.</p>
+<div class="perfil-badge" id="cs-perfil-badge"></div>
+<div class="carta-wrap">
+<div class="carta-top">
+<div class="carta-avatar">🌿</div>
+<div class="carta-from">
+<div class="carta-nombre">Paloma</div>
+<div class="carta-sub">Synesis · Método de crianza consciente</div>
+</div>
+<div class="carta-fecha" id="cs-fecha"></div>
+</div>
+<div class="carta-body">
+<p class="carta-saludo">Querido/a,</p>
+<div class="carta-texto" id="cs-carta-texto"></div>
+</div>
+<div class="carta-firma-wrap">
+<div class="carta-firma">Con cariño y sin juicio,<br/>Paloma</div>
+<div class="carta-firma-sub" style="margin-top:6px;">Synesis · Método de crianza consciente</div>
+</div>
+</div>
+<button class="btn" onclick="window.print()" style="background:var(--antracita);">🖨 Guardar o imprimir mi carta</button>
+<button class="btn-ghost" onclick="csReiniciar()">Volver a empezar →</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+
+  var respuestas = { q1:'', q2:'', q3:'', q4:'' };
+
+  // CARTAS
+  var cartas = {
+    desbordado: {
+      perfil: '💛 El adulto desbordado',
+      texto: [
+        'Hay días en los que sientes que no puedes más.',
+        'Empiezas con intención. Te dices que hoy vas a tener más paciencia, que lo vas a hacer mejor… y en algún momento, algo se rompe. Levantas la voz. Te aceleras. Reaccionas.',
+        'Y justo después llega el silencio. Y esa sensación que pesa tanto.\n"¿Por qué otra vez?"\n"¿Por qué no puedo controlarme?"\n"Mi hijo/a no se merece esto…"',
+        'Y ahí es donde más duele. Porque no es que no te importe. Es que te importa demasiado. Pero estás cansado/a. Saturado/a. Sobrepasado/a. Y nadie te enseñó a sostener todo esto mientras educas. Nadie te enseñó a calmarte mientras tu hijo/a está desbordado. Nadie te enseñó a parar cuando todo dentro de ti va rápido.',
+        'Y aun así… lo sigues intentando. Sigues buscando. Sigues cuestionándote. Sigues queriendo hacerlo mejor. Y eso dice muchísimo de ti.',
+        'No eres un mal padre o una mala madre. Eres un adulto que está aprendiendo a hacerlo diferente. Y aquí no vienes a hacerlo perfecto. Vienes a entenderte, a regularte y a acompañar mejor.',
+        'Y eso… se aprende. Estás en el lugar correcto. Y no estás solo/a en esto.'
+      ]
+    },
+    duda: {
+      perfil: '🔍 El adulto que duda constantemente',
+      texto: [
+        'A veces sientes que estás perdido/a.',
+        'Lees cosas, escuchas, pruebas… pero en el fondo, siempre aparece la misma sensación: "No sé si lo estoy haciendo bien." Y eso cansa. Porque quieres hacerlo bien. De verdad. Pero no tienes claridad.',
+        'Y entonces dudas… y cuando dudas, te insegurizas… y cuando te insegurizas, todo se vuelve más difícil. Te gustaría tener una forma clara de actuar. Sentir que sabes lo que haces. Sentir que puedes sostener las situaciones sin tanta incertidumbre.',
+        'Pero hasta ahora… nadie te ha dado eso. Y no porque no seas capaz. Sino porque es difícil encontrar un camino que de verdad tenga sentido.',
+        'Y aun así, sigues aquí. Buscando entender. Buscando hacerlo mejor. Buscando una forma que encaje contigo. Y eso es muy valioso.',
+        'No necesitas saberlo todo. Necesitas empezar a comprender lo importante. Poco a poco. Sin prisa. Con sentido.',
+        'Y eso es justo lo que estás empezando a construir ahora. Respira. No estás tan perdido/a como sientes. Estás empezando a encontrar tu camino.'
+      ]
+    },
+    patron: {
+      perfil: '🔄 El adulto que repite patrones',
+      texto: [
+        'Hay momentos en los que te ves desde fuera… y no te gusta lo que ves.',
+        'Reaccionas, dices algo, actúas de una forma… y en cuanto pasa, lo sientes: "Esto no es lo que quería hacer." "Estoy haciendo lo mismo que viví." Y duele. Duele porque tú querías hacerlo diferente. Porque prometiste que no repetirías eso. Porque sabes cómo se siente estar al otro lado.',
+        'Pero aun así… ocurre. Y ahí aparece la culpa. La frustración. La sensación de estar fallando.',
+        'Pero escúchame bien: no estás repitiendo porque quieras. Estás repitiendo porque es lo que aprendiste. Porque tu cerebro guarda esas respuestas como automáticas. Porque en momentos de tensión, sale lo conocido.',
+        'Y cambiar eso… no es inmediato. Es un proceso. Un proceso en el que primero te das cuenta. Luego entiendes. Y poco a poco… empiezas a elegir diferente.',
+        'Y tú ya estás en ese punto. Te estás viendo. Te estás cuestionando. Estás parando algo que lleva años dentro. Eso no es fallar. Eso es empezar a cambiar.',
+        'No necesitas hacerlo perfecto. Solo necesitas seguir siendo consciente. Y cada vez que te das cuenta… ya lo estás haciendo diferente.'
+      ]
+    },
+    conflicto: {
+      perfil: '🤍 El adulto que evita el conflicto',
+      texto: [
+        'Te cuesta sostener esos momentos.',
+        'Cuando tu hijo/a se enfada, llora o se desborda… algo dentro de ti quiere que eso termine cuanto antes. Porque incomoda. Porque duele. Porque te remueve. Y muchas veces, sin darte cuenta, cedes. No porque no creas en los límites. Sino porque no sabes cómo mantenerlos sin que todo se rompa.',
+        'Y eso te deja en un punto difícil. Porque sabes que así no es… pero tampoco sabes cómo hacerlo diferente. Y entonces te sientes perdido/a.',
+        'Pero déjame decirte algo importante: el problema no es que haya conflicto. El problema es no saber cómo estar dentro de él. Porque el conflicto forma parte de la crianza. Y tu hijo/a no necesita que lo evites. Necesita que le acompañes. Que estés ahí. Que sostengas. Que pongas límites… sin romper el vínculo.',
+        'Y eso es algo que puedes aprender. No tienes que elegir entre paz o límites. Puedes construir ambas cosas.',
+        'Y eso es justo lo que estás empezando a hacer aquí. Paso a paso. A tu ritmo. Sin tener que hacerlo perfecto.'
+      ]
+    },
+    exigente: {
+      perfil: '⭐ El adulto exigente',
+      texto: [
+        'Hay momentos en los que te desesperas.',
+        'Sientes que ya lo has explicado. Que ya debería entenderlo. Que no puede ser tan difícil. Y cuando no ocurre… te frustras. Porque en tu cabeza tiene sentido. Porque tú sí puedes hacerlo. Porque esperas que él/ella también pueda.',
+        'Pero no es así. Y eso genera tensión.',
+        'Hay algo importante que puede cambiar tu forma de verlo: tu hijo/a no está en tu punto. No tiene tu capacidad. No tiene tu control. No tiene tu regulación. No es que no quiera hacerlo mejor. Es que muchas veces… todavía no puede.',
+        'Y cuando entiendes eso… algo se afloja. Baja la exigencia. Aparece más paciencia. Y empiezas a acompañar desde otro lugar.',
+        'No necesitas exigir más. Necesitas comprender mejor. Y eso es justo lo que estás empezando a hacer.',
+        'No estás haciéndolo mal. Estás ajustando la mirada. Y ese cambio… transforma todo.'
+      ]
+    }
+  };
+
+  // LÓGICA DE PERFIL
+  // Las respuestas de cada pregunta votan por un perfil
+  var votos = {
+    // Q1
+    mananas: 'desbordado', rabietas: 'desbordado', limites: 'conflicto',
+    noche: 'desbordado', todo: 'desbordado',
+    // Q2
+    grito: 'desbordado', cedo: 'conflicto', bloqueo: 'duda',
+    exijo: 'exigente', automatico: 'patron',
+    // Q3
+    nopuedo: 'desbordado', 'nosé': 'duda', repito: 'patron',
+    limite: 'conflicto', dificil: 'exigente',
+    // Q4
+    agotado: 'desbordado', perdido: 'duda', culpa: 'desbordado',
+    conflicto: 'conflicto', patron: 'patron'
+  };
+
+  function calcularPerfil() {
+    var conteo = { desbordado:0, duda:0, patron:0, conflicto:0, exigente:0 };
+    [respuestas.q1, respuestas.q2, respuestas.q3, respuestas.q4].forEach(function(r){
+      var p = votos[r];
+      if(p) conteo[p]++;
+    });
+    var max = 0;
+    var perfil = 'desbordado';
+    Object.keys(conteo).forEach(function(k){
+      if(conteo[k] > max){ max = conteo[k]; perfil = k; }
+    });
+    return perfil;
+  }
+
+  // SELECCIÓN
+  window.csSel = function(el, q, val) {
+    var group = el.closest('.opts');
+    group.querySelectorAll('.opt').forEach(function(o){ o.classList.remove('sel'); });
+    el.classList.add('sel');
+    respuestas['q'+q] = val;
+  };
+
+  // VALIDAR Y AVANZAR
+  window.csNext = function(step) {
+    var val = document.getElementById('cs-val-'+step);
+    var ok = respuestas['q'+step] !== '';
+    if(!ok){ if(val) val.classList.add('show'); return; }
+    if(val) val.classList.remove('show');
+    if(step===4){
+      var perfil = calcularPerfil();
+      var carta = cartas[perfil];
+      var badge = document.getElementById('cs-perfil-badge');
+      var texto = document.getElementById('cs-carta-texto');
+      var fecha = document.getElementById('cs-fecha');
+      if(badge) badge.textContent = carta.perfil;
+      if(texto) texto.innerHTML = carta.texto.map(function(p){
+        return '<p>'+p.replace(/\n/g,'<br>')+'</p>';
+      }).join('');
+      if(fecha){
+        var d = new Date();
+        var meses=['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+        fecha.textContent = d.getDate()+' de '+meses[d.getMonth()]+' de '+d.getFullYear();
+      }
+      csGo('cs-s5');
+    } else {
+      csGo('cs-s'+(step+1));
+    }
+  };
+
+  // NAVEGACIÓN
+  window.csGo = function(id) {
+    document.querySelectorAll('#carta-syn .s').forEach(function(s){ s.classList.remove('on'); });
+    document.getElementById(id).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // REINICIAR
+  window.csReiniciar = function() {
+    respuestas = { q1:'', q2:'', q3:'', q4:'' };
+    document.querySelectorAll('#carta-syn .opt.sel').forEach(function(o){ o.classList.remove('sel'); });
+    csGo('cs-s0');
+  };
+
+})();
+</script>
+</body>
+</html>

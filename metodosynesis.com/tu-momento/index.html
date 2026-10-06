@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Momento para ti · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+#syn-reg { --verde:#8FAF9A; --beige:#F3EDE4; --antracita:#3A3A3A; --terracota:#D08770; --verde-claro:#E4EFE8; --blanco:#FFFFFF; font-family:'DM Sans',sans-serif; color:var(--antracita); background:var(--beige); padding:0 0 80px; max-width:640px; margin:0 auto; }
+#syn-reg * { box-sizing:border-box; margin:0; padding:0; }
+#syn-reg .s { display:none; }
+#syn-reg .s.on { display:block; animation:sfade .45s ease; }
+@keyframes sfade { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+
+/* HEADER */
+#syn-reg .hd { padding:28px 28px 0; display:flex; align-items:center; justify-content:space-between; margin-bottom:36px; }
+#syn-reg .logo { font-family:'Playfair Display',serif; font-size:17px; display:flex; align-items:center; gap:6px; }
+#syn-reg .logo-dot { width:6px;height:6px;background:var(--verde);border-radius:50%; }
+#syn-reg .badge { font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:var(--verde);background:var(--verde-claro);padding:5px 12px;border-radius:20px; }
+
+/* CUERPO */
+#syn-reg .body { padding:0 28px; }
+
+/* INICIO */
+#syn-reg .hero-icon { width:88px;height:88px;background:var(--blanco);border-radius:50%;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;font-size:38px;box-shadow:0 4px 28px rgba(143,175,154,.25);animation:pulse 3s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{box-shadow:0 4px 28px rgba(143,175,154,.25)} 50%{box-shadow:0 4px 44px rgba(143,175,154,.5)} }
+#syn-reg .h1 { font-family:'Playfair Display',serif;font-size:clamp(28px,5vw,40px);line-height:1.2;margin-bottom:16px;text-align:center; }
+#syn-reg .h1 em { font-style:italic;color:var(--verde); }
+#syn-reg .lead { font-size:15px;line-height:1.75;color:#6a6a6a;text-align:center;margin-bottom:36px;max-width:440px;margin-left:auto;margin-right:auto; }
+
+/* TARJETAS DE SELECCIÓN */
+#syn-reg .cards { display:flex;flex-direction:column;gap:14px;margin-bottom:8px; }
+#syn-reg .card { background:var(--blanco);border-radius:18px;padding:22px 22px;display:flex;align-items:center;gap:18px;cursor:pointer;border:2px solid transparent;transition:all .22s;box-shadow:0 2px 12px rgba(58,58,58,.07); }
+#syn-reg .card:hover { border-color:var(--verde);transform:translateX(4px);box-shadow:0 4px 20px rgba(143,175,154,.2); }
+#syn-reg .card-icon { width:54px;height:54px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0; }
+#syn-reg .card-body { flex:1; }
+#syn-reg .card-title { font-size:15px;font-weight:500;margin-bottom:4px; }
+#syn-reg .card-hint { font-size:12px;color:#8a8a8a;line-height:1.5; }
+#syn-reg .card-arrow { font-size:20px;color:#C8C2B8;flex-shrink:0; }
+
+/* BOTONES */
+#syn-reg .btn { display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--verde);color:#fff;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;padding:16px 36px;border-radius:50px;border:none;cursor:pointer;transition:all .22s;width:100%; }
+#syn-reg .btn:hover { background:#7a9e85;transform:translateY(-2px);box-shadow:0 8px 24px rgba(143,175,154,.4); }
+#syn-reg .btn-ghost { display:inline-flex;align-items:center;justify-content:center;gap:6px;background:transparent;color:#8a8a8a;font-family:'DM Sans',sans-serif;font-size:14px;padding:12px 24px;border-radius:50px;border:1.5px solid #DDD8D0;cursor:pointer;transition:all .2s;width:100%;margin-top:10px; }
+#syn-reg .btn-ghost:hover { border-color:var(--antracita);color:var(--antracita); }
+#syn-reg .back { display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#8a8a8a;cursor:pointer;margin-bottom:28px;padding:8px 0;background:none;border:none;font-family:'DM Sans',sans-serif;transition:color .2s; }
+#syn-reg .back:hover { color:var(--antracita); }
+
+/* ---- RESPIRACIÓN ---- */
+#syn-reg .breath-wrap { display:flex;flex-direction:column;align-items:center;padding:10px 0; }
+#syn-reg .breath-title { font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,26px);margin-bottom:8px;text-align:center; }
+#syn-reg .breath-sub { font-size:14px;color:#6a6a6a;text-align:center;margin-bottom:36px;line-height:1.6;max-width:400px; }
+
+#syn-reg .ring-wrap { position:relative;width:220px;height:220px;margin-bottom:28px; }
+#syn-reg .ring-outer { position:absolute;inset:0;border-radius:50%;background:var(--verde-claro);transition:transform 4s ease-in-out; }
+#syn-reg .ring-mid { position:absolute;width:170px;height:170px;border-radius:50%;background:rgba(143,175,154,.35);top:50%;left:50%;transform:translate(-50%,-50%);transition:transform 4s ease-in-out; }
+#syn-reg .ring-inner { position:absolute;width:120px;height:120px;border-radius:50%;background:var(--verde);top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 4s ease-in-out;gap:2px; }
+#syn-reg .ring-count { font-size:36px;font-weight:300;color:#fff;font-family:'DM Sans',sans-serif;line-height:1; }
+#syn-reg .ring-label { font-size:11px;color:rgba(255,255,255,.85);letter-spacing:.5px; }
+
+#syn-reg .breath-phase { font-size:18px;font-weight:500;color:var(--verde);text-align:center;min-height:28px;margin-bottom:6px;transition:opacity .4s; }
+#syn-reg .breath-instr { font-size:13px;color:#8a8a8a;text-align:center;margin-bottom:24px;line-height:1.5;min-height:36px; }
+#syn-reg .rounds { display:flex;gap:8px;margin-bottom:28px; }
+#syn-reg .rdot { width:10px;height:10px;border-radius:50%;background:#DDD8D0;transition:background .4s; }
+#syn-reg .rdot.done { background:var(--verde); }
+#syn-reg .rdot.now { background:var(--terracota); }
+
+/* ---- NOMBRA ---- */
+#syn-reg .nombra-title { font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,26px);margin-bottom:10px; }
+#syn-reg .nombra-sub { font-size:14px;color:#6a6a6a;margin-bottom:28px;line-height:1.7; }
+#syn-reg .chips { display:flex;flex-direction:column;gap:10px;margin-bottom:28px; }
+#syn-reg .chip { background:var(--blanco);border:1.5px solid #E8E2D9;border-radius:14px;padding:16px 20px;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:12px;box-shadow:0 1px 6px rgba(58,58,58,.05); }
+#syn-reg .chip:hover { border-color:var(--verde);background:var(--verde-claro); }
+#syn-reg .chip.picked { border-color:var(--verde);background:var(--verde-claro); }
+#syn-reg .chip.picked .chip-circle { background:var(--verde);border-color:var(--verde); }
+#syn-reg .chip.picked .chip-circle::after { opacity:1; }
+#syn-reg .chip-circle { width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid #C8C2B8;flex-shrink:0;position:relative;transition:all .2s; }
+#syn-reg .chip-circle::after { content:'';width:8px;height:8px;background:#fff;border-radius:50%;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0;transition:opacity .2s; }
+#syn-reg .chip-text { font-size:14px;line-height:1.4; }
+
+/* CARTA EMOCIONAL */
+#syn-reg .carta { display:none;background:var(--blanco);border-radius:20px;padding:32px 28px;margin-bottom:20px;box-shadow:0 4px 24px rgba(143,175,154,.2);border:2px solid var(--verde-claro); }
+#syn-reg .carta.show { display:block;animation:sfade .5s ease; }
+#syn-reg .carta-top { display:flex;align-items:center;gap:12px;margin-bottom:20px; }
+#syn-reg .carta-avatar { width:44px;height:44px;background:var(--verde-claro);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0; }
+#syn-reg .carta-from { font-size:13px;color:#8a8a8a; }
+#syn-reg .carta-from strong { display:block;font-size:14px;color:var(--antracita);font-weight:500; }
+#syn-reg .carta-divider { height:1px;background:var(--verde-claro);margin-bottom:20px; }
+#syn-reg .carta-body { font-size:15px;line-height:1.85;color:#3a3a3a; }
+#syn-reg .carta-body p { margin-bottom:14px; }
+#syn-reg .carta-body p:last-child { margin-bottom:0; }
+#syn-reg .carta-firma { margin-top:22px;padding-top:16px;border-top:1px solid var(--verde-claro);display:flex;align-items:center;gap:8px; }
+#syn-reg .carta-firma-dot { width:8px;height:8px;background:var(--verde);border-radius:50%; }
+#syn-reg .carta-firma-text { font-family:'Playfair Display',serif;font-size:14px;color:var(--verde);font-style:italic; }
+
+/* FIN */
+#syn-reg .fin-icon { width:80px;height:80px;background:var(--verde-claro);border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-size:36px; }
+#syn-reg .fin-title { font-family:'Playfair Display',serif;font-size:clamp(22px,4vw,30px);margin-bottom:14px;text-align:center;line-height:1.3; }
+#syn-reg .fin-text { font-size:15px;line-height:1.75;color:#6a6a6a;text-align:center;margin-bottom:32px; }
+#syn-reg .fin-nota { background:var(--blanco);border-radius:16px;padding:22px 24px;margin-bottom:28px;border-left:4px solid var(--terracota);box-shadow:0 2px 10px rgba(58,58,58,.06); }
+#syn-reg .fin-nota-label { font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--terracota);margin-bottom:8px;display:block; }
+#syn-reg .fin-nota p { font-size:14px;line-height:1.7;color:#5a5a5a;font-style:italic; }
+
+@media(max-width:600px){
+  #syn-reg .hd { padding:20px 18px 0; }
+  #syn-reg .body { padding:0 18px; }
+}
+body, .elementor-widget-container, .elementor-widget-html, .elementor-column-wrap, .elementor-column, .elementor-section {
+  background-color: #F3EDE4 !important;
+}
+</style>
+<div id="syn-reg">
+<!-- S0: INICIO -->
+<div class="s on" id="sr-s0">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/><span class="badge">Bloque del Adulto</span></div>
+<div class="body">
+<div class="hero-icon">🌿</div>
+<h1 class="h1">Un momento<br/><em>para ti</em></h1>
+<p class="lead">Dos herramientas sencillas para los momentos en que necesitas volver a ti misma. Sin prisas. Sin exigencias.</p>
+<div class="cards">
+<div class="card" onclick="srGo('sr-s1')">
+<div class="card-icon" style="background:#E4EFE8;">🫁</div>
+<div class="card-body">
+<div class="card-title">La pausa consciente</div>
+<div class="card-hint">Respiración guiada para bajar el nivel de activación y volver a tu centro</div>
+</div>
+<span class="card-arrow">›</span>
+</div>
+<div class="card" onclick="srGo('sr-s2')">
+<div class="card-icon" style="background:#FFF3EE;">💬</div>
+<div class="card-body">
+<div class="card-title">Nombra lo que sientes</div>
+<div class="card-hint">Elige cómo te encuentras hoy y recibe un mensaje hecho para ti</div>
+</div>
+<span class="card-arrow">›</span>
+</div>
+</div>
+</div>
+</div>
+<!-- S1: PAUSA CONSCIENTE -->
+<div class="s" id="sr-s1">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="srGo('sr-s0')">← Volver</button>
+<div class="breath-wrap">
+<h2 class="breath-title">La pausa consciente</h2>
+<p class="breath-sub">Busca un sitio tranquilo, siéntate con la espalda recta y los pies apoyados en el suelo. Si puedes, pon música suave o silencio. Cuatro rondas para relajar el cuerpo entero y volver a ti.</p>
+<div class="ring-wrap">
+<div class="ring-outer" id="sr-outer"></div>
+<div class="ring-mid" id="sr-mid"></div>
+<div class="ring-inner" id="sr-inner">
+<span class="ring-count" id="sr-count">·</span>
+<span class="ring-label" id="sr-rlabel"></span>
+</div>
+</div>
+<div class="breath-phase" id="sr-phase">Pulsa para empezar</div>
+<div class="breath-instr" id="sr-instr">Cierra los ojos si puedes.<br/>Deja que todo tu cuerpo se afloje.</div>
+<div class="rounds" id="sr-rounds">
+<div class="rdot"></div><div class="rdot"></div><div class="rdot"></div><div class="rdot"></div>
+</div>
+<button class="btn" id="sr-bbtn" onclick="srBreathStart()">Empezar →</button>
+<button class="btn-ghost" id="sr-bback" onclick="srGo('sr-s0')">← Volver al inicio</button>
+</div>
+</div>
+</div>
+<!-- S2: NOMBRA LO QUE SIENTES -->
+<div class="s" id="sr-s2">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body">
+<button class="back" onclick="srGo('sr-s0')">← Volver</button>
+<h2 class="nombra-title">Nombra lo que sientes</h2>
+<p class="nombra-sub">Ponerle palabras a lo que nos pasa hace que el cerebro lo integre y baje la intensidad emocional. ¿Cómo estás hoy?</p>
+<div class="chips" id="sr-chips">
+<div class="chip" onclick="srPick(this,'cansada')"><div class="chip-circle"></div><span class="chip-text">Estoy cansado/a</span></div>
+<div class="chip" onclick="srPick(this,'maldia')"><div class="chip-circle"></div><span class="chip-text">He tenido un mal día</span></div>
+<div class="chip" onclick="srPick(this,'nopuedo')"><div class="chip-circle"></div><span class="chip-text">No puedo más</span></div>
+<div class="chip" onclick="srPick(this,'malgeneral')"><div class="chip-circle"></div><span class="chip-text">Me siento mal</span></div>
+<div class="chip" onclick="srPick(this,'malhumor')"><div class="chip-circle"></div><span class="chip-text">Me siento muy malhumorado/a</span></div>
+<div class="chip" onclick="srPick(this,'nosalio')"><div class="chip-circle"></div><span class="chip-text">Hoy no me ha salido bien nada</span></div>
+<div class="chip" onclick="srPick(this,'trabajo')"><div class="chip-circle"></div><span class="chip-text">He discutido en el trabajo</span></div>
+<div class="chip" onclick="srPick(this,'pareja')"><div class="chip-circle"></div><span class="chip-text">He discutido con mi pareja</span></div>
+</div>
+<button class="btn" id="sr-nbtn" onclick="srReveal()" style="display:none;">Ver mi mensaje →</button>
+<div class="carta" id="sr-carta">
+<div class="carta-top">
+<div class="carta-avatar">🌿</div>
+<div class="carta-from"><strong>Paloma</strong>Un mensaje para ti</div>
+</div>
+<div class="carta-divider"></div>
+<div class="carta-body" id="sr-carta-body"></div>
+<div class="carta-firma"><div class="carta-firma-dot"></div><span class="carta-firma-text">Synesis · Método de crianza consciente</span></div>
+</div>
+<button class="btn" id="sr-nfin" onclick="srGo('sr-s3')" style="display:none;">He terminado →</button>
+<button class="btn-ghost" id="sr-nreset" onclick="srReset()" style="display:none;">Elegir otro estado →</button>
+</div>
+</div>
+<!-- S3: FIN -->
+<div class="s" id="sr-s3">
+<div class="hd"><img alt="Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg" style="height:28px;width:auto;"/></div>
+<div class="body" style="text-align:center;">
+<div class="fin-icon">✨</div>
+<h2 class="fin-title">Has vuelto a ti</h2>
+<p class="fin-text">Ese pequeño gesto de parar y cuidarte ya es crianza consciente. No tienes que estar perfecto/a para ser un buen padre o una buena madre. Solo tienes que seguir intentándolo.</p>
+<div class="fin-nota">
+<span class="fin-nota-label">Recuerda</span>
+<p>Regalarte tiempo a ti mismo/a no es egoísmo. Es la base desde la que puedes dar a tu hijo o hija lo que realmente necesita. Un padre o una madre regulado/a cría de forma diferente.</p>
+</div>
+<button class="btn" onclick="srGo('sr-s0');srBreathReset();srReset()">Usar otra herramienta →</button>
+</div>
+</div>
+</div>
+<script>
+(function(){
+
+  // ---- NAVEGACIÓN ----
+  window.srGo = function(id) {
+    document.querySelectorAll('#syn-reg .s').forEach(function(s){ s.classList.remove('on'); });
+    document.getElementById(id).classList.add('on');
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+  // ---- RESPIRACIÓN ----
+  var bRunning=false, bRound=0, bTOs=[];
+  var phases=[
+    {name:'Inhala',instr:'Llena el abdomen de aire despacio',dur:4,sIn:1.18,sOut:1.13},
+    {name:'Sostén',instr:'Retén el aire, siente tu cuerpo en calma',dur:4,sIn:1.18,sOut:1.13},
+    {name:'Exhala',instr:'Suelta el aire y con él toda la tensión',dur:6,sIn:1,sOut:1}
+  ];
+
+  window.srBreathReset = function() {
+    bRunning=false; bRound=0;
+    bTOs.forEach(clearTimeout); bTOs=[];
+    var el=function(id){return document.getElementById(id);};
+    ['sr-outer','sr-mid','sr-inner'].forEach(function(id){
+      var e=el(id); if(!e)return;
+      e.style.transition='none'; e.style.transform='';
+      if(id==='sr-inner') e.style.transform='translate(-50%,-50%)';
+    });
+    if(el('sr-count')) el('sr-count').textContent='·';
+    if(el('sr-rlabel')) el('sr-rlabel').textContent='';
+    if(el('sr-phase')) el('sr-phase').textContent='Pulsa para empezar';
+    if(el('sr-instr')) el('sr-instr').innerHTML='Cierra los ojos si puedes.<br>Deja que todo tu cuerpo se afloje.';
+    if(el('sr-bbtn')) { el('sr-bbtn').textContent='Empezar →'; el('sr-bbtn').onclick=srBreathStart; el('sr-bbtn').style.display='flex'; }
+    document.querySelectorAll('#sr-rounds .rdot').forEach(function(d){ d.className='rdot'; });
+  };
+
+  window.srBreathStart = function() {
+    if(bRunning) return;
+    bRunning=true;
+    var btn=document.getElementById('sr-bbtn');
+    if(btn) btn.style.display='none';
+    bRound=0; doRound();
+  };
+
+  function doRound() {
+    if(bRound>=4){ endBreath(); return; }
+    updateDots(bRound);
+    var t=0;
+    phases.forEach(function(ph){
+      var dur=ph.dur;
+      bTOs.push(setTimeout(function(){
+        setPhase(ph.name, ph.instr);
+        animRings(ph.sIn, ph.sOut, dur);
+        countDown(dur);
+      },t*1000));
+      t+=dur;
+    });
+    bTOs.push(setTimeout(function(){ bRound++; doRound(); },t*1000));
+  }
+
+  function setPhase(name,instr){
+    var p=document.getElementById('sr-phase');
+    var i=document.getElementById('sr-instr');
+    if(p) p.textContent=name;
+    if(i) i.textContent=instr;
+  }
+
+  function animRings(sIn,sOut,dur){
+    var outer=document.getElementById('sr-outer');
+    var mid=document.getElementById('sr-mid');
+    var inner=document.getElementById('sr-inner');
+    var t=dur+'s ease-in-out';
+    if(outer){outer.style.transition='transform '+t; outer.style.transform='scale('+sOut+')';}
+    if(mid){mid.style.transition='transform '+t; mid.style.transform='translate(-50%,-50%) scale('+sIn+')';}
+    if(inner){inner.style.transition='transform '+t; inner.style.transform='translate(-50%,-50%) scale('+sIn+')';}
+  }
+
+  function countDown(secs){
+    var c=document.getElementById('sr-count');
+    var l=document.getElementById('sr-rlabel');
+    var elapsed=0;
+    if(c) c.textContent=secs;
+    var iv=setInterval(function(){
+      elapsed++;
+      if(c) c.textContent=secs-elapsed;
+      if(elapsed>=secs) clearInterval(iv);
+    },1000);
+    bTOs.push(iv);
+  }
+
+  function updateDots(r){
+    var dots=document.querySelectorAll('#sr-rounds .rdot');
+    dots.forEach(function(d,i){
+      d.className='rdot';
+      if(i<r) d.classList.add('done');
+      else if(i===r) d.classList.add('now');
+    });
+  }
+
+  function endBreath(){
+    bRunning=false;
+    document.querySelectorAll('#sr-rounds .rdot').forEach(function(d){ d.className='rdot done'; });
+    var p=document.getElementById('sr-phase');
+    var i=document.getElementById('sr-instr');
+    var c=document.getElementById('sr-count');
+    var btn=document.getElementById('sr-bbtn');
+    if(p) p.textContent='Bien hecho ✓';
+    if(i) i.textContent='Tu sistema nervioso acaba de recibir una señal de calma.';
+    if(c) c.textContent='✓';
+    if(btn){ btn.textContent='He terminado →'; btn.style.display='flex'; btn.onclick=function(){ srGo('sr-s3'); }; }
+  }
+
+  // ---- NOMBRA ----
+  var picked=null;
+
+  var mensajes={
+    cansada:{
+      title:'Estoy cansado/a',
+      texto:'<p>No siempre tienes que estar al cien por cien. Y está bien así.</p><p>Siéntete orgulloso/a de todo lo que has podido hacer hoy, por pequeño que sea. Cualquier paso que des, aunque parezca mínimo, es un paso hacia adelante. Eso tiene valor.</p><p>Permítete estar cansado/a. Permítete simplemente <em>no estar</em> hoy. Hay momentos en que lo más valioso que puedes hacer es recargarte, sin culpa, sin exigencia.</p><p>Descansa. Mañana serás tú de nuevo.</p>'
+    },
+    maldia:{
+      title:'He tenido un mal día',
+      texto:'<p>Hay días que simplemente no salen como uno espera. Y eso no dice nada malo de ti.</p><p>Lo mejor que puedes hacer ahora es enfocar tu energía en lo que todavía puedes controlar, y soltar lo que ya pasó. Si el día ya se fue, no vale la pena seguir cargándolo.</p><p>Todavía quedan horas, o si no, mañana es otro día que trae consigo oportunidades nuevas. Oportunidades que podrás afrontar con más calma, con más ilusión.</p><p>Deja ir este día. Ya hiciste suficiente.</p>'
+    },
+    nopuedo:{
+      title:'No puedo más',
+      texto:'<p>No podemos ser superhéroes todo el tiempo. Somos humanos, y tenemos todo el derecho a agotarnos y a llegar a ese punto en que ya no queda más.</p><p>Permítete hoy descansar de verdad. Y si puedes, cuéntaselo a alguien de confianza, tu pareja, una amistad, un familiar, para que puedan sostenerte un momento mientras tú das un paso atrás.</p><p>En este estado no tienes que tomar decisiones importantes ni resolver nada. Solo tienes que estar.</p><p>Recuerda: si tú estás bien, tus hijos e hijas también estarán mejor. Cuidarte es cuidarles.</p>'
+    },
+    malgeneral:{
+      title:'Me siento mal',
+      texto:'<p>Antes de nada, pregúntate: ¿de dónde viene esto? ¿Tienes algún dolor físico? ¿Ha pasado algo que no esperabas? ¿Ha habido alguna conversación difícil?</p><p>Identificarlo, ponerle nombre, ya ayuda a bajar la intensidad de lo que sientes. Eso es exactamente lo que hemos visto en el curso: nombrar regula.</p><p>Y si no encuentras una razón clara, también está bien. No siempre hay que estar al cien por cien. Tenemos derecho a sentirnos mal sin necesitar una explicación.</p><p>No te exijas más hoy. Ya es suficiente con estar.</p>'
+    },
+    malhumor:{
+      title:'Me siento muy malhumorado/a',
+      texto:'<p>Cuando el malhumor aparece, suele ser una señal de que algo por dentro está pidiendo atención.</p><p>Intenta pensar de dónde viene ese estrés, aunque sea brevemente. Y después, regálate un momento para ti. Un paseo, unos minutos de lectura, un rato de silencio.</p><p>Si lo necesitas, puedes usar ahora mismo la herramienta de respiración que tienes aquí. Solo cuatro rondas bastan para que el sistema nervioso baje un poco esa activación.</p><p>Vuelve a ti primero. Desde ahí todo se gestiona mejor.</p>'
+    },
+    nosalio:{
+      title:'Hoy no me ha salido bien nada',
+      texto:'<p>Hay días así. Días en que nada encaja, nada fluye, nada sale como querías. Y son agotadores, lo sé.</p><p>Pero recuerda que todavía quedan horas en este día, y siempre hay posibilidad de cambiar el rumbo aunque sea un poco. Y si ya no queda energía, mañana es otro día.</p><p>Lo que importa no es que todo salga bien, sino que puedas seguir adelante.</p><p>Intenta respirar, regálate un ratito para hacer algo que te guste, aunque sea pequeño. Te lo mereces.</p>'
+    },
+    trabajo:{
+      title:'He discutido en el trabajo',
+      texto:'<p>El trabajo puede llevarnos a niveles de estrés muy altos, y eso es agotador. Pero hay algo importante que puedes hacer ahora mismo: dejarlo fuera de casa.</p><p>Las personas que te esperan en casa no tienen nada que ver con lo que ha pasado. No se merecen cargar con esa energía. Y tú te mereces descansar cuando cruzas esa puerta.</p><p>Pon un límite simbólico entre el trabajo y tu hogar. Respira antes de entrar. Deja que ese día se quede fuera.</p><p>En casa eres otra cosa. En casa eres tú.</p>'
+    },
+    pareja:{
+      title:'He discutido con mi pareja',
+      texto:'<p>Las discusiones con la pareja duelen de una forma especial. Pueden dejarte triste, confundido/a, con mucha energía acumulada sin saber qué hacer con ella.</p><p>Cuando puedas, intenta buscar el foco: ¿qué es lo que realmente pasó? ¿Qué hay detrás de todo eso?</p><p>Recuerda que lo importante no es tener razón, ni el rencor, ni el ego. Lo importante es arreglarlo. Siéntate con tu pareja, cuéntale tus preocupaciones desde el amor, escúchale también.</p><p>Respira primero. Luego habla. Desde la calma, todo se puede resolver.</p>'
+    }
+  };
+
+  window.srPick = function(el, key) {
+    document.querySelectorAll('#sr-chips .chip').forEach(function(c){ c.classList.remove('picked'); });
+    el.classList.add('picked');
+    picked=key;
+    var btn=document.getElementById('sr-nbtn');
+    if(btn) btn.style.display='flex';
+  };
+
+  window.srReveal = function() {
+    if(!picked) return;
+    var m=mensajes[picked];
+    var body=document.getElementById('sr-carta-body');
+    var carta=document.getElementById('sr-carta');
+    var fin=document.getElementById('sr-nfin');
+    var reset=document.getElementById('sr-nreset');
+    var nbtn=document.getElementById('sr-nbtn');
+    if(body) body.innerHTML=m.texto;
+    if(carta) carta.classList.add('show');
+    if(fin) fin.style.display='flex';
+    if(reset) reset.style.display='flex';
+    if(nbtn) nbtn.style.display='none';
+    // Scroll suave a la carta
+    setTimeout(function(){ if(carta) carta.scrollIntoView({behavior:'smooth',block:'start'}); },100);
+  };
+
+  window.srReset = function() {
+    picked=null;
+    document.querySelectorAll('#sr-chips .chip').forEach(function(c){ c.classList.remove('picked'); });
+    var carta=document.getElementById('sr-carta');
+    var fin=document.getElementById('sr-nfin');
+    var reset=document.getElementById('sr-nreset');
+    var nbtn=document.getElementById('sr-nbtn');
+    if(carta) carta.classList.remove('show');
+    if(fin) fin.style.display='none';
+    if(reset) reset.style.display='none';
+    if(nbtn) nbtn.style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+
+})();
+</script>
+</body>
+</html>

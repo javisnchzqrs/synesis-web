@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>Recurso Introspeccion · Método Synesis</title>
+<link rel="icon" href="https://app.metodosynesis.com/media/fotos/isotipo-192.png">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-W8LQ6VT3');</script>
+<style>html,body{margin:0;padding:0}</style>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<style>
+/* RESET ELEMENTOR */
+.elementor-widget-html, .elementor-widget-container {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+body { background: #F3EDE4 !important; margin: 0 !important; padding: 0 !important; }
+#viaje-infancia *, #viaje-infancia *::before, #viaje-infancia *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+#viaje-infancia {
+  --verde-salvia: #8FAF9A;
+  --beige: #F3EDE4;
+  --antracita: #3A3A3A;
+  --terracota: #D08770;
+  --verde-claro: #E4EFE8;
+  --blanco: #FFFFFF;
+  --sombra: rgba(58,58,58,0.08);
+  font-family: 'Inter', sans-serif;
+  color: var(--antracita);
+  background: var(--beige);
+  padding: 32px 20px 80px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* WRAPPER FULL WIDTH */
+#viaje-page-wrap {
+  min-height: 100vh;
+  background: #F3EDE4;
+  margin: 0;
+  padding: 0;
+}
+
+/* NAVBAR */
+#viaje-navbar {
+  background: #F3EDE4;
+  border-bottom: 1px solid rgba(143,175,154,0.25);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+#viaje-navbar img {
+  height: 32px;
+  width: auto;
+}
+
+#viaje-progress-wrap {
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  height: 3px;
+  background: #E4EFE8;
+  z-index: 9999;
+}
+#viaje-progress-fill {
+  height: 100%;
+  background: #8FAF9A;
+  transition: width 0.5s ease;
+  width: 0%;
+}
+
+#viaje-infancia .vi-screen { display: none; animation: viFadeIn 0.4s ease; }
+#viaje-infancia .vi-screen.active { display: block; }
+@keyframes viFadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+#viaje-infancia .vi-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8FAF9A;
+  margin-bottom: 16px;
+  display: block;
+}
+#viaje-infancia .vi-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.2;
+  color: #3A3A3A;
+  margin-bottom: 24px;
+}
+#viaje-infancia .vi-title em {
+  font-style: italic;
+  color: #8FAF9A;
+}
+#viaje-infancia .vi-text {
+  font-size: 15px;
+  line-height: 1.75;
+  color: #5a5a5a;
+  margin-bottom: 14px;
+}
+#viaje-infancia .vi-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin: 28px 0;
+  border-left: 4px solid #8FAF9A;
+  box-shadow: 0 2px 16px rgba(58,58,58,0.08);
+}
+#viaje-infancia .vi-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #5a5a5a;
+  font-style: italic;
+}
+
+#viaje-infancia .vi-steps {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 32px;
+}
+#viaje-infancia .vi-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #DDD8D0;
+  transition: all 0.3s;
+}
+#viaje-infancia .vi-dot.active { background: #8FAF9A; width: 24px; border-radius: 4px; }
+#viaje-infancia .vi-dot.done { background: #8FAF9A; }
+
+#viaje-infancia .vi-block-num {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8FAF9A;
+  margin-bottom: 8px;
+  display: block;
+}
+#viaje-infancia .vi-block-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(20px, 3.5vw, 28px);
+  line-height: 1.3;
+  color: #3A3A3A;
+  margin-bottom: 12px;
+}
+#viaje-infancia .vi-block-intro {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #6a6a6a;
+  font-style: italic;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(143,175,154,0.3);
+}
+
+#viaje-infancia .vi-q-wrap {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(58,58,58,0.08);
+}
+#viaje-infancia .vi-q-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #3A3A3A;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+#viaje-infancia .vi-q-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  min-width: 22px;
+  background: #E4EFE8;
+  color: #8FAF9A;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+#viaje-infancia .vi-options { display: flex; flex-direction: column; gap: 8px; }
+#viaje-infancia .vi-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #E8E2D9;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #fff;
+  user-select: none;
+}
+#viaje-infancia .vi-option:hover { border-color: #8FAF9A; background: #E4EFE8; }
+#viaje-infancia .vi-option.selected { border-color: #8FAF9A; background: #E4EFE8; }
+#viaje-infancia .vi-option.selected .vi-circle { background: #8FAF9A; border-color: #8FAF9A; }
+#viaje-infancia .vi-option.selected .vi-circle::after { opacity: 1; }
+#viaje-infancia .vi-circle {
+  width: 18px; height: 18px;
+  min-width: 18px;
+  border-radius: 50%;
+  border: 2px solid #C8C2B8;
+  margin-top: 2px;
+  transition: all 0.2s;
+  position: relative;
+}
+#viaje-infancia .vi-circle::after {
+  content: '';
+  width: 7px; height: 7px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+#viaje-infancia .vi-opt-text {
+  font-size: 13px;
+  line-height: 1.5;
+  color: #3A3A3A;
+  padding-top: 1px;
+}
+
+#viaje-infancia .vi-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #8FAF9A;
+  color: white;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 14px 32px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
+}
+#viaje-infancia .vi-btn:hover { background: #7a9e85; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(143,175,154,0.4); }
+#viaje-infancia .vi-btn-sec {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #8a8a8a;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1.5px solid #DDD8D0;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+#viaje-infancia .vi-btn-sec:hover { border-color: #3A3A3A; color: #3A3A3A; }
+#viaje-infancia .vi-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+#viaje-infancia .vi-val {
+  display: none;
+  background: #FFF3EE;
+  border: 1px solid #D08770;
+  color: #D08770;
+  font-size: 13px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+#viaje-infancia .vi-val.show { display: block; }
+
+#viaje-infancia .vi-result-hero {
+  background: #fff;
+  border-radius: 20px;
+  padding: 36px 28px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 24px rgba(58,58,58,0.08);
+  text-align: center;
+}
+#viaje-infancia .vi-result-icon {
+  width: 68px; height: 68px;
+  background: #E4EFE8;
+  border-radius: 50%;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+#viaje-infancia .vi-result-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #8FAF9A;
+  margin-bottom: 8px;
+  display: block;
+}
+#viaje-infancia .vi-result-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 4vw, 32px);
+  line-height: 1.25;
+  color: #3A3A3A;
+  margin-bottom: 14px;
+}
+#viaje-infancia .vi-result-intro {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #6a6a6a;
+}
+#viaje-infancia .vi-result-sec {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 12px rgba(58,58,58,0.08);
+}
+#viaje-infancia .vi-result-sec-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #8FAF9A;
+  margin-bottom: 12px;
+  display: block;
+}
+#viaje-infancia .vi-result-sec p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #5a5a5a;
+}
+#viaje-infancia .vi-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0;
+}
+#viaje-infancia .vi-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #5a5a5a;
+}
+#viaje-infancia .vi-list li::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: #8FAF9A;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 7px;
+}
+#viaje-infancia .vi-fear {
+  background: #FFF8F5;
+  border-left: 4px solid #D08770;
+  border-radius: 0 10px 10px 0;
+  padding: 16px 20px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #5a5a5a;
+  font-style: italic;
+}
+#viaje-infancia .vi-secondary {
+  background: #E4EFE8;
+  border-radius: 14px;
+  padding: 20px 24px;
+  margin-bottom: 14px;
+  border: 1.5px solid rgba(143,175,154,0.4);
+}
+#viaje-infancia .vi-secondary-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #8FAF9A;
+  margin-bottom: 8px;
+  display: block;
+}
+#viaje-infancia .vi-secondary p {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #5a5a5a;
+}
+#viaje-infancia .vi-reflection textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 14px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #3A3A3A;
+  background: #fff;
+  border: 1.5px solid #DDD8D0;
+  border-radius: 10px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  margin-top: 10px;
+}
+#viaje-infancia .vi-reflection textarea:focus { border-color: #8FAF9A; }
+#viaje-infancia .vi-hint {
+  font-size: 12px;
+  color: #9a9a9a;
+  margin-top: 6px;
+  font-style: italic;
+  display: block;
+}
+</style>
+<div id="viaje-page-wrap">
+<nav id="viaje-navbar">
+<img alt="Método Synesis" decoding="async" src="https://metodosynesis.com/wp-content/uploads/2026/04/Logo-Principal.svg"/>
+</nav>
+<div id="viaje-progress-wrap"><div id="viaje-progress-fill"></div></div>
+<div id="viaje-infancia">
+<div class="vi-screen active" id="vi-screen-0">
+<span class="vi-eyebrow">Bloque del Adulto · Recurso de autoconocimiento</span>
+<h1 class="vi-title">Viaje a tu<br/><em>infancia</em></h1>
+<p class="vi-text">A veces reaccionamos con nuestros hijos de formas que no entendemos del todo. No es falta de amor. Es que nadie nos enseñó a observar cómo fuimos educados nosotros.</p>
+<p class="vi-text">Este cuestionario te ayuda a descubrir qué aprendiste emocionalmente en tu infancia y cómo eso puede estar influyendo, sin que lo sepas, en tu forma de educar hoy.</p>
+<div class="vi-card">
+<p>No hay respuestas correctas ni incorrectas. Responde desde lo que sentías, no desde lo que recuerdas que debería haber pasado. Tómate el tiempo que necesites.</p>
+</div>
+<button class="vi-btn" id="btn-start">Empezar mi viaje →</button>
+</div>
+<div class="vi-screen" id="vi-screen-1">
+<div class="vi-steps" id="vi-steps-1"></div>
+<span class="vi-block-num">Bloque 1 de 6</span>
+<h2 class="vi-block-title">Cómo se vivían las emociones en tu infancia</h2>
+<p class="vi-block-intro">Intenta volver mentalmente a tu infancia. No pienses solo en situaciones concretas, sino en cómo te sentías cuando experimentabas emociones intensas.</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>Cuando estabas triste, enfadado o frustrado de pequeño, ¿cómo solían reaccionar los adultos que te cuidaban?</p>
+<div class="vi-options" data-q="b1q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me acompañaban, escuchaban y me ayudaban a entender lo que sentía</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Intentaban calmarme rápido o distraerme para que se me pasara</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto+auto"><div class="vi-circle"></div><span class="vi-opt-text">Me decían que no era para tanto o que debía controlarme</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Se enfadaban o me corregían por reaccionar así</span></div>
+<div class="vi-option" data-points="2" data-profile="auto+controlar"><div class="vi-circle"></div><span class="vi-opt-text">Tenía que gestionarlo solo, sin demasiado acompañamiento</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>Cuando llorabas o mostrabas emociones intensas, ¿qué sensación recuerdas con más frecuencia?</p>
+<div class="vi-options" data-q="b1q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me sentía comprendido y acompañado</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que incomodaba un poco, pero intentaban ayudar</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que exageraba o que debía tranquilizarme rápido</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que era mejor no mostrar lo que me pasaba</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que tenía que aprender a resolverlo por mi cuenta</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>Cuando estabas enfadado o frustrado, ¿qué solías hacer con esas emociones?</p>
+<div class="vi-options" data-q="b1q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Podía expresarlas y alguien me ayudaba a gestionarlas</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba calmarlas porque veía que generaban incomodidad</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Trataba de controlarlas para no meterme en problemas</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Prefería no mostrarlas y guardármelas</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Me aislaba o las gestionaba solo</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste, de manera implícita, sobre mostrar emociones?</p>
+<div class="vi-options" data-q="b1q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que era seguro expresar lo que sentía</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor no exagerar demasiado</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Que debía controlarme y comportarme correctamente</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Que mostrar emociones podía generar problemas</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor gestionarlas solo</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-1">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-1-back">← Volver</button>
+<button class="vi-btn" id="btn-1-next">Siguiente bloque →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-2">
+<div class="vi-steps" id="vi-steps-2"></div>
+<span class="vi-block-num">Bloque 2 de 6</span>
+<h2 class="vi-block-title">Relación con el error</h2>
+<p class="vi-block-intro">Piensa en cómo se vivían los errores durante tu infancia. No solo errores escolares, sino también equivocaciones cotidianas.</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>Cuando te equivocabas o hacías algo mal, ¿cómo solían reaccionar los adultos importantes para ti?</p>
+<div class="vi-options" data-q="b2q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Solían ayudarme a entender el error y a mejorar sin hacerme sentir mal</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me corregían, pero de forma tranquila y sin demasiada presión</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Mostraban cierta decepción o esperaban que lo hiciera mejor</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Me señalaban el error con firmeza o insistían en hacerlo bien</span></div>
+<div class="vi-option" data-points="1" data-profile="controlar+vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que equivocarme generaba tensión o malestar</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>Cuando cometías un error, ¿qué sensación recuerdas con más frecuencia?</p>
+<div class="vi-options" data-q="b2q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que equivocarse era parte del aprendizaje</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba hacerlo mejor la próxima vez sin darle demasiada importancia</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto+complacer"><div class="vi-circle"></div><span class="vi-opt-text">Me preocupaba no cumplir las expectativas</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que debía hacerlo bien para evitar críticas</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Prefería no equivocarme porque me generaba incomodidad o inseguridad</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>Piensa en situaciones donde algo no te salía bien. ¿Cómo reaccionabas normalmente?</p>
+<div class="vi-options" data-q="b2q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Lo intentaba de nuevo con ayuda o acompañamiento</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Trataba de mejorar sin darle demasiadas vueltas</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Me esforzaba mucho para que saliera perfecto</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto+complacer"><div class="vi-circle"></div><span class="vi-opt-text">Me frustraba y quería hacerlo bien cuanto antes</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Prefería evitar situaciones donde pudiera fallar</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste, de forma implícita, sobre equivocarte?</p>
+<div class="vi-options" data-q="b2q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que era algo normal y formaba parte de aprender</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor hacerlo bien, pero sin demasiada presión</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Que debía esforzarme para cumplir las expectativas</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Que equivocarme podía generar críticas o decepción</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor evitar errores siempre que fuera posible</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-2">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-2-back">← Volver</button>
+<button class="vi-btn" id="btn-2-next">Siguiente bloque →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-3">
+<div class="vi-steps" id="vi-steps-3"></div>
+<span class="vi-block-num">Bloque 3 de 6</span>
+<h2 class="vi-block-title">Seguridad y previsibilidad del entorno</h2>
+<p class="vi-block-intro">Piensa en cómo era el ambiente emocional en tu hogar. ¿Era un entorno predecible? ¿Sabías qué esperar?</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>¿Cómo describirías el ambiente emocional en tu hogar?</p>
+<div class="vi-options" data-q="b3q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Generalmente era estable y predecible</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Había altibajos, pero me sentía bastante seguro</span></div>
+<div class="vi-option" data-points="1" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">A veces había tensión o cambios inesperados</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Era difícil saber cómo reaccionarían los adultos</span></div>
+<div class="vi-option" data-points="2" data-profile="complacer+vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que debía estar atento para evitar conflictos</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>Cuando surgían problemas o momentos difíciles en casa, ¿qué solías hacer?</p>
+<div class="vi-options" data-q="b3q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Confiaba en que los adultos lo gestionarían</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba mantener la calma y seguir con lo mío</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Observaba para adaptarme a la situación</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Trataba de anticiparme para evitar problemas</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Prefería aislarme o resolverlo por mi cuenta</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>¿Qué sensación tenías respecto a la seguridad emocional?</p>
+<div class="vi-options" data-q="b3q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me sentía protegido y acompañado</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Generalmente me sentía seguro</span></div>
+<div class="vi-option" data-points="1" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">A veces me sentía inseguro o confundido</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar+complacer"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que debía estar atento a lo que pasaba</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que tenía que cuidarme solo</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste sobre sentirte seguro?</p>
+<div class="vi-options" data-q="b3q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que podía confiar en los adultos</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que normalmente todo estaba bajo control</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor adaptarse a lo que pasara</span></div>
+<div class="vi-option" data-points="2" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Que debía anticiparme para evitar problemas</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Que tenía que depender de mí mismo</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-3">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-3-back">← Volver</button>
+<button class="vi-btn" id="btn-3-next">Siguiente bloque →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-4">
+<div class="vi-steps" id="vi-steps-4"></div>
+<span class="vi-block-num">Bloque 4 de 6</span>
+<h2 class="vi-block-title">Autonomía e independencia</h2>
+<p class="vi-block-intro">Piensa en cómo se construyó tu independencia. ¿Te acompañaban cuando necesitabas ayuda? ¿Te dejaban hacer cosas solo?</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>Cuando tenías dificultades, ¿qué ocurría normalmente?</p>
+<div class="vi-options" data-q="b4q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me ayudaban y me acompañaban</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me animaban a intentarlo con apoyo cercano</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Me pedían que lo resolviera con poca ayuda</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Esperaban que lo solucionara solo</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Tenía que arreglármelas sin demasiado acompañamiento</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>¿Cómo se vivía tu independencia?</p>
+<div class="vi-options" data-q="b4q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me dejaban explorar con seguridad</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Tenía autonomía progresiva</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">A veces me sentía poco acompañado</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Tenía que asumir responsabilidades pronto</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Me acostumbré a depender solo de mí</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>Cuando necesitabas ayuda emocional, ¿qué solías hacer?</p>
+<div class="vi-options" data-q="b4q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">La pedía con facilidad</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">A veces la pedía, otras lo gestionaba solo</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba resolverlo sin molestar</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Prefería no pedir ayuda</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Me acostumbré a gestionarlo todo solo</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste sobre necesitar a los demás?</p>
+<div class="vi-options" data-q="b4q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que podía apoyarme en ellos</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que era bueno ser independiente con apoyo</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor no depender demasiado</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Que debía resolver mis cosas solo</span></div>
+<div class="vi-option" data-points="2" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Que tenía que ser completamente autosuficiente</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-4">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-4-back">← Volver</button>
+<button class="vi-btn" id="btn-4-next">Siguiente bloque →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-5">
+<div class="vi-steps" id="vi-steps-5"></div>
+<span class="vi-block-num">Bloque 5 de 6</span>
+<h2 class="vi-block-title">Límites y autoridad</h2>
+<p class="vi-block-intro">Piensa en cómo se establecían las normas. ¿Había diálogo? ¿Había castigos? Recuerda cómo te sentías cuando te ponían un límite.</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>Cuando no cumplías una norma, ¿cómo reaccionaban normalmente?</p>
+<div class="vi-options" data-q="b5q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me explicaban el motivo del límite</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Me corregían con firmeza pero con calma</span></div>
+<div class="vi-option" data-points="1" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">Dependía mucho del momento</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Había enfado o castigo</span></div>
+<div class="vi-option" data-points="2" data-profile="complacer+vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Prefería evitar situaciones donde me pusieran límites</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>¿Cómo vivías los límites?</p>
+<div class="vi-options" data-q="b5q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Como algo que me ayudaba a entender</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Como algo normal aunque incómodo</span></div>
+<div class="vi-option" data-points="1" data-profile="controlar"><div class="vi-circle"></div><span class="vi-opt-text">A veces me generaban inseguridad</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Sentía presión por hacerlo bien</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Me generaban tensión o miedo</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>¿Qué hacías cuando sabías que algo no estaba permitido?</p>
+<div class="vi-options" data-q="b5q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba entender el motivo</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Trataba de cumplirlo</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Me preocupaba equivocarme</span></div>
+<div class="vi-option" data-points="2" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba evitar el conflicto</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Prefería no llamar la atención</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste sobre la autoridad?</p>
+<div class="vi-options" data-q="b5q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que podía ser firme y cercana</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que había normas que respetar</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor no equivocarse</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Que el conflicto generaba malestar</span></div>
+<div class="vi-option" data-points="2" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Que era mejor adaptarse para evitar problemas</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-5">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-5-back">← Volver</button>
+<button class="vi-btn" id="btn-5-next">Siguiente bloque →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-6">
+<div class="vi-steps" id="vi-steps-6"></div>
+<span class="vi-block-num">Bloque 6 de 6</span>
+<h2 class="vi-block-title">Sensación de vínculo y pertenencia</h2>
+<p class="vi-block-intro">Piensa en cómo te sentías dentro de tu familia. ¿Te sentías visto? ¿Escuchado? ¿Dependía el cariño de tu comportamiento?</p>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">1</span>¿Cómo te sentías respecto al cariño de los adultos importantes?</p>
+<div class="vi-options" data-q="b6q1">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Sentía que era estable e incondicional</span></div>
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Generalmente me sentía querido</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">A veces sentía que dependía de mi comportamiento</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Me esforzaba para mantener el vínculo</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Tenía miedo a perder el cariño</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">2</span>¿Qué hacías para sentirte conectado?</p>
+<div class="vi-options" data-q="b6q2">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Podía ser yo mismo</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba comportarme adecuadamente</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Trataba de no molestar</span></div>
+<div class="vi-option" data-points="2" data-profile="perfecto+complacer"><div class="vi-circle"></div><span class="vi-opt-text">Buscaba aprobación</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Me adaptaba para mantener el vínculo</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">3</span>Cuando había distancia emocional, ¿qué ocurría?</p>
+<div class="vi-options" data-q="b6q3">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Confiaba en que se resolvería</span></div>
+<div class="vi-option" data-points="1" data-profile="auto"><div class="vi-circle"></div><span class="vi-opt-text">Me sentía incómodo pero tranquilo</span></div>
+<div class="vi-option" data-points="1" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Intentaba acercarme</span></div>
+<div class="vi-option" data-points="1" data-profile="perfecto+complacer"><div class="vi-circle"></div><span class="vi-opt-text">Me preocupaba haber hecho algo mal</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Temía perder la conexión</span></div>
+</div>
+</div>
+<div class="vi-q-wrap">
+<p class="vi-q-label"><span class="vi-q-num">4</span>¿Qué aprendiste sobre el vínculo?</p>
+<div class="vi-options" data-q="b6q4">
+<div class="vi-option" data-points="0" data-profile="base"><div class="vi-circle"></div><span class="vi-opt-text">Que era seguro y estable</span></div>
+<div class="vi-option" data-points="1" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Que debía cuidarlo</span></div>
+<div class="vi-option" data-points="1" data-profile="complacer"><div class="vi-circle"></div><span class="vi-opt-text">Que dependía de mi comportamiento</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Que debía adaptarme para mantenerlo</span></div>
+<div class="vi-option" data-points="2" data-profile="vinculo"><div class="vi-circle"></div><span class="vi-opt-text">Que podía perderse si no hacía las cosas bien</span></div>
+</div>
+</div>
+<div class="vi-val" id="vi-val-6">Por favor, responde todas las preguntas antes de continuar.</div>
+<div class="vi-nav">
+<button class="vi-btn-sec" id="btn-6-back">← Volver</button>
+<button class="vi-btn" id="btn-6-calc">Ver mi resultado →</button>
+</div>
+</div>
+<div class="vi-screen" id="vi-screen-7">
+<div id="vi-resultado"></div>
+<div class="vi-result-sec vi-reflection">
+<span class="vi-result-sec-title">Tu espacio de reflexión</span>
+<p style="font-size:14px;color:#6a6a6a;line-height:1.6;">¿Qué resuena en ti de todo esto? Escribe lo que ha surgido, sin estructura, solo lo que sientes ahora mismo.</p>
+<textarea placeholder="Escribe aquí tu reflexión personal..."></textarea>
+<span class="vi-hint">Este espacio es solo para ti. No se envía ni se guarda en ningún lugar.</span>
+</div>
+<div style="margin-top:16px;">
+<button class="vi-btn-sec" id="btn-reset">← Volver al inicio</button>
+</div>
+</div>
+</div><!-- /viaje-infancia -->
+</div><!-- /viaje-page-wrap -->
+<script>
+(function(){
+  var scores = { perfecto:0, complacer:0, controlar:0, auto:0, vinculo:0 };
+
+  var perfiles = {
+    perfecto: {
+      icono:'⭐', titulo:'El que aprendió a ser perfecto',
+      aprendiste:'Probablemente creciste en un entorno donde hacerlo bien era importante. Aprendiste a esforzarte, a cumplir expectativas y a evitar el error para sentir reconocimiento o tranquilidad. Esta adaptación te ayudó a desarrollar responsabilidad y compromiso.',
+      hoy:['Te exiges hacerlo bien como padre o madre','Te cuesta tolerar errores de tu hijo','Tiendes a corregir con frecuencia','Te incomoda el caos o la improvisación'],
+      fortalezas:['Alta implicación en la crianza','Responsabilidad y constancia','Deseo genuino de hacerlo bien'],
+      riesgos:['Exigencia elevada hacia el niño sin darte cuenta','Poca tolerancia al error y al proceso','Dificultad para disfrutar del camino'],
+      miedo:'Miedo a equivocarte y a no hacerlo suficientemente bien.',
+      acciones:['Valida el esfuerzo de tu hijo antes que el resultado','Muestra tus propios errores con naturalidad delante de él','Permite que experimente sin corregir de inmediato','Recuerda: no tiene que ser perfecto, tiene que ser suficiente']
+    },
+    complacer: {
+      icono:'🤝', titulo:'El que aprendió a complacer',
+      aprendiste:'Aprendiste a adaptarte a los demás para mantener la armonía. Probablemente percibías que evitar conflictos ayudaba a que el ambiente fuera más tranquilo. Esta adaptación te dio una gran sensibilidad emocional.',
+      hoy:['Te cuesta poner límites firmes','Evitas frustrar a tu hijo','Negocias más de lo que quisieras','Buscas que no se enfade contigo'],
+      fortalezas:['Empatía y sensibilidad emocional','Cercanía y buena conexión afectiva','Capacidad de escucha profunda'],
+      riesgos:['Límites inconsistentes que generan inseguridad','Dificultad para sostener el enfado del niño','El niño puede aprender que la insistencia funciona'],
+      miedo:'Miedo al conflicto y a la ruptura del vínculo.',
+      acciones:['Recuerda que poner límites también es una forma de cuidar','Mantén la calma cuando tu hijo se enfade por un límite','Establece pocas normas pero cúmplelas con consistencia','No cambies el límite por la incomodidad emocional del momento']
+    },
+    controlar: {
+      icono:'🧭', titulo:'El que aprendió a controlarlo todo',
+      aprendiste:'Creciste en un entorno donde anticiparse ayudaba a sentir seguridad. Desarrollaste la necesidad de prever y controlar para evitar situaciones incómodas. Esta adaptación te dio capacidad de organización y cuidado.',
+      hoy:['Tiendes a sobreproteger a tu hijo','Te cuesta dejarle autonomía','Anticipas problemas constantemente','Intervienes rápido ante la dificultad'],
+      fortalezas:['Cuidado y atención constante','Previsión y responsabilidad','Atención al detalle'],
+      riesgos:['El niño puede desarrollar poca tolerancia a la frustración','Ansiedad en la crianza por querer controlarlo todo','Intervención excesiva que limita su aprendizaje'],
+      miedo:'Miedo a que tu hijo sufra o a que algo se descontrole.',
+      acciones:['Permite pequeñas frustraciones: son necesarias para crecer','Da espacio para que resuelva solo antes de intervenir','Retrasa tu intervención unos segundos y observa','Recuerda: tu hijo puede con esto']
+    },
+    auto: {
+      icono:'🌿', titulo:'El que aprendió a ser autosuficiente',
+      aprendiste:'Aprendiste a gestionar tus emociones y necesidades de forma independiente. Probablemente tuviste que adaptarte resolviendo situaciones por tu cuenta. Esta adaptación te dio resiliencia y autonomía.',
+      hoy:['Te cuesta acompañar emociones intensas de tu hijo','Tiendes a fomentar mucha independencia','Minimizas el malestar emocional','Prefieres soluciones prácticas a la escucha emocional'],
+      fortalezas:['Resiliencia y capacidad de resolver','Estabilidad y autonomía','Transmites seguridad en situaciones difíciles'],
+      riesgos:['Poca validación emocional hacia el niño','Dificultad para sostener emociones sin resolver','El niño puede aprender que las emociones son un problema'],
+      miedo:'Miedo a depender emocionalmente de los demás.',
+      acciones:['Valida las emociones de tu hijo antes de resolver','Permanece presente sin buscar soluciones rápidas','Nombra las emociones con él: veo que estás enfadado','Recuerda que acompañar no es debilitar']
+    },
+    vinculo: {
+      icono:'💛', titulo:'El que aprendió a proteger el vínculo a toda costa',
+      aprendiste:'Desarrollaste una fuerte necesidad de asegurar la conexión emocional. Probablemente percibías que el vínculo podía verse afectado por el conflicto. Esta adaptación te dio una gran capacidad afectiva.',
+      hoy:['Gran sensibilidad al estado emocional de tu hijo','Dificultad para poner límites firmes','Necesidad de mantener cercanía constante','Incomodidad ante el distanciamiento aunque sea momentáneo'],
+      fortalezas:['Afectividad y presencia emocional','Cercanía y cuidado del vínculo','Alta sensibilidad hacia las necesidades del niño'],
+      riesgos:['Dependencia emocional que limita la autonomía del niño','Límites inconsistentes por miedo a dañar la relación','Sobreimplicación que agota al adulto'],
+      miedo:'Miedo a perder el vínculo con tu hijo.',
+      acciones:['Recuerda que el vínculo no se rompe por un límite','Practica mantener firmeza con cercanía al mismo tiempo','Permite momentos de frustración: forman parte del amor','Diferencia entre vínculo y complacencia']
+    }
+  };
+
+  var nombresSecundarios = {
+    perfecto:'aprendiste a ser perfecto', complacer:'aprendiste a complacer',
+    controlar:'aprendiste a controlarlo todo', auto:'aprendiste a ser autosuficiente',
+    vinculo:'aprendiste a proteger el vínculo'
+  };
+
+  function viGoTo(n) {
+    document.querySelectorAll('.vi-screen').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('vi-screen-'+n).classList.add('active');
+    var pct = n===0 ? 0 : Math.round((n/6)*100);
+    document.getElementById('viaje-progress-fill').style.width = pct+'%';
+    for (var i=1; i<=6; i++) {
+      var el = document.getElementById('vi-steps-'+i);
+      if (!el) continue;
+      var html='';
+      for (var j=1; j<=6; j++) {
+        var cls='vi-dot';
+        if (j<n) cls+=' done';
+        else if (j===n) cls+=' active';
+        html+='<div class="'+cls+'"></div>';
+      }
+      el.innerHTML=html;
+    }
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function viSelect(el, qKey) {
+    var group = document.querySelector('[data-q="'+qKey+'"]');
+    group.querySelectorAll('.vi-option').forEach(function(o){ o.classList.remove('selected'); });
+    el.classList.add('selected');
+  }
+
+  function viValidate(n) {
+    var qs = ['b'+n+'q1','b'+n+'q2','b'+n+'q3','b'+n+'q4'];
+    for (var i=0; i<qs.length; i++) {
+      var g = document.querySelector('[data-q="'+qs[i]+'"]');
+      if (!g) continue;
+      if (!g.querySelector('.vi-option.selected')) return false;
+    }
+    return true;
+  }
+
+  function viSum(n) {
+    var qs = ['b'+n+'q1','b'+n+'q2','b'+n+'q3','b'+n+'q4'];
+    qs.forEach(function(q){
+      var g = document.querySelector('[data-q="'+q+'"]');
+      if (!g) return;
+      var sel = g.querySelector('.vi-option.selected');
+      if (!sel) return;
+      var pts = parseInt(sel.dataset.points)||0;
+      var prof = sel.dataset.profile;
+      if (prof === 'base' || pts === 0) return;
+      prof.split('+').forEach(function(p){ if(scores[p]!==undefined) scores[p]+=pts; });
+    });
+  }
+
+  function viNext(n) {
+    if (!viValidate(n)) { document.getElementById('vi-val-'+n).classList.add('show'); return; }
+    document.getElementById('vi-val-'+n).classList.remove('show');
+    viSum(n);
+    viGoTo(n+1);
+  }
+
+  function viCalcular() {
+    if (!viValidate(6)) { document.getElementById('vi-val-6').classList.add('show'); return; }
+    document.getElementById('vi-val-6').classList.remove('show');
+    viSum(6);
+    var sorted = Object.entries(scores).sort(function(a,b){ return b[1]-a[1]; });
+    var principal = sorted[0][0];
+    var secundario = (sorted[1][1] >= sorted[0][1]*0.7 && sorted[0][1]>0) ? sorted[1][0] : null;
+    viMostrar(principal, secundario);
+    viGoTo(7);
+  }
+
+  function li(items){ return '<ul class="vi-list">'+items.map(function(i){ return '<li>'+i+'</li>'; }).join('')+'</ul>'; }
+
+  function viMostrar(principal, secundario) {
+    var p = perfiles[principal];
+    var html = '<div class="vi-result-hero"><div class="vi-result-icon">'+p.icono+'</div><span class="vi-result-eyebrow">Tu tendencia predominante</span><h2 class="vi-result-title">'+p.titulo+'</h2><p class="vi-result-intro">Las experiencias de tu infancia han dado forma a tu manera de relacionarte con las emociones, los límites y el vínculo. Lo que encontrarás a continuación no es una etiqueta, sino una tendencia aprendida. Y todo lo que se aprende puede transformarse.</p></div>';
+    if (secundario) {
+      html += '<div class="vi-secondary"><span class="vi-secondary-label">Tendencia secundaria</span><p>Además de tu tendencia principal, también aparecen rasgos de alguien que <strong>'+nombresSecundarios[secundario]+'</strong>. Esto indica que en algunas situaciones puedes activar patrones de ambas tendencias, especialmente bajo estrés.</p></div>';
+    }
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">Lo que aprendiste</span><p>'+p.aprendiste+'</p></div>';
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">Cómo puede aparecer hoy en tu crianza</span>'+li(p.hoy)+'</div>';
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">Tus fortalezas como padre o madre</span>'+li(p.fortalezas)+'</div>';
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">Posibles riesgos si no se hace consciente</span>'+li(p.riesgos)+'</div>';
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">El miedo de fondo</span><div class="vi-fear">'+p.miedo+'</div></div>';
+    html += '<div class="vi-result-sec"><span class="vi-result-sec-title">Qué puedes empezar a hacer desde hoy</span>'+li(p.acciones)+'</div>';
+    document.getElementById('vi-resultado').innerHTML = html;
+  }
+
+  function viReset() {
+    Object.keys(scores).forEach(function(k){ scores[k]=0; });
+    document.querySelectorAll('.vi-option.selected').forEach(function(el){ el.classList.remove('selected'); });
+    document.querySelectorAll('.vi-val').forEach(function(el){ el.classList.remove('show'); });
+    viGoTo(0);
+  }
+
+  function addOptionListeners() {
+    document.querySelectorAll('.vi-option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        var group = opt.closest('[data-q]');
+        if (group) viSelect(opt, group.dataset.q);
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    addOptionListeners();
+    document.getElementById('btn-start').addEventListener('click', function(){ viGoTo(1); });
+    document.getElementById('btn-1-back').addEventListener('click', function(){ viGoTo(0); });
+    document.getElementById('btn-1-next').addEventListener('click', function(){ viNext(1); });
+    document.getElementById('btn-2-back').addEventListener('click', function(){ viGoTo(1); });
+    document.getElementById('btn-2-next').addEventListener('click', function(){ viNext(2); });
+    document.getElementById('btn-3-back').addEventListener('click', function(){ viGoTo(2); });
+    document.getElementById('btn-3-next').addEventListener('click', function(){ viNext(3); });
+    document.getElementById('btn-4-back').addEventListener('click', function(){ viGoTo(3); });
+    document.getElementById('btn-4-next').addEventListener('click', function(){ viNext(4); });
+    document.getElementById('btn-5-back').addEventListener('click', function(){ viGoTo(4); });
+    document.getElementById('btn-5-next').addEventListener('click', function(){ viNext(5); });
+    document.getElementById('btn-6-back').addEventListener('click', function(){ viGoTo(5); });
+    document.getElementById('btn-6-calc').addEventListener('click', function(){ viCalcular(); });
+    document.getElementById('btn-reset').addEventListener('click', function(){ viReset(); });
+  });
+
+})();
+</script>
+</body>
+</html>
