@@ -498,6 +498,13 @@
   }
 
   .form-group { margin-bottom: 14px; }
+  .edad-grupo { margin-bottom: 18px; }
+  .edad-label { display: block; font-size: 14px; font-weight: 500; color: var(--antracita); margin-bottom: 8px; }
+  .edad-opciones { display: flex; flex-wrap: wrap; gap: 8px; }
+  .edad-op { flex: 1 1 auto; padding: 10px 12px; border: 1px solid rgba(58,58,58,0.15); border-radius: 12px; background: var(--blanco); font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--antracita); cursor: pointer; transition: border-color .2s, background .2s; white-space: nowrap; }
+  .edad-op:hover { border-color: var(--verde-salvia); }
+  .edad-op[aria-checked="true"] { border-color: var(--verde-salvia); background: var(--verde-salvia); color: #fff; font-weight: 600; }
+
 
   .form-input {
     width: 100%;
@@ -666,6 +673,16 @@
     </div>
     <h2 class="modal-title">Que estés aquí ya dice mucho de <em>ti</em></h2>
     <p class="modal-subtitle">¿Dónde te enviamos el vídeo?</p>
+    <div class="edad-grupo" role="radiogroup" aria-labelledby="edadLabel">
+      <span class="edad-label" id="edadLabel">¿Qué edad tiene tu peque?</span>
+      <div class="edad-opciones" id="edadOpciones">
+        <button type="button" class="edad-op" role="radio" aria-checked="false" data-edad="menos_2">Menos de 2</button>
+        <button type="button" class="edad-op" role="radio" aria-checked="false" data-edad="2_3">2–3 años</button>
+        <button type="button" class="edad-op" role="radio" aria-checked="false" data-edad="4_5">4–5 años</button>
+        <button type="button" class="edad-op" role="radio" aria-checked="false" data-edad="6">6 años</button>
+        <button type="button" class="edad-op" role="radio" aria-checked="false" data-edad="7_mas">7 o más</button>
+      </div>
+    </div>
     <div class="form-group">
       <input type="text" class="form-input" id="modalNombre" placeholder="Tu nombre" autocomplete="given-name" required>
     </div>
@@ -705,6 +722,16 @@
   leerUTMs();
 
 
+  /* ── EDAD DEL PEQUE (fuera de 2-6 no cuenta como conversión en Meta) ── */
+  let edadRango = '';
+  document.querySelectorAll('#edadOpciones .edad-op').forEach(function (b) {
+    b.addEventListener('click', function () {
+      edadRango = b.dataset.edad;
+      document.querySelectorAll('#edadOpciones .edad-op').forEach(function (o) { o.setAttribute('aria-checked', o === b ? 'true' : 'false'); });
+    });
+  });
+  function enEdad() { return edadRango === '2_3' || edadRango === '4_5' || edadRango === '6'; }
+
   /* ── MODAL ── */
   function openModal() {
     document.getElementById('modalOverlay').classList.add('active');
@@ -729,6 +756,10 @@
     const telefono = document.getElementById('modalTelefono').value.trim();
     const consent = document.getElementById('consentimiento').checked;
 
+    if (!edadRango) {
+      alert('Dinos la edad de tu peque para continuar.');
+      return;
+    }
     if (!nombre || !email || !telefono || !consent) {
       alert(!consent ? 'Debes aceptar la política de privacidad para continuar.' : 'Por favor, rellena tu nombre, email y teléfono.');
       return;
@@ -743,7 +774,7 @@
       const response = await fetch('https://n8n.metodosynesis.com/webhook/captacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, sesion: (function () { try { return sessionStorage.getItem('synesis_sesion') || ''; } catch (e) { return ''; } })(), timestamp: new Date().toISOString() }, leerUTMs()))
+        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, edad_rango: edadRango, sesion: (function () { try { return sessionStorage.getItem('synesis_sesion') || ''; } catch (e) { return ''; } })(), timestamp: new Date().toISOString() }, leerUTMs()))
       });
       // Una respuesta HTTP correcta confirma aceptación por el endpoint.
       // No confirma por sí sola que todo el escenario de Make haya terminado.
@@ -769,7 +800,9 @@
     try {
       window.dataLayer = window.dataLayer || [];
       window.dataLayer.push({
-        event: 'synesis_registro_completado',
+        // Fuera de 2-6 años: otro evento, para que Meta no lo cuente como lead
+        event: enEdad() ? 'synesis_registro_completado' : 'synesis_registro_fuera_edad',
+        edad_rango: edadRango,
         // No se envían los datos personales del formulario a la capa de datos.
         eventCallback: function() {
           clearTimeout(temporizador);
