@@ -245,14 +245,14 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:16px;pa
 .porsemana strong{display:block;font-size:clamp(72px,9vw,128px);font-weight:700;letter-spacing:-.06em;line-height:.9;color:var(--sage-deep);font-variant-numeric:tabular-nums}
 .porsemana strong i{font-style:normal;font-size:.45em;margin-left:.06em;letter-spacing:0}
 .porsemana span{display:block;font-size:clamp(19px,1.7vw,23px);font-weight:500;margin-top:12px;max-width:22ch;line-height:1.25}
-.planes{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.planes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .plan{text-align:left;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:18px 20px;transition:border-color .2s,box-shadow .2s}
 .plan:hover{border-color:var(--sage-2)}
 .plan.on{border-color:var(--sage-deep);box-shadow:0 0 0 3px var(--sage-soft)}
 .plan small{display:block;font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
 .plan b{display:block;font-size:38px;letter-spacing:-.04em;line-height:1.05;margin:6px 0 2px}
 .plan b i{font-style:normal;font-size:.5em;margin-left:2px}
-.plan span{display:block;font-size:14px;color:var(--muted)}
+.plan span{display:block;font-size:13px;color:var(--muted);white-space:nowrap}
 .plan em{display:block;font-style:normal;font-size:15px;color:var(--sage-deep);font-weight:500;margin-top:8px}
 .plazas{grid-column:1/-1;font-size:13.5px;color:var(--muted)}
 
@@ -333,7 +333,7 @@ footer{display:flex;align-items:center;justify-content:space-between;gap:16px;pa
   .nums{gap:5px}.nums button{border-radius:11px}
   .semanas{gap:2px;grid-template-columns:16px repeat(52,minmax(0,1fr))}
   .semanas b{font-size:8px;padding-right:3px}
-  .planes{grid-template-columns:1fr 1fr}
+  .planes{grid-template-columns:1fr}
   .plan b{font-size:30px}
   footer{position:sticky;bottom:0;z-index:5;background:var(--bg);padding-top:12px;padding-bottom:14px;box-shadow:0 -10px 20px -14px rgba(46,56,48,.25)}
   .dots{flex:1;min-width:0}

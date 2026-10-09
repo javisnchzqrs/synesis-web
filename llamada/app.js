@@ -5,8 +5,9 @@ const PROGRAMA={
   familias:'+80',
   semanas:12,            /* duración del acompañamiento: confirmar con Synesis */
   planes:[
-    {id:'esencial',nombre:'Esencial',precio:397,cuota:133,sesiones:2},
-    {id:'intensivo',nombre:'Intensivo',precio:597,cuota:199,sesiones:5}
+    {id:'esencial',nombre:'Esencial',precio:197,cuota2:'98,50',cuota3:'65,66',sesiones:0},
+    {id:'impulso',nombre:'Impulso',precio:295,cuota2:'147,50',cuota3:'98,33',sesiones:2},
+    {id:'intensivo',nombre:'Intensivo',precio:385,cuota2:'192,50',cuota3:'128,33',sesiones:5}
   ],
   /* testimonios en vídeo: para activar el de Alba, pega su URL en src */
   videos:[
@@ -14,7 +15,7 @@ const PROGRAMA={
     {n:'Alba',h:'niño de 3 años',src:'/media/videos/testimonio-alba.mp4'}
   ],
   /* sesiones 1 a 1 repartidas en las 12 semanas, según plan: confirmar con Paloma */
-  sesionesEn:{esencial:[2,7],intensivo:[1,3,5,8,11]},
+  sesionesEn:{esencial:[],impulso:[2,7],intensivo:[1,3,5,8,11]},
   /* vídeos del formato (horizontales, en bucle y sin sonido): pega la URL del de sesiones cuando lo tengas */
   formatoVideos:{
     vid:'/media/videos/plataforma.mov',
@@ -94,7 +95,7 @@ if(!C||!C.hijo)C=leerEnlace();
 if(!C||!C.hijo)C={...EJEMPLO};
 
 /* estado de la llamada */
-const S={semana:1,hoy:0,meta:0,veces:3,modo:'nada',hito:0,precio:false,plan:'esencial',cierre:'q',duda:''};
+const S={semana:1,hoy:0,meta:0,veces:3,modo:'nada',hito:0,precio:false,plan:'impulso',cierre:'q',duda:''};
 
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -217,7 +218,7 @@ function paginas(){
         <div class="barra-track" style="--anos:${18-d.edad}"><div class="barra-prog" style="--w:${(PROGRAMA.semanas/d.restan*100).toFixed(2)}"></div></div>
         <div class="barra-ed"><span>Hoy · ${d.edad} años</span><span>18 años</span></div></div>
       <div class="inv-bajo">${S.precio?invRes(d):`<button class="btn prim xl rev" style="--r:.6s" data-act="precio">Ver la inversión</button>`}</div></div>`,
-   n:{dice:`Estas son las semanas que le quedan en casa contigo. El método son estas ${PROGRAMA.semanas}. [Pulsa «Ver la inversión»] Son ${d.plan.precio} €, o ${d.plan.cuota} € al mes durante 3 meses.`,
+   n:{dice:`Estas son las semanas que le quedan en casa contigo. El método son estas ${PROGRAMA.semanas}. [Pulsa «Ver la inversión»] Son ${d.plan.precio} €, o si lo prefieres en 2 pagos de ${d.plan.cuota2} € o en 3 de ${d.plan.cuota3} €.`,
       l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha el plan que elija: queda en el cierre.','Antes de dudas: «Lo que sientes ahora es alivio. Y el alivio se va. Lo que cambia las cosas es saber qué hacer, cada vez.»']}},
 
   {t:'Cierre',html:cierreHTML(d,inicio),
@@ -277,7 +278,7 @@ function formatoHTML(d){
   const F=[
     ['vid','Vídeos cortos','~12 min / semana','Piezas de 8 a 12 minutos para entender qué pasa en cada situación y cómo afrontarla.'],
     ['rec','Recursos prácticos','5–10 min / semana','Guías y ejercicios para llevar la teoría a tu casa desde el primer día.'],
-    ['ses','Sesiones 1 a 1',`${d.plan.sesiones} sesiones de 1 h con Paloma`,d.v(`Para que no ${d.gp('estés solo','estés sola')}: Paloma te guía en tu caso concreto.`,'Para que no estéis solos: Paloma os guía en vuestro caso concreto.')]];
+    ['ses','Sesiones 1 a 1',d.plan.sesiones?`${d.plan.sesiones} sesiones de 1 h con Paloma`:'En Impulso e Intensivo',d.v(`Para que no ${d.gp('estés solo','estés sola')}: Paloma te guía en tu caso concreto.`,'Para que no estéis solos: Paloma os guía en vuestro caso concreto.')]];
   return `<div class="wrap formato">
     <p class="eyebrow rev">El formato</p>
     <h2 class="h2 rev" style="--r:.1s">Tres piezas. <em>Una sola forma de hacerlo.</em></h2>
@@ -303,7 +304,7 @@ function semanaSlideHTML(d){
 function invRes(d){
   const pl=PROGRAMA.planes;
   return `<div class="inv-res aparece"><div class="porsemana"><strong>${dec(d.porSemana)}<i>€</i></strong><span>por cada semana que le queda en casa ${d.v('contigo','con vosotros')}.</span></div>
-    <div class="planes">${pl.map(x=>`<button class="plan ${x.id===S.plan?'on':''}" data-act="plan" data-v="${x.id}"><small>${x.nombre}</small><b>${x.precio}<i>€</i></b><span>o 3 pagos de ${x.cuota} €</span><em>${x.sesiones} sesiones privadas con Paloma</em></button>`).join('')}
+    <div class="planes">${pl.map(x=>`<button class="plan ${x.id===S.plan?'on':''}" data-act="plan" data-v="${x.id}"><small>${x.nombre}</small><b>${x.precio}<i>€</i></b><span>o 2 pagos de ${x.cuota2}&nbsp;€<br>o 3 pagos de ${x.cuota3}&nbsp;€</span><em>${x.sesiones?`${x.sesiones} sesiones 1 a 1 con Paloma + vídeos y recursos`:'Vídeos y recursos, sin sesiones 1 a 1'}</em></button>`).join('')}
     <p class="plazas">Plazas limitadas: las sesiones las hace Paloma personalmente.</p></div></div>`;
 }
 function cierreHTML(d,inicio){
@@ -313,7 +314,7 @@ function cierreHTML(d,inicio){
     const chips=[(S.hoy*S.meta)?`De ${S.hoy} a ${S.meta}`:'',`Plan ${d.plan.nombre}`,`Empezáis el lunes ${dia}`].filter(Boolean);
     return `<div class="wrap centro aparece"><p class="eyebrow">Hecho</p>
       <h2 class="h2">${d.gp('Bienvenido','Bienvenida')}, ${p}. <em>Empezáis el lunes.</em></h2>
-      <ol class="pasos-si"><li><small>Ahora</small>${d.v('Te','Os')} llega el enlace de pago</li><li><small>Hoy</small>${d.v('Entras','Entráis')} en la plataforma</li><li><small>Esta semana</small>Reservamos ${d.v('tu','vuestra')} primera sesión con Paloma</li></ol>
+      <ol class="pasos-si"><li><small>Ahora</small>${d.v('Te','Os')} llega el enlace de pago</li><li><small>Hoy</small>${d.v('Entras','Entráis')} en la plataforma</li><li><small>Esta semana</small>${d.plan.sesiones?`Reservamos ${d.v('tu','vuestra')} primera sesión con Paloma`:`${d.v('Empiezas','Empezáis')} el primer bloque de vídeos`}</li></ol>
       <div class="resumen">${chips.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>`;
   }
   if(S.cierre==='duda'){
@@ -321,7 +322,7 @@ function cierreHTML(d,inicio){
     const R={dinero:`Son ${dec(d.porSemana)} € por cada semana que le queda en casa. Y es para siempre: ${d.v('te','os')} sirve ahora, a los 6 y a los 12.`,
       pareja:'Perfecto, esto se decide en equipo. ¿Qué crees que te va a preguntar? Lo resolvemos ahora.',
       tiempo:'Son unos 20 minutos a la semana. Menos de lo que os quita una tarde mala.',
-      funciona:`Por eso trabajamos el caso de ${C.hijo}, no uno genérico. En sesiones privadas con Paloma.`};
+      funciona:d.plan.sesiones?`Por eso trabajamos el caso de ${C.hijo}, no uno genérico. En sesiones privadas con Paloma.`:`El método va situación por situación, como las de ${C.hijo}. Y si ${d.v('quieres','queréis')} que Paloma lo vea ${d.v('contigo','con vosotros')}, Impulso incluye 2 sesiones 1 a 1.`};
     return `<div class="wrap centro aparece"><p class="eyebrow">Es normal dudar</p><h2 class="h2">¿Qué ${d.v('te','os')} frena?</h2>
       <div class="dudas">${D.map(([k,t])=>`<button data-act="duda" data-v="${k}" class="${S.duda===k?'on':''}">${esc(t)}</button>`).join('')}</div>
       <div class="respuesta">${S.duda?`<p class="aparece">${esc(R[S.duda])}</p>`:''}<button class="link" data-act="volver">Volver a la pregunta</button></div></div>`;
