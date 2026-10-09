@@ -2,7 +2,7 @@
 'use strict';
 /* ───────────── programa ───────────── */
 const PROGRAMA={
-  familias:'+80',
+  familias:'+150',
   semanas:12,            /* duración del acompañamiento: confirmar con Synesis */
   planes:[
     {id:'esencial',nombre:'Esencial',precio:197,cuota2:'98,50',cuota3:'65,66',sesiones:0},
@@ -95,7 +95,7 @@ if(!C||!C.hijo)C=leerEnlace();
 if(!C||!C.hijo)C={...EJEMPLO};
 
 /* estado de la llamada */
-const S={semana:1,hoy:0,meta:0,veces:3,modo:'nada',hito:0,precio:false,plan:'impulso',cierre:'q',duda:''};
+const S={semana:1,hoy:0,meta:0,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,plan:'impulso',cierre:'q',duda:''};
 
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -107,6 +107,9 @@ const mezcla=(a,b,t)=>{const h=x=>[1,3,5].map(i=>parseInt(x.substr(i,2),16));con
 const ico={
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
   flecha:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>'};
+
+/* veces que pasará de aquí al horizonte, según lo diga al día o a la semana */
+const totalVeces=d=>Math.round(S.veces*(S.unidad==='semana'?d.horizonte/7:d.horizonte));
 
 /* datos derivados del caso */
 function datos(){
@@ -159,14 +162,15 @@ function paginas(){
 
   {t:'Lo que cuesta esperar',html:`<div class="wrap centro">
       <p class="eyebrow rev">Lo que cuesta esperar</p>
-      <div class="veces rev" style="--r:.1s"><span>¿Cuántas veces al día pasa?</span>
-        <span class="stepper"><button data-act="veces" data-v="-1" aria-label="Menos">−</button><output id="veces">${S.veces}</output><button data-act="veces" data-v="1" aria-label="Más">+</button></span></div>
-      <div class="contador" id="contador" aria-live="polite">${num(S.veces*d.horizonte)}</div>
+      <div class="veces rev" style="--r:.1s"><span>¿Cuántas veces pasa?</span>
+        <span class="stepper"><button data-act="veces" data-v="-1" aria-label="Menos">−</button><output id="veces">${S.veces}</output><button data-act="veces" data-v="1" aria-label="Más">+</button></span>
+        <span class="unidad" role="group" aria-label="Cada cuánto">${[['dia','al día'],['semana','a la semana']].map(([k,t])=>`<button data-act="unidad" data-v="${k}" class="${S.unidad===k?'on':''}">${t}</button>`).join('')}</span></div>
+      <div class="contador" id="contador" aria-live="polite">${num(totalVeces(d))}</div>
       <p class="contador-l rev" style="--r:.5s">veces más ${d.edad<6?`hasta que ${h} cumpla 6 años`:'en los próximos 3 años'}.</p>
       <p class="ensena rev" style="--r:.8s">Y cada una le enseña ${esc(d.aprende)}.</p>
       <p class="tu rev" style="--r:1s">${d.v('Y tú te quedas','Y vosotros os quedáis')} con <b>${esc(low(C.siente))}</b>.</p></div>`,
-   n:{dice:`¿Cuántas veces al día pasa algo así? … Si nada cambia, de aquí a que cumpla 6 son todas estas veces más. Y cada una le enseña algo.`,
-      l:['Ajusta el número con + y − según lo que diga.','Después, calla 3 segundos. Deja que lo mire.','Si dice «es una fase»: pasa a la siguiente, está hecha para eso.']}},
+   n:{dice:`¿Cuántas veces pasa algo así, al día o a la semana? … Si nada cambia, de aquí a que cumpla 6 son todas estas veces más. Y cada una le enseña algo.`,
+      l:['Ajusta el número con + y − según lo que diga. Si te lo dice por semanas («unas 3 veces a la semana»), pulsa «a la semana».','Después, calla 3 segundos. Deja que lo mire.','Si dice «es una fase»: pasa a la siguiente, está hecha para eso.']}},
 
   {t:'Si nada cambia',html:`<div class="wrap proy ${S.modo}" id="proy">
       <div><p class="eyebrow rev">Lo que viene</p>
@@ -309,7 +313,7 @@ function invRes(d){
 }
 function cierreHTML(d,inicio){
   const dia=inicio.getDate(),{h,p}=d;
-  const deseo=C.deseo?`<p class="deseo-l rev">${d.v('Lo que me dijiste','Lo que me contasteis')}</p><p class="deseo rev" style="--r:.1s">«${esc(C.deseo)}»</p>`:'';
+  const deseo=C.deseo?`<p class="deseo-l rev">${d.v('Lo que me dijiste','Lo que me contasteis')}</p><div class="burbuja rev" style="--r:.1s"><p>${esc(C.deseo)}</p><span class="burbuja-meta" aria-hidden="true">✓✓</span></div>`:'';
   if(S.cierre==='si'){
     const chips=[(S.hoy*S.meta)?`De ${S.hoy} a ${S.meta}`:'',`Plan ${d.plan.nombre}`,`Empezáis el lunes ${dia}`].filter(Boolean);
     return `<div class="wrap centro aparece"><p class="eyebrow">Hecho</p>
@@ -376,7 +380,7 @@ function autoVid(){
 }
 function entrar(i){
   autoVid();
-  if((P[i]||{}).t==='Lo que cuesta esperar'){const d=datos();cuenta(0,S.veces*d.horizonte,1400,350);}
+  if((P[i]||{}).t==='Lo que cuesta esperar'){const d=datos();cuenta(0,totalVeces(d),1400,350);}
 }
 let rafC=0;
 function cuenta(desde,hasta,ms,delay=0){
@@ -400,8 +404,13 @@ main.addEventListener('click',e=>{
     $('#res').innerHTML=resEscala(d);
   }
   else if(act==='veces'){
-    const antes=S.veces*d.horizonte;S.veces=Math.min(20,Math.max(1,S.veces+(+v)));
-    $('#veces').textContent=S.veces;cuenta(antes,S.veces*d.horizonte,700);
+    const antes=totalVeces(d);S.veces=Math.min(20,Math.max(1,S.veces+(+v)));
+    $('#veces').textContent=S.veces;cuenta(antes,totalVeces(d),700);
+  }
+  else if(act==='unidad'){
+    const antes=totalVeces(d);S.unidad=v;
+    b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+    cuenta(antes,totalVeces(d),700);
   }
   else if(act==='modo'){
     if(S.modo===v)return;S.modo=v;
@@ -493,7 +502,7 @@ $('#form').onsubmit=e=>{
      edad:+$('#f-edad').value||3,angulo:$('#f-angulo').value,situacion:$('#f-situacion').value,reaccion:$('#f-reaccion').value,
      siente:$('#f-siente').value,cree:$('#f-cree').value,deseo:$('#f-deseo').value.trim(),notas:notasPrev};
   try{localStorage.setItem(CLAVE,JSON.stringify(C))}catch(err){}
-  Object.assign(S,{semana:1,hoy:0,meta:0,veces:3,modo:'nada',hito:0,precio:false,cierre:'q',duda:''});
+  Object.assign(S,{semana:1,hoy:0,meta:0,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,cierre:'q',duda:''});
   render();$('#editor').classList.remove('abierto');
 };
 $('#f-ejemplo').onclick=()=>{C={...EJEMPLO};try{localStorage.removeItem(CLAVE)}catch(err){}llenarForm();Object.assign(S,{hoy:0,meta:0,precio:false,cierre:'q',duda:''});render();};
