@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Lo que hablamos · Método Synesis</title>
+<meta property="og:title" content="Lo que hablamos, para verlo con calma">
+<meta property="og:description" content="Tu caso, el método y los programas. De Paloma, Método Synesis.">
+<meta property="og:image" content="https://app.metodosynesis.com/media/fotos/paloma-recurso.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#F3EDE4">
+<style>
+  body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F3EDE4;color:#2E3830;font:17px/1.5 "DM Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;text-align:center;padding:16px;box-sizing:border-box}
+  p{margin:0;max-width:30ch}
+  a{color:#4C6E57;font-weight:700}
+  .punto{width:10px;height:10px;border-radius:50%;background:#6D9278;margin:0 auto 14px;animation:l 1s ease-in-out infinite alternate}
+  @keyframes l{to{opacity:.3}}
+</style>
+</head>
+<body>
+<div id="m"><div class="punto" aria-hidden="true"></div><p>Abriendo…</p></div>
+<script>
+/* Enlace corto: /i/?codigo → pide el caso y abre «Lo que hablamos» (/info/) */
+(function(){
+  var codigo=(location.search.slice(1).split('&')[0]||'').replace(/[^a-z0-9]/gi,'').toLowerCase();
+  function fallo(){
+    document.getElementById('m').innerHTML='<p>No encuentro este enlace. Escríbele a Paloma y te lo vuelve a mandar: <a href="https://wa.me/34644623164">WhatsApp</a></p>';
+  }
+  if(!codigo)return fallo();
+  fetch('https://oggfczwarbznrtzloivk.supabase.co/rest/v1/rpc/caso_info',{
+    method:'POST',
+    headers:{'Content-Type':'application/json',apikey:'sb_publishable_LSk6Pp0nj-xM-tZ-DJaJOw_GKGknq2p'},
+    body:JSON.stringify({p_codigo:codigo})
+  }).then(function(r){return r.ok?r.json():null}).then(function(c){
+    if(!c)return fallo();
+    location.replace('/info/?c='+c);
+  }).catch(fallo);
+})();
+</script>
+</body>
+</html>
