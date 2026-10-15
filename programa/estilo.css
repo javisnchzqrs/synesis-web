@@ -1,0 +1,28 @@
+/* Extras de /programa/ sobre /info/estilo.css */
+.frases{display:grid;gap:10px;margin-top:22px;justify-items:start}
+.frases .burbuja p{font-size:16.5px}
+.elige-caja .chips{display:flex;flex-wrap:wrap;gap:8px}
+.elige-caja .chips button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:10px 16px;font-size:15px;font-weight:500;color:var(--muted);min-height:44px}
+.elige-caja .chips button.on{background:var(--sage-deep);border-color:var(--sage-deep);color:#fff}
+.antes-despues{display:grid;gap:12px;margin-top:22px}
+.ad{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:18px}
+.ad h3{font-size:19px}
+.ad p{font-size:16px;margin-top:10px;padding-left:12px;border-left:3px solid}
+.ad span{display:block;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+.antes{border-color:var(--terra-soft)!important;color:var(--muted)}
+.antes span{color:var(--terra-deep)}
+.despues{border-color:var(--sage-2)!important}
+.despues span{color:var(--sage-deep)}
+.estados{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:16px}
+.estados div{background:var(--sage-soft);border-radius:16px;padding:14px}
+.estados b{display:block;color:var(--sage-deep);font-size:17px}
+.estados span{font-size:14px;color:var(--ink)}
+.dif{display:grid;gap:14px;margin-top:22px}
+.dif div{display:flex;gap:12px;align-items:flex-start}
+.dif svg{width:22px;height:22px;flex:none;color:var(--sage);margin-top:2px}
+.dif b{display:block;font-size:17px}
+.dif p{color:var(--muted)}
+.dif p b{color:var(--ink)}
+.paloma{display:flex;align-items:center;gap:16px}
+.paloma img{width:96px;height:96px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid var(--paper)}
+@media (min-width:640px){.antes-despues{grid-template-columns:repeat(2,minmax(0,1fr))}.estados{grid-template-columns:repeat(4,minmax(0,1fr))}}

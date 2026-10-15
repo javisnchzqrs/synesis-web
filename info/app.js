@@ -49,7 +49,7 @@ const HITOS={
 };
 const HITO18=['Se va de casa con la relación que tuvisteis. Esa ya no se repite.','Se va de casa. Y sigue volviendo, porque contigo está bien.'];
 /* módulo del bloque 4 que más tiene que ver con lo que nos contó */
-const MODULO={rabietas:'Rabietas',obedece:'No escucha',pega:'Momentos difíciles',generico:'Límites'};
+const MODULO={rabietas:'Rabietas',obedece:'No escucha',pega:'Cómo acompañar en momentos difíciles',generico:'Límites'};
 
 const EJEMPLO={rol:'madre',nino:'o',padre:'Laura',hijo:'Antonio',edad:3,angulo:'obedece',
   situacion:'Hay que repetírselo todo mil veces',reaccion:'Me bloqueo y no sé qué hacer',siente:'Agotamiento',
@@ -183,7 +183,7 @@ function metodo(d){
       <header><span class="n">${b.n}</span><div><h3>${b.t}</h3><small>${b.s}</small></div></header>
       <p>${b.p}</p>
       ${b.caso?`<p class="en-caso"><span>En ${d.v('tu','vuestro')} caso</span>${b.caso}</p>`:''}
-      <ul class="modulos">${b.m.map(x=>`<li class="${b.n===4&&x===destaca?'on':''}">${esc(x)}</li>`).join('')}</ul>
+      <ul class="modulos">${b.m.map(x=>`<li class="${x===destaca?'on':''}">${esc(x)}</li>`).join('')}</ul>
     </article>`).join('')}</div>
     <p class="pie">Primero ${d.v('entiendes','entendéis')}, después ${d.v('sabes','sabéis')} qué hacer. Por eso los cambios se quedan.</p>
   </section>`;
