@@ -3,19 +3,29 @@
 /* ───────────── programa ───────────── */
 const PROGRAMA={
   familias:'+150',
-  semanas:12,            /* duración del acompañamiento: confirmar con Synesis */
-  planes:[
-    {id:'esencial',nombre:'Esencial',precio:197,cuota2:'98,50',cuota3:'65,66',sesiones:0},
-    {id:'impulso',nombre:'Impulso',precio:295,cuota2:'147,50',cuota3:'98,33',sesiones:2},
-    {id:'intensivo',nombre:'Intensivo',precio:385,cuota2:'192,50',cuota3:'128,33',sesiones:5}
-  ],
+  semanas:12,
+  nombre:'3 meses de acompañamiento 1:1 con Paloma',
+  precio:497,
+  /* [nombre, detalle, valor en €] */
+  incluye:[
+    ['Diagnóstico inicial','Un cuestionario por adulto + la 1.ª sesión'],
+    ['6 sesiones 1 a 1 con Paloma','3 el primer mes, 2 el segundo y 1 el tercero. Con la pareja, si quiere.',414],
+    ['Un plan después de cada sesión','Para saber qué hacer hasta la siguiente'],
+    ['Tu área personal','Con tu evolución, paso a paso']],
+  bonos:[
+    {ico:'chat',n:'Seguimiento por WhatsApp',d:'Audio y texto. Respuesta en 24 h laborables.',badge:'3 meses + mes 4',valor:120},
+    {ico:'play',n:'Formación en vídeo',d:'Para entender qué pasa en cada situación.',badge:'15 meses',valor:197},
+    {ico:'mano',n:'6 recursos interactivos',lista:['Semáforo emocional','Un momento para ti','Plan de regulación','Viaje a tu infancia','La carta que nadie te escribió','El reloj del niño'],valor:90}],
+  pagos:[
+    {id:'unico',nombre:'Pago único',precio:'497',det:'De una vez'},
+    {id:'klarna',nombre:'3 plazos sin intereses',precio:'3 × 165,67',det:'Con Klarna'}],
   /* testimonios en vídeo: para activar el de Alba, pega su URL en src */
   videos:[
     {n:'Paula',h:'niño de 4 años',src:'/media/videos/testimonio-paula.mp4'},
     {n:'Alba',h:'niño de 3 años',src:'/media/videos/testimonio-alba.mp4'}
   ],
-  /* sesiones 1 a 1 repartidas en las 12 semanas, según plan: confirmar con Paloma */
-  sesionesEn:{esencial:[],impulso:[2,7],intensivo:[1,3,5,8,11]},
+  /* semanas con sesión (3 el 1.er mes, 2 el 2.º, 1 el 3.º): confirmar con Paloma */
+  sesionesEn:[1,2,4,6,8,11],
   /* vídeos del formato (horizontales, en bucle y sin sonido): pega la URL del de sesiones cuando lo tengas */
   formatoVideos:{
     vid:'/media/videos/plataforma.mov',
@@ -95,7 +105,7 @@ if(!C||!C.hijo)C=leerEnlace();
 if(!C||!C.hijo)C={...EJEMPLO};
 
 /* estado de la llamada */
-const S={semana:1,hoy:0,meta:0,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,plan:'impulso',cierre:'q',duda:''};
+const S={semana:1,hoy:null,meta:null,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,pago:'unico',cierre:'q',duda:'',filo:'hab',capa:1,ses:1};
 
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -115,15 +125,13 @@ const totalVeces=d=>Math.round(S.veces*(S.unidad==='semana'?d.horizonte/7:d.hori
 function datos(){
   const edad=Math.min(12,Math.max(1,+C.edad||3));
   const ella=C.rol!=='padre', nina=C.nino==='a', amb=C.rol==='ambos';
-  const plan=PROGRAMA.planes.find(x=>x.id===S.plan)||PROGRAMA.planes[0];
-  const restan=(18-edad)*52;
+  const pago=PROGRAMA.pagos.find(x=>x.id===S.pago)||PROGRAMA.pagos[0];
   const horizonte=edad<6?(6-edad)*365:3*365;
-  return {edad,ella,nina,amb,plan,restan,horizonte,v:(sg,pl)=>amb?pl:sg,
+  return {edad,ella,nina,amb,pago,horizonte,v:(sg,pl)=>amb?pl:sg,
     h:esc(C.hijo),p:esc(C.padre),
     g:(m,f)=>nina?f:m, gp:(m,f)=>amb?m.replace(/o$/,'os'):(ella?f:m),
     aprende:REACCIONES[C.reaccion]||'que cuando se desborda, nadie sabe qué hacer',
-    hitos:[6,9,12,15,18].filter(a=>a>edad),
-    porSemana:plan.precio/restan};
+    hitos:[6,9,12,15,18].filter(a=>a>edad)};
 }
 function fraseHito(d,edad){
   const set=HITOS[C.angulo]||HITOS.generico;
@@ -138,8 +146,8 @@ function fraseHito(d,edad){
 function paginas(){
   const d=datos(),{h,p}=d;
   const inicio=lunes();
-  const colores=Array.from({length:10},(_,i)=>mezcla('#8FAF9A','#C4785D',i/9));
-  const nums=q=>`<div class="nums" role="group">${colores.map((c,i)=>`<button style="--c:${c}" data-act="num" data-q="${q}" data-v="${i+1}" class="${S[q]===i+1?'on':''}">${i+1}</button>`).join('')}</div>`;
+  const colores=Array.from({length:11},(_,i)=>mezcla('#C4785D','#8FAF9A',i/10));
+  const nums=q=>`<div class="nums" role="group">${colores.map((c,i)=>`<button style="--c:${c}" data-act="num" data-q="${q}" data-v="${i}" class="${S[q]===i?'on':''}">${i}</button>`).join('')}</div>`;
   if(!S.hito||!d.hitos.includes(S.hito))S.hito=d.hitos[0];
 
   return [
@@ -151,14 +159,14 @@ function paginas(){
    n:{dice:`Hola ${C.padre}. Esta llamada es para que salgas sabiendo exactamente qué hacer con ${C.hijo}. Antes de nada, cuéntame: ¿cómo ha ido esta semana?`,
       l:['Deja que hable. Apunta sus palabras exactas: las vas a usar al final.','No expliques el método todavía.','Si es escueta: «¿Y cómo te está afectando a ti, más allá de lo que hace?»']}},
 
-  {t:'Del 1 al 10',html:`<div class="wrap centro">
-      <p class="eyebrow rev">Del 1 al 10</p>
-      <p class="pregunta rev" style="--r:.1s">¿Cuánto os está afectando esto hoy?</p>
-      <div class="rev" style="--r:.2s;width:100%;display:flex;flex-direction:column;align-items:center">${nums('hoy')}<div class="extremos"><span>Nada</span><span>Muchísimo</span></div></div>
-      <div class="bloque2 ${S.hoy?'':'off'}" id="b2"><p class="pregunta">¿Y dónde ${d.v('quieres','queréis')} estar dentro de 3 meses?</p>${nums('meta')}</div>
+  {t:'Control',html:`<div class="wrap centro">
+      <p class="eyebrow rev">Del 0 al 10</p>
+      <p class="pregunta rev" style="--r:.1s">En los momentos difíciles con ${h}, ¿cuánto control ${d.v('sientes','sentís')} sobre cómo ${d.v('reaccionas tú','reaccionáis vosotros')}?</p>
+      <div class="rev" style="--r:.2s;width:100%;display:flex;flex-direction:column;align-items:center">${nums('hoy')}<div class="extremos"><span>0 · Exploto, no me reconozco</span><span>10 · Reacciono como quiero</span></div></div>
+      <div class="bloque2 ${S.hoy!==null?'':'off'}" id="b2"><p class="pregunta">¿Y dónde ${d.v('quieres','queréis')} estar dentro de 3 meses?</p>${nums('meta')}</div>
       <div class="res" id="res">${resEscala(d)}</div></div>`,
-   n:{dice:`Del 1 al 10, ¿cuánto os está afectando esto ahora mismo, a ti y a ${C.hijo}? … ¿Y dónde te gustaría estar dentro de 3 meses?`,
-      l:['Pulsa tú el número que te diga.','Si dice menos de 6: «¿Y en los días malos?». Usa ese número.','Repite la distancia en voz alta: «De 8 a 2. Ese es el camino.»']}},
+   n:{dice:`En los momentos difíciles con ${C.hijo}, del 0 al 10, ¿cuánto control sientes sobre cómo reaccionas tú? 0 es «exploto, no me reconozco» y 10 «reacciono como quiero». … ¿Y dónde te gustaría estar dentro de 3 meses?`,
+      l:['Pulsa tú el número que te diga.','Si dice más de 5: «¿Y en el peor momento de esta semana?». Usa ese número.','Repite la distancia en voz alta: «De 3 a 8. Ese es el camino.»','Si vienen los dos: que diga cada uno su número. Pulsa el más bajo.']}},
 
   {t:'Lo que cuesta esperar',html:`<div class="wrap centro">
       <p class="eyebrow rev">Lo que cuesta esperar</p>
@@ -195,45 +203,43 @@ function paginas(){
    n:{dice:`${d.v('No eres '+d.gp('el único','la única'),'No sois los únicos')}. Mira lo que cuenta ${PROGRAMA.videos[0].n}, que estaba igual que vosotros.`,
       l:['Dale al play y deja que lo vea entero. No hables encima.','Si compartes pantalla, activa «compartir audio» o no se oirá.','Al terminar: «¿Te ves ahí?» y calla.']}},
 
-  {t:'La filosofía',html:`<div class="wrap">
-      <p class="eyebrow rev">La filosofía</p>
-      <h2 class="h2 rev" style="--r:.1s">Cambiamos el patrón <em>empezando por ${d.v('ti','vosotros')}</em>.</h2>
-      <div class="pasos">
-        <div class="paso first rev" style="--r:.2s"><span class="n">1</span><h3>${d.v('Tú','Vosotros')}</h3><p>Qué hacer en el momento.</p></div>
-        <div class="paso rev" style="--r:.3s"><span class="n">2</span><h3>${h}</h3><p>Qué hay detrás de lo que hace.</p></div>
-        <div class="paso rev" style="--r:.4s"><span class="n">3</span><h3>${d.v('Vosotros','Los tres')}</h3><p>Volver a conectar.</p></div>
-        <div class="paso rev" style="--r:.5s"><span class="n">4</span><h3>El día a día</h3><p class="aplic">${esc(C.situacion)}</p></div></div>
-      <p class="filo-pie rev" style="--r:.65s">Todo el método sigue este orden. Primero ${d.v('entiendes','entendéis')}, después ${d.v('sabes','sabéis')} qué hacer.</p></div>`,
-   n:{dice:`Por eso no empezamos por ${C.hijo}: empezamos por ti. Cuando tú sabes qué hacer en el momento, ${C.hijo} cambia.`,
-      l:['Un minuto, no más. No es una clase.','Conecta el paso 4 con lo que te contó: «Esto de '+low(C.situacion)+' lo trabajamos desde la primera semana.»']}},
+  {t:'La filosofía',html:filosofiaHTML(d),
+   n:{dice:`Lo que hace ${C.hijo} es como un termómetro: te dice la temperatura que hay en casa.`,
+      l:['«Cuando sube, lo normal es intentar bajar el número.»',
+         '[Premios] «Un premio es como ponerle hielo. Baja… un rato.»',
+         '[Castigos] «Un castigo es sujetarlo a la fuerza. Mientras aprietas, se queda. En cuanto sueltas, sube. A veces, más.»',
+         '[Trucos] «Y los trucos lo tapan para no verlo. Pero sigue ahí.»',
+         '«Cambias el número. No la temperatura. ¿Te suena?» → y CALLA.',
+         '[Con Synesis] «Nosotros no tocamos el termómetro. Ajustamos el termostato. Y el termostato eres tú.»',
+         '«Ojo: no es que tú lo provoques. Es que en ti está la palanca.» (dilo siempre)',
+         '[Ajustar] «Cuando cambias cómo reaccionas, cambia la temperatura de casa. Y '+C.hijo+' baja solo. Y se queda.»',
+         'Las capas: «Primero tú. Luego entendemos a '+C.hijo+'. Luego la relación. Y el día a día cambia como consecuencia.»',
+         'Puente: «Por eso lo que vamos a medir no es a '+C.hijo+'. Es tu termostato: ese '+(S.hoy??'número')+' que me has dicho.»']}},
 
-  {t:'El formato',html:formatoHTML(d),
-   n:{dice:`Así es como lo vas a vivir. Vídeos cortos para entender, recursos para aplicarlo en casa, y Paloma contigo en tu caso concreto.`,
-      l:['Deja que los vídeos corran. Señala cada uno mientras lo nombras.','Conecta los vídeos con su caso: «Aquí está el de '+low(C.situacion)+'.»','Recalca: las 12 semanas son el acompañamiento; los vídeos y recursos son para siempre.']}},
+  {t:'Los 3 meses',html:mesesHTML(d),
+   n:{dice:`Estos son los 3 meses. Medimos una sola cosa: tu termostato, tu control en los momentos difíciles. Hoy estás en un ${S.hoy??'[su número]'} y quieres llegar a un ${S.meta??'[su objetivo]'}. Empezamos con una evaluación, buscamos tus oportunidades y sacamos tareas. Después de cada sesión, un plan hasta la siguiente. Y antes de cada una, medimos cómo vas.`,
+      l:['Pulsa las sesiones una a una: abajo cambia el ciclo.','3 sesiones el primer mes, cuando más se mueve. Luego más espacio para aplicarlo.','La línea es el objetivo, no una promesa: «Esto es lo que vamos a medir '+(d.amb?'juntos':d.gp('juntos','juntas'))+'.»']}},
 
-  {t:'Tu semana',html:semanaSlideHTML(d),
-   n:{dice:`¿Y cuánto tiempo te pide esto? Mira una semana normal. Un vídeo cuando ${C.hijo} se duerme, un par de recursos con el café… Unos 20 minutos a la semana.`,
-      l:['Pulsa 2 o 3 semanas, incluida una con sesión (punto naranja).','Remata el número grande: «de las 112 horas que estás despierta».','Si dice «no tengo tiempo»: vuelve aquí.']}},
+  {t:'Los bonos',html:bonosHTML(d),
+   n:{dice:`Y si empiezas hoy, todo esto va incluido. [Nombra cada uno, sin correr]`,
+      l:['El WhatsApp pesa mucho: sigue un mes más cuando acaban las sesiones.','Deja que lea los precios tachados.','No digas el precio todavía: va en la siguiente.']}},
 
-  {t:'La inversión',html:`<div class="wrap">
-      <p class="eyebrow rev">En perspectiva</p>
-      <h2 class="h2 rev" style="--r:.1s">A ${h} le quedan <em>${num(d.restan)} semanas</em> en casa ${d.v('contigo','con vosotros')}.</h2>
-      <div class="barra rev" style="--r:.2s;margin-top:58px"><span class="barra-call">${PROGRAMA.semanas} semanas: el método</span>
-        <div class="barra-track" style="--anos:${18-d.edad}"><div class="barra-prog" style="--w:${(PROGRAMA.semanas/d.restan*100).toFixed(2)}"></div></div>
-        <div class="barra-ed"><span>Hoy · ${d.edad} años</span><span>18 años</span></div></div>
-      <div class="inv-bajo">${S.precio?invRes(d):`<button class="btn prim xl rev" style="--r:.6s" data-act="precio">Ver la inversión</button>`}</div></div>`,
-   n:{dice:`Estas son las semanas que le quedan en casa contigo. El método son estas ${PROGRAMA.semanas}. [Pulsa «Ver la inversión»] Son ${d.plan.precio} €, o si lo prefieres en 2 pagos de ${d.plan.cuota2} € o en 3 de ${d.plan.cuota3} €.`,
-      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha el plan que elija: queda en el cierre.','Antes de dudas: «Lo que sientes ahora es alivio. Y el alivio se va. Lo que cambia las cosas es saber qué hacer, cada vez.»']}},
+  {t:'La inversión',html:`<div class="wrap centro inv">
+      <p class="eyebrow rev">La inversión</p>
+      <h2 class="h2 rev" style="--r:.1s">${PROGRAMA.nombre}</h2>
+      <div class="inv-bajo">${S.precio?invRes(d):`<button class="btn prim xl rev" style="--r:.4s" data-act="precio">Ver la inversión</button>`}</div></div>`,
+   n:{dice:`Todo esto tiene un valor de ${valorTotal()} €. La inversión es de ${PROGRAMA.precio} €. Si lo prefieres, en 3 plazos sin intereses con Klarna: 3 de 165,67 €.`,
+      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha la forma de pago que elija: queda en el cierre.','Si Klarna rechaza: 3 pagos de 175 € directamente con nosotros.','Sesión extra fuera del programa: 69 €, siempre.','La garantía no se dice aquí. Solo si duda (mira las notas del cierre).']}},
 
   {t:'Cierre',html:cierreHTML(d,inicio),
-   n:{dice:`${C.padre}, ¿empezamos el lunes?`,
-      l:['Pregunta y CALLA. El primero que habla pierde.','Si dice que sí: pulsa «Sí, empezamos» y manda el enlace de pago en ese momento.','Si duda: pulsa «Tengo una duda» y la opción que diga. Lee la frase y pregunta «¿Qué más te frena?».','Pareja: «¿Quedamos mañana a las [hora] cinco minutos con él/ella?» Nunca un «ya me dices» sin fecha.','Si no cierra: «Te mando un resumen por WhatsApp. ¿Te parece?»']}}
+   n:{dice:`${C.padre}, ${S.hoy!==null&&S.meta!==null?`de ${S.hoy} a ${S.meta}. `:''}¿Empezamos hoy?`,
+      l:['Pregunta y CALLA. El primero que habla pierde.','Si dice que sí: pulsa «Sí, empezamos» y manda el enlace de pago en ese momento.','Si duda: pulsa «Tengo una duda» y la opción que diga. Lee la frase y pregunta «¿Qué más te frena?».','Pareja: «¿Quedamos mañana a las [hora] cinco minutos con él/ella?» Nunca un «ya me dices» sin fecha.','Si no cierra: «Te mando un resumen por WhatsApp. ¿Te parece?»','Variante: «¿Ajustamos el termostato? ¿Empezamos hoy?»','Garantía: solo si duda y solo de palabra. «Si tras la primera sesión ves que no es para ti, te devolvemos todo menos esa sesión.»']}}
   ];
 }
 
 function resEscala(d){
-  if(!S.hoy)return '';
-  if(!S.meta)return `<strong><span class="a">${S.hoy}</span></strong><small>Ahora, ¿dónde ${d.v('quieres','queréis')} estar?</small>`;
+  if(S.hoy===null)return '';
+  if(S.meta===null)return `<strong><span class="a">${S.hoy}</span></strong><small>Ahora, ¿dónde ${d.v('quieres','queréis')} estar?</small>`;
   return `<strong><span class="a">${S.hoy}</span>${ico.flecha}<span class="b">${S.meta}</span></strong><small>Ese es el camino que vamos a hacer ${d.gp('juntos','juntas')}.</small>`;
 }
 function fraseHTML(d){
@@ -263,7 +269,7 @@ const AGENDA=[
 const DIAS=['L','M','X','J','V','S','D'];
 const dur=m=>m>=60?`${Math.floor(m/60)} h${m%60?' '+m%60+' min':''}`:`${m} min`;
 function semanaHTML(d){
-  const w=S.semana,ses=(PROGRAMA.sesionesEn[d.plan.id]||[]).includes(w);
+  const w=S.semana,ses=PROGRAMA.sesionesEn.includes(w);
   const items=AGENDA.filter(x=>!x.ses||ses);
   const tot=items.reduce((a,x)=>a+x.m,0);
   const bloque=['Tú',d.h,'Vosotros','El día a día'][Math.min(3,Math.floor((w-1)/3))];
@@ -277,62 +283,98 @@ function semanaHTML(d){
     <div class="dias aparece">${filas}</div>
     <div class="sem-tot"><strong>${dur(tot)}</strong><span>de las 112 horas que ${d.v('estás','estáis')} ${d.gp('despierto','despierta')} esta semana.</span></div>`;
 }
-function formatoHTML(d){
-  const V=PROGRAMA.formatoVideos;
-  const F=[
-    ['vid','Vídeos cortos','~12 min / semana','Piezas de 8 a 12 minutos para entender qué pasa en cada situación y cómo afrontarla.'],
-    ['rec','Recursos prácticos','5–10 min / semana','Guías y ejercicios para llevar la teoría a tu casa desde el primer día.'],
-    ['ses','Sesiones 1 a 1',d.plan.sesiones?`${d.plan.sesiones} sesiones de 1 h con Paloma`:'En Impulso e Intensivo',d.v(`Para que no ${d.gp('estés solo','estés sola')}: Paloma te guía en tu caso concreto.`,'Para que no estéis solos: Paloma os guía en vuestro caso concreto.')]];
-  return `<div class="wrap formato">
-    <p class="eyebrow rev">El formato</p>
-    <h2 class="h2 rev" style="--r:.1s">Tres piezas. <em>Una sola forma de hacerlo.</em></h2>
-    <div class="fv-grid">${F.map((x,i)=>`<article class="fv rev" style="--r:${.2+i*.12}s">
-      <div class="fv-media">${V[x[0]]?`<video src="${esc(V[x[0]])}" data-auto muted loop playsinline autoplay preload="auto" aria-label="${esc(x[1])}"></video>`
-        :`<div class="vpend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="13" height="12" rx="2"/><path d="m16 10 5-3v10l-5-3"/></svg><span>Vídeo próximamente</span></div>`}</div>
-      <div class="fv-t"><i class="sw ${x[0]}"></i><h3>${x[1]}</h3></div>
-      <span class="fv-tag">${x[2]}</span>
-      <p>${x[3]}</p></article>`).join('')}</div>
-    <p class="siempre rev" style="--r:.6s">${ico.check}<span><b>El acceso no termina a las 12 semanas.</b> Los vídeos y recursos son ${d.v('tuyos','vuestros')} para siempre: ${d.v('te','os')} sirven ahora, a los 6 y a los 12.</span></p></div>`;
+const R_FILO=[92,152,212,272];
+function filosofiaHTML(d){
+  const hab=S.filo==='hab',h=d.h;
+  const capas=[[d.v('Tú','Vosotros'),'Qué hacer en el momento'],[C.hijo,'Qué hay detrás'],['La relación','Volver a conectar'],['El día a día',C.situacion]];
+  return `<div class="wrap filo ${hab?'es-hab':'es-syn'}" id="filo">
+    <div class="filo-txt"><p class="eyebrow rev">La filosofía</p>
+      <h2 class="h2 rev solo-hab" style="--r:.1s">Lo habitual: <span class="alarma">bajar el número.</span></h2>
+      <h2 class="h2 rev solo-syn" style="--r:.1s">El termostato <em>${d.v('eres tú','sois vosotros')}.</em></h2>
+      <div class="seg filo-seg rev" style="--r:.2s" role="group"><button data-act="filo" data-v="hab" class="${hab?'on':''}">Lo habitual</button><button data-act="filo" data-v="syn" class="${hab?'':'on'}">Con Synesis</button></div>
+      <div class="solo-hab intentos rev" style="--r:.3s">${['Premios','Castigos','Trucos'].map((t,i)=>`<button class="intento" data-act="termo" data-v="${i}"><span class="cn">${i+1}</span>${t}</button>`).join('')}</div>
+      <div class="solo-syn rev" style="--r:.3s"><button class="btn prim" data-act="ajustar">Ajustar el termostato</button>
+        <ol class="capas-t">${capas.map((x,i)=>`<li data-capa="${i+1}"><span class="cn">${i+1}</span><span><b>${esc(x[0])}</b><small>${esc(x[1])}</small></span></li>`).join('')}</ol></div></div>
+    <div class="termo-host rev" style="--r:.15s" id="termo-host" data-nombre="${h}" data-modo="${hab?'hab':'syn'}"></div></div>`;
 }
-function semanaSlideHTML(d){
-  const ses=PROGRAMA.sesionesEn[d.plan.id]||[];
-  return `<div class="wrap sem-slide">
-    <div><p class="eyebrow rev">Tu semana</p>
-      <h2 class="h2 rev" style="--r:.1s">Cabe en una semana <em>que ya va llena</em>.</h2>
-      <p class="sem-sub rev" style="--r:.2s">Así podría ser una semana ${d.v('tuya','vuestra')} durante las ${PROGRAMA.semanas} semanas de acompañamiento.</p>
-      <ul class="ley-f rev" style="--r:.3s"><li><i class="sw vid"></i>Vídeo</li><li><i class="sw rec"></i>Recurso</li><li><i class="sw ses"></i>Sesión con Paloma</li></ul></div>
-    <div class="sem rev" style="--r:.3s">
-      <div class="sem-top"><span>Una semana de ejemplo</span><div class="chips" role="group" aria-label="Semanas">${Array.from({length:PROGRAMA.semanas},(_,k)=>k+1).map(k=>`<button data-act="semana" data-v="${k}" class="${S.semana===k?'on':''} ${ses.includes(k)?'s':''}" aria-label="Semana ${k}">${k}</button>`).join('')}</div></div>
-      <div id="semana">${semanaHTML(d)}</div></div></div>`;
+const SESIONES=[{w:1,m:1},{w:2,m:1},{w:4,m:1},{w:6,m:2},{w:8,m:2},{w:11,m:3}];
+function cicloDe(n){
+  if(n===1)return [['Antes','Evaluación inicial','Un cuestionario por adulto. Tu punto de partida.'],['Sesión 1','Tus oportunidades','Vemos dónde está la palanca.'],['Después','Tu plan','Tus primeras tareas, hasta la sesión 2.']];
+  if(n===6)return [['Antes','Medimos','Cómo ha ido desde la sesión 5.'],['Sesión 6','Dónde estás','Comparamos con el punto de partida.'],['Después','Tu plan','Para seguir por tu cuenta.']];
+  return [['Antes','Medimos','Cómo ha ido desde la sesión '+(n-1)+'.'],['Sesión '+n,'Enfocamos','Lo que más mueve tu número.'],['Después','Tu plan','Tareas hasta la sesión '+(n+1)+'.']];
 }
+function mesesHTML(d){
+  const hay=S.hoy!==null&&S.meta!==null;
+  const a=S.hoy??3,b=Math.max(S.meta??8,a);
+  const W=1000,H=270,L=34,Rr=16,T=22,B=46;
+  const x=w=>L+w/12*(W-L-Rr),y=v=>T+(1-v/10)*(H-T-B);
+  const f=w=>a+(b-a)*(1-Math.pow(1-w/12,1.6));
+  let dpath='';for(let w=0;w<=12.001;w+=.25)dpath+=(w?'L':'M')+x(w).toFixed(1)+' '+y(f(w)).toFixed(1);
+  const area=dpath+`L${x(12)} ${y(0)}L${x(0)} ${y(0)}Z`;
+  const meses=[0,1,2].map(m=>`<rect class="mes ${m%2?'b':''}" x="${x(m*4)}" y="${T-10}" width="${x(4)-x(0)}" height="${H-B-T+10}"/><text class="mes-t" x="${x(m*4+2)}" y="${H-16}">Mes ${m+1} · ${3-m} ${m===2?'sesión':'sesiones'}</text>`).join('');
+  const grid=[0,5,10].map(v=>`<line class="rej" x1="${x(0)}" x2="${x(12)}" y1="${y(v)}" y2="${y(v)}"/><text class="rej-t" x="${L-10}" y="${y(v)+4}">${v}</text>`).join('');
+  const nodos=SESIONES.map((s,i)=>{const w=s.w-.5,cx=x(w),cy=y(f(w));return `<g class="nodo ${S.ses===i+1?'on':''}" data-act="ses" data-v="${i+1}" style="--d:${.6+i*.12}s"><circle cx="${cx}" cy="${cy}" r="17"/><text x="${cx}" y="${cy+5}">${i+1}</text></g>`;}).join('');
+  const ciclo=cicloDe(S.ses);
+  return `<div class="wrap meses">
+    <div class="meses-h"><div><p class="eyebrow rev">Los 3 meses</p>
+      <h2 class="h2 rev" style="--r:.1s">Un objetivo. <em>Medido sesión a sesión.</em></h2></div>
+      <div class="kpi rev" style="--r:.2s"><small>Lo que medimos · ${d.v('tu','vuestro')} termostato</small><b>Tu control en los momentos difíciles</b>${hay?`<span class="kpi-n"><i class="a">${a}</i>${ico.flecha}<i class="b">${b}</i></span>`:''}</div></div>
+    <div class="grafica rev" style="--r:.25s"><svg viewBox="0 0 ${W} ${H}" aria-hidden="true">
+      <defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FAF9A" stop-opacity=".35"/><stop offset="1" stop-color="#8FAF9A" stop-opacity="0"/></linearGradient></defs>
+      ${meses}${grid}
+      <line class="meta-l" x1="${x(0)}" x2="${x(12)}" y1="${y(b)}" y2="${y(b)}"/><text class="meta-t" x="${x(12)-6}" y="${y(b)-10}">Objetivo${hay?' · '+b:''}</text>
+      <path class="area" d="${area}"/><path class="linea" d="${dpath}" pathLength="1"/>
+      <circle class="ini" cx="${x(0)}" cy="${y(a)}" r="7"/><text class="ini-t" x="${x(0)+14}" y="${y(a)+22}">Hoy${hay?' · '+a:''}</text>
+      ${nodos}</svg></div>
+    <div class="ciclo" aria-live="polite">${ciclo.map((c,i)=>`<div class="paso-c ${i===1?'mid':''}"><small>${c[0]}</small><b>${c[1]}</b><span>${c[2]}</span></div>${i<2?`<span class="ciclo-f">${ico.flecha}</span>`:''}`).join('')}</div></div>`;
+}
+const BICO={
+  chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11h.01M12 11h.01M15 11h.01"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m10 9 5 3-5 3z"/></svg>',
+  mano:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 5.6l2.1 2.1M3 12h3M18.4 5.6l-2.1 2.1M21 12h-3"/><circle cx="12" cy="14" r="5"/><path d="m10 14 1.5 1.5L14 13"/></svg>',
+  cole:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 12 5l9 5-9 5z"/><path d="M7 12v4c0 1.5 2.2 3 5 3s5-1.5 5-3v-4"/></svg>'};
+function bonosHTML(d){
+  const vb=PROGRAMA.bonos.reduce((a,x)=>a+x.valor,0);
+  return `<div class="wrap bonos-w">
+    <div class="bonos-h"><p class="eyebrow rev">Si ${d.v('empiezas','empezáis')} hoy</p>
+      <h2 class="h2 rev" style="--r:.1s">Además, ${d.v('te llevas','os lleváis')} <em>todo esto.</em></h2></div>
+    <div class="bgrid">${PROGRAMA.bonos.map((x,i)=>`<article class="bcard rev" style="--r:${.2+i*.1}s">
+      <div class="bcard-top"><span class="bico">${BICO[x.ico]}</span>${x.badge?`<span class="bbadge">${esc(x.badge)}</span>`:''}</div>
+      <h3>${esc(x.n)}</h3>
+      ${x.lista?`<ul class="blista">${x.lista.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:`<p>${esc(x.d)}</p>`}
+      <div class="bprecio"><s>${x.valor} €</s><b>Gratis</b></div></article>`).join('')}</div>
+    <div class="btotal rev" style="--r:.65s"><span>Valor de los bonos</span><s>${vb} €</s><b>Gratis</b></div></div>`;
+}
+const valorTotal=()=>PROGRAMA.incluye.reduce((a,x)=>a+(x[2]||0),0)+PROGRAMA.bonos.reduce((a,x)=>a+x.valor,0);
 function invRes(d){
-  const pl=PROGRAMA.planes;
-  return `<div class="inv-res aparece"><div class="porsemana"><strong>${dec(d.porSemana)}<i>€</i></strong><span>por cada semana que le queda en casa ${d.v('contigo','con vosotros')}.</span></div>
-    <div class="planes">${pl.map(x=>`<button class="plan ${x.id===S.plan?'on':''}" data-act="plan" data-v="${x.id}"><small>${x.nombre}</small><b>${x.precio}<i>€</i></b><span>o 2 pagos de ${x.cuota2}&nbsp;€<br>o 3 pagos de ${x.cuota3}&nbsp;€</span><em>${x.sesiones?`${x.sesiones} sesiones 1 a 1 con Paloma + vídeos y recursos`:'Vídeos y recursos, sin sesiones 1 a 1'}</em></button>`).join('')}
-    <p class="plazas">Plazas limitadas: las sesiones las hace Paloma personalmente.</p></div></div>`;
+  return `<div class="inv-res2 aparece">
+    <div class="precio"><s>${num(valorTotal())} €</s><strong>${PROGRAMA.precio}<i>€</i></strong></div>
+    <div class="planes pagos">${PROGRAMA.pagos.map(x=>`<button class="plan ${x.id===S.pago?'on':''}" data-act="pago" data-v="${x.id}"><small>${x.nombre}</small><b>${x.precio}<i>€</i></b><span>${x.det}</span></button>`).join('')}</div>
+    <p class="plazas">Plazas limitadas: las sesiones las hace Paloma personalmente.</p></div>`;
 }
 function cierreHTML(d,inicio){
   const dia=inicio.getDate(),{h,p}=d;
   const deseo=C.deseo?`<p class="deseo-l rev">${d.v('Lo que me dijiste','Lo que me contasteis')}</p><div class="burbuja rev" style="--r:.1s"><p>${esc(C.deseo)}</p><span class="burbuja-meta" aria-hidden="true">✓✓</span></div>`:'';
   if(S.cierre==='si'){
-    const chips=[(S.hoy*S.meta)?`De ${S.hoy} a ${S.meta}`:'',`Plan ${d.plan.nombre}`,`Empezáis el lunes ${dia}`].filter(Boolean);
+    const chips=[(S.hoy!==null&&S.meta!==null)?`Objetivo: de ${S.hoy} a ${S.meta}`:'','3 meses con Paloma',d.pago.nombre].filter(Boolean);
     return `<div class="wrap centro aparece"><p class="eyebrow">Hecho</p>
-      <h2 class="h2">${d.gp('Bienvenido','Bienvenida')}, ${p}. <em>Empezáis el lunes.</em></h2>
-      <ol class="pasos-si"><li><small>Ahora</small>${d.v('Te','Os')} llega el enlace de pago</li><li><small>Hoy</small>${d.v('Entras','Entráis')} en la plataforma</li><li><small>Esta semana</small>${d.plan.sesiones?`Reservamos ${d.v('tu','vuestra')} primera sesión con Paloma`:`${d.v('Empiezas','Empezáis')} el primer bloque de vídeos`}</li></ol>
+      <h2 class="h2">${d.gp('Bienvenido','Bienvenida')}, ${p}. <em>Empezamos hoy.</em></h2>
+      <ol class="pasos-si"><li><small>Ahora</small>${d.v('Te','Os')} llega el enlace de pago</li><li><small>Hoy</small>${d.v('Rellenas tu','Rellenáis cada uno vuestro')} cuestionario de diagnóstico</li><li><small>Esta semana</small>${d.v('Tu','Vuestra')} primera sesión con Paloma</li></ol>
       <div class="resumen">${chips.map(x=>`<span>${esc(x)}</span>`).join('')}</div></div>`;
   }
   if(S.cierre==='duda'){
     const D=[['dinero','El dinero'],['pareja','Hablarlo con mi pareja'],['tiempo','El tiempo'],['funciona',`Si funcionará con ${C.hijo}`]].filter(x=>!(d.amb?x[0]==='pareja':false));
-    const R={dinero:`Son ${dec(d.porSemana)} € por cada semana que le queda en casa. Y es para siempre: ${d.v('te','os')} sirve ahora, a los 6 y a los 12.`,
-      pareja:'Perfecto, esto se decide en equipo. ¿Qué crees que te va a preguntar? Lo resolvemos ahora.',
+    const R={dinero:`Se puede pagar en 3 plazos sin intereses: 3 de 165,67 €. Y empezamos igual hoy.`,
+      pareja:'Perfecto, esto se decide en equipo. Además, puede venir a las sesiones. ¿Qué crees que te va a preguntar? Lo resolvemos ahora.',
       tiempo:'Son unos 20 minutos a la semana. Menos de lo que os quita una tarde mala.',
-      funciona:d.plan.sesiones?`Por eso trabajamos el caso de ${C.hijo}, no uno genérico. En sesiones privadas con Paloma.`:`El método va situación por situación, como las de ${C.hijo}. Y si ${d.v('quieres','queréis')} que Paloma lo vea ${d.v('contigo','con vosotros')}, Impulso incluye 2 sesiones 1 a 1.`};
+      funciona:`Por eso trabajamos el caso de ${C.hijo}, no uno genérico. En sesiones 1 a 1 con Paloma.`};
     return `<div class="wrap centro aparece"><p class="eyebrow">Es normal dudar</p><h2 class="h2">¿Qué ${d.v('te','os')} frena?</h2>
       <div class="dudas">${D.map(([k,t])=>`<button data-act="duda" data-v="${k}" class="${S.duda===k?'on':''}">${esc(t)}</button>`).join('')}</div>
       <div class="respuesta">${S.duda?`<p class="aparece">${esc(R[S.duda])}</p>`:''}<button class="link" data-act="volver">Volver a la pregunta</button></div></div>`;
   }
   return `<div class="wrap centro">${deseo}
-      <h2 class="h2 cierre-q rev" style="--r:.35s">${p}, ¿empezamos el lunes ${dia}?</h2>
+      ${(S.hoy!==null&&S.meta!==null)?`<p class="kpi-cierre rev" style="--r:.25s">${d.v('Tu','Vuestro')} objetivo <span><i class="a">${S.hoy}</i>${ico.flecha}<i class="b">${S.meta}</i></span></p>`:''}
+      <h2 class="h2 cierre-q rev" style="--r:.35s">${p}, ¿empezamos hoy?</h2>
       <div class="acciones rev" style="--r:.55s"><button class="btn prim xl" data-act="si">Sí, empezamos</button><button class="btn sec xl" data-act="duda0">Tengo una duda</button></div></div>`;
 }
 
@@ -379,6 +421,8 @@ function autoVid(){
   });
 }
 function entrar(i){
+  if((P[i]||{}).t==='La filosofía'){const h=main.querySelector(`.slide[data-i="${i}"] #termo-host`);if(h){if(window.TermoAPI)TermoAPI.montar(h);else window.__termoPend=h;}}
+  if(['Los 3 meses','Cierre'].includes((P[i]||{}).t)){P=paginas();const sec=main.querySelector(`.slide[data-i="${i}"]`);if(sec)sec.innerHTML=P[i].html;notas();}
   autoVid();
   if((P[i]||{}).t==='Lo que cuesta esperar'){const d=datos();cuenta(0,totalVeces(d),1400,350);}
 }
@@ -430,8 +474,12 @@ main.addEventListener('click',e=>{
     S.semana=+v;b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
     $('#semana').innerHTML=semanaHTML(d);
   }
+  else if(act==='filo'){if(S.filo===v)return;S.filo=v;const w=$('#filo');w.classList.toggle('es-hab',v==='hab');w.classList.toggle('es-syn',v==='syn');b.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));if(window.TermoAPI)TermoAPI.modo(v);}
+  else if(act==='termo'){if(window.TermoAPI)TermoAPI.accion(+v);}
+  else if(act==='ajustar'){if(window.TermoAPI)TermoAPI.ajustar();}
+  else if(act==='ses'){S.ses=+v;pinta(cur);}
   else if(act==='precio'){S.precio=true;pinta(cur);}
-  else if(act==='plan'){S.plan=v;pinta(cur);main.querySelector(`.slide[data-i="${cur}"] .inv-res`)?.classList.remove('aparece');}
+  else if(act==='pago'){S.pago=v;pinta(cur);main.querySelector(`.slide[data-i="${cur}"] .inv-res2`)?.classList.remove('aparece');}
   else if(act==='si'){S.cierre='si';pinta(cur);confeti();}
   else if(act==='duda0'){S.cierre='duda';S.duda='';pinta(cur);}
   else if(act==='duda'){S.duda=v;pinta(cur);main.querySelector(`.slide[data-i="${cur}"] .wrap`)?.classList.remove('aparece');}
@@ -502,10 +550,10 @@ $('#form').onsubmit=e=>{
      edad:+$('#f-edad').value||3,angulo:$('#f-angulo').value,situacion:$('#f-situacion').value,reaccion:$('#f-reaccion').value,
      siente:$('#f-siente').value,cree:$('#f-cree').value,deseo:$('#f-deseo').value.trim(),notas:notasPrev};
   try{localStorage.setItem(CLAVE,JSON.stringify(C))}catch(err){}
-  Object.assign(S,{semana:1,hoy:0,meta:0,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,cierre:'q',duda:''});
+  Object.assign(S,{semana:1,hoy:null,meta:null,veces:1,unidad:'dia',modo:'nada',hito:0,precio:false,cierre:'q',duda:''});
   render();$('#editor').classList.remove('abierto');
 };
-$('#f-ejemplo').onclick=()=>{C={...EJEMPLO};try{localStorage.removeItem(CLAVE)}catch(err){}llenarForm();Object.assign(S,{hoy:0,meta:0,precio:false,cierre:'q',duda:''});render();};
+$('#f-ejemplo').onclick=()=>{C={...EJEMPLO};try{localStorage.removeItem(CLAVE)}catch(err){}llenarForm();Object.assign(S,{hoy:null,meta:null,precio:false,cierre:'q',duda:''});render();};
 
 render();
 })();
