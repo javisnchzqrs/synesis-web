@@ -1,7 +1,7 @@
 import { workflow, node, trigger, ifElse, sticky, expr } from '@n8n/workflow-sdk';
 
 // Copia de referencia. En n8n, __MCP_TOKEN__ y __SYSTEM_PROMPT__ están sustituidos
-// por el token del conector y por el prompt maestro de la auditoría (no se publica en este repositorio).
+// por el token del conector y por el prompt maestro de la auditoría V3 «tú eres la palanca» (Lab OPT-3, 10/11/2026; no se publica en este repositorio).
 
 const cuestionario = trigger({
   type: 'n8n-nodes-base.webhook',
@@ -227,11 +227,11 @@ const montar = node({
         "if (!m) throw new Error('Claude no devolvió JSON para ' + d.id);\n" +
         "let ia;\n" +
         "try { ia = JSON.parse(m[0]); } catch (e) { throw new Error('JSON de Claude no válido para ' + d.id + ': ' + e.message); }\n" +
-        "const CAMPOS = ['nombre_hijo','edad_hijo','s1_mensaje_padre','s1_pregunta_paloma','s2_conducta','s2_corazon_1','s2_corazon_2','s2_corazon_3','s3_bucle_hace','s3_bucle_pide','s3_bucle_lees','s3_bucle_aprende','s4_raiz_main','s4_raiz_sub','s4_edad9','s4_edad14','s4_edad30','s5_consecuencia','s7_benef_hijo','s7_benef_relacion','s7_benef_social'];\n" +
-        "const datos = { v: 1, id: d.id, creado: new Date().toISOString(), angulo: d.angulo };\n" +
+        "const CAMPOS = ['nombre_hijo','edad_hijo','s1_mensaje_padre','s1_pregunta_paloma','s2_conducta','s2_corazon_1','s2_corazon_2','s2_corazon_3','s3_bucle_hace','s3_bucle_pide','s3_bucle_lees','s3_bucle_aprende','s4_raiz_main','s4_raiz_sub','s4_edad9','s4_edad14','s4_edad30','s5_palanca_momento','s6_destino_3m'];\n" +
+        "const datos = { v: 3, id: d.id, creado: new Date().toISOString(), angulo: d.angulo };\n" +
         "let vacios = 0;\n" +
         "CAMPOS.forEach(function (k) { const v = String(ia[k] == null ? '' : ia[k]).replace(/[\\r\\n]+/g, ' ').trim(); if (!v) vacios++; datos[k] = v; });\n" +
-        "if (vacios > 3) throw new Error('Auditoría incompleta para ' + d.id + ' (' + vacios + ' campos vacíos)');\n" +
+        "if (vacios > 2 || !datos.s5_palanca_momento) throw new Error('Auditoría incompleta para ' + d.id + ' (' + vacios + ' campos vacíos)');\n" +
         "if (!datos.nombre_hijo) datos.nombre_hijo = 'tu peque';\n" +
         "return { json: { id: d.id, archivo: 'app.metodosynesis.com/auditoria/datos/' + d.id + '.json', contenido: JSON.stringify(datos) } };"
     }
