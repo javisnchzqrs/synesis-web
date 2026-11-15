@@ -12,7 +12,9 @@
 <meta property="og:title" content="Cuando estás agotada, tu cerebro elige por ti">
 <meta property="og:description" content="Un vídeo de Paloma para ti, antes de nuestra charla.">
 <meta property="og:image" content="https://embed-ssl.wistia.com/deliveries/db3934c0c5eacc08a7c18a31b2b11eb708acb76c.jpg?image_crop_resized=1200x675">
-<meta name="theme-color" content="#F3EDE4">
+<meta name="theme-color" content="#F3EDE4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#3A3A3A" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
 <link rel="icon" href="/media/fotos/isotipo-192.png">
 <link rel="apple-touch-icon" href="/media/fotos/isotipo-180.png">
 <link rel="preconnect" href="https://fast.wistia.com">
@@ -20,30 +22,71 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap">
 <style>
-:root{--salvia:#8FAF9A;--salvia-d:#6d9278;--beige:#F3EDE4;--antracita:#3A3A3A;--terra:#D08770;--claro:#E4EFE8;--suave:rgba(58,58,58,.68);--linea:rgba(58,58,58,.1)}
-*{box-sizing:border-box;margin:0}
+:root{
+  --salvia:#8FAF9A;--salvia-d:#6d9278;--beige:#F3EDE4;--antracita:#3A3A3A;--terra:#D08770;--claro:#E4EFE8;
+  --fondo:var(--beige);--tinta:var(--antracita);--suave:rgba(58,58,58,.66);--linea:rgba(58,58,58,.12);
+  --burbuja:#fff;--acento:var(--salvia-d);--marca:var(--claro);
+}
+@media (prefers-color-scheme:dark){
+  :root{--fondo:#3A3A3A;--tinta:#F3EDE4;--suave:rgba(243,237,228,.68);--linea:rgba(243,237,228,.14);
+    --burbuja:rgba(243,237,228,.09);--acento:var(--salvia);--marca:rgba(143,175,154,.18)}
+  .cierre{background:rgba(143,175,154,.16)!important;color:var(--tinta)!important}
+  .cierre h2{color:var(--salvia)!important}
+  .firma span{color:var(--suave)!important}.firma b{color:var(--tinta)!important}
+}
+*{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%}
-body{font-family:'DM Sans',system-ui,sans-serif;background:var(--beige);color:var(--antracita);line-height:1.5;min-height:100vh}
-.wrap{max-width:640px;margin:0 auto;padding:24px 18px calc(40px + env(safe-area-inset-bottom))}
-.logo{display:block;height:26px;width:auto;margin:0 auto 30px}
-.ante{display:block;text-align:center;font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--salvia-d);margin-bottom:12px}
-h1{font-size:clamp(26px,7.2vw,38px);font-weight:700;line-height:1.14;letter-spacing:-.025em;text-align:center}
-h1 em{display:block;font-style:italic;font-weight:400;color:var(--terra);margin-top:4px}
-.paloma{display:flex;gap:12px;align-items:center;justify-content:center;margin:20px auto 24px;max-width:460px}
-.paloma img{flex:none;width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:top;background:var(--claro)}
-.paloma p{font-size:16px;line-height:1.4;color:var(--suave)}
-.video{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:var(--antracita);box-shadow:0 14px 40px rgba(58,58,58,.18)}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--fondo);color:var(--tinta);line-height:1.5;min-height:100vh;
+  background-image:radial-gradient(120% 60% at 0% 0%,var(--marca) 0,transparent 60%)}
+.wrap{max-width:600px;margin:0 auto;padding:22px 20px calc(36px + env(safe-area-inset-bottom))}
+.logo{display:block;height:24px;width:auto}
+
+/* El camino hasta la charla: lo único que se mueve en la página, y solo cuando ella ve el vídeo */
+.camino{list-style:none;display:grid;grid-template-columns:auto 1fr auto 1fr auto;align-items:start;gap:0 8px;margin:26px 0 30px}
+.camino li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;color:var(--suave);white-space:nowrap}
+.camino .punto{width:22px;height:22px;border-radius:50%;border:2px solid var(--linea);background:var(--fondo);display:grid;place-items:center;transition:background .5s,border-color .5s}
+.camino .punto svg{width:12px;height:12px;stroke:#fff;opacity:0;transition:opacity .4s .2s}
+.camino .hilo{height:2px;background:var(--linea);border-radius:2px;position:relative;overflow:hidden;margin-top:10px}
+.camino .hilo::after{content:"";position:absolute;inset:0;background:var(--salvia);transform:scaleX(var(--lleno,0));transform-origin:left;transition:transform .9s cubic-bezier(.3,.8,.3,1)}
+.camino .pasado .punto{border-color:var(--salvia);background:var(--salvia)}
+.camino .actual{color:var(--tinta);font-weight:500}
+.camino .actual .punto{border-color:var(--acento);box-shadow:0 0 0 5px var(--marca)}
+.camino .visto .punto{background:var(--acento);border-color:var(--acento)}
+.camino .visto .punto svg,.camino .pasado .punto svg{opacity:1}
+
+h1{font-size:clamp(29px,8vw,42px);font-weight:700;line-height:1.08;letter-spacing:-.032em;max-width:17ch}
+h1 em{display:block;font-style:italic;font-weight:400;color:var(--terra);margin-top:6px;letter-spacing:-.02em}
+
+.nota{display:flex;gap:10px;align-items:flex-end;margin:24px 0 22px}
+.nota img{flex:none;width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:top;background:var(--claro)}
+.burbuja{background:var(--burbuja);border:1px solid var(--linea);border-radius:18px 18px 18px 6px;padding:11px 15px 10px;font-size:16.5px;line-height:1.4;max-width:420px}
+.burbuja small{display:block;font-size:12.5px;color:var(--suave);margin-top:3px}
+
+.video{position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#2b2b2b;
+  box-shadow:0 1px 0 var(--linea),0 22px 50px -18px rgba(58,58,58,.45)}
 .video wistia-player{display:block;width:100%;height:100%}
-.giro{text-align:center;font-size:13.5px;color:var(--suave);margin-top:10px}
-.cierre{margin-top:30px;background:var(--claro);border-radius:20px;padding:22px 22px 20px}
-.cierre p{font-size:17px;line-height:1.45}
-.firma{display:flex;gap:12px;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid rgba(109,146,120,.25)}
-.firma img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top;background:#fff}
-.firma p{font-size:15px;line-height:1.35;color:var(--suave)}
-.firma b{display:block;font-size:17px;font-weight:700;color:var(--antracita)}
-.pie{margin-top:34px;text-align:center;font-size:12.5px;color:var(--suave)}
-.pie a{color:inherit;text-decoration:none;margin:0 8px}
-@media (min-width:700px){.wrap{padding-top:40px}.logo{margin-bottom:40px}}
+.estado{margin-top:11px;font-size:13.5px;color:var(--suave);min-height:1.5em}
+.estado b{font-weight:500;color:var(--tinta)}
+
+.puntos{margin-top:30px;padding-top:24px;border-top:1px solid var(--linea)}
+.puntos h2{font-size:17px;font-weight:700;letter-spacing:-.01em;margin-bottom:12px}
+.puntos ul{list-style:none;display:grid;gap:11px}
+.puntos li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:16px;line-height:1.42}
+.puntos li::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--salvia);margin:8px 0 0 7px}
+
+.cierre{margin-top:32px;background:var(--claro);color:var(--antracita);border-radius:22px 22px 22px 8px;padding:22px 22px 18px}
+.cierre h2{font-size:14px;font-weight:500;color:var(--salvia-d);margin-bottom:6px}
+.cierre p{font-size:19px;line-height:1.38;letter-spacing:-.01em}
+.firma{display:flex;gap:11px;align-items:center;margin-top:18px}
+.firma img{width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:top;background:#fff}
+.firma span{font-size:14.5px;line-height:1.3;color:rgba(58,58,58,.7)}
+.firma b{display:block;font-size:16px;font-weight:700;color:var(--antracita)}
+
+.legal{margin-top:30px;font-size:12.5px;color:var(--suave)}
+.legal a{color:inherit;text-decoration:none;margin-right:14px}
+a:focus-visible,wistia-player:focus-visible{outline:2px solid var(--acento);outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (min-width:720px){.wrap{padding-top:40px}.camino{margin:34px 0 38px}}
 </style>
 <!-- Vídeo de Wistia: la miniatura se ve al instante mientras carga el reproductor -->
 <style>wistia-player[media-id='8w7o9owqtb']:not(:defined){background:center/cover no-repeat url('https://fast.wistia.com/embed/medias/8w7o9owqtb/swatch');display:block;filter:blur(4px)}</style>
@@ -58,30 +101,65 @@ customElements.whenDefined('wistia-player').then(function(){var p=document.query
 </head>
 <body>
 <main class="wrap">
-  <img class="logo" src="/media/fotos/logo-principal.svg" alt="Método Synesis">
+  <img class="logo" src="/media/fotos/logo-principal.svg" alt="Método Synesis" height="24">
 
-  <span class="ante">Para ti · 9 min</span>
+  <ol class="camino" data-paso="1" aria-label="Antes de nuestra charla">
+    <li data-n="1"><span class="punto"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Tú</li>
+    <li class="hilo" data-n="1" aria-hidden="true"></li>
+    <li data-n="2"><span class="punto"><svg viewBox="0 0 24 24" fill="none" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Tu peque</li>
+    <li class="hilo" data-n="2" aria-hidden="true"></li>
+    <li data-n="3"><span class="punto"></span>Nuestra charla</li>
+  </ol>
+
   <h1>Cuando estás agotada, no eliges cómo reaccionas. <em>Tu cerebro elige por ti.</em></h1>
 
-  <div class="paloma">
-    <img src="/media/fotos/paloma-recurso.jpg" alt="" width="40" height="40">
-    <p>Antes de hablar de tu peque, quiero hablar de ti.</p>
+  <div class="nota">
+    <img src="/media/fotos/paloma-recurso.jpg" alt="" width="38" height="38">
+    <p class="burbuja">Antes de hablar de tu peque, quiero hablar de ti.<small>Paloma</small></p>
   </div>
 
   <div class="video">
     <wistia-player media-id="8w7o9owqtb" aspect="1.7777777777777777"></wistia-player>
   </div>
-  <p class="giro">Gira el móvil para verlo en grande.</p>
+  <p class="estado" aria-live="polite"><b>9 minutos.</b> Si los peques ya duermen, mejor con auriculares.</p>
+
+  <section class="puntos">
+    <h2>Lo que te llevas de este vídeo</h2>
+    <ul><li>Por qué el cansancio te hace reaccionar en automático, aunque sepas lo que querrías hacer.</li><li>Que el estrés de criar no es un fallo tuyo.</li><li>Cómo recargar tu batería para volver a responder con calma.</li></ul>
+  </section>
 
   <section class="cierre">
+    <h2>Para nuestra charla</h2>
     <p>Esta semana, fíjate en qué momentos se te acaba la batería. Lo hablamos juntas.</p>
     <div class="firma">
-      <img src="/media/fotos/paloma-recurso.jpg" alt="Paloma Robles" width="44" height="44">
-      <p><b>Nos vemos en nuestra charla.</b>Paloma</p>
+      <img src="/media/fotos/paloma-recurso.jpg" alt="" width="40" height="40">
+      <span><b>Nos vemos en nuestra charla.</b>Paloma Robles, educadora infantil</span>
     </div>
   </section>
 
-  <p class="pie"><a href="https://metodosynesis.com/politica-de-privacidad" target="_blank" rel="noopener">Privacidad</a>·<a href="https://metodosynesis.com/aviso-legal" target="_blank" rel="noopener">Aviso legal</a></p>
+  <p class="legal"><a href="https://metodosynesis.com/politica-de-privacidad" target="_blank" rel="noopener">Privacidad</a><a href="https://metodosynesis.com/aviso-legal" target="_blank" rel="noopener">Aviso legal</a></p>
 </main>
+<script>
+/* Marca el camino: pasos anteriores hechos, el actual resaltado y, al ver casi todo el vídeo, se completa */
+(function () {
+  var c = document.querySelector('.camino'); var paso = Number(c.getAttribute('data-paso'));
+  c.querySelectorAll('li[data-n]:not(.hilo)').forEach(function (li) {
+    var n = Number(li.getAttribute('data-n'));
+    if (n < paso) li.classList.add('pasado'); else if (n === paso) { li.classList.add('actual'); li.setAttribute('aria-current', 'step'); }
+  });
+  c.querySelectorAll('.hilo').forEach(function (h) { if (Number(h.getAttribute('data-n')) < paso) h.style.setProperty('--lleno', 1); });
+  var hecho = false;
+  var t = setInterval(function () {
+    var p = document.querySelector('wistia-player'); if (!p || hecho) return;
+    var d = Number(p.duration) || 0, ct = Number(p.currentTime) || 0;
+    if (d && ct / d >= 0.9) {
+      hecho = true; clearInterval(t);
+      c.querySelector('li[data-n="' + paso + '"]:not(.hilo)').classList.add('visto');
+      var h = c.querySelector('.hilo[data-n="' + paso + '"]'); if (h) h.style.setProperty('--lleno', 1);
+      document.querySelector('.estado').innerHTML = '<b>Visto.</b> Gracias por darte este rato.';
+    }
+  }, 1500);
+})();
+</script>
 </body>
 </html>
