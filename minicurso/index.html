@@ -144,6 +144,12 @@ details p{padding:0 0 15px;font-size:15.5px;color:var(--suave)}
 .final .noche svg{width:26px;height:26px;stroke:var(--beige)}
 .final p{font-size:17px;color:var(--suave);margin:-6px auto 20px;max-width:32ch}
 .final .garantias{color:var(--suave)}
+.alt{display:grid;grid-template-columns:52px 1fr;gap:14px;align-items:start;border:1px dashed rgba(109,146,120,.55);border-radius:20px;padding:18px}
+.alt img{width:52px;height:52px;border-radius:50%;object-fit:cover;object-position:top}
+.alt h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.alt p{font-size:15.5px;color:var(--suave);margin:4px 0 12px}
+.cta-sec{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:12px;border:1.5px solid var(--salvia-d);color:var(--salvia-d);font-weight:700;font-size:15px;text-decoration:none}
+.cta-sec:hover{background:var(--claro)}
 .legal{margin-top:34px;text-align:center;font-size:12.5px;color:var(--suave)}
 .legal a{color:inherit;text-decoration:none;margin:0 8px}
 
@@ -224,10 +230,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     <p class="nota-ej">Así se ve tu área. El gráfico es un ejemplo.</p>
   </section>
 
-  <!-- 5 · EMOCIONAL: Paloma, sin culpa por no poder invertir más -->
+  <!-- 5 · EMOCIONAL: Paloma explica cómo le va a ayudar -->
   <section>
     <div class="paloma">
       <p data-t="nota1"></p>
+      <p data-t="nota2"></p>
       <p>He grabado estos vídeos con lo esencial que le explicaría a una familia en tu situación. Para que esta misma semana tengas por dónde empezar.</p>
       <div class="firma"><img src="/media/fotos/paloma-recurso.jpg" alt="" width="44" height="44"><div><b>Paloma Robles</b><span>Educadora infantil</span></div></div>
     </div>
@@ -239,12 +246,22 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     <div class="precio">
       <div class="cifra">37 €<small>pago único</small></div>
       <ul class="comparar">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Menos que <span class="pend">[una sola sesión con un especialista]</span>.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Sin cuotas ni suscripción. Es tuyo para siempre.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>5 vídeos, tu recurso y tu seguimiento semanal. Sin cuotas ni suscripción.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Es tuyo para siempre: vuelve a verlo cada vez que lo necesites.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Lo empiezas esta noche, no dentro de semanas.</span></li>
       </ul>
-      <p class="descuento"><b>Y si más adelante quieres que Paloma te acompañe</b>, te descontamos estos 37 € del acompañamiento.</p>
+      <p class="descuento"><b>Y si más adelante quieres que Paloma te acompañe</b>, te descontamos estos 37&nbsp;€ del acompañamiento.</p>
       <div data-zona="compra-precio"></div>
+    </div>
+  </section>
+
+  <!-- 6b · ALTERNATIVA: quien prefiere el acompañamiento -->
+  <section class="alt">
+    <img src="/media/fotos/paloma-recurso.jpg" alt="" width="52" height="52">
+    <div>
+      <h3>¿Prefieres que Paloma te acompañe?</h3>
+      <p>Reserva una llamada para charlar conmigo y ver cómo abordaríamos tu caso.</p>
+      <a class="cta-sec" id="cta-minicurso-reserva" href="/reserva/">Reservar llamada</a>
     </div>
   </section>
 
@@ -254,7 +271,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     <details><summary>¿Y si no tengo tiempo?</summary><p>Son 5 vídeos de <span class="pend">[X]</span> minutos. Puedes ver uno cada noche, cuando tu peque se duerma.</p></details>
     <details><summary>¿Sirve para la edad de mi peque?</summary><p>Está pensado para peques de 2 a 6 años, la etapa en la que más se repiten estas escenas.</p></details>
     <details><summary>¿Cuándo tengo acceso?</summary><p>Al momento. Al pagar te llega un email con tu acceso y entras desde el móvil.</p></details>
-    <details><summary>¿Y si no me sirve?</summary><p><span class="pend">[Garantía: por decidir]</span></p></details>
+    <details><summary>¿Me va a servir?</summary><p data-t="servir"></p></details>
   </section>
 
   <!-- 8 · FINAL: cerrar con su peque y con esta noche -->
@@ -277,7 +294,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   /* ── Textos de cada minicurso ── */
   var CURSOS = {
     rabietas: {
-      nombre: 'Minicurso Rabietas', stripe: '#[enlace de pago de Stripe · Rabietas]',
+      nombre: 'Minicurso Rabietas', situacion: 'explota', stripe: '#[enlace de pago de Stripe · Rabietas]',
       h1: function (p) { return 'Cuando ' + p + ' explota, tú también acabas al límite.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
       ahora: 'Explota por algo pequeño. Intentas razonar, subes el tono y acabáis los dos peor.',
@@ -286,7 +303,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       recurso: '[Recurso de Rabietas: qué es y cuándo se usa]'
     },
     pega: {
-      nombre: 'Minicurso Pega y muerde', stripe: '#[enlace de pago de Stripe · Pega y muerde]',
+      nombre: 'Minicurso Pega y muerde', situacion: 'pega o muerde', stripe: '#[enlace de pago de Stripe · Pega y muerde]',
       h1: function (p) { return 'Cuando ' + p + ' pega o muerde, sientes que todos te miran.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
       ahora: 'Pega o muerde. Te tensas, le riñes, y a los dos días vuelve a pasar.',
@@ -295,6 +312,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       recurso: '[Recurso de Pega y muerde: qué es y cuándo se usa]'
     }
   };
+  function SERVIR(p) {
+    return 'Está hecho para cambiar tu forma de ver a ' + p + '. Cuando entiendes qué le pasa, sabes cómo actuar. ' +
+      'Los vídeos te dan las claves y el cambio llega al probarlas en casa. No lo harás a ciegas: el recurso te guía en tu caso y cada semana ves cómo avanzas.';
+  }
   var DEMO = { nombre_hijo: 'Lucía', angulo: 'rabietas', s3_bucle_hace: 'Se tira al suelo en el súper cuando le dices que no' };
 
   var q = new URLSearchParams(location.search);
@@ -325,7 +346,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       poner('sub', '5 vídeos cortos para entender a tu peque y saber qué hacer tú en el momento difícil. Elige el tuyo:');
       document.querySelector('[data-zona="compra-portada"]').innerHTML = selector();
       document.querySelectorAll('[data-solo-curso],#precio,.final').forEach(function (el) { el.hidden = true; });
-      poner('nota1', 'Sé que ahora mismo no es momento de un acompañamiento. Y está bien: también se puede empezar por algo más pequeño.');
+      poner('nota1', 'Con estos vídeos vas a entender qué le pasa a tu peque por dentro en esos momentos, y por qué a veces lo que haces no funciona.');
+      poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú cuando llega el momento difícil.');
+      poner('servir', SERVIR('tu peque'));
       document.querySelectorAll('[data-elige]').forEach(function (b) { b.addEventListener('click', function () { curso = b.getAttribute('data-elige'); pintar(); scrollTo({ top: 0 }); }); });
       return;
     }
@@ -339,7 +362,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     poner('videos', c.videos.map(function (t, i) { return '<li><span class="n">' + (i + 1) + '</span><span><b>' + pend(t) + '</b></span><span class="min"><span class="pend">[X min]</span></span></li>'; }).join(''));
     poner('recurso', pend(c.recurso));
     poner('mock-t', esc(c.nombre)); poner('mock-1', pend(c.videos[0])); poner('mock-2', pend(c.videos[1])); poner('mock-3', pend(c.videos[2]));
-    poner('nota1', 'Sé que ahora mismo no es momento de un acompañamiento. Y está bien. Lo importante es que no te quedes esperando mientras ' + peque + ' y tú seguís pasándolo mal.');
+    poner('nota1', 'Con estos 5 vídeos vas a entender qué le pasa a ' + peque + ' por dentro cuando ' + c.situacion + ', y por qué a veces lo que haces no funciona.');
+    poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú en ese momento, paso a paso.');
+    poner('servir', SERVIR(peque));
     poner('final-h', 'Esta noche, cuando ' + peque + ' se duerma, <em>ve el primer vídeo.</em>');
     poner('final-p', 'Son unos minutos. Mañana ya sabrás algo que hoy no sabías de lo que le pasa.');
     poner('fija', esc(c.nombre));
