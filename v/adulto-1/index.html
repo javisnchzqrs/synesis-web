@@ -47,6 +47,9 @@ h1 em{display:block;font-style:italic;font-weight:400;color:var(--terra);margin-
 </style>
 <!-- Vídeo de Wistia: la miniatura se ve al instante mientras carga el reproductor -->
 <style>wistia-player[media-id='8w7o9owqtb']:not(:defined){background:center/cover no-repeat url('https://fast.wistia.com/embed/medias/8w7o9owqtb/swatch');display:block;filter:blur(4px)}</style>
+<!-- Que el vídeo empiece siempre con sonido (Wistia recuerda el «silenciado» en el navegador) -->
+<script>try{localStorage.removeItem('wistia-viewer-preferences')}catch(e){}
+customElements.whenDefined('wistia-player').then(function(){var p=document.querySelector('wistia-player');if(p)p.muted=false;});</script>
 <script src="https://fast.wistia.com/player.js" async></script>
 <script src="https://fast.wistia.com/embed/8w7o9owqtb.js" async type="module"></script>
 <!-- Conteo propio, sin cookies: visitas por página y, si el enlace lleva ?r=, cuánto vídeo ve cada familia -->
