@@ -115,7 +115,9 @@ h2 em{font-style:italic;font-weight:400;color:var(--terra)}
 .firma img{width:44px;height:44px;border-radius:50%;object-fit:cover;object-position:top}
 .firma b{display:block;font-size:16px}
 .firma span{font-size:14px;color:var(--suave)}
-.testimonio{margin-top:12px;border-left:3px solid var(--salvia);padding:4px 0 4px 14px;font-size:15.5px;color:var(--suave)}
+.caso{margin-top:12px;border-left:3px solid var(--salvia);padding:4px 0 4px 16px}
+.caso blockquote{font-size:16.5px;line-height:1.5;font-style:italic}
+.caso figcaption{margin-top:8px;font-size:13.5px;color:var(--suave)}
 
 /* ── 6. Precio (contraste) ── */
 .precio{background:var(--antracita);color:var(--beige);border-radius:24px;padding:24px 20px 20px;position:relative;overflow:hidden}
@@ -238,7 +240,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       <p>He grabado estos vídeos con lo esencial que le explicaría a una familia en tu situación. Para que esta misma semana tengas por dónde empezar.</p>
       <div class="firma"><img src="/media/fotos/paloma-recurso.jpg" alt="" width="44" height="44"><div><b>Paloma Robles</b><span>Educadora infantil</span></div></div>
     </div>
-    <p class="testimonio"><span class="pend">[Testimonio corto de una madre, con su permiso: qué cambió en casa]</span></p>
+    <figure class="caso" data-solo-curso>
+      <blockquote data-t="caso"></blockquote>
+      <figcaption>Paloma, sobre una familia que acompañó <span class="pend">[Paloma: ajusta los detalles a un caso real]</span></figcaption>
+    </figure>
   </section>
 
   <!-- 6 · CONTRASTE DE PRECIO -->
@@ -294,22 +299,24 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   /* ── Textos de cada minicurso ── */
   var CURSOS = {
     rabietas: {
-      nombre: 'Minicurso Rabietas', situacion: 'explota', stripe: '#[enlace de pago de Stripe · Rabietas]',
+      nombre: 'Minicurso Rabietas', situacion: 'explota', stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
       h1: function (p) { return 'Cuando ' + p + ' explota, tú también acabas al límite.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
       ahora: 'Explota por algo pequeño. Intentas razonar, subes el tono y acabáis los dos peor.',
       despues: function (p) { return 'Sabes qué le pasa a ' + p + ' en plena rabieta y qué hacer tú para no entrar en ella.'; },
       videos: ['[Título vídeo 1]', '[Título vídeo 2]', '[Título vídeo 3]', '[Título vídeo 4]', '[Título vídeo 5]'],
-      recurso: '[Recurso de Rabietas: qué es y cuándo se usa]'
+      recurso: '[Recurso de Rabietas: qué es y cuándo se usa]',
+      caso: '«Una mamá me contó que su hija de 4 años se tiraba al suelo cada vez que tocaba salir del parque. Ella acababa gritando y luego se sentía fatal. Cuando entendió qué le pasaba a su peque por dentro, cambió lo que hacía en esos primeros segundos. Las rabietas no desaparecieron de un día para otro, pero empezaron a durar mucho menos. Y ella dejó de salir de cada una sintiéndose culpable.»'
     },
     pega: {
-      nombre: 'Minicurso Pega y muerde', situacion: 'pega o muerde', stripe: '#[enlace de pago de Stripe · Pega y muerde]',
+      nombre: 'Minicurso Pega y muerde', situacion: 'pega o muerde', stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
       h1: function (p) { return 'Cuando ' + p + ' pega o muerde, sientes que todos te miran.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
       ahora: 'Pega o muerde. Te tensas, le riñes, y a los dos días vuelve a pasar.',
       despues: function (p) { return 'Entiendes qué hay detrás de cada golpe de ' + p + ' y qué hacer tú en ese momento.'; },
       videos: ['[Título vídeo 1]', '[Título vídeo 2]', '[Título vídeo 3]', '[Título vídeo 4]', '[Título vídeo 5]'],
-      recurso: '[Recurso de Pega y muerde: qué es y cuándo se usa]'
+      recurso: '[Recurso de Pega y muerde: qué es y cuándo se usa]',
+      caso: '«Una mamá me contó que la llamaban de la guarde casi cada semana porque su hijo de 3 años mordía. Ella le reñía y se lo explicaba mil veces, y nada. Cuando entendió que ese mordisco era su forma de decir «no puedo más», empezó a adelantarse a esos momentos. Poco a poco dejaron de llamarla.»'
     }
   };
   function SERVIR(p) {
@@ -319,6 +326,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   var DEMO = { nombre_hijo: 'Lucía', angulo: 'rabietas', s3_bucle_hace: 'Se tira al suelo en el súper cuando le dices que no' };
 
   var q = new URLSearchParams(location.search);
+  var id = (q.get('id') || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
   var curso = ({ rabietas: 'rabietas', pega: 'pega' })[q.get('m')] || null;
   var datos = {};
 
@@ -326,9 +334,16 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   function pend(s) { return esc(s).replace(/\[([^\]]+)\]/g, '<span class="pend">[$1]</span>'); }
   function poner(k, html) { document.querySelectorAll('[data-t="' + k + '"]').forEach(function (el) { el.innerHTML = html; }); }
 
+  function enlacePago() {
+    var u = new URL(CURSOS[curso].stripe), email = '';
+    if (id) u.searchParams.set('client_reference_id', id);
+    try { email = localStorage.getItem('synesis_email') || ''; } catch (e) {}
+    if (email) u.searchParams.set('prefilled_email', email);
+    return u.toString();
+  }
   function botonCompra(id) {
     var c = CURSOS[curso];
-    return '<a class="cta" id="cta-minicurso-' + id + '" href="' + esc(c.stripe) + '" data-compra>Empezar esta noche <span>· 37 €</span></a>' +
+    return '<a class="cta" id="cta-minicurso-' + id + '" href="' + esc(enlacePago()) + '" data-compra>Empezar esta noche <span>· 37 €</span></a>' +
       '<div class="garantias">' +
       '<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Pago seguro con Stripe</span>' +
       '<span><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>Acceso al momento</span></div>';
@@ -361,6 +376,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     poner('despues', esc(c.despues(peque)));
     poner('videos', c.videos.map(function (t, i) { return '<li><span class="n">' + (i + 1) + '</span><span><b>' + pend(t) + '</b></span><span class="min"><span class="pend">[X min]</span></span></li>'; }).join(''));
     poner('recurso', pend(c.recurso));
+    poner('caso', esc(c.caso));
     poner('mock-t', esc(c.nombre)); poner('mock-1', pend(c.videos[0])); poner('mock-2', pend(c.videos[1])); poner('mock-3', pend(c.videos[2]));
     poner('nota1', 'Con estos 5 vídeos vas a entender qué le pasa a ' + peque + ' por dentro cuando ' + c.situacion + ', y por qué a veces lo que haces no funciona.');
     poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú en ese momento, paso a paso.');
@@ -369,7 +385,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     poner('final-p', 'Son unos minutos. Mañana ya sabrás algo que hoy no sabías de lo que le pasa.');
     poner('fija', esc(c.nombre));
     ['portada', 'precio', 'final'].forEach(function (z) { document.querySelector('[data-zona="compra-' + z + '"]').innerHTML = botonCompra(z); });
-    document.querySelector('#fija .cta').setAttribute('href', c.stripe);
+    document.querySelector('#fija .cta').setAttribute('href', enlacePago());
     try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_minicurso_vista', curso: curso, personalizada: !!datos.nombre_hijo }); } catch (e) {}
   }
 
@@ -382,7 +398,6 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   }, 250);
 
   /* Personalización con su auditoría (?id=) o datos de ejemplo (?demo=1) */
-  var id = (q.get('id') || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
   function arrancar(d) {
     datos = d || {};
     if (!curso && (datos.angulo === 'rabietas' || datos.angulo === 'pega')) curso = datos.angulo;
