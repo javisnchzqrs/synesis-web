@@ -335,10 +335,8 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   function poner(k, html) { document.querySelectorAll('[data-t="' + k + '"]').forEach(function (el) { el.innerHTML = html; }); }
 
   function enlacePago() {
-    var u = new URL(CURSOS[curso].stripe), email = '';
-    if (id) u.searchParams.set('client_reference_id', id);
-    try { email = localStorage.getItem('synesis_email') || ''; } catch (e) {}
-    if (email) u.searchParams.set('prefilled_email', email);
+    var u = new URL(CURSOS[curso].stripe);
+    if (id) u.searchParams.set('client_reference_id', id); // une la compra a su auditoría (sin datos personales en la URL)
     return u.toString();
   }
   function botonCompra(id) {
