@@ -1,4 +1,4 @@
-/* Método Synesis · plataforma de minicursos (cursos.metodosynesis.com)
+/* Método Synesis · plataforma de talleres (internamente, minicursos) (cursos.metodosynesis.com)
    Login con email y contraseña (Supabase Auth, proyecto synesis-panel).
    Cada clienta solo ve sus cursos (RLS). Escribe solo por funciones: cursos_guardar_progreso,
    cursos_guardar_medicion y cursos_guardar_perfil. El alta la hace n8n al recibir el pago de Stripe. */
@@ -101,14 +101,14 @@
     return '<section class="cta"><div class="quien"><img src="' + FOTO + '" alt=""><span><b style="color:var(--beige)">Paloma Robles</b> · educadora infantil</span></div>' +
       '<h2>Tú eres la palanca. Paloma te ayuda a usarla.</h2>' +
       '<p>Ya tienes las claves. En el acompañamiento, Paloma está contigo 3 meses, paso a paso, con lo que vivís en casa.</p>' +
-      (hasta && hasta > new Date() ? '<p class="regalo"><b>Si empiezas antes del ' + fecha(hasta) + '</b>, te descontamos los 37 € de este minicurso.</p>' : '') +
+      (hasta && hasta > new Date() ? '<p class="regalo"><b>Si empiezas antes del ' + fecha(hasta) + '</b>, te descontamos los 37 € de este taller.</p>' : '') +
       '<a class="boton terra cta" href="' + esc(url) + '" target="_blank" rel="noopener" data-cta="' + esc(c.id) + '">Hablar con Paloma</a></section>';
   }
 
   /* ---------- pantallas de acceso ---------- */
   function vistaEntrar(msg) {
     app.innerHTML = '<main class="acceso"><img class="logo" src="' + LOGO + '" alt="Método Synesis">' +
-      '<h1>Entra en tu minicurso</h1><p class="sub">Con el email con el que lo compraste.</p>' +
+      '<h1>Entra en tu taller</h1><p class="sub">Con el email con el que lo compraste.</p>' +
       '<form id="f"><label class="campo"><span>Email</span><input type="email" name="email" autocomplete="email" required></label>' +
       '<label class="campo"><span>Contraseña</span><input type="password" name="clave" autocomplete="current-password" required></label>' +
       '<div id="m">' + (msg || '') + '</div><button class="boton" type="submit">Entrar</button></form>' +
@@ -129,7 +129,7 @@
     $('#f').onsubmit = function (e) {
       e.preventDefault(); var b = this.querySelector('button'); b.disabled = true;
       api.pedirEnlace(this.email.value.trim()).catch(function () {}).then(function () {
-        $('#m').innerHTML = '<p class="aviso">Listo. Si ese email tiene un minicurso, te llega el enlace en un minuto. Mira también en promociones o spam.</p>';
+        $('#m').innerHTML = '<p class="aviso">Listo. Si ese email tiene un taller, te llega el enlace en un minuto. Mira también en promociones o spam.</p>';
       });
     };
   }
@@ -152,12 +152,12 @@
     var nombre = (E.usuario.nombre || '').split(' ')[0];
     var h = barra() + '<main class="pagina"><h1 style="font-size:30px;letter-spacing:-.03em;line-height:1.1;margin-top:10px">Hola' + (nombre ? ', ' + esc(nombre) : '') + '</h1>';
     if (!cs.length) {
-      h += '<p class="sub">Aún no tienes ningún minicurso con este email. Si acabas de pagar, espera un minuto y recarga.</p>';
+      h += '<p class="sub">Aún no tienes ningún taller con este email. Si acabas de pagar, espera un minuto y recarga.</p>';
     } else {
-      h += '<p class="sub">Tus minicursos</p><div class="mis">';
+      h += '<p class="sub">Tus talleres</p><div class="mis">';
       cs.forEach(function (c) {
         var x = pctCurso(c);
-        h += '<a class="portada" href="#/curso/' + c.id + '"><span class="eti">Minicurso</span><h1>' + esc(c.nombre) + '</h1>' +
+        h += '<a class="portada" href="#/curso/' + c.id + '"><span class="eti">Taller</span><h1>' + esc(c.nombre) + '</h1>' +
           '<div class="total"><div class="fila"><span>Tu progreso</span><b>' + pct(x) + '%</b></div><div class="barra-pct"><i style="width:' + pct(x) + '%"></i></div></div></a>';
       });
       h += '</div>';
@@ -169,7 +169,7 @@
   function vistaCurso(c, pestana) {
     var x = pctCurso(c), sig = siguiente(c), todos = !sig;
     var h = barra((E.cursos.length > 1) ? '#/' : null) + '<main class="pagina">' +
-      '<section class="portada"><span class="eti">Minicurso</span><h1>' + esc(c.nombre) + '</h1>' +
+      '<section class="portada"><span class="eti">Taller</span><h1>' + esc(c.nombre) + '</h1>' +
       '<div class="total"><div class="fila"><span>' + c.videos.filter(visto).length + ' de ' + c.videos.length + ' vídeos</span><b>' + pct(x) + '%</b></div><div class="barra-pct"><i style="width:' + pct(x) + '%"></i></div></div>' +
       (todos ? '<a class="boton blanco" href="#/curso/' + c.id + '/evolucion">Ver tu evolución</a>'
         : '<a class="boton" href="#/curso/' + c.id + '/video/' + sig.orden + '">' + PLAY + '<span>' + (x > 0 ? 'Seguir' : 'Empezar') + ': ' + esc(sig.titulo) + '</span></a>') +
@@ -229,7 +229,7 @@
       '<div class="pregunta"><b id="txtPregunta">' + pregunta(c) + '</b><div class="escala" data-grupo="v">' + escala + '</div><div class="extremos"><span>0 · nada</span><span>10 · total</span></div></div>' +
       (esInicial ? '' : '<div class="pregunta"><b>¿Cuántos días ha pasado esta semana?</b><div class="dias" data-grupo="d">' + dias + '</div></div>' +
         '<label class="campo"><span>¿Algo que quieras apuntar? <small style="font-weight:400;color:var(--suave)">(opcional)</small></span><textarea name="nota" rows="2" maxlength="600"></textarea></label>') +
-      '<div id="mm"></div><button class="boton" type="submit" disabled style="margin-top:20px">' + (esInicial ? 'Empezar el minicurso' : 'Guardar esta semana') + '</button></form>';
+      '<div id="mm"></div><button class="boton" type="submit" disabled style="margin-top:20px">' + (esInicial ? 'Empezar el taller' : 'Guardar esta semana') + '</button></form>';
   }
   function vistaEvolucion(c) {
     var ini = inicial(c.id), sem = semanales(c.id), ult = sem[sem.length - 1];
