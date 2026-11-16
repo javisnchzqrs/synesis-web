@@ -273,7 +273,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   <!-- 7 · DUDAS -->
   <section>
     <h2>Dudas rápidas</h2>
-    <details><summary>¿Y si no tengo tiempo?</summary><p>Son 5 vídeos de <span class="pend">[X]</span> minutos. Puedes ver uno cada noche, cuando tu peque se duerma.</p></details>
+    <details><summary>¿Y si no tengo tiempo?</summary><p data-t="tiempo"></p></details>
     <details><summary>¿Sirve para la edad de mi peque?</summary><p>Está pensado para peques de 2 a 6 años, la etapa en la que más se repiten estas escenas.</p></details>
     <details><summary>¿Cuándo tengo acceso?</summary><p>Al momento. Al pagar te llega un email con tu acceso y entras desde el móvil.</p></details>
     <details><summary>¿Me va a servir?</summary><p data-t="servir"></p></details>
@@ -304,7 +304,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
       ahora: 'Explota por algo pequeño. Intentas razonar, subes el tono y acabáis los dos peor.',
       despues: function (p) { return 'Sabes qué le pasa a ' + p + ' en plena rabieta y qué hacer tú para no entrar en ella.'; },
-      videos: ['[Título vídeo 1]', '[Título vídeo 2]', '[Título vídeo 3]', '[Título vídeo 4]', '[Título vídeo 5]'],
+      videos: [['Qué pasa en una rabieta', 8], ['Los 4 tipos de rabieta', 9], ['Qué hacer en el momento exacto', 9], ['Cuatro escenas reales', 11], ['Lo que viene después', 5]],
       recurso: '[Recurso de Rabietas: qué es y cuándo se usa]',
       caso: '«Una mamá me contó que su hija de 4 años se tiraba al suelo cada vez que tocaba salir del parque. Ella acababa gritando y luego se sentía fatal. Cuando entendió qué le pasaba a su peque por dentro, cambió lo que hacía en esos primeros segundos. Las rabietas no desaparecieron de un día para otro, pero empezaron a durar mucho menos. Y ella dejó de salir de cada una sintiéndose culpable.»'
     },
@@ -314,7 +314,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
       ahora: 'Pega o muerde. Te tensas, le riñes, y a los dos días vuelve a pasar.',
       despues: function (p) { return 'Entiendes qué hay detrás de cada golpe de ' + p + ' y qué hacer tú en ese momento.'; },
-      videos: ['[Título vídeo 1]', '[Título vídeo 2]', '[Título vídeo 3]', '[Título vídeo 4]', '[Título vídeo 5]'],
+      videos: [['Por qué pega y muerde', 9], ['Seis motivos detrás de un golpe o un mordisco', 10], ['Qué hacer cuando pega o muerde', 9], ['Cómo llevarlo al día a día', 10], ['Lo que viene después', 6]],
       recurso: '[Recurso de Pega y muerde: qué es y cuándo se usa]',
       caso: '«Una mamá me contó que la llamaban de la guarde casi cada semana porque su hijo de 3 años mordía. Ella le reñía y se lo explicaba mil veces, y nada. Cuando entendió que ese mordisco era su forma de decir «no puedo más», empezó a adelantarse a esos momentos. Poco a poco dejaron de llamarla.»'
     }
@@ -372,15 +372,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     poner('sub', esc(c.sub(peque)));
     poner('ahora', datos.s3_bucle_hace ? '<span class="cita">«' + esc(datos.s3_bucle_hace) + '»</span>. ' + esc(c.ahora.split('. ').slice(1).join('. ')) : esc(c.ahora));
     poner('despues', esc(c.despues(peque)));
-    poner('videos', c.videos.map(function (t, i) { return '<li><span class="n">' + (i + 1) + '</span><span><b>' + pend(t) + '</b></span><span class="min"><span class="pend">[X min]</span></span></li>'; }).join(''));
+    poner('videos', c.videos.map(function (v, i) { return '<li><span class="n">' + (i + 1) + '</span><span><b>' + esc(v[0]) + '</b></span><span class="min">' + v[1] + ' min</span></li>'; }).join(''));
+    var mins = c.videos.map(function (v) { return v[1]; }), total = mins.reduce(function (a, b) { return a + b; }, 0);
+    poner('tiempo', 'Son 5 vídeos de entre ' + Math.min.apply(null, mins) + ' y ' + Math.max.apply(null, mins) + ' minutos, unos ' + total + ' en total. Puedes ver uno cada noche, cuando ' + peque + ' se duerma.');
     poner('recurso', pend(c.recurso));
     poner('caso', esc(c.caso));
-    poner('mock-t', esc(c.nombre)); poner('mock-1', pend(c.videos[0])); poner('mock-2', pend(c.videos[1])); poner('mock-3', pend(c.videos[2]));
+    poner('mock-t', esc(c.nombre)); poner('mock-1', esc(c.videos[0][0])); poner('mock-2', esc(c.videos[1][0])); poner('mock-3', esc(c.videos[2][0]));
     poner('nota1', 'Con estos 5 vídeos vas a entender qué le pasa a ' + peque + ' por dentro cuando ' + c.situacion + ', y por qué a veces lo que haces no funciona.');
     poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú en ese momento, paso a paso.');
     poner('servir', SERVIR(peque));
     poner('final-h', 'Esta noche, cuando ' + peque + ' se duerma, <em>ve el primer vídeo.</em>');
-    poner('final-p', 'Son unos minutos. Mañana ya sabrás algo que hoy no sabías de lo que le pasa.');
+    poner('final-p', 'Son ' + c.videos[0][1] + ' minutos. Mañana ya sabrás algo que hoy no sabías de lo que le pasa.');
     poner('fija', esc(c.nombre));
     ['portada', 'precio', 'final'].forEach(function (z) { document.querySelector('[data-zona="compra-' + z + '"]').innerHTML = botonCompra(z); });
     document.querySelector('#fija .cta').setAttribute('href', enlacePago());
