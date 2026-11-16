@@ -1,9 +1,9 @@
 <!doctype html>
 <!--
-  Landing de compra del minicurso (37 €) · para quien no puede invertir ahora en el acompañamiento.
+  Landing de compra del taller (37 €; internamente, minicurso) · para quien no puede invertir ahora en el acompañamiento.
   BORRADOR v1: los [corchetes] son textos o datos pendientes.
-  Enlace: /minicurso/?id=<id de su auditoría>  → personaliza con el nombre del peque y su escena (lee /auditoria/datos/<id>.json).
-          /minicurso/?m=rabietas | ?m=pega      → sin personalizar.  ?demo=1 → datos de ejemplo.
+  Enlace: /taller/?id=<id de su auditoría>  → personaliza con el nombre del peque y su escena (lee /auditoria/datos/<id>.json).
+          /taller/?m=rabietas | ?m=pega      → sin personalizar.  ?demo=1 → datos de ejemplo.
 -->
 <html lang="es">
 <head>
@@ -215,7 +215,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       <div class="movil" aria-hidden="true">
         <div class="pantalla">
           <div class="hola">Hola 👋</div>
-          <div class="t" data-t="mock-t">Minicurso</div>
+          <div class="t" data-t="mock-t">Taller</div>
           <div class="barra" style="--p:40%"><i></i></div>
           <div class="pct"><span>2 de 5 vídeos</span><span>40 %</span></div>
           <div class="mini">
@@ -291,15 +291,15 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
 </main>
 
 <div class="fija" id="fija" aria-hidden="true">
-  <div class="dentro"><div class="que"><b data-t="fija">Minicurso</b>37 €, acceso al momento</div><a class="cta" id="cta-minicurso-fija" href="#" data-compra>Empezar</a></div>
+  <div class="dentro"><div class="que"><b data-t="fija">Taller</b>37 €, acceso al momento</div><a class="cta" id="cta-minicurso-fija" href="#" data-compra>Empezar</a></div>
 </div>
 
 <script>
 (function () {
-  /* ── Textos de cada minicurso ── */
+  /* ── Textos de cada taller ── */
   var CURSOS = {
     rabietas: {
-      nombre: 'Minicurso Rabietas', situacion: 'explota', stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
+      nombre: 'Taller Rabietas', situacion: 'explota', stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
       h1: function (p) { return 'Cuando ' + p + ' explota, tú también acabas al límite.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
       ahora: 'Explota por algo pequeño. Intentas razonar, subes el tono y acabáis los dos peor.',
@@ -309,7 +309,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       caso: '«Una mamá me contó que su hija de 4 años se tiraba al suelo cada vez que tocaba salir del parque. Ella acababa gritando y luego se sentía fatal. Cuando entendió qué le pasaba a su peque por dentro, cambió lo que hacía en esos primeros segundos. Las rabietas no desaparecieron de un día para otro, pero empezaron a durar mucho menos. Y ella dejó de salir de cada una sintiéndose culpable.»'
     },
     pega: {
-      nombre: 'Minicurso Pega y muerde', situacion: 'pega o muerde', stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
+      nombre: 'Taller Pega y muerde', situacion: 'pega o muerde', stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
       h1: function (p) { return 'Cuando ' + p + ' pega o muerde, sientes que todos te miran.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
       ahora: 'Pega o muerde. Te tensas, le riñes, y a los dos días vuelve a pasar.',
