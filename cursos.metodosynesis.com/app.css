@@ -44,11 +44,6 @@ a{color:inherit}
 .boton small{display:block;font-weight:400;font-size:13px;opacity:.85}
 .enlace{background:none;border:0;cursor:pointer;color:var(--salvia-d);font-weight:500;text-decoration:underline;text-underline-offset:3px;font-size:15px}
 
-/* Pestañas */
-.pestanas{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:rgba(58,58,58,.06);border-radius:14px;padding:4px;margin:20px 0 18px;position:sticky;top:8px;z-index:5;backdrop-filter:blur(8px)}
-.pestanas button{border:0;background:none;border-radius:11px;padding:10px 4px;font-size:14.5px;font-weight:500;color:var(--suave);cursor:pointer}
-.pestanas button[aria-selected=true]{background:var(--tarjeta);color:var(--tinta);font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.08)}
-
 /* Lista de vídeos */
 .videos{list-style:none;display:grid;gap:10px}
 .videos a{display:grid;grid-template-columns:46px 1fr auto;gap:14px;align-items:center;background:var(--tarjeta);border:1px solid var(--linea);border-radius:18px;padding:12px 14px;text-decoration:none}
@@ -88,9 +83,37 @@ h2{font-size:20px;letter-spacing:-.015em;line-height:1.25}
 .video-info .claro{margin-top:14px}
 .navegar{display:grid;gap:10px;margin-top:20px}
 
-/* Recurso */
-.recurso{border-radius:20px;overflow:hidden;border:1px solid var(--linea);background:var(--tarjeta)}
-.recurso iframe{display:block;width:100%;height:calc(100vh - 200px);min-height:560px;border:0}
+/* Recurso a pantalla completa */
+.pantalla-recurso{position:fixed;inset:0;display:flex;flex-direction:column;background:var(--papel)}
+.barra-fina{flex:none;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(8px + env(safe-area-inset-top)) 16px 8px;border-bottom:1px solid var(--linea);background:var(--papel)}
+.barra-fina a{display:inline-flex;align-items:center;gap:4px;font-size:15px;font-weight:500;text-decoration:none;color:var(--suave);padding:6px 0}
+.barra-fina span{font-size:13.5px;color:var(--suave);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pantalla-recurso iframe{flex:1;width:100%;border:0;display:block;background:#fff}
+body.modo-recurso{overflow:hidden}
+
+/* Inicio del taller */
+.portada.compacta{padding:18px 18px 18px}
+.portada.compacta h1{font-size:clamp(24px,6.4vw,32px)}
+.portada.compacta .total{margin-top:14px}
+.portada.compacta .boton{margin-top:16px}
+.accesos{display:grid;gap:10px;margin-top:16px}
+.acceso-bloque{display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;background:var(--tarjeta);border:1px solid var(--linea);border-radius:18px;padding:14px;text-decoration:none}
+.acceso-bloque .ico{width:48px;height:48px;border-radius:14px;background:var(--claro);color:var(--salvia-d);display:grid;place-items:center}
+.acceso-bloque b{display:block;font-size:17px;line-height:1.25}
+.acceso-bloque small{display:block;font-size:14px;color:var(--suave);margin-top:2px}
+.acceso-bloque small.toca{color:var(--terra);font-weight:500}
+.acceso-bloque .flecha{color:var(--suave)}
+.titulo{font-size:30px;letter-spacing:-.03em;line-height:1.1;margin-top:6px}
+.titulo+.sub{margin-bottom:18px}
+
+/* Barra inferior */
+.pagina.con-nav{padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+.nav-inf{position:fixed;left:0;right:0;bottom:0;z-index:20;display:grid;grid-template-columns:repeat(4,1fr);max-width:680px;margin:0 auto;
+  padding:6px 8px calc(6px + env(safe-area-inset-bottom));background:rgba(243,237,228,.94);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--linea)}
+.nav-inf a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;text-decoration:none;color:var(--suave);font-size:12px;font-weight:500;border-radius:12px}
+.nav-inf a[aria-current=page]{color:var(--salvia-d);font-weight:700}
+.nav-inf a[aria-current=page] svg{background:var(--claro);border-radius:10px;padding:3px;width:30px;height:28px}
+@media (min-width:720px){.nav-inf{border-left:1px solid var(--linea);border-right:1px solid var(--linea);border-radius:16px 16px 0 0}}
 
 /* Medición */
 .escala{display:grid;grid-template-columns:repeat(11,1fr);gap:4px;margin-top:14px}
@@ -127,4 +150,3 @@ h2{font-size:20px;letter-spacing:-.015em;line-height:1.25}
 .legal a{color:inherit;text-decoration:none;margin-right:14px}
 :focus-visible{outline:2px solid var(--salvia);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
-@media (min-width:720px){.recurso iframe{height:calc(100vh - 220px)}}

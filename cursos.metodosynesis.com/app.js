@@ -28,6 +28,13 @@
   var CHECK = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
   var FLECHA = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
   var ATRAS = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>';
+  var ICO = {
+    inicio: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/></svg>',
+    videos: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="15" rx="3"/><path d="M10 9.2v5.6l4.6-2.8z" fill="currentColor"/></svg>',
+    recurso: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>',
+    evolucion: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>'
+  };
+  var NOMBRE_RECURSO = { rabietas: 'Kit de rabietas', pega: 'Kit Pega y muerde' };
   var PLAY = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
 
   /* ---------- datos ---------- */
@@ -89,6 +96,12 @@
     return '<header class="barra">' + (atras ? '<a class="atras" href="' + atras + '">' + ATRAS + 'Volver</a>' : '<img class="logo" src="' + LOGO + '" alt="Método Synesis">') +
       '<button class="salir" data-salir>Salir</button></header>';
   }
+  function navInf(c, activo) {
+    return '<nav class="nav-inf" aria-label="Secciones del taller">' + [['inicio', 'Inicio', ''], ['videos', 'Vídeos', '/videos'], ['recurso', 'Recurso', '/recurso'], ['evolucion', 'Evolución', '/evolucion']].map(function (p) {
+      return '<a href="#/curso/' + c.id + p[2] + '"' + (p[0] === activo ? ' aria-current="page"' : '') + '>' + ICO[p[0]] + '<span>' + p[1] + '</span></a>';
+    }).join('') + '</nav>';
+  }
+  function nombreRecurso(c) { return NOMBRE_RECURSO[c.id] || 'Tu recurso'; }
   function anillo(x) {
     var r = 19, l = 2 * Math.PI * r, hecho = x >= 0.9;
     return '<span class="anillo' + (hecho ? ' hecho' : '') + '"><svg viewBox="0 0 46 46"><circle cx="23" cy="23" r="' + r + '" fill="' + (hecho ? 'var(--salvia)' : 'none') + '" stroke="var(--linea)" stroke-width="4"/>' +
@@ -165,40 +178,47 @@
     app.innerHTML = h + LEGAL + '</main>';
   }
 
-  /* ---------- curso ---------- */
-  function vistaCurso(c, pestana) {
-    var x = pctCurso(c), sig = siguiente(c), todos = !sig;
-    var h = barra((E.cursos.length > 1) ? '#/' : null) + '<main class="pagina">' +
-      '<section class="portada"><span class="eti">Taller</span><h1>' + esc(c.nombre) + '</h1>' +
-      '<div class="total"><div class="fila"><span>' + c.videos.filter(visto).length + ' de ' + c.videos.length + ' vídeos</span><b>' + pct(x) + '%</b></div><div class="barra-pct"><i style="width:' + pct(x) + '%"></i></div></div>' +
-      (todos ? '<a class="boton blanco" href="#/curso/' + c.id + '/evolucion">Ver tu evolución</a>'
-        : '<a class="boton" href="#/curso/' + c.id + '/video/' + sig.orden + '">' + PLAY + '<span>' + (x > 0 ? 'Seguir' : 'Empezar') + ': ' + esc(sig.titulo) + '</span></a>') +
-      '</section>' +
-      '<nav class="pestanas" role="tablist">' +
-      [['videos', 'Vídeos'], ['recurso', 'Tu recurso'], ['evolucion', 'Tu evolución']].map(function (p) {
-        return '<button role="tab" aria-selected="' + (p[0] === pestana) + '" data-tab="' + p[0] + '">' + p[1] + '</button>';
-      }).join('') + '</nav><div id="cont"></div>';
-    app.innerHTML = h + '</main>';
-    app.querySelectorAll('[data-tab]').forEach(function (b) {
-      b.onclick = function () { location.replace('#/curso/' + c.id + (b.dataset.tab === 'videos' ? '' : '/' + b.dataset.tab)); };
+  /* ---------- curso: inicio, vídeos, recurso y evolución ---------- */
+  function vistaCurso(c) {
+    var x = pctCurso(c), sig = siguiente(c), todos = !sig, vistos = c.videos.filter(visto).length;
+    var sem = semanales(c.id), ult = sem[sem.length - 1], hechaSemana = ult && ult.semana === lunes();
+    var h = barra((E.cursos.length > 1) ? '#/' : null) + '<main class="pagina con-nav">' +
+      '<section class="portada compacta"><span class="eti">Taller</span><h1>' + esc(c.nombre) + '</h1>' +
+      '<div class="total"><div class="fila"><span>Tu progreso</span><b>' + pct(x) + '%</b></div><div class="barra-pct"><i style="width:' + pct(x) + '%"></i></div></div>' +
+      (todos ? '' : '<a class="boton" href="#/curso/' + c.id + '/video/' + sig.orden + '">' + PLAY + '<span>' + (x > 0 ? 'Seguir' : 'Empezar') + ': ' + esc(sig.titulo) + '</span></a>') +
+      '</section><div class="accesos">' +
+      acceso(c, 'videos', 'Vídeos', todos ? 'Los ' + c.videos.length + ' vistos. Puedes volver cuando quieras.' : vistos + ' de ' + c.videos.length + ' vistos') +
+      acceso(c, 'recurso', nombreRecurso(c), c.recurso_url ? 'Para usarlo en el día a día' : 'Muy pronto aquí') +
+      acceso(c, 'evolucion', 'Tu evolución', hechaSemana ? 'Esta semana: ' + ult.control + ' de 10' : 'Toca la de esta semana', !hechaSemana) +
+      '</div>' + cta(c) + LEGAL + '</main>' + navInf(c, 'inicio');
+    app.innerHTML = h;
+  }
+  function acceso(c, id, titulo, sub, aviso) {
+    return '<a class="acceso-bloque" href="#/curso/' + c.id + '/' + id + '"><span class="ico">' + ICO[id] + '</span><span><b>' + esc(titulo) + '</b><small' + (aviso ? ' class="toca"' : '') + '>' + esc(sub) + '</small></span><span class="flecha">' + FLECHA + '</span></a>';
+  }
+  function vistaVideos(c) {
+    var x = pctCurso(c), sig = siguiente(c);
+    var l = '<ul class="videos">';
+    c.videos.forEach(function (v) {
+      var p = pctVideo(v);
+      l += '<li><a href="#/curso/' + c.id + '/video/' + v.orden + '"' + (sig && sig.id === v.id ? ' class="siguiente"' : '') + '>' + anillo(p) +
+        '<span><b>' + esc(v.titulo) + '</b><small>' + (visto(v) ? 'Visto' : p > 0 ? 'Visto el ' + pct(p) + '%' : (sig && sig.id === v.id ? 'Tu siguiente vídeo' : 'Sin empezar')) +
+        (v.duracion_seg ? ' · ' + Math.round(v.duracion_seg / 60) + ' min' : '') + '</small></span><span class="flecha">' + FLECHA + '</span></a></li>';
     });
-    var cont = $('#cont');
-    if (pestana === 'videos') {
-      var l = '<ul class="videos">';
-      c.videos.forEach(function (v) {
-        var p = pctVideo(v);
-        l += '<li><a href="#/curso/' + c.id + '/video/' + v.orden + '"' + (sig && sig.id === v.id ? ' class="siguiente"' : '') + '>' + anillo(p) +
-          '<span><b>' + esc(v.titulo) + '</b><small>' + (visto(v) ? 'Visto' : p > 0 ? 'Visto el ' + pct(p) + '%' : (sig && sig.id === v.id ? 'Tu siguiente vídeo' : 'Sin empezar')) +
-          (v.duracion_seg ? ' · ' + Math.round(v.duracion_seg / 60) + ' min' : '') + '</small></span><span class="flecha">' + FLECHA + '</span></a></li>';
-      });
-      cont.innerHTML = l + '</ul>' + cta(c) + LEGAL;
-    } else if (pestana === 'recurso') {
-      cont.innerHTML = c.recurso_url ? '<div class="recurso"><iframe src="' + esc(c.recurso_url) + '" title="Tu recurso" loading="lazy"></iframe></div>'
-        : '<div class="tarjeta"><h2>Tu recurso está en camino</h2><p class="sub">Paloma lo está terminando. En cuanto esté, aparece aquí.</p></div>';
-    } else {
-      cont.innerHTML = vistaEvolucion(c) + cta(c) + LEGAL;
-      activarMedicion(c, false);
+    app.innerHTML = barra() + '<main class="pagina con-nav"><h1 class="titulo">Vídeos</h1><p class="sub">' + c.videos.filter(visto).length + ' de ' + c.videos.length + ' vistos · ' + pct(x) + '% del taller</p>' +
+      l + '</ul>' + LEGAL + '</main>' + navInf(c, 'videos');
+  }
+  function vistaRecurso(c) {
+    if (!c.recurso_url) {
+      app.innerHTML = barra() + '<main class="pagina con-nav"><section class="tarjeta"><h2>Tu recurso está en camino</h2><p class="sub">Paloma lo está terminando. En cuanto esté, aparece aquí.</p></section></main>' + navInf(c, 'recurso');
+      return;
     }
+    app.innerHTML = '<div class="pantalla-recurso"><header class="barra-fina"><a href="#/curso/' + c.id + '">' + ATRAS + 'Volver al taller</a><span>' + esc(nombreRecurso(c)) + '</span></header>' +
+      '<iframe src="' + esc(c.recurso_url) + '" title="' + esc(nombreRecurso(c)) + '"></iframe></div>';
+  }
+  function vistaEvolucionPag(c) {
+    app.innerHTML = barra() + '<main class="pagina con-nav">' + vistaEvolucion(c) + cta(c) + LEGAL + '</main>' + navInf(c, 'evolucion');
+    activarMedicion(c, false);
   }
 
   /* ---------- evolución ---------- */
@@ -280,7 +300,7 @@
   /* ---------- vídeo ---------- */
   function vistaVideo(c, v) {
     var i = c.videos.indexOf(v), sigV = c.videos[i + 1], antV = c.videos[i - 1];
-    app.innerHTML = barra('#/curso/' + c.id) + '<main class="pagina">' +
+    app.innerHTML = barra('#/curso/' + c.id + '/videos') + '<main class="pagina con-nav">' +
       '<div class="marco">' + (v.wistia_id ? '<wistia-player media-id="' + esc(v.wistia_id) + '" aspect="1.7777777777777777"></wistia-player>'
         : '<div class="hueco">Vídeo en preparación.<br>Muy pronto lo tienes aquí.</div>') + '</div>' +
       '<div class="video-info"><span class="eti">' + esc(c.nombre) + ' · Vídeo ' + v.orden + ' de ' + c.videos.length + '</span><h1>' + esc(v.titulo) + '</h1>' +
@@ -289,7 +309,7 @@
       '<div class="navegar">' + (sigV ? '<a class="boton" href="#/curso/' + c.id + '/video/' + sigV.orden + '">Siguiente: ' + esc(sigV.titulo) + '</a>' : '<a class="boton" href="#/curso/' + c.id + '/evolucion">Ver tu evolución</a>') +
       '<a class="boton linea" href="#/curso/' + c.id + '/recurso">Abrir tu recurso</a>' +
       (antV ? '<a class="boton linea" href="#/curso/' + c.id + '/video/' + antV.orden + '">Anterior: ' + esc(antV.titulo) + '</a>' : '') + '</div>' +
-      (!sigV ? cta(c) : '') + LEGAL + '</main>';
+      (!sigV ? cta(c) : '') + LEGAL + '</main>' + navInf(c, 'videos');
     if (v.wistia_id) {
       if (!document.querySelector('script[data-wistia="' + v.wistia_id + '"]')) {
         var s = document.createElement('script'); s.src = 'https://fast.wistia.com/embed/' + v.wistia_id + '.js'; s.type = 'module'; s.async = true; s.dataset.wistia = v.wistia_id; document.head.appendChild(s);
@@ -341,6 +361,7 @@
     if (pararVideo) { pararVideo(); pararVideo = null; }
     window.scrollTo(0, 0);
     var r = (location.hash || '#/').slice(2).split('/');
+    document.body.classList.remove('modo-recurso');
     if (r[0] !== 'curso') return vistaInicio();
     var c = curso(r[1]);
     if (!c) { location.replace('#/'); return; }
@@ -350,7 +371,11 @@
       var v = c.videos.filter(function (x) { return String(x.orden) === r[3]; })[0];
       return v ? vistaVideo(c, v) : location.replace('#/curso/' + c.id);
     }
-    vistaCurso(c, r[2] === 'recurso' ? 'recurso' : r[2] === 'evolucion' ? 'evolucion' : 'videos');
+    document.body.classList.toggle('modo-recurso', r[2] === 'recurso' && !!c.recurso_url);
+    if (r[2] === 'videos') return vistaVideos(c);
+    if (r[2] === 'recurso') return vistaRecurso(c);
+    if (r[2] === 'evolucion') return vistaEvolucionPag(c);
+    vistaCurso(c);
   }
 
   app.addEventListener('click', function (e) {
