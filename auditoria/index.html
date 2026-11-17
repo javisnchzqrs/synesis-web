@@ -642,6 +642,26 @@
 .mt-txt { font-size: 13.5px; color: #555; line-height: 1.38; margin-top: 1px; }
 .mt-pie { flex-shrink: 0; text-align: center; font-size: 13.5px; color: #6b6b6b; line-height: 1.4; }
 .mt-pie strong { color: var(--antracita); }
+
+/* filtro: tu punto de partida */
+.pp-wrap { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.pp-title { font-size: 22px; font-weight: 600; color: var(--antracita); line-height: 1.28; text-align: center; }
+.pp-title strong { color: var(--terracota); font-weight: 700; }
+.pp-contraste { display: flex; align-items: center; justify-content: center; gap: 14px; background: #fff; border-radius: 18px; padding: 18px 14px; box-shadow: 0 4px 18px rgba(58,58,58,0.07); }
+.pp-caja { text-align: center; min-width: 96px; }
+.pp-etq { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8a8a; margin-bottom: 4px; }
+.pp-num { font-size: 46px; font-weight: 700; line-height: 1; }
+.pp-num small { font-size: 15px; font-weight: 600; color: #8a8a8a; margin-left: 2px; }
+.pp-hoy .pp-num { color: var(--terracota); }
+.pp-meta .pp-num { color: var(--verde-salvia-dark); }
+.pp-flecha { color: var(--verde-salvia); flex-shrink: 0; }
+.pp-preg { font-size: 16px; font-weight: 500; color: var(--antracita); line-height: 1.42; text-align: center; padding: 0 6px; }
+.pp-botones { display: flex; flex-direction: column; gap: 10px; }
+.pp-si { width: 100%; padding: 16px 20px; background: var(--verde-salvia); color: #fff; border: none; border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; }
+.pp-si:hover { background: var(--verde-salvia-dark); }
+.pp-no { width: 100%; padding: 14px 20px; background: transparent; color: var(--antracita); border: 1.5px solid rgba(58,58,58,0.18); border-radius: 14px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 500; cursor: pointer; }
+.pp-no:hover { border-color: rgba(58,58,58,0.35); }
+.pp-escala-preg { font-size: 15px; font-weight: 600; color: var(--antracita); text-align: center; line-height: 1.38; margin-bottom: 12px; }
 </style>
 <style>
   .espera { width: 100%; max-width: 420px; min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 18px; color: var(--antracita); font-family: 'DM Sans', sans-serif; }
@@ -911,15 +931,23 @@
 
       <div class="mt-pie"><strong>3 meses de acompañamiento 1 a 1 con Paloma.</strong><br>Tu caso, no uno genérico.</div>
 
-      <button class="slide-btn" onclick="nextSlide()">¿Por dónde empezaría en mi caso?
+      <button class="slide-btn" onclick="irAPuntoPartida()">¿Por dónde empezaría en mi caso?
         <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
       </button>
     </div>
 </section>
 <section class="slide-wrap" data-idx="6">
 <div class="slide">
+      <div class="pa-head">
+        <div class="pa-eyebrow">Tu punto de partida</div>
+      </div>
+      <div class="pp-wrap" id="pp-wrap"></div>
+    </div>
+</section>
+<section class="slide-wrap" data-idx="7">
+<div class="slide">
       <div class="c-head">
-        <div class="c-title">Por dónde empezar <strong>en tu caso</strong>,<br>te lo cuento en una llamada.</div>
+        <div class="c-title" id="c-title"></div>
       </div>
 
       <div class="chat-card">
@@ -935,18 +963,11 @@
         </div>
 
         <div class="chat-body" id="c-chat">
-          <div class="msg msg-in" style="animation-delay: 0.2s;">Ya has visto lo más importante: el cambio con {{nombre_hijo}} empieza en ti. Y eso se aprende. 🌱<span class="msg-time">21:12</span></div>
-          <div class="msg msg-out" style="animation-delay: 0.5s;">¿Y por dónde empiezo yo?<span class="msg-time">21:12</span></div>
-          <div class="msg msg-in" style="animation-delay: 0.8s;">Depende de tu caso. Por eso prefiero verlo contigo en una llamada. Sin juicio y sin presión.<span class="msg-time">21:13</span></div>
-          <div class="msg msg-out" style="animation-delay: 1.1s;">¿Y si no me convence?<span class="msg-time">21:13</span></div>
           <div class="typing" id="c-typing"><span></span><span></span><span></span></div>
         </div>
       </div>
 
-      <a class="cta-llamada" id="c-cta" href="/reserva/">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        Hablar con Paloma sobre mi caso
-      </a>
+      <a class="cta-llamada cta" id="c-cta" href="/reserva/"></a>
     </div>
 </section>
   </div>
@@ -1396,7 +1417,76 @@
         cont.appendChild(b); })(n); }
     } catch(e){ console.warn("init tu",e); }
   }
-  function initSlide8(root){
+
+  // ===== Filtro «Tu punto de partida» =====
+  // Rutas: «Sí», 8 o más, o «Ahora no» en No obedece/genérico → llamada. «Ahora no» en Rabietas/Pega → taller.
+  // Guardado en el panel: pendiente del nombre de la función (Supabase synesis-panel).
+  var RPC_PUNTO_PARTIDA = '';
+  var IDX_PUNTO = 6, IDX_CIERRE = 7;
+  var ESCENA = { rabietas: 'tiene una rabieta', pega: 'pega o muerde', no_obedece: 'no te hace caso', generico: 'se desborda' };
+  var TALLER = { rabietas: 'Rabietas: reaccionar desde la calma', pega: 'Cuando pega o muerde: pararlo sin gritar' };
+  function dl(o){ try { window.dataLayer = window.dataLayer || []; window.dataLayer.push(o); } catch(e) {} }
+  function aud(){ return window.__aud || {}; }
+  function guardarPuntoPartida(control, respuesta){
+    if (!RPC_PUNTO_PARTIDA) return;
+    /* se conecta cuando esté la función del panel */
+  }
+  function decidir(respuesta){
+    var a = aud(), n = window.controlInicial;
+    window.__respuesta = respuesta;
+    window.__ruta = (respuesta === 'ahora_no' && TALLER[a.angulo]) ? 'taller' : 'llamada';
+    dl({ event: 'synesis_punto_partida', control: n, respuesta: respuesta, ruta: window.__ruta, angulo: a.angulo || '' });
+    guardarPuntoPartida(n, respuesta);
+    window.irA(IDX_CIERRE);
+  }
+  window.irAPuntoPartida = function(){
+    if (typeof window.controlInicial === 'number' && window.controlInicial >= 8) { decidir('alto'); return; }
+    window.irA(IDX_PUNTO);
+  };
+  function pintarPregunta(wrap){
+    var n = window.controlInicial, meta = Math.min(10, n + 3);
+    wrap.innerHTML =
+      '<div class="pp-title">Me has dicho que, hoy, tu control es un <strong>' + n + ' de 10</strong>.</div>' +
+      '<div class="pp-contraste">' +
+        '<div class="pp-caja pp-hoy"><div class="pp-etq">Hoy</div><div class="pp-num">' + n + '<small>/10</small></div></div>' +
+        '<svg class="pp-flecha" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>' +
+        '<div class="pp-caja pp-meta"><div class="pp-etq">En 3 meses</div><div class="pp-num">' + meta + '<small>/10</small></div></div>' +
+      '</div>' +
+      '<div class="pp-preg">¿Te planteas invertir en un acompañamiento para llegar, al menos, a un ' + meta + '?</div>' +
+      '<div class="pp-botones">' +
+        '<button class="pp-si" id="pp-si">Sí, quiero llegar a un ' + meta + '</button>' +
+        '<button class="pp-no" id="pp-no">Ahora prefiero empezar por mi cuenta</button>' +
+      '</div>';
+    wrap.querySelector('#pp-si').onclick = function(){ decidir('si'); };
+    wrap.querySelector('#pp-no').onclick = function(){ decidir('ahora_no'); };
+  }
+  function pintarEscala(wrap){
+    var a = aud();
+    var escena = ESCENA[a.angulo] || ESCENA.generico;
+    wrap.innerHTML =
+      '<div class="pp-title">Antes de seguir: <strong>¿dónde estás hoy?</strong></div>' +
+      '<div class="tu-escala"><div class="pp-escala-preg">Del 0 al 10, ¿cuánto control sientes hoy cuando ' + (a.nombre || 'tu peque') + ' ' + escena + '?</div>' +
+      '<div class="tu-nums" id="pp-nums"></div>' +
+      '<div class="tu-extremos"><span>0 · Exploto</span><span>10 · Reacciono como quiero</span></div></div>';
+    var cont = wrap.querySelector('#pp-nums');
+    function color(n){ var x=[208,135,112], y=[143,175,154], t=n/10; return 'rgb('+x.map(function(v,k){return Math.round(v+(y[k]-v)*t);}).join(',')+')'; }
+    for (var n=0; n<=10; n++){ (function(n){
+      var b = document.createElement('button'); b.className='tu-num'; b.textContent=n; b.style.background=color(n);
+      b.onclick = function(){
+        window.controlInicial = n;
+        dl({ event: 'synesis_auditoria_control', control: n, origen: 'punto_partida' });
+        if (n >= 8) { decidir('alto'); return; }
+        pintarPregunta(wrap);
+      };
+      cont.appendChild(b); })(n); }
+  }
+  function initSlidePunto(root){
+    try {
+      var wrap = root.querySelector('#pp-wrap');
+      if (typeof window.controlInicial === 'number') pintarPregunta(wrap); else pintarEscala(wrap);
+    } catch(e){ console.warn("init punto",e); }
+  }
+  function initSlide8V1(root){
     try {
 
   (function(){
@@ -1424,13 +1514,83 @@
     } catch(e){ console.warn("init 8",e); }
   }
 
+  function initSlide8(root){
+    try {
+  (function(){
+    var chat = root.querySelector('#c-chat');
+    var typing = root.querySelector('#c-typing');
+    var estado = root.querySelector('#c-estado');
+    var cta = root.querySelector('#c-cta');
+    var titulo = root.querySelector('#c-title');
+    var a = aud(), n = window.controlInicial, meta = (typeof n === 'number') ? Math.min(10, n + 3) : null;
+    var nombre = a.nombre || 'tu peque';
+    var ICON_TEL = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+    var ICON_PLAY = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>';
+    var previos, finales;
+    if (window.__ruta === 'taller') {
+      titulo.innerHTML = 'Empieza por tu cuenta, <strong>a tu ritmo</strong>.';
+      previos = [
+        ['in', 'Lo entiendo. No siempre es el momento de un acompañamiento.', '21:12'],
+        ['out', '¿Y hay algo que pueda hacer ya?', '21:12'],
+        ['in', 'Sí. He preparado un taller para empezar por ti: <strong>' + TALLER[a.angulo] + '</strong>.', '21:13'],
+        ['in', 'Vídeos cortos, a tu ritmo, para empezar a subir ese ' + n + '.', '21:13'],
+        ['out', '¿Y si luego quiero más?', '21:14']
+      ];
+      finales = [['in', 'Me escribes y lo vemos. 🤍', '21:14']];
+      cta.href = '/taller/?id=' + encodeURIComponent(a.id || '') + '&m=' + a.angulo;
+      cta.innerHTML = ICON_PLAY + ' Ver el taller';
+      cta.onclick = function(){ dl({ event: 'synesis_cta_taller', curso: a.angulo, control: n }); };
+    } else {
+      titulo.innerHTML = 'Por dónde empezar <strong>en tu caso</strong>,<br>te lo cuento en una llamada.';
+      previos = [
+        ['in', 'Ya has visto lo más importante: el cambio con ' + nombre + ' empieza en ti. Y eso se aprende. 🌱', '21:12'],
+        ['out', '¿Y por dónde empiezo yo?', '21:12'],
+        ['in', 'Depende de tu caso. Por eso prefiero verlo contigo en una llamada. Sin juicio y sin presión.', '21:13'],
+        ['out', '¿Y si no me convence?', '21:13']
+      ];
+      finales = [];
+      if (typeof n === 'number') {
+        var t = window.__respuesta === 'si'
+          ? 'Me has dicho que hoy estás en un ' + n + ' y quieres llegar a un ' + meta + '. En la llamada vemos cómo.'
+          : window.__respuesta === 'ahora_no'
+            ? 'Me has dicho que hoy estás en un ' + n + '. En la llamada vemos por dónde empezar, sin compromiso.'
+            : 'Me has dicho que hoy estás en un ' + n + '. En la llamada vemos dónde quieres estar en 3 meses y cómo llegar.';
+        finales.push(['in', t, '21:15']);
+      }
+      finales.push(['in', 'Si veo que esto no encaja contigo, te lo digo yo. Y saldrás con mucha más claridad de la que tienes ahora. 🤍', '21:15']);
+      cta.innerHTML = ICON_TEL + ' Hablar con Paloma sobre mi caso';
+      cta.onclick = function(){ dl({ event: 'synesis_cta_llamada', control: (typeof n === 'number' ? n : ''), respuesta: window.__respuesta || '' }); };
+    }
+    function burbuja(m, delay){
+      var d = document.createElement('div');
+      d.className = 'msg ' + (m[0] === 'in' ? 'msg-in' : 'msg-out');
+      d.style.animationDelay = delay + 's';
+      d.innerHTML = m[1] + '<span class="msg-time">' + m[2] + '</span>';
+      return d;
+    }
+    previos.forEach(function(m, k){ chat.insertBefore(burbuja(m, 0.2 + k * 0.3), typing); });
+    function scrollChat(){ chat.scrollTop = chat.scrollHeight; }
+    scrollChat();
+    setTimeout(function(){
+      typing.classList.add('show'); estado.textContent = 'escribiendo…'; scrollChat();
+      setTimeout(function(){
+        typing.classList.remove('show'); estado.textContent = 'en línea';
+        finales.forEach(function(m){ chat.appendChild(burbuja(m, 0)); });
+        scrollChat();
+        setTimeout(function(){ cta.style.opacity = '1'; cta.style.pointerEvents = 'auto'; }, 700);
+      }, 2200);
+    }, 2000);
+  })();
+    } catch(e){ console.warn("init 8",e); }
+  }
+
 function arrancarAuditoria(){
   var slides = document.querySelectorAll('.slide-wrap');
   var segs = document.querySelectorAll('.stories-seg');
   var cur = 0, done = {};
   var initMap = window.__auditoriaV1
-    ? {"0": "initSlide0", "1": "initSlide1", "2": "initSlide2", "3": "initSlide3", "8": "initSlide8"}
-    : {"0": "initSlide0", "1": "initSlide1", "2": "initSlide2", "3": "initSlide3", "4": "initSlideTu", "6": "initSlide8"};
+    ? {"0": "initSlide0", "1": "initSlide1", "2": "initSlide2", "3": "initSlide3", "8": "initSlide8V1"}
+    : {"0": "initSlide0", "1": "initSlide1", "2": "initSlide2", "3": "initSlide3", "4": "initSlideTu", "6": "initSlidePunto", "7": "initSlide8"};
   function show(i){
     for (var n=0;n<slides.length;n++){
       slides[n].classList.toggle('active', n===i);
@@ -1440,6 +1600,7 @@ function arrancarAuditoria(){
     cur = i;
     if(!done[i]){ if(initMap[i]){ done[i]=true; setTimeout(function(){ window[initMap[i]](slides[i]); }, 80); } }
   }
+  window.irA = function(i){ if(i>=0 && i<slides.length) show(i); };
   window.nextSlide = function(){ if(cur<slides.length-1) show(cur+1); };
   window.prevSlide = function(){ if(cur>0) show(cur-1); };
   function arrancar(){
@@ -1470,6 +1631,7 @@ function arrancarAuditoria(){
     if (!d.nombre_hijo) d.nombre_hijo = 'tu peque';
     // auditorías anteriores a «tú eres la palanca» (sin s5_palanca_momento) se ven con la plantilla anterior
     window.__auditoriaV1 = !d.s5_palanca_momento;
+    window.__aud = { id: d.id || id, angulo: d.angulo || 'generico', nombre: d.nombre_hijo };
     var tpl = document.getElementById(window.__auditoriaV1 ? 'tpl-v1' : 'tpl').innerHTML;
     app.innerHTML = tpl.replace(/\{\{([a-z0-9_]+)\}\}/g, function(m, k){ return seguro(d[k]); });
     try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_auditoria_vista', angulo: d.angulo || '', version_auditoria: window.__auditoriaV1 ? 'v1' : 'palanca' }); } catch(e) {}
