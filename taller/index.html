@@ -92,34 +92,71 @@ h2 em{font-style:italic;font-weight:400;color:var(--terra)}
 .preview video{display:block;width:100%;height:100%;object-fit:cover}
 .preview figcaption{position:absolute;left:10px;bottom:10px;font-size:12px;color:#fff;background:rgba(58,58,58,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:4px 10px;border-radius:99px}
 
-.kit{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 14px;margin:0 -20px;scrollbar-width:none}
-.kit::-webkit-scrollbar{display:none}
-.kit-p{flex:none;width:238px;scroll-snap-align:center}
-.tel{border-radius:30px;padding:8px;background:var(--antracita);box-shadow:0 22px 44px -22px rgba(58,58,58,.6);pointer-events:none;user-select:none}
-.tel-in{border-radius:23px;background:var(--beige);padding:14px 12px;height:330px;overflow:hidden;font-size:11.5px;line-height:1.35}
-.tel-t{font-size:13.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
-.tel-paso{font-size:10.5px;color:var(--suave);margin-bottom:6px}
-.tel .bar{height:4px;border-radius:4px;background:rgba(58,58,58,.1);margin-bottom:12px}.tel .bar i{display:block;height:100%;border-radius:4px;background:var(--salvia-d)}
-.tel .q{background:#fff;border-radius:12px;padding:12px;font-size:13px;font-weight:500}
-.tel .ops{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
-.tel .ops span{background:var(--claro);border-radius:10px;padding:9px;text-align:center;font-weight:500}
-.tel .ops .on{background:var(--salvia-d);color:#fff}
-.tel .urg{margin-top:12px;background:var(--terra);color:#fff;border-radius:12px;padding:10px;text-align:center;font-weight:700}
-.tel .tipo{margin-top:10px;background:var(--antracita);color:var(--beige);border-radius:12px;padding:10px}
-.tel .tipo b{display:block;color:#fff;font-size:12.5px}
-.tel .chips{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.tel .chips span{background:#fff;border-radius:10px;padding:8px;font-weight:500}
-.tel .chips .on{outline:2px solid var(--salvia-d)}
-.tel .ficha{margin-top:8px;background:#fff;border-radius:12px;padding:10px}
-.tel .tabs{display:flex;gap:4px;margin-bottom:8px}.tel .tabs span{flex:1;text-align:center;font-size:10px;padding:5px 2px;border-radius:7px;background:var(--beige)}.tel .tabs .on{background:var(--salvia-d);color:#fff}
-.tel .frase{background:var(--claro);border-radius:10px 10px 10px 3px;padding:8px 10px;font-style:italic}
-.tel .escena{background:#fff;border-radius:12px;padding:11px;font-size:12px}
-.tel .escena b{display:block;font-size:10.5px;color:var(--terra);margin-bottom:4px}
-.tel .elige{display:grid;gap:6px;margin-top:8px}.tel .elige span{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:8px 10px}
-.tel .elige .ok{border-color:var(--salvia-d);background:var(--claro)}
-.tel .elige .ok::after{content:" ✓";color:var(--salvia-d);font-weight:700}
-.kit-p h4{font-size:15.5px;font-weight:700;margin:12px 4px 2px}
-.kit-p p{font-size:14px;color:var(--suave);margin:0 4px;line-height:1.4}
+/* Vitrina del kit: un móvil de verdad con 3 pantallas; se ve qué hace, no las respuestas */
+.vitrina{background:linear-gradient(180deg,var(--claro) 0,rgba(228,239,232,0) 85%);border-radius:26px;padding:14px 12px 4px;margin:0 -6px}
+.pestanas{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:rgba(255,255,255,.7);border:1px solid var(--linea);border-radius:14px;padding:4px}
+.pestanas button{border:0;background:none;border-radius:10px;padding:9px 4px;font:500 12.5px/1.2 'DM Sans',sans-serif;color:var(--suave);cursor:pointer;transition:background .25s,color .25s}
+.pestanas button[aria-selected="true"]{background:var(--antracita);color:var(--beige)}
+.escenario{display:grid;place-items:center;padding:22px 0 8px;position:relative}
+.escenario::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;top:60px;background:radial-gradient(rgba(208,135,112,.28),transparent 70%);filter:blur(10px)}
+.disp{position:relative;width:272px;border-radius:44px;padding:9px;background:linear-gradient(145deg,#4a4a4a,#2c2c2c);box-shadow:0 0 0 1px rgba(255,255,255,.08) inset,0 40px 70px -30px rgba(58,58,58,.7),0 14px 30px -12px rgba(58,58,58,.35);user-select:none;-webkit-user-select:none;touch-action:pan-y}
+.disp-in{position:relative;border-radius:36px;overflow:hidden;background:linear-gradient(180deg,#fbf8f3 0,var(--beige) 100%);height:540px;color:var(--antracita)}
+.sb{display:flex;align-items:center;justify-content:space-between;padding:12px 22px 0;font-size:12px;font-weight:700;height:34px}
+.isla{width:84px;height:24px;border-radius:14px;background:#1d1d1d;display:block}
+.sb-ic{display:flex;gap:5px;align-items:center}.sb-ic svg{height:10px;fill:currentColor}
+.app-cab{display:flex;align-items:center;gap:8px;padding:10px 16px 8px;border-bottom:1px solid var(--linea)}
+.app-cab img{border-radius:6px}.app-cab b{font-size:13px;flex:1;letter-spacing:-.01em}
+.app-av img{border-radius:50%;object-fit:cover;object-position:top;box-shadow:0 0 0 2px var(--salvia)}
+.pantallas{position:relative;height:452px}
+.pant{position:absolute;inset:0;padding:14px 14px 0;opacity:0;transform:translateX(16px);transition:opacity .35s,transform .35s;pointer-events:none}
+.pant.on{opacity:1;transform:none}
+.home{position:absolute;left:50%;bottom:8px;width:96px;height:4px;margin-left:-48px;border-radius:4px;background:rgba(58,58,58,.35)}
+.pant h5{font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.pant .sub5{font-size:11.5px;color:var(--suave);margin:3px 0 12px}
+.ico{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:9px;flex:none}
+.ico svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.t1{background:var(--claro);color:var(--salvia-d)}.t2{background:#f6e3dc;color:#b86a52}.t3{background:#efe6d6;color:#8a6d3b}.t4{background:#e3e9ef;color:#56708a}
+.preg{display:grid;gap:7px}
+.preg>div{display:grid;grid-template-columns:22px 1fr;gap:9px;align-items:center;background:#fff;border-radius:12px;padding:9px 10px;font-size:12.5px;font-weight:500;box-shadow:0 1px 0 var(--linea)}
+.preg em{font-style:normal;width:22px;height:22px;border-radius:50%;background:var(--claro);color:var(--salvia-d);font-size:11px;font-weight:700;display:grid;place-items:center}
+.tipos{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:12px 0}
+.tipos>span{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.65);border:1px dashed rgba(58,58,58,.18);border-radius:11px;padding:7px 8px;font-size:11.5px;font-weight:500}
+.tipos .ico{width:22px;height:22px;border-radius:7px}.tipos .ico svg{width:12px;height:12px}
+.btn5{display:flex;align-items:center;justify-content:center;gap:7px;border-radius:13px;padding:12px;font-size:13px;font-weight:700;color:#fff;background:var(--antracita);box-shadow:0 10px 20px -12px rgba(58,58,58,.8)}
+.btn5 svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn5.urg{background:var(--terra);margin-top:8px;box-shadow:0 10px 20px -12px rgba(208,135,112,.9)}
+.rejilla{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.rejilla>span{display:grid;justify-items:center;gap:5px;background:#fff;border-radius:13px;padding:10px 4px;font-size:11px;font-weight:500;box-shadow:0 1px 0 var(--linea)}
+.rejilla>.sel{outline:2px solid var(--salvia-d)}
+.hoja5{margin-top:10px;background:#fff;border-radius:16px;padding:11px;box-shadow:0 -10px 24px -18px rgba(58,58,58,.5)}
+.hoja5 .tabs5{display:flex;gap:4px;margin-bottom:10px}.hoja5 .tabs5 span{flex:1;text-align:center;font-size:10.5px;font-weight:500;padding:6px 2px;border-radius:8px;background:var(--beige)}.hoja5 .tabs5 .on{background:var(--salvia-d);color:#fff}
+.velo{position:relative}
+.velo i{display:block;height:9px;border-radius:5px;background:linear-gradient(90deg,#d9d2c6,#e8e1d6);margin:7px 0;filter:blur(2.2px)}
+.velo .burbuja5{height:34px;border-radius:12px 12px 12px 4px;background:var(--claro);filter:blur(3px)}
+.candado{position:absolute;inset:0;display:grid;place-items:center}
+.candado span{display:inline-flex;align-items:center;gap:6px;background:rgba(58,58,58,.88);color:#fff;border-radius:99px;padding:6px 11px;font-size:11px;font-weight:700;backdrop-filter:blur(4px)}
+.candado svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.esc5{border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 1px 0 var(--linea)}
+.esc5 .cine{height:92px;display:flex;align-items:flex-end;padding:10px;background:linear-gradient(135deg,var(--salvia) 0,#a9c2b1 45%,var(--terra) 130%);color:#fff;font-size:10.5px;font-weight:700;position:relative}
+.esc5 .cine svg{position:absolute;right:10px;top:10px;width:30px;height:30px;stroke:rgba(255,255,255,.85);fill:none;stroke-width:1.6}
+.esc5 p{padding:10px 11px 2px;font-size:12.5px;font-weight:500;line-height:1.35}
+.esc5 small{display:block;padding:0 11px 10px;font-size:11px;color:var(--suave)}
+.ops5{display:grid;gap:6px;margin:10px 0}
+.ops5>span{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--linea);border-radius:11px;padding:8px 10px;font-size:11.5px}
+.ops5>span::before{content:"";width:14px;height:14px;border-radius:50%;border:1.5px solid rgba(58,58,58,.3);flex:none}
+.juegos{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.juegos>span{display:grid;gap:6px;background:#fff;border-radius:13px;padding:10px;font-size:11.5px;font-weight:700;line-height:1.2;box-shadow:0 1px 0 var(--linea)}
+.juegos>.mas{background:var(--antracita);color:var(--beige);place-content:center;text-align:center;font-size:12px}
+.chips5{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.chips5>span{display:flex;align-items:center;gap:6px;background:#fff;border-radius:99px;padding:5px 8px 5px 5px;font-size:11px;line-height:1.15;font-weight:500;box-shadow:0 1px 0 var(--linea)}
+.chips5 .ico{width:22px;height:22px;border-radius:50%}.chips5 .ico svg{width:12px;height:12px}
+.urg5{display:inline-flex;align-items:center;gap:5px;float:right;margin-top:-2px;background:var(--terra);color:#fff;border-radius:99px;padding:5px 9px;font-size:10.5px;font-weight:700;box-shadow:0 6px 14px -8px rgba(208,135,112,.9)}
+.urg5 svg{width:11px;height:11px;fill:currentColor;stroke:none}
+.preg{gap:6px}.preg>div{padding:8px 10px}
+.kit-txt{text-align:center;padding:6px 8px 16px}
+.kit-txt h4{font-size:17px;font-weight:700;letter-spacing:-.015em}
+.kit-txt p{font-size:15px;color:var(--suave);line-height:1.45;margin-top:4px}
+@media (prefers-reduced-motion:reduce){.pant{transition:none}}
 
 .evo{display:grid;gap:14px}
 .evo-paso{position:relative;padding-left:22px}
@@ -254,11 +291,23 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       <ol class="videos" data-t="videos"></ol>
     </div>
 
-    <!-- 3b · El kit: pantallas de muestra, sin que se pueda usar -->
+    <!-- 3b · El kit: se ve lo que hace, pero las respuestas quedan dentro -->
     <div class="bloque">
       <div class="cab"><span class="num">2</span><div><h3 data-t="kit-nombre">Tu kit interactivo</h3><p data-t="kit-intro"></p></div></div>
-      <div class="kit" data-t="kit" aria-label="Pantallas del kit"></div>
-      <p class="nota-ej">Desliza para ver cada parte. Son pantallas de muestra.</p>
+      <div class="vitrina">
+        <div class="pestanas" role="tablist" data-t="kit-tabs"></div>
+        <div class="escenario">
+          <div class="disp" aria-hidden="true">
+            <div class="disp-in">
+              <div class="sb"><span>21:47</span><i class="isla"></i><span class="sb-ic"><svg viewBox="0 0 18 12"><rect x="0" y="7" width="3" height="5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2" width="3" height="10" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1" opacity=".35"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3" fill="none" stroke="currentColor"/><rect x="2" y="2" width="14" height="8" rx="2"/><rect x="24" y="4" width="2" height="4" rx="1"/></svg></span></div>
+              <div class="app-cab"><img src="/media/fotos/isotipo-192.png" alt="" width="22" height="22"><b data-t="kit-app">Kit</b><span class="app-av"><img src="/media/fotos/paloma-recurso.jpg" alt="" width="22" height="22"></span></div>
+              <div class="pantallas" data-t="kit-pantallas"></div>
+              <i class="home"></i>
+            </div>
+          </div>
+        </div>
+        <div class="kit-txt" aria-live="polite"><h4 data-t="kit-t"></h4><p data-t="kit-p"></p></div>
+      </div>
     </div>
 
     <!-- 3c · La evolución: cada domingo, una pregunta y el gráfico que sube -->
@@ -355,12 +404,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       kitNombre: 'Kit de rabietas', clip: '/media/taller/rabietas-preview.mp4', poster: 'https://embed-ssl.wistia.com/deliveries/31627e10fe450710cb1d13fd658eca260e92afcb.jpg?image_crop_resized=640x360',
       kitIntro: 'Una herramienta para el móvil que te acompaña antes, durante y después de la rabieta.',
       kit: [
-        { t: '¿Qué está pasando?', p: 'Respondes 4 preguntas rápidas y te dice qué tipo de rabieta es: desborde, límite, enfado o necesidad sin cubrir. Y tiene un botón para cuando está pasando ahora mismo.',
-          h: '<div class="tel-t">¿Qué está pasando?</div><div class="tel-paso">Pregunta 2 de 4</div><div class="bar"><i style="width:50%"></i></div><div class="q">¿Ha empezado después de un «no»?</div><div class="ops"><span class="on">Sí</span><span>No</span></div><div class="tipo"><b>Parece una rabieta de límite</b>Qué hacer ahora, paso a paso</div><div class="urg">Está pasando ahora</div>' },
-        { t: 'Sus momentos difíciles', p: 'El súper, el parque, la cena, el baño, dormir, la salida de la escuela… Cada uno trae cómo prepararlo, cómo llevarlo y qué hacer si estalla, con frases listas para decir.',
-          h: '<div class="tel-t">Sus momentos difíciles</div><div class="chips"><span class="on">🛒 Súper</span><span>🛝 Parque</span><span>🍽️ Cena</span><span>🛁 Baño</span><span>🌙 Dormir</span><span>🎒 Salida</span></div><div class="ficha"><div class="tabs"><span>Prepararlo</span><span>Llevarlo</span><span class="on">Si estalla</span></div><div class="frase">«Estoy aquí. No te voy a dejar sola con esto.»</div></div>' },
-        { t: 'Practica en frío', p: 'Escenas reales en las que decides cómo reaccionar, para que en el momento te salga solo.',
-          h: '<div class="tel-t">Practica en frío</div><div class="escena"><b>Escena 3</b>Estáis en el parque y toca irse. Se tira al suelo gritando.</div><div class="elige"><span>Le explico por qué hay que irse</span><span class="ok">Me agacho y nombro lo que siente</span><span>Le aviso: «o vienes o me voy»</span></div>' }
+        { tab: 'Qué pasa', t: '¿Qué está pasando?', p: 'Respondes 4 preguntas rápidas y te dice qué tipo de rabieta es. Y tiene un botón para cuando está pasando ahora mismo.', h: '<div class="urg5"><svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>Está pasando ahora</div><h5>¿Qué está pasando?</h5><p class="sub5">4 preguntas · menos de 30 segundos</p><div class="preg"><div><em>1</em>¿Qué ha pasado justo antes?</div><div><em>2</em>¿Cómo está su cuerpo ahora?</div><div><em>3</em>¿Te busca o se aleja de ti?</div><div><em>4</em>¿Puede escucharte en este momento?</div></div><div class="tipos"><span><span class="ico t1"><svg viewBox="0 0 24 24"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg></span>Desborde</span><span><span class="ico t2"><svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></span>Límite</span><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>Enfado</span><span><span class="ico t4"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span>Necesidad</span></div><div class="btn5"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>Descubrir el tipo de rabieta</div>' },
+        { tab: 'Sus momentos', t: 'Sus momentos difíciles', p: 'El súper, el parque, la cena, el baño, dormir, la salida de la escuela… Cada uno trae cómo prepararlo, cómo llevarlo y qué hacer si estalla, con frases listas para decir.', h: '<h5>Sus momentos difíciles</h5><p class="sub5">Elige dónde te pasa</p><div class="rejilla"><span class="sel"><span class="ico t2"><svg viewBox="0 0 24 24"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></span>Súper</span><span><span class="ico t1"><svg viewBox="0 0 24 24"><path d="M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z"/><path d="M7 16v6"/><path d="M13 19v3"/><path d="M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5"/></svg></span>Parque</span><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/><path d="M7 2v20"/><path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></svg></span>Cena</span><span><span class="ico t4"><svg viewBox="0 0 24 24"><path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><line x1="10" x2="8" y1="5" y2="7"/><line x1="2" x2="22" y1="12" y2="12"/><line x1="7" x2="7" y1="19" y2="21"/><line x1="17" x2="17" y1="19" y2="21"/></svg></span>Baño</span><span><span class="ico t4"><svg viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></span>Dormir</span><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M4 10a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/><path d="M8 10h8"/><path d="M8 18h8"/><path d="M8 22v-6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></span>Salida del cole</span></div><div class="hoja5"><div class="tabs5"><span class="on">Prepararlo</span><span>Llevarlo</span><span>Si estalla</span></div><div class="velo"><div class="burbuja5"></div><i style="width:92%"></i><i style="width:74%"></i><i style="width:85%"></i><div class="candado"><span><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Frases listas para decir</span></div></div></div>' },
+        { tab: 'Practica', t: 'Practica en frío', p: 'Escenas reales en las que decides cómo reaccionar, para que en el momento te salga solo.', h: '<h5>Practica en frío</h5><p class="sub5">Escenas reales, sin presión</p><div class="esc5"><div class="cine">ESCENA<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></div><p>Toca irse del parque. Se tira al suelo gritando.</p><small>¿Qué harías tú?</small></div><div class="ops5"><span>Explicarle por qué hay que irse</span><span>Agacharte a su altura</span><span>Avisarle: «o vienes o me voy»</span></div><div class="btn5"><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Ver qué funciona y por qué</div>' }
       ], stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
       h1: function (p) { return 'Cuando ' + p + ' explota, tú también acabas al límite.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
@@ -374,12 +420,9 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       kitNombre: 'Kit Pega y muerde', clip: '/media/taller/pega-preview.mp4', poster: 'https://embed-ssl.wistia.com/deliveries/d0485370afbc647a64044cbd91d233f3953a2523.jpg?image_crop_resized=640x360',
       kitIntro: 'Para entender qué te está diciendo con ese golpe y enseñarle otra forma de decirlo.',
       kit: [
-        { t: 'Ponte en sus zapatos', p: 'Las 6 razones más habituales por las que pega o muerde: rabia, impulso, que le faltan palabras, que busca tu atención, que lo ha visto hacer o cansancio. Para cada una, cómo reconocerla y qué hacer.',
-          h: '<div class="tel-t">Ponte en sus zapatos</div><div class="chips"><span>Rabia</span><span>Impulso</span><span class="on">Le faltan palabras</span><span>Busca tu atención</span><span>Lo ha visto hacer</span><span>Cansancio</span></div><div class="ficha"><div class="tabs"><span class="on">Cómo reconocerla</span><span>Qué hacer</span></div>Pega cuando quiere algo y no le salen las palabras para pedirlo.</div>' },
-        { t: 'Su caja de herramientas', p: 'Más de 10 juegos cortos para practicar en calma, como pisar fuerte como un elefante, soplar como un dragón, decir «¡para!» o usar una señal secreta. Cada uno le da una forma de sacar la rabia sin hacer daño.',
-          h: '<div class="tel-t">Su caja de herramientas</div><div class="chips"><span>🐘 Pisar como un elefante</span><span class="on">🐉 Soplar como un dragón</span><span>✋ Decir «¡para!»</span><span>🤫 La señal secreta</span><span>🎈 Inflar el globo</span><span>➕ 6 juegos más</span></div>' },
-        { t: 'Practica en frío', p: 'Escenas en las que decides cómo actuarías, para llegar preparada al momento real.',
-          h: '<div class="tel-t">Practica en frío</div><div class="escena"><b>Escena 2</b>En el parque, otro niño le quita la pala. Levanta la mano.</div><div class="elige"><span>Le riño: «¡eso no se hace!»</span><span class="ok">Le paro la mano con calma y le pongo palabras</span><span>Le obligo a pedir perdón</span></div>' }
+        { tab: 'Sus razones', t: 'Ponte en sus zapatos', p: 'Las 6 razones más habituales por las que pega o muerde. Para cada una, cómo reconocerla y qué hacer.', h: '<h5>Ponte en sus zapatos</h5><p class="sub5">6 razones detrás de un golpe</p><div class="chips5"><span><span class="ico t2"><svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></span>Rabia</span><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg></span>Impulso</span><span><span class="ico t1"><svg viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></span>Le faltan palabras</span><span><span class="ico t4"><svg viewBox="0 0 24 24"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></span>Busca tu atención</span><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>Lo ha visto hacer</span><span><span class="ico t1"><svg viewBox="0 0 24 24"><rect width="16" height="10" x="2" y="7" rx="2" ry="2"/><line x1="22" x2="22" y1="11" y2="13"/><line x1="6" x2="6" y1="11" y2="13"/></svg></span>Cansancio</span></div><div class="hoja5" style="margin-top:12px"><div class="tabs5"><span class="on">Cómo reconocerla</span><span>Qué hacer</span></div><div class="velo"><i style="width:92%"></i><i style="width:74%"></i><i style="width:85%"></i><div class="candado"><span><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Dentro de tu kit</span></div></div></div><div class="btn5" style="margin-top:12px"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>Descubrir su razón</div>' },
+        { tab: 'Herramientas', t: 'Su caja de herramientas', p: 'Más de 10 juegos cortos para practicar en calma. Cada uno le da una forma de sacar la rabia sin hacer daño.', h: '<h5>Su caja de herramientas</h5><p class="sub5">Juegos cortos para practicar en calma</p><div class="juegos"><span><span class="ico t3"><svg viewBox="0 0 24 24"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg></span>Pisar fuerte como un elefante</span><span><span class="ico t2"><svg viewBox="0 0 24 24"><path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/></svg></span>Soplar como un dragón</span><span><span class="ico t1"><svg viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></span>Decir «¡para!»</span><span><span class="ico t4"><svg viewBox="0 0 24 24"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg></span>La señal secreta</span><span><span class="ico t2"><svg viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg></span><span class="velo" style="display:block"><i style="width:80%;margin:2px 0"></i><i style="width:55%;margin:5px 0 0"></i></span></span><span class="mas">+6 juegos más</span></div><div class="btn5" style="margin-top:12px"><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Ver cómo se juega cada uno</div>' },
+        { tab: 'Practica', t: 'Practica en frío', p: 'Escenas en las que decides cómo actuarías, para llegar preparada al momento real.', h: '<h5>Practica en frío</h5><p class="sub5">Escenas reales, sin presión</p><div class="esc5"><div class="cine">ESCENA<svg viewBox="0 0 24 24"><path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z"/><path d="m6.2 5.3 3.1 3.9"/><path d="m12.4 3.4 3.1 4"/><path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg></div><p>En el parque, otro niño le quita la pala. Levanta la mano.</p><small>¿Qué harías tú?</small></div><div class="ops5"><span>Reñirle: «¡eso no se hace!»</span><span>Pararle la mano con calma</span><span>Pedirle que pida perdón</span></div><div class="btn5"><svg viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Ver qué funciona y por qué</div>' }
       ], stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
       h1: function (p) { return 'Cuando ' + p + ' pega o muerde, sientes que todos te miran.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
@@ -409,6 +452,19 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     if (id) u.searchParams.set('client_reference_id', id); // une la compra a su auditoría (sin datos personales en la URL)
     return u.toString();
   }
+  /* Vitrina del kit: pestañas y deslizar el móvil con el dedo */
+  var kitActual = 0;
+  function verKit(i) {
+    var c = CURSOS[curso], n = c.kit.length; kitActual = (i + n) % n;
+    document.querySelectorAll('.pant').forEach(function (p, j) { p.classList.toggle('on', j === kitActual); });
+    document.querySelectorAll('[data-kit]').forEach(function (b, j) { b.setAttribute('aria-selected', j === kitActual ? 'true' : 'false'); });
+    poner('kit-t', esc(c.kit[kitActual].t)); poner('kit-p', esc(c.kit[kitActual].p));
+  }
+  (function () {
+    var d = document.querySelector('.disp'), x0 = null;
+    d.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    d.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) verKit(kitActual + (dx < 0 ? 1 : -1)); x0 = null; });
+  })();
   function botonCompra(id) {
     var c = CURSOS[curso];
     return '<a class="cta" id="cta-minicurso-' + id + '" href="' + esc(enlacePago()) + '" data-compra>Empezar esta noche <span>· 37 €</span></a>' +
@@ -450,7 +506,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     if (c.clip.charAt(0) !== '[') { clip.poster = c.poster; clip.src = c.clip; } else { clip.closest('.preview').innerHTML = '<span class="pend" style="margin:auto;color:#fff">' + esc(c.clip) + '</span>'; clip = null; }
     poner('kit-nombre', esc(c.kitNombre) + ' <small style="font-weight:400;color:var(--suave)">(interactivo)</small>');
     poner('kit-intro', esc(c.kitIntro));
-    poner('kit', c.kit.map(function (k) { return '<div class="kit-p"><div class="tel" aria-hidden="true"><div class="tel-in">' + k.h + '</div></div><h4>' + esc(k.t) + '</h4><p>' + esc(k.p) + '</p></div>'; }).join(''));
+    poner('kit-app', esc(c.kitNombre));
+    poner('kit-tabs', c.kit.map(function (k, i) { return '<button type="button" role="tab" data-kit="' + i + '">' + esc(k.tab) + '</button>'; }).join(''));
+    poner('kit-pantallas', c.kit.map(function (k) { return '<div class="pant">' + k.h + '</div>'; }).join(''));
+    verKit(0);
+    document.querySelectorAll('[data-kit]').forEach(function (b) { b.addEventListener('click', function () { verKit(+b.getAttribute('data-kit')); }); });
     poner('evo-aviso', '¿Cómo ha ido la semana con ' + peque + '?');
     poner('evo-pregunta', '¿Cuánto control has sentido esta semana cuando ' + peque + ' ' + c.situacion + '?');
     poner('caso', esc(c.caso));
