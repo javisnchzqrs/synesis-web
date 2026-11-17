@@ -82,29 +82,70 @@ h2 em{font-style:italic;font-weight:400;color:var(--terra)}
 .videos b{display:block;font-size:15.5px;font-weight:500;line-height:1.3}
 .videos small{font-size:13px;color:var(--suave)}
 .videos .min{font-size:13px;color:var(--suave);white-space:nowrap}
-.extras{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
-.extra{background:#fff;border:1px solid var(--linea);border-radius:18px;padding:15px}
-.extra svg{width:22px;height:22px;stroke:var(--salvia-d);margin-bottom:8px}
-.extra b{display:block;font-size:15px;line-height:1.3}
-.extra span{display:block;font-size:13.5px;color:var(--suave);margin-top:3px;line-height:1.35}
+/* ── Bloques de «Qué tienes al entrar» ── */
+.bloque{margin-top:26px}
+.cab{display:grid;grid-template-columns:30px 1fr;gap:12px;margin-bottom:12px}
+.cab .num{width:30px;height:30px;border-radius:50%;background:var(--antracita);color:var(--beige);display:grid;place-items:center;font-weight:700;font-size:14px;margin-top:2px}
+.cab h3{font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+.cab p{font-size:15.5px;color:var(--suave);margin-top:2px}
+.preview{position:relative;border-radius:18px;overflow:hidden;background:#2b2b2b;aspect-ratio:16/9;margin-bottom:10px;box-shadow:0 18px 40px -20px rgba(58,58,58,.5)}
+.preview video{display:block;width:100%;height:100%;object-fit:cover}
+.preview figcaption{position:absolute;left:10px;bottom:10px;font-size:12px;color:#fff;background:rgba(58,58,58,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:4px 10px;border-radius:99px}
 
-/* ── 4. Así se ve (visual): móvil con el área ── */
-.escena{display:grid;place-items:center;padding:26px 0 6px;position:relative}
-.escena::before{content:"";position:absolute;inset:10% 8%;border-radius:50%;background:radial-gradient(var(--claro),transparent 70%)}
-.movil{position:relative;width:250px;border-radius:36px;padding:10px;background:var(--antracita);box-shadow:0 30px 60px -24px rgba(58,58,58,.55)}
-.pantalla{border-radius:28px;background:var(--beige);padding:18px 14px 16px;min-height:430px}
-.pantalla .hola{font-size:12px;color:var(--suave)}
-.pantalla .t{font-size:16px;font-weight:700;letter-spacing:-.02em;margin:2px 0 10px}
-.barra{height:6px;border-radius:6px;background:rgba(58,58,58,.1);overflow:hidden}
-.barra i{display:block;height:100%;width:var(--p);background:var(--salvia-d);border-radius:6px}
-.pantalla .pct{display:flex;justify-content:space-between;font-size:11px;color:var(--suave);margin:5px 0 12px}
-.mini{display:grid;gap:6px}
-.mini div{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:center;background:#fff;border-radius:10px;padding:7px 8px;font-size:11.5px}
-.mini em{width:22px;height:22px;border-radius:7px;background:var(--claro);display:grid;place-items:center;font-style:normal;font-weight:700;font-size:11px;color:var(--salvia-d)}
-.mini .ok em{background:var(--salvia);color:#fff}
-.grafico{margin-top:12px;background:#fff;border-radius:12px;padding:10px}
-.grafico b{font-size:11.5px}
-.grafico svg{display:block;width:100%;height:70px;margin-top:6px}
+.kit{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 20px 14px;margin:0 -20px;scrollbar-width:none}
+.kit::-webkit-scrollbar{display:none}
+.kit-p{flex:none;width:238px;scroll-snap-align:center}
+.tel{border-radius:30px;padding:8px;background:var(--antracita);box-shadow:0 22px 44px -22px rgba(58,58,58,.6);pointer-events:none;user-select:none}
+.tel-in{border-radius:23px;background:var(--beige);padding:14px 12px;height:330px;overflow:hidden;font-size:11.5px;line-height:1.35}
+.tel-t{font-size:13.5px;font-weight:700;letter-spacing:-.01em;margin-bottom:8px}
+.tel-paso{font-size:10.5px;color:var(--suave);margin-bottom:6px}
+.tel .bar{height:4px;border-radius:4px;background:rgba(58,58,58,.1);margin-bottom:12px}.tel .bar i{display:block;height:100%;border-radius:4px;background:var(--salvia-d)}
+.tel .q{background:#fff;border-radius:12px;padding:12px;font-size:13px;font-weight:500}
+.tel .ops{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+.tel .ops span{background:var(--claro);border-radius:10px;padding:9px;text-align:center;font-weight:500}
+.tel .ops .on{background:var(--salvia-d);color:#fff}
+.tel .urg{margin-top:12px;background:var(--terra);color:#fff;border-radius:12px;padding:10px;text-align:center;font-weight:700}
+.tel .tipo{margin-top:10px;background:var(--antracita);color:var(--beige);border-radius:12px;padding:10px}
+.tel .tipo b{display:block;color:#fff;font-size:12.5px}
+.tel .chips{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tel .chips span{background:#fff;border-radius:10px;padding:8px;font-weight:500}
+.tel .chips .on{outline:2px solid var(--salvia-d)}
+.tel .ficha{margin-top:8px;background:#fff;border-radius:12px;padding:10px}
+.tel .tabs{display:flex;gap:4px;margin-bottom:8px}.tel .tabs span{flex:1;text-align:center;font-size:10px;padding:5px 2px;border-radius:7px;background:var(--beige)}.tel .tabs .on{background:var(--salvia-d);color:#fff}
+.tel .frase{background:var(--claro);border-radius:10px 10px 10px 3px;padding:8px 10px;font-style:italic}
+.tel .escena{background:#fff;border-radius:12px;padding:11px;font-size:12px}
+.tel .escena b{display:block;font-size:10.5px;color:var(--terra);margin-bottom:4px}
+.tel .elige{display:grid;gap:6px;margin-top:8px}.tel .elige span{background:#fff;border:1px solid var(--linea);border-radius:10px;padding:8px 10px}
+.tel .elige .ok{border-color:var(--salvia-d);background:var(--claro)}
+.tel .elige .ok::after{content:" ✓";color:var(--salvia-d);font-weight:700}
+.kit-p h4{font-size:15.5px;font-weight:700;margin:12px 4px 2px}
+.kit-p p{font-size:14px;color:var(--suave);margin:0 4px;line-height:1.4}
+
+.evo{display:grid;gap:14px}
+.evo-paso{position:relative;padding-left:22px}
+.evo-paso::before{content:"";position:absolute;left:5px;top:20px;bottom:-14px;width:2px;background:var(--linea)}
+.evo-paso:last-child::before{display:none}
+.evo-paso::after{content:"";position:absolute;left:0;top:5px;width:12px;height:12px;border-radius:50%;background:var(--salvia)}
+.evo-dia{display:block;font-size:13px;font-weight:700;color:var(--salvia-d);margin-bottom:6px}
+.aviso{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:center;background:rgba(255,255,255,.75);border:1px solid var(--linea);border-radius:16px;padding:11px 12px;box-shadow:0 8px 20px -14px rgba(58,58,58,.4)}
+.aviso img{border-radius:7px}
+.aviso b{display:block;font-size:13px}.aviso span{font-size:14px;color:var(--suave)}
+.escala{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:13px}
+.escala p{font-size:15px;font-weight:500;margin-bottom:10px}
+.nums{display:grid;grid-template-columns:repeat(11,1fr);gap:3px}
+.nums i{font-style:normal;text-align:center;font-size:12px;padding:7px 0;border-radius:7px;background:var(--beige)}
+.nums .si{background:var(--salvia-d);color:#fff;font-weight:700;transform:scale(1.12)}
+.escala small{display:flex;justify-content:space-between;font-size:11.5px;color:var(--suave);margin-top:5px}
+.curva{background:#fff;border:1px solid var(--linea);border-radius:16px;padding:13px}
+.curva b{font-size:14px}
+.curva svg{display:block;width:100%;height:auto;margin:8px 0 4px}
+.curva small{font-size:12.5px;color:var(--suave)}
+.curva .linea{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1.6s cubic-bezier(.4,.1,.2,1)}
+.curva .pt{opacity:0;transition:opacity .4s}
+.evo.ver .curva .linea{stroke-dashoffset:0}
+.evo.ver .curva .pt{opacity:1}
+.evo.ver .curva .pt:nth-of-type(2){transition-delay:.45s}.evo.ver .curva .pt:nth-of-type(3){transition-delay:.9s}.evo.ver .curva .pt:nth-of-type(4){transition-delay:1.35s}
+@media (prefers-reduced-motion:reduce){.curva .linea{stroke-dashoffset:0}.curva .pt{opacity:1}}
 .nota-ej{text-align:center;font-size:12.5px;color:var(--suave);margin-top:10px}
 
 /* ── 5. Paloma (emocional) ── */
@@ -198,38 +239,49 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     </div>
   </section>
 
-  <!-- 3 · TANGIBLE: exactamente lo que recibe -->
+  <!-- 3 · TANGIBLE + VISUAL: qué tienes al entrar (vídeos, kit y evolución), enseñado, no contado -->
   <section data-solo-curso>
     <h2>Qué tienes al entrar</h2>
     <p class="intro">Todo abierto desde el primer minuto. A tu ritmo, en el móvil.</p>
-    <ol class="videos" data-t="videos"></ol>
-    <div class="extras">
-      <div class="extra"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><b data-t="recurso-t">Tu recurso</b><span data-t="recurso">[Qué es el recurso de Paloma y cuándo se usa]</span></div>
-      <div class="extra"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg><b>Tu evolución</b><span>Cada semana marcas cuánto control sientes, del 0 al 10, y ves tu gráfico.</span></div>
-    </div>
-  </section>
 
-  <!-- 4 · VISUAL: cómo se ve por dentro -->
-  <section data-solo-curso aria-label="Así se ve tu área">
-    <div class="escena">
-      <div class="movil" aria-hidden="true">
-        <div class="pantalla">
-          <div class="hola">Hola 👋</div>
-          <div class="t" data-t="mock-t">Taller</div>
-          <div class="barra" style="--p:40%"><i></i></div>
-          <div class="pct"><span>2 de 5 vídeos</span><span>40 %</span></div>
-          <div class="mini">
-            <div class="ok"><em>✓</em><span data-t="mock-1">Vídeo 1</span></div>
-            <div class="ok"><em>✓</em><span data-t="mock-2">Vídeo 2</span></div>
-            <div><em>3</em><span data-t="mock-3">Vídeo 3</span></div>
-          </div>
-          <div class="grafico"><b>Tu control, semana a semana</b>
-            <svg viewBox="0 0 200 70" fill="none"><path d="M0 69h200" stroke="rgba(58,58,58,.12)"/><path d="M8 52 L64 46 L120 34 L192 20" stroke="#6d9278" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><g fill="#6d9278"><circle cx="8" cy="52" r="4"/><circle cx="64" cy="46" r="4"/><circle cx="120" cy="34" r="4"/><circle cx="192" cy="20" r="4"/></g></svg>
-          </div>
-        </div>
+    <!-- 3a · Los vídeos, con un trocito en bucle -->
+    <div class="bloque">
+      <div class="cab"><span class="num">1</span><div><h3>5 vídeos con Paloma</h3><p data-t="total-videos"></p></div></div>
+      <figure class="preview">
+        <video data-t-src="clip" muted loop playsinline autoplay preload="metadata" aria-label="Fragmento de uno de los vídeos, sin sonido"></video>
+        <figcaption>Un trocito del vídeo 3, sin sonido</figcaption>
+      </figure>
+      <ol class="videos" data-t="videos"></ol>
+    </div>
+
+    <!-- 3b · El kit: pantallas de muestra, sin que se pueda usar -->
+    <div class="bloque">
+      <div class="cab"><span class="num">2</span><div><h3 data-t="kit-nombre">Tu kit interactivo</h3><p data-t="kit-intro"></p></div></div>
+      <div class="kit" data-t="kit" aria-label="Pantallas del kit"></div>
+      <p class="nota-ej">Desliza para ver cada parte. Son pantallas de muestra.</p>
+    </div>
+
+    <!-- 3c · La evolución: cada domingo, una pregunta y el gráfico que sube -->
+    <div class="bloque">
+      <div class="cab"><span class="num">3</span><div><h3>Tu evolución, semana a semana</h3><p>Cada domingo por la noche, una pregunta. Respondes en diez segundos y ves cómo avanzáis.</p></div></div>
+      <div class="evo" id="evo">
+        <div class="evo-paso"><span class="evo-dia">Domingo, 21:45</span>
+          <div class="aviso"><img src="/media/fotos/isotipo-192.png" alt="" width="28" height="28"><div><b>Método Synesis</b><span data-t="evo-aviso"></span></div></div></div>
+        <div class="evo-paso"><span class="evo-dia">Respondes</span>
+          <div class="escala"><p data-t="evo-pregunta"></p><div class="nums" aria-hidden="true"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i class="si">6</i><i>7</i><i>8</i><i>9</i><i>10</i></div><small><span>Nada</span><span>Total</span></small></div></div>
+        <div class="evo-paso"><span class="evo-dia">Y ves tu avance</span>
+          <div class="curva"><b>Tu control, semana a semana</b>
+            <svg viewBox="0 0 300 130" fill="none" aria-label="Ejemplo: de 3 a 7 en cuatro semanas">
+              <g stroke="rgba(58,58,58,.1)"><path d="M20 20H290M20 60H290M20 100H290"/></g>
+              <g font-size="10" fill="rgba(58,58,58,.55)" font-family="DM Sans"><text x="4" y="24">10</text><text x="8" y="64">5</text><text x="8" y="104">0</text>
+                <text x="30" y="124">Sem 1</text><text x="108" y="124">Sem 2</text><text x="186" y="124">Sem 3</text><text x="258" y="124">Sem 4</text></g>
+              <path class="linea" d="M45 76 L123 68 L201 52 L279 44" stroke="#6d9278" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" pathLength="1"/>
+              <g fill="#6d9278"><circle class="pt" cx="45" cy="76" r="5"/><circle class="pt" cx="123" cy="68" r="5"/><circle class="pt" cx="201" cy="52" r="5"/><circle class="pt" cx="279" cy="44" r="6" fill="#D08770"/></g>
+              <g font-size="11" font-weight="700" fill="#3A3A3A" font-family="DM Sans"><text class="pt" x="40" y="94">3</text><text class="pt" x="118" y="86">4</text><text class="pt" x="196" y="70">6</text><text class="pt" x="274" y="34">7</text></g>
+            </svg>
+            <small>Ejemplo. Ver que subes, aunque sea un punto, ayuda a seguir.</small></div></div>
       </div>
     </div>
-    <p class="nota-ej">Así se ve tu área. El gráfico es un ejemplo.</p>
   </section>
 
   <!-- 5 · EMOCIONAL: Paloma explica cómo le va a ayudar -->
@@ -251,7 +303,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     <div class="precio">
       <div class="cifra">37 €<small>pago único</small></div>
       <ul class="comparar">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>5 vídeos, tu recurso y tu seguimiento semanal. Sin cuotas ni suscripción.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>5 vídeos, tu kit interactivo y tu seguimiento semanal. Sin cuotas ni suscripción.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Es tuyo para siempre: vuelve a verlo cada vez que lo necesites.</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Lo empiezas esta noche, no dentro de semanas.</span></li>
       </ul>
@@ -299,29 +351,47 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
   /* ── Textos de cada taller ── */
   var CURSOS = {
     rabietas: {
-      nombre: 'Taller Rabietas', situacion: 'explota', stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
+      nombre: 'Taller Rabietas', situacion: 'explota',
+      kitNombre: 'Kit de rabietas', clip: '/media/taller/rabietas-preview.mp4', poster: 'https://embed-ssl.wistia.com/deliveries/31627e10fe450710cb1d13fd658eca260e92afcb.jpg?image_crop_resized=640x360',
+      kitIntro: 'Una herramienta para el móvil que te acompaña antes, durante y después de la rabieta.',
+      kit: [
+        { t: '¿Qué está pasando?', p: 'Respondes 4 preguntas rápidas y te dice qué tipo de rabieta es: desborde, límite, enfado o necesidad sin cubrir. Y tiene un botón para cuando está pasando ahora mismo.',
+          h: '<div class="tel-t">¿Qué está pasando?</div><div class="tel-paso">Pregunta 2 de 4</div><div class="bar"><i style="width:50%"></i></div><div class="q">¿Ha empezado después de un «no»?</div><div class="ops"><span class="on">Sí</span><span>No</span></div><div class="tipo"><b>Parece una rabieta de límite</b>Qué hacer ahora, paso a paso</div><div class="urg">Está pasando ahora</div>' },
+        { t: 'Sus momentos difíciles', p: 'El súper, el parque, la cena, el baño, dormir, la salida de la escuela… Cada uno trae cómo prepararlo, cómo llevarlo y qué hacer si estalla, con frases listas para decir.',
+          h: '<div class="tel-t">Sus momentos difíciles</div><div class="chips"><span class="on">🛒 Súper</span><span>🛝 Parque</span><span>🍽️ Cena</span><span>🛁 Baño</span><span>🌙 Dormir</span><span>🎒 Salida</span></div><div class="ficha"><div class="tabs"><span>Prepararlo</span><span>Llevarlo</span><span class="on">Si estalla</span></div><div class="frase">«Estoy aquí. No te voy a dejar sola con esto.»</div></div>' },
+        { t: 'Practica en frío', p: 'Escenas reales en las que decides cómo reaccionar, para que en el momento te salga solo.',
+          h: '<div class="tel-t">Practica en frío</div><div class="escena"><b>Escena 3</b>Estáis en el parque y toca irse. Se tira al suelo gritando.</div><div class="elige"><span>Le explico por qué hay que irse</span><span class="ok">Me agacho y nombro lo que siente</span><span>Le aviso: «o vienes o me voy»</span></div>' }
+      ], stripe: 'https://buy.stripe.com/eVq00kdp500086yc0M7bW0k',
       h1: function (p) { return 'Cuando ' + p + ' explota, tú también acabas al límite.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué le pasa a ' + p + ' por dentro y qué hacer tú en esos primeros segundos.'; },
       ahora: 'Explota por algo pequeño. Intentas razonar, subes el tono y acabáis los dos peor.',
       despues: function (p) { return 'Sabes qué le pasa a ' + p + ' en plena rabieta y qué hacer tú para no entrar en ella.'; },
       videos: [['Qué pasa en una rabieta', 8], ['Los 4 tipos de rabieta', 9], ['Qué hacer en el momento exacto', 9], ['Cuatro escenas reales', 11], ['Lo que viene después', 5]],
-      recurso: '[Recurso de Rabietas: qué es y cuándo se usa]',
       caso: '«Una mamá me contó que su hija de 4 años se tiraba al suelo cada vez que tocaba salir del parque. Ella acababa gritando y luego se sentía fatal. Cuando entendió qué le pasaba a su peque por dentro, cambió lo que hacía en esos primeros segundos. Las rabietas no desaparecieron de un día para otro, pero empezaron a durar mucho menos. Y ella dejó de salir de cada una sintiéndose culpable.»'
     },
     pega: {
-      nombre: 'Taller Pega y muerde', situacion: 'pega o muerde', stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
+      nombre: 'Taller Pega y muerde', situacion: 'pega o muerde',
+      kitNombre: 'Kit Pega y muerde', clip: '/media/taller/pega-preview.mp4', poster: 'https://embed-ssl.wistia.com/deliveries/d0485370afbc647a64044cbd91d233f3953a2523.jpg?image_crop_resized=640x360',
+      kitIntro: 'Para entender qué te está diciendo con ese golpe y enseñarle otra forma de decirlo.',
+      kit: [
+        { t: 'Ponte en sus zapatos', p: 'Las 6 razones más habituales por las que pega o muerde: rabia, impulso, que le faltan palabras, que busca tu atención, que lo ha visto hacer o cansancio. Para cada una, cómo reconocerla y qué hacer.',
+          h: '<div class="tel-t">Ponte en sus zapatos</div><div class="chips"><span>Rabia</span><span>Impulso</span><span class="on">Le faltan palabras</span><span>Busca tu atención</span><span>Lo ha visto hacer</span><span>Cansancio</span></div><div class="ficha"><div class="tabs"><span class="on">Cómo reconocerla</span><span>Qué hacer</span></div>Pega cuando quiere algo y no le salen las palabras para pedirlo.</div>' },
+        { t: 'Su caja de herramientas', p: 'Más de 10 juegos cortos para practicar en calma, como pisar fuerte como un elefante, soplar como un dragón, decir «¡para!» o usar una señal secreta. Cada uno le da una forma de sacar la rabia sin hacer daño.',
+          h: '<div class="tel-t">Su caja de herramientas</div><div class="chips"><span>🐘 Pisar como un elefante</span><span class="on">🐉 Soplar como un dragón</span><span>✋ Decir «¡para!»</span><span>🤫 La señal secreta</span><span>🎈 Inflar el globo</span><span>➕ 6 juegos más</span></div>' },
+        { t: 'Practica en frío', p: 'Escenas en las que decides cómo actuarías, para llegar preparada al momento real.',
+          h: '<div class="tel-t">Practica en frío</div><div class="escena"><b>Escena 2</b>En el parque, otro niño le quita la pala. Levanta la mano.</div><div class="elige"><span>Le riño: «¡eso no se hace!»</span><span class="ok">Le paro la mano con calma y le pongo palabras</span><span>Le obligo a pedir perdón</span></div>' }
+      ], stripe: 'https://buy.stripe.com/5kQbJ2fxd144biKgh27bW0l',
       h1: function (p) { return 'Cuando ' + p + ' pega o muerde, sientes que todos te miran.'; },
       sub: function (p) { return '5 vídeos cortos con Paloma para entender qué intenta decir ' + p + ' con ese golpe y cómo pararlo sin gritar.'; },
       ahora: 'Pega o muerde. Te tensas, le riñes, y a los dos días vuelve a pasar.',
       despues: function (p) { return 'Entiendes qué hay detrás de cada golpe de ' + p + ' y qué hacer tú en ese momento.'; },
       videos: [['Por qué pega y muerde', 9], ['Seis motivos detrás de un golpe o un mordisco', 10], ['Qué hacer cuando pega o muerde', 9], ['Cómo llevarlo al día a día', 10], ['Lo que viene después', 6]],
-      recurso: '[Recurso de Pega y muerde: qué es y cuándo se usa]',
       caso: '«Una mamá me contó que la llamaban de la guarde casi cada semana porque su hijo de 3 años mordía. Ella le reñía y se lo explicaba mil veces, y nada. Cuando entendió que ese mordisco era su forma de decir «no puedo más», empezó a adelantarse a esos momentos. Poco a poco dejaron de llamarla.»'
     }
   };
   function SERVIR(p) {
     return 'Está hecho para cambiar tu forma de ver a ' + p + '. Cuando entiendes qué le pasa, sabes cómo actuar. ' +
-      'Los vídeos te dan las claves y el cambio llega al probarlas en casa. No lo harás a ciegas: el recurso te guía en tu caso y cada semana ves cómo avanzas.';
+      'Los vídeos te dan las claves y el cambio llega al probarlas en casa. No lo harás a ciegas: el kit te guía en tu caso y cada semana ves cómo avanzas.';
   }
   var DEMO = { nombre_hijo: 'Lucía', angulo: 'rabietas', s3_bucle_hace: 'Se tira al suelo en el súper cuando le dices que no' };
 
@@ -360,7 +430,7 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
       document.querySelector('[data-zona="compra-portada"]').innerHTML = selector();
       document.querySelectorAll('[data-solo-curso],#precio,.final').forEach(function (el) { el.hidden = true; });
       poner('nota1', 'Con estos vídeos vas a entender qué le pasa a tu peque por dentro en esos momentos, y por qué a veces lo que haces no funciona.');
-      poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú cuando llega el momento difícil.');
+      poner('nota2', 'Y el kit te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú cuando llega el momento difícil.');
       poner('servir', SERVIR('tu peque'));
       document.querySelectorAll('[data-elige]').forEach(function (b) { b.addEventListener('click', function () { curso = b.getAttribute('data-elige'); pintar(); scrollTo({ top: 0 }); }); });
       return;
@@ -375,11 +445,17 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     poner('videos', c.videos.map(function (v, i) { return '<li><span class="n">' + (i + 1) + '</span><span><b>' + esc(v[0]) + '</b></span><span class="min">' + v[1] + ' min</span></li>'; }).join(''));
     var mins = c.videos.map(function (v) { return v[1]; }), total = mins.reduce(function (a, b) { return a + b; }, 0);
     poner('tiempo', 'Son 5 vídeos de entre ' + Math.min.apply(null, mins) + ' y ' + Math.max.apply(null, mins) + ' minutos, unos ' + total + ' en total. Puedes ver uno cada noche, cuando ' + peque + ' se duerma.');
-    poner('recurso', pend(c.recurso));
+    poner('total-videos', 'Cortos, para ver uno cada noche. Unos ' + c.videos.reduce(function (a, v) { return a + v[1]; }, 0) + ' minutos en total.');
+    var clip = document.querySelector('[data-t-src="clip"]');
+    if (c.clip.charAt(0) !== '[') { clip.poster = c.poster; clip.src = c.clip; } else { clip.closest('.preview').innerHTML = '<span class="pend" style="margin:auto;color:#fff">' + esc(c.clip) + '</span>'; clip = null; }
+    poner('kit-nombre', esc(c.kitNombre) + ' <small style="font-weight:400;color:var(--suave)">(interactivo)</small>');
+    poner('kit-intro', esc(c.kitIntro));
+    poner('kit', c.kit.map(function (k) { return '<div class="kit-p"><div class="tel" aria-hidden="true"><div class="tel-in">' + k.h + '</div></div><h4>' + esc(k.t) + '</h4><p>' + esc(k.p) + '</p></div>'; }).join(''));
+    poner('evo-aviso', '¿Cómo ha ido la semana con ' + peque + '?');
+    poner('evo-pregunta', '¿Cuánto control has sentido esta semana cuando ' + peque + ' ' + c.situacion + '?');
     poner('caso', esc(c.caso));
-    poner('mock-t', esc(c.nombre)); poner('mock-1', esc(c.videos[0][0])); poner('mock-2', esc(c.videos[1][0])); poner('mock-3', esc(c.videos[2][0]));
     poner('nota1', 'Con estos 5 vídeos vas a entender qué le pasa a ' + peque + ' por dentro cuando ' + c.situacion + ', y por qué a veces lo que haces no funciona.');
-    poner('nota2', 'Y el recurso te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú en ese momento, paso a paso.');
+    poner('nota2', 'Y el kit te enseña a aplicarlo en tu casa, en tu situación concreta: qué hacer tú en ese momento, paso a paso.');
     poner('servir', SERVIR(peque));
     poner('final-h', 'Esta noche, cuando ' + peque + ' se duerma, <em>ve el primer vídeo.</em>');
     poner('final-p', 'Son ' + c.videos[0][1] + ' minutos. Mañana ya sabrás algo que hoy no sabías de lo que le pasa.');
@@ -388,6 +464,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var
     document.querySelector('#fija .cta').setAttribute('href', enlacePago());
     try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_minicurso_vista', curso: curso, personalizada: !!datos.nombre_hijo }); } catch (e) {}
   }
+
+  /* El gráfico de evolución se dibuja al verlo */
+  var evo = document.getElementById('evo');
+  if ('IntersectionObserver' in window) { new IntersectionObserver(function (es, o) { es.forEach(function (e) { if (e.isIntersecting) { evo.classList.add('ver'); o.disconnect(); } }); }, { threshold: .5 }).observe(evo); }
+  else evo.classList.add('ver');
 
   /* Barra fija: aparece cuando el botón de la portada sale de la pantalla y se esconde al llegar al final */
   var fija = document.getElementById('fija');
