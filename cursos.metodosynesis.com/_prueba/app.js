@@ -35,6 +35,8 @@
     evolucion: '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5.5-5.5 4 4L21 7"/><path d="M15 7h6v6"/></svg>'
   };
   var NOMBRE_RECURSO = { rabietas: 'Kit de rabietas', pega: 'Kit Pega y muerde' };
+  var PREFIJO_RECURSO = { rabietas: 'rk-', pega: 'pk-' }; // claves que usa cada kit en localStorage
+  var pararRecurso = null;
   var PLAY = '<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
 
   /* ---------- datos ---------- */
@@ -68,6 +70,12 @@
     },
     medicion: function (cursoId, control, dias, nota, inicial) {
       return sb.rpc('cursos_guardar_medicion', { p_curso_id: cursoId, p_control: control, p_dias: dias, p_nota: nota || null, p_inicial: !!inicial }).then(function (r) { if (r.error) throw r.error; });
+    },
+    estadoRecurso: function (cursoId) {
+      return sb.from('cursos_recurso_estado').select('datos').eq('curso_id', cursoId).maybeSingle().then(function (r) { if (r.error) throw r.error; return r.data ? r.data.datos : null; });
+    },
+    guardarRecurso: function (cursoId, datos) {
+      return sb.rpc('cursos_guardar_recurso', { p_curso_id: cursoId, p_datos: datos }).then(function (r) { if (r.error) throw r.error; });
     },
     perfil: function (hijo) { return sb.rpc('cursos_guardar_perfil', { p_hijo: hijo, p_edad_rango: null }).then(function (r) { if (r.error) throw r.error; }); }
   };
@@ -214,7 +222,50 @@
       return;
     }
     app.innerHTML = '<div class="pantalla-recurso"><header class="barra-fina"><a href="#/curso/' + c.id + '">' + ATRAS + 'Volver al taller</a><span>' + esc(nombreRecurso(c)) + '</span></header>' +
-      '<iframe src="' + esc(c.recurso_url) + '" title="' + esc(nombreRecurso(c)) + '"></iframe></div>';
+      '<div class="cargando" id="espera"><span class="punto"></span></div></div>';
+    var pre = PREFIJO_RECURSO[c.id];
+    var abrir = function () {
+      var e = $('#espera'); if (!e) return;
+      e.outerHTML = '<iframe src="' + esc(c.recurso_url) + '" title="' + esc(nombreRecurso(c)) + '"></iframe>';
+      if (pre) pararRecurso = sincronizarRecurso(c.id, pre, enCuenta);
+    };
+    var enCuenta = false;
+    if (!pre) return abrir();
+    api.estadoRecurso(c.id).then(function (datos) { enCuenta = !!datos; prepararLocal(pre, datos); }).catch(function () {}).then(abrir);
+  }
+  // El avance de los kits se guarda en la cuenta: antes de abrir, lo guardado pasa al dispositivo, y cada cambio vuelve a la cuenta.
+  function clavesLocales(pre) {
+    var o = {};
+    try { for (var i = 0; i < localStorage.length; i++) { var k = localStorage.key(i); if (k && k.indexOf(pre) === 0) o[k] = localStorage.getItem(k); } } catch (e) {}
+    return o;
+  }
+  function prepararLocal(pre, datos) {
+    try {
+      var dueno = localStorage.getItem('synesis-recurso-dueno'), yo = E.usuario.user_id;
+      var ajeno = dueno && dueno !== yo;
+      if (datos || ajeno) Object.keys(clavesLocales(pre)).forEach(function (k) { localStorage.removeItem(k); });
+      if (datos) Object.keys(datos).forEach(function (k) { if (k.indexOf(pre) === 0 && typeof datos[k] === 'string') localStorage.setItem(k, datos[k]); });
+      if (yo) localStorage.setItem('synesis-recurso-dueno', yo);
+    } catch (e) {}
+  }
+  function borrarRecursosLocales() {
+    try { Object.keys(PREFIJO_RECURSO).forEach(function (id) { Object.keys(clavesLocales(PREFIJO_RECURSO[id])).forEach(function (k) { localStorage.removeItem(k); }); }); localStorage.removeItem('synesis-recurso-dueno'); } catch (e) {}
+  }
+  function sincronizarRecurso(cursoId, pre, enCuenta) {
+    var ultimo = enCuenta ? JSON.stringify(clavesLocales(pre)) : '{}', espera = null;
+    function revisar() {
+      var ahora = clavesLocales(pre), txt = JSON.stringify(ahora);
+      if (txt === ultimo) return;
+      api.guardarRecurso(cursoId, ahora).then(function () { ultimo = txt; }).catch(function () {});
+    }
+    function pronto() { clearTimeout(espera); espera = setTimeout(revisar, 1200); }
+    var alSalir = function () { if (document.visibilityState === 'hidden') revisar(); };
+    var t = setInterval(revisar, 5000);
+    window.addEventListener('storage', pronto);
+    document.addEventListener('visibilitychange', alSalir);
+    window.addEventListener('pagehide', revisar);
+    revisar(); // si había avance de antes en este dispositivo y la cuenta estaba vacía, se sube
+    return function () { clearTimeout(espera); clearInterval(t); revisar(); window.removeEventListener('storage', pronto); document.removeEventListener('visibilitychange', alSalir); window.removeEventListener('pagehide', revisar); };
   }
   function vistaEvolucionPag(c) {
     app.innerHTML = barra() + '<main class="pagina con-nav">' + vistaEvolucion(c) + cta(c) + LEGAL + '</main>' + navInf(c, 'evolucion');
@@ -359,6 +410,7 @@
   /* ---------- router ---------- */
   function pintar() {
     if (pararVideo) { pararVideo(); pararVideo = null; }
+    if (pararRecurso) { pararRecurso(); pararRecurso = null; }
     window.scrollTo(0, 0);
     var r = (location.hash || '#/').slice(2).split('/');
     document.body.classList.remove('modo-recurso');
@@ -396,7 +448,7 @@
     api.iniciar(function (ev, s) {
       if (ev === 'PASSWORD_RECOVERY') { E.recuperando = true; vistaNuevaClave(); }
       else if (ev === 'SIGNED_IN' && !dentro && !E.recuperando) arrancar();
-      else if (ev === 'SIGNED_OUT') { dentro = false; E = {}; vistaEntrar(); }
+      else if (ev === 'SIGNED_OUT') { dentro = false; E = {}; borrarRecursosLocales(); vistaEntrar(); }
     }).then(function (s) {
       if (E.recuperando && s) return vistaNuevaClave();
       if (s) arrancar(); else if (!E.recuperando) vistaEntrar();
