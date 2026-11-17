@@ -1,3 +1,1215 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Recurso · rabietas</title>
-<style>body{font-family:'DM Sans',system-ui,sans-serif;background:#F3EDE4;color:#3A3A3A;margin:0;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}b{display:block;font-size:20px;margin-bottom:6px}</style></head>
-<body><div><b>Recurso en preparación</b>Aquí irá el recurso interactivo de Paloma.</div></body></html>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kit de rabietas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,500;1,9..40,600&display=swap" rel="stylesheet">
+<style>
+/* Layout: app móvil. Botón SOS arriba para el momento difícil, camino guiado debajo; cada tarea se abre a pantalla completa con una cosa por pantalla; navegación inferior fija. */
+:root {
+  --bg: #F3EDE4;
+  --surface: #FFFDF9;
+  --soft: #E4EFE8;
+  --text: #3A3A3A;
+  --muted: #74746C;
+  --sage: #8FAF9A;
+  --sage-deep: #6D9278;
+  --on-sage: #22302A;
+  --terra: #D08770;
+  --terra-soft: #F7E6DF;
+  --line: rgba(58, 58, 58, 0.10);
+  --shadow: 0 1px 2px rgba(58, 58, 58, 0.05), 0 10px 30px rgba(58, 58, 58, 0.07);
+  --font: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --nav-h: 68px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C211F; --surface: #252B28; --soft: #2C3832; --text: #EDE9E1; --muted: #AEB3AA;
+    --sage: #8FAF9A; --sage-deep: #A9C6B2; --on-sage: #17201B; --terra: #E3A08A; --terra-soft: #3B2D27;
+    --line: rgba(237, 233, 225, 0.12);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C211F; --surface: #252B28; --soft: #2C3832; --text: #EDE9E1; --muted: #AEB3AA;
+  --sage: #8FAF9A; --sage-deep: #A9C6B2; --on-sage: #17201B; --terra: #E3A08A; --terra-soft: #3B2D27;
+  --line: rgba(237, 233, 225, 0.12);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+  color-scheme: dark;
+}
+html { -webkit-text-size-adjust: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body.locked { overflow: hidden; }
+button { font-family: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--sage-deep); outline-offset: 2px; }
+svg.lucide { width: 22px; height: 22px; flex: none; }
+[hidden] { display: none !important; }
+
+.app { max-width: 520px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 18px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom, 0px)); }
+
+/* Cabecera */
+.top { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; }
+.brand svg { width: 28px; height: 28px; color: var(--sage); }
+.pill { font-size: 12px; font-weight: 600; color: var(--sage-deep); background: var(--soft); padding: 5px 11px; border-radius: 999px; }
+.screen-title { font-size: 30px; line-height: 1.12; font-weight: 700; letter-spacing: -0.025em; margin: 22px 0 6px; text-wrap: balance; }
+.screen-sub { color: var(--muted); margin: 0 0 18px; }
+
+/* Tarjetas */
+.card { background: var(--surface); border-radius: 24px; padding: 20px; box-shadow: var(--shadow); }
+.stack { display: grid; gap: 14px; }
+.label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 16px/1.2 var(--font); background: var(--text); color: var(--bg); border: 0; border-radius: 999px; padding: 15px 22px; cursor: pointer; min-height: 52px; }
+.btn.sage { background: var(--sage); color: var(--on-sage); }
+.btn.ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn.block { width: 100%; }
+.btn:disabled { opacity: .35; cursor: default; }
+.link { background: none; border: 0; padding: 0; font: 600 14px/1.4 var(--font); color: var(--sage-deep); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Hero de inicio */
+.hero { background: var(--sage); color: var(--on-sage); border-radius: 28px; padding: 24px 22px; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,.14); }
+.hero .k { font-size: 13px; font-weight: 600; opacity: .85; margin: 0 0 8px; }
+.hero h2 { font-size: 24px; line-height: 1.2; letter-spacing: -0.015em; margin: 0 0 18px; font-weight: 700; text-wrap: balance; position: relative; }
+.hero blockquote { margin: 0 0 18px; font-size: 22px; line-height: 1.3; font-weight: 600; font-style: italic; text-wrap: balance; position: relative; }
+.hero .btn { background: var(--on-sage); color: #F3EDE4; position: relative; }
+.hero .meta { display: flex; align-items: center; gap: 14px; position: relative; }
+.hero .meta span { font-size: 14px; font-weight: 500; opacity: .85; }
+
+/* Camino */
+.path { display: grid; gap: 10px; }
+.step { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--surface); border: 0; border-radius: 20px; padding: 14px 16px; cursor: pointer; box-shadow: var(--shadow); }
+.step .ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--soft); color: var(--sage-deep); }
+.step.done .ic { background: var(--sage); color: var(--on-sage); }
+.step.next { box-shadow: var(--shadow), inset 0 0 0 2px var(--sage); }
+.step b { display: block; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.step small { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+.step .go { color: var(--muted); }
+.badge-next { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--on-sage); background: var(--sage); padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+
+/* Mini caja en inicio */
+.mini-box { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; text-align: left; cursor: pointer; }
+.mini-icons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.mini-icons span { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--bg); color: var(--muted); }
+.mini-icons span.in { background: var(--soft); color: var(--sage-deep); }
+.mini-icons span.star { background: var(--sage); color: var(--on-sage); }
+.mini-icons svg.lucide { width: 16px; height: 16px; }
+.big-num { font-size: 34px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.big-num small { font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+
+/* Caja */
+.box { background: var(--surface); border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; }
+.box-head { background: var(--sage-deep); color: #FFFDF9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+.box-head b { font-size: 15px; }
+.box-head span { font-size: 14px; font-variant-numeric: tabular-nums; opacity: .92; }
+.meter { height: 6px; background: rgba(255,255,255,.25); border-radius: 6px; margin: 0 20px; position: relative; top: -10px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: #FFFDF9; border-radius: 6px; transition: width .5s ease; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 8px 14px 16px; }
+.tile { position: relative; border: 0; border-radius: 18px; padding: 14px 6px 12px; background: var(--bg); cursor: pointer; display: grid; justify-items: center; gap: 8px; min-height: 96px; align-content: center; }
+.tile .ti { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; color: var(--muted); background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); }
+.tile span { font-size: 12.5px; font-weight: 600; line-height: 1.2; text-align: center; color: var(--muted); }
+.tile.in { background: var(--soft); }
+.tile.in .ti { background: var(--surface); color: var(--sage-deep); box-shadow: none; }
+.tile.in span { color: var(--text); }
+.tile.star { background: var(--sage); }
+.tile.star .ti { background: rgba(255,255,255,.35); color: var(--on-sage); box-shadow: none; }
+.tile.star span { color: var(--on-sage); }
+.tile .st { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: var(--terra); color: #fff; display: grid; place-items: center; }
+.tile .st svg.lucide { width: 12px; height: 12px; }
+.tile .rec { position: absolute; top: 9px; right: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--terra); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); padding: 0 6px; margin-top: 12px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+/* Lista de escenas */
+.scene-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; width: 100%; text-align: left; border: 0; background: var(--surface); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); cursor: pointer; }
+.scene-card .where { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--terra); }
+.scene-card b { display: block; font-size: 17px; margin: 2px 0 4px; }
+.scene-card q { display: block; font-size: 14.5px; font-style: italic; color: var(--muted); quotes: "«" "»"; line-height: 1.4; }
+.scene-card .ok { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--muted); }
+.scene-card .ok.done { background: var(--sage); color: var(--on-sage); }
+
+/* Navegación inferior */
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+.nav-in { max-width: 520px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.nav button { background: none; border: 0; cursor: pointer; display: grid; justify-items: center; gap: 3px; padding: 6px 0; font-size: 12px; font-weight: 600; color: var(--muted); }
+.nav button[aria-current="page"] { color: var(--text); }
+.nav button[aria-current="page"] .nic { background: var(--soft); color: var(--sage-deep); }
+.nav .nic { width: 54px; height: 30px; border-radius: 999px; display: grid; place-items: center; }
+
+/* Flujo a pantalla completa */
+.flow { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); animation: up .28s ease; }
+@keyframes up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.flow-bar { flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 10px; padding: 10px max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px)); max-width: 560px; width: 100%; margin: 0 auto; }
+.icon-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--surface); display: grid; place-items: center; cursor: pointer; box-shadow: var(--shadow); }
+.bar { height: 6px; background: var(--line); border-radius: 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--sage); border-radius: 6px; transition: width .35s ease; }
+.flow-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.flow-in { max-width: 520px; margin: 0 auto; padding: 12px max(22px, env(safe-area-inset-right, 0px)) 24px max(22px, env(safe-area-inset-left, 0px)); }
+.flow-foot { flex: none; padding: 12px max(22px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); max-width: 520px; width: 100%; margin: 0 auto; display: grid; gap: 10px; }
+.flow-foot:empty { display: none; }
+.q-kicker { font-size: 13px; font-weight: 600; color: var(--sage-deep); margin: 8px 0 8px; }
+.q { font-size: 27px; line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+.q-help { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+.opts { display: grid; gap: 10px; margin-top: 18px; }
+.opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: 500 16px/1.4 var(--font); background: var(--surface); border: 0; border-radius: 18px; padding: 16px 18px; cursor: pointer; box-shadow: var(--shadow); min-height: 60px; transition: transform .1s; }
+.opt:active { transform: scale(.985); }
+.opt .oi { width: 36px; height: 36px; border-radius: 12px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; flex: none; }
+.opt[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--sage-deep), var(--shadow); background: var(--soft); }
+.opt[aria-pressed="true"] .oi { background: var(--sage); color: var(--on-sage); }
+.opt.picked { box-shadow: inset 0 0 0 2px var(--sage-deep); background: var(--soft); }
+.opt.faded { opacity: .45; }
+.opt:disabled { cursor: default; }
+.group-label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 22px 0 -6px; }
+.tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+.tool-grid .tile { background: var(--surface); box-shadow: var(--shadow); }
+.tool-grid .tile[aria-pressed="true"] { background: var(--sage); }
+.tool-grid .tile[aria-pressed="true"] .ti { background: rgba(255,255,255,.35); color: var(--on-sage); box-shadow: none; }
+.tool-grid .tile[aria-pressed="true"] span { color: var(--on-sage); }
+
+/* Páginas de resultado */
+.dots { display: flex; justify-content: center; gap: 6px; }
+.dots i { width: 7px; height: 7px; border-radius: 7px; background: var(--line); transition: width .25s; }
+.dots i.on { width: 22px; background: var(--sage-deep); }
+.big-card { background: var(--surface); border-radius: 28px; padding: 26px 22px; box-shadow: var(--shadow); margin-top: 8px; }
+.big-card.sage { background: var(--sage); color: var(--on-sage); }
+.big-card.terra { background: var(--terra-soft); }
+.big-card .k { font-size: 13px; font-weight: 600; margin: 0 0 10px; opacity: .85; }
+.quote { font-size: 27px; line-height: 1.25; font-weight: 600; font-style: italic; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.4); margin-top: 18px; }
+.big-card h3 { font-size: 22px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+.big-card p { margin: 0 0 12px; font-size: 17px; }
+.big-card p:last-child { margin-bottom: 0; }
+.center-page { min-height: calc(100vh - 230px); display: grid; align-content: center; }
+.center-page .big-card.sage { padding: 34px 26px; }
+.center-page .big-card.sage .quote { font-size: 31px; }
+.soft-note { font-size: 15px; color: var(--muted); background: var(--bg); border-radius: 16px; padding: 12px 14px; margin-top: 16px; }
+.sign { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); font-size: 16px; }
+.sign:first-of-type { border-top: 0; }
+.sign .si { width: 36px; height: 36px; border-radius: 12px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; }
+.num { width: 30px; height: 30px; border-radius: 50%; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 14px; font-weight: 700; }
+
+/* Escenas */
+.voice-card { background: var(--terra-soft); border-radius: 28px; padding: 28px 24px; margin-top: 8px; }
+.voice-card .who { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--terra); margin-bottom: 14px; }
+.voice-card .quote { font-size: 28px; }
+.scene-text { font-size: 19px; line-height: 1.5; margin: 6px 0 0; }
+.fb { border-radius: 22px; padding: 18px; margin-top: 16px; animation: up .25s ease; }
+.fb.good { background: var(--sage); color: var(--on-sage); }
+.fb.other { background: var(--terra-soft); }
+.fb b { display: flex; align-items: center; gap: 8px; font-size: 17px; margin-bottom: 4px; }
+.fb p { margin: 0; font-size: 16px; }
+.fb .better { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(58,58,58,.12); }
+.fb .better small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--terra); margin-bottom: 4px; }
+.recap { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); }
+.recap:first-of-type { border-top: 0; }
+.recap p { margin: 0; font-size: 15.5px; }
+.recap small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
+
+/* Hoja inferior */
+.sheet-bg { position: fixed; inset: 0; z-index: 60; background: rgba(28, 33, 31, .38); animation: fade .2s ease; }
+@keyframes fade { from { opacity: 0; } }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; max-height: 88vh; overflow-y: auto; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px max(22px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); animation: sheetUp .3s cubic-bezier(.2,.9,.3,1); }
+@keyframes sheetUp { from { transform: translateY(100%); } }
+.sheet-in { max-width: 520px; margin: 0 auto; }
+.grab { width: 40px; height: 5px; border-radius: 5px; background: var(--line); margin: 0 auto 16px; }
+.sheet-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.sheet-head .ti { width: 56px; height: 56px; border-radius: 18px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; }
+.sheet-head .ti svg.lucide { width: 28px; height: 28px; }
+.sheet-head h3 { margin: 0; font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; }
+.sheet-head small { display: block; font-size: 13px; color: var(--muted); font-weight: 500; }
+.block-k { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sage-deep); margin: 0 0 6px; }
+.game { background: var(--bg); border-radius: 18px; padding: 16px; font-size: 16px; margin-bottom: 14px; }
+.say { background: var(--soft); border-radius: 18px; padding: 16px; font-size: 19px; font-weight: 600; font-style: italic; line-height: 1.35; margin-bottom: 18px; }
+.status-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.status-row span { flex: 1; text-align: center; font-size: 12.5px; font-weight: 600; padding: 8px 4px; border-radius: 12px; background: var(--bg); color: var(--muted); }
+.status-row span.on { background: var(--sage); color: var(--on-sage); }
+.party { text-align: center; padding: 6px 0 4px; }
+.party .burst { width: 84px; height: 84px; border-radius: 50%; background: var(--sage); color: var(--on-sage); display: grid; place-items: center; margin: 4px auto 14px; animation: pop .5s cubic-bezier(.2,1.6,.4,1); }
+.party .burst svg.lucide { width: 40px; height: 40px; }
+@keyframes pop { from { transform: scale(.3); opacity: 0; } }
+.party h3 { font-size: 24px; margin: 0 0 8px; }
+.party p { color: var(--muted); margin: 0 0 18px; }
+
+
+.sos { display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: center; width: 100%; text-align: left; border: 0; background: var(--terra-soft); border-radius: 24px; padding: 18px; cursor: pointer; }
+.sos .ic { width: 52px; height: 52px; border-radius: 16px; background: var(--terra); color: #FFFDF9; display: grid; place-items: center; }
+.sos b { display: block; font-size: 18px; line-height: 1.25; }
+.sos small { display: block; font-size: 14px; color: var(--muted); }
+.sos .go { color: var(--terra); }
+.step.urgent .ic { background: var(--terra); color: #FFFDF9; }
+.step.urgent { background: var(--terra-soft); box-shadow: none; }
+.phrase-card { background: var(--soft); border-radius: 20px; padding: 18px 20px; font-size: 21px; line-height: 1.35; font-weight: 600; font-style: italic; margin-top: 12px; text-wrap: pretty; }
+.step-k { display: flex; align-items: center; gap: 12px; font-size: 24px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.2; margin: 18px 0 4px; }
+.step-k .num { flex: none; }
+.nota { font-size: 16px; color: var(--muted); margin: 14px 0 0; line-height: 1.5; }
+.q-kicker { display: flex; align-items: center; gap: 6px; }
+.q-kicker svg.lucide { width: 16px; height: 16px; }
+.big-card .k { display: flex; align-items: center; gap: 6px; }
+.big-card .k svg.lucide, .mblock .mk svg.lucide { width: 16px; height: 16px; }
+.si.big { width: 48px; height: 48px; border-radius: 15px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; flex: none; }
+.type-note { display: flex; gap: 12px; align-items: center; background: var(--soft); border-radius: 18px; padding: 14px 16px; margin-top: 20px; font-size: 15.5px; font-weight: 500; }
+.type-note .si { width: 36px; height: 36px; border-radius: 12px; background: var(--surface); color: var(--sage-deep); display: grid; place-items: center; flex: none; }
+.mblock { border-radius: 20px; padding: 16px; margin-top: 10px; background: var(--bg); }
+.mblock .mk { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sage-deep); margin: 0 0 4px; }
+.mblock.burst { background: var(--terra-soft); }
+.mblock.burst .mk { color: var(--terra); }
+.mblock p { margin: 0; font-size: 16px; }
+.prog-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 16px; }
+.filters { display: flex; gap: 8px; overflow-x: auto; padding: 2px 2px 8px; margin: 0 -2px 8px; scrollbar-width: none; }
+.filters::-webkit-scrollbar { display: none; }
+.fchip { flex: none; border: 0; background: var(--surface); box-shadow: var(--shadow); border-radius: 999px; padding: 10px 16px; font: 600 14px/1.2 var(--font); cursor: pointer; color: var(--text); }
+.fchip[aria-pressed="true"] { background: var(--text); color: var(--bg); }
+.ex { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; font-size: 14.5px; color: var(--muted); line-height: 1.4; }
+.cycles { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+.orb { width: 200px; height: 200px; max-width: 62vw; max-height: 62vw; border-radius: 50%; margin: 30px auto 22px; background: radial-gradient(circle at 35% 30%, var(--soft), var(--sage)); transform: scale(.6); transition: transform 1s ease-in-out; }
+.orb.in { transform: scale(1); transition: transform 4s ease-in-out; }
+.orb.out { transform: scale(.6); transition: transform 6s ease-in-out; }
+.breath-label { font-size: 28px; font-weight: 700; margin: 0; min-height: 40px; }
+.breath-phrase { font-style: italic; color: var(--muted); font-size: 19px; min-height: 58px; max-width: 28ch; margin: 6px auto 0; }
+.copy-msg { font-size: 14px; color: var(--muted); margin: 14px 0 0; }
+.copy-msg:empty { display: none; }
+.copy-fallback { width: 100%; min-height: 140px; margin-top: 10px; font: 14px/1.5 var(--font); color: var(--text); background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 12px; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="app" id="app"></div>
+<nav class="nav" aria-label="Secciones"><div class="nav-in" id="nav"></div></nav>
+<div id="flow-root"></div>
+<div id="sheet-root"></div>
+
+<script>
+var LOGO = '<svg viewBox="0 0 1280 1280" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M595.0,1278.9C564.5,1276.2 551.5,1274.7 541.7,1273.0C535.5,1271.9 527.4,1270.5 523.6,1270.0C503.8,1267.1 464.8,1256.9 433.0,1246.3C416.0,1240.6 378.5,1225.5 368.3,1220.1C367.3,1219.6 360.9,1216.4 354.0,1213.0C301.3,1186.7 252.0,1152.8 209.0,1113.5C187.7,1094.0 159.3,1063.9 142.5,1043.0C62.4,943.3 14.9,827.2 2.8,700.9C-0.4,668.2 -0.4,612.1 2.8,579.5C8.9,515.9 24.1,454.7 48.5,395.1C58.5,370.6 72.9,342.0 89.7,313.0C103.1,289.7 132.9,248.0 149.8,228.6C152.2,225.8 156.8,220.6 159.9,217.0C175.7,198.8 214.7,160.0 217.1,160.0C217.6,160.0 217.0,162.1 215.9,164.8C197.2,207.9 186.7,263.6 186.7,319.5C186.6,384.3 200.9,440.7 230.8,493.5C250.0,527.5 278.6,560.4 316.1,591.5C322.8,597.1 346.1,613.9 352.2,617.5C353.1,618.0 357.6,621.0 362.2,624.1C370.6,629.7 372.4,630.8 383.9,637.7C387.4,639.8 391.0,642.0 391.9,642.5C399.9,647.4 414.8,655.9 432.5,665.5C436.4,667.6 441.8,670.5 444.5,672.0C468.8,685.3 545.9,723.7 580.5,739.7C605.7,751.4 643.7,768.8 658.0,775.3C672.4,781.8 692.4,791.1 717.5,802.8C762.4,823.8 814.9,851.6 835.5,865.3C881.8,896.2 915.3,940.3 930.8,990.5C935.8,1006.9 935.8,1006.9 939.4,1028.0C944.7,1059.7 942.4,1107.0 933.9,1140.4C925.9,1171.6 910.1,1204.3 893.0,1224.9C888.3,1230.6 887.8,1230.8 872.8,1236.7C837.2,1250.8 784.5,1265.9 756.4,1270.0C752.6,1270.5 744.5,1271.9 738.4,1273.0C728.1,1274.8 714.5,1276.3 684.0,1279.0C670.9,1280.1 607.8,1280.1 595.0,1278.9ZM1119.7,1061.5C1120.0,1059.8 1121.3,1052.7 1122.6,1045.5C1124.0,1038.3 1126.0,1021.9 1127.1,1009.0C1130.6,969.8 1128.8,919.4 1122.9,891.1C1121.8,885.8 1120.5,879.2 1120.0,876.3C1119.0,870.1 1112.0,846.0 1108.0,834.3C1099.9,810.9 1083.7,779.1 1069.5,758.8C1038.3,714.0 999.1,678.2 947.0,646.7C933.5,638.6 882.0,612.3 860.0,602.3C857.0,600.9 850.0,597.6 844.5,595.0C828.2,587.2 783.4,566.9 760.0,556.7C732.8,544.8 703.1,531.7 695.0,528.0C690.3,525.9 684.9,523.5 683.0,522.7C678.9,521.0 649.1,507.4 630.0,498.5C622.6,495.1 612.2,490.3 607.0,488.0C590.0,480.3 547.3,459.3 534.8,452.4C492.9,429.4 464.6,409.2 439.5,384.4C423.4,368.5 420.4,365.2 410.4,352.0C383.2,316.1 368.8,277.5 364.9,229.8C361.7,190.9 373.0,142.2 393.3,107.5C413.8,72.6 444.4,42.8 477.8,25.3C482.6,22.8 486.4,20.2 486.3,19.6C486.1,18.8 492.7,17.0 505.3,14.3C553.6,3.9 585.6,0.6 639.0,0.5C681.2,0.5 702.8,2.0 736.0,7.1C762.7,11.2 773.3,13.4 798.0,19.7C803.2,21.0 809.3,22.6 811.5,23.1C829.9,27.6 885.8,47.6 897.9,54.1C899.9,55.1 901.9,56.0 902.4,56.0C904.0,56.0 946.1,77.5 958.5,84.7C989.3,102.5 1027.2,129.0 1050.6,149.0C1053.3,151.4 1058.2,155.6 1061.5,158.4C1073.3,168.5 1094.8,189.3 1106.1,201.5C1120.8,217.5 1122.7,219.7 1131.4,230.0C1174.5,281.5 1211.1,343.0 1235.5,405.0C1252.4,448.2 1264.0,490.2 1271.5,535.5C1277.5,571.8 1279.4,596.0 1279.4,639.0C1279.5,667.5 1279.1,681.3 1277.7,696.5C1267.8,805.1 1231.6,907.8 1171.5,996.9C1157.4,1017.8 1135.5,1046.5 1123.6,1059.6C1119.3,1064.4 1119.2,1064.4 1119.7,1061.5Z"/></svg>';
+var ICONS = {"arrow-left":"<path d=\"m12 19-7-7 7-7\" /> <path d=\"M19 12H5\" />","arrow-right":"<path d=\"M5 12h14\" /> <path d=\"m12 5 7 7-7 7\" />","arrow-up-right":"<path d=\"M7 7h10v10\" /> <path d=\"M7 17 17 7\" />","battery-low":"<rect width=\"16\" height=\"10\" x=\"2\" y=\"7\" rx=\"2\" ry=\"2\" /> <line x1=\"22\" x2=\"22\" y1=\"11\" y2=\"13\" /> <line x1=\"6\" x2=\"6\" y1=\"11\" y2=\"13\" />","calendar":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" />","calendar-check":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" /> <path d=\"m9 16 2 2 4-4\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","clock":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <polyline points=\"12 6 12 12 16 14\" />","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\" />","cloud-lightning":"<path d=\"M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973\" /> <path d=\"m13 12-3 5h4l-3 5\" />","cloud-rain":"<path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\" /> <path d=\"M16 14v6\" /> <path d=\"M8 14v6\" /> <path d=\"M12 16v6\" />","cookie":"<path d=\"M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5\" /> <path d=\"M8.5 8.5v.01\" /> <path d=\"M16 15.5v.01\" /> <path d=\"M12 12v.01\" /> <path d=\"M11 17v.01\" /> <path d=\"M7 14v.01\" />","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" /> <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />","door-open":"<path d=\"M13 4h3a2 2 0 0 1 2 2v14\" /> <path d=\"M2 20h3\" /> <path d=\"M13 20h9\" /> <path d=\"M10 12v.01\" /> <path d=\"M13 4.562v16.157a1 1 0 0 1-1.242.97L5 20V5.562a2 2 0 0 1 1.515-1.94l4-1A2 2 0 0 1 13 4.561Z\" />","ellipsis":"<circle cx=\"12\" cy=\"12\" r=\"1\" /> <circle cx=\"19\" cy=\"12\" r=\"1\" /> <circle cx=\"5\" cy=\"12\" r=\"1\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","flag":"<path d=\"M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z\" /> <line x1=\"4\" x2=\"4\" y1=\"22\" y2=\"15\" />","flame":"<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\" />","gift":"<rect x=\"3\" y=\"8\" width=\"18\" height=\"4\" rx=\"1\" /> <path d=\"M12 8v13\" /> <path d=\"M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7\" /> <path d=\"M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5\" />","hand":"<path d=\"M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" /> <path d=\"M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2\" /> <path d=\"M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8\" /> <path d=\"M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />","hand-metal":"<path d=\"M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4\" /> <path d=\"M14 11V9a2 2 0 1 0-4 0v2\" /> <path d=\"M10 10.5V5a2 2 0 1 0-4 0v9\" /> <path d=\"m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5\" />","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />","hourglass":"<path d=\"M5 22h14\" /> <path d=\"M5 2h14\" /> <path d=\"M17 22v-4.172a2 2 0 0 0-.586-1.414L12 12l-4.414 4.414A2 2 0 0 0 7 17.828V22\" /> <path d=\"M7 2v4.172a2 2 0 0 0 .586 1.414L12 12l4.414-4.414A2 2 0 0 0 17 6.172V2\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />","message-square":"<path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\" />","moon":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" />","octagon":"<path d=\"M2.586 16.726A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2h6.624a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586z\" />","pause":"<rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\" /> <rect x=\"6\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\" />","play":"<polygon points=\"6 3 20 12 6 21 6 3\" />","puzzle":"<path d=\"M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z\" />","refresh-cw":"<path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\" /> <path d=\"M21 3v5h-5\" /> <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\" /> <path d=\"M8 16H3v5\" />","school":"<path d=\"M14 22v-4a2 2 0 1 0-4 0v4\" /> <path d=\"m18 10 3.447 1.724a1 1 0 0 1 .553.894V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-7.382a1 1 0 0 1 .553-.894L6 10\" /> <path d=\"M18 5v17\" /> <path d=\"m4 6 7.106-3.553a2 2 0 0 1 1.788 0L20 6\" /> <path d=\"M6 5v17\" /> <circle cx=\"12\" cy=\"9\" r=\"2\" />","search":"<circle cx=\"11\" cy=\"11\" r=\"8\" /> <path d=\"m21 21-4.3-4.3\" />","shirt":"<path d=\"M20.38 3.46 16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47a1 1 0 0 0 .99.84H6v10c0 1.1.9 2 2 2h8a2 2 0 0 0 2-2V10h2.15a1 1 0 0 0 .99-.84l.58-3.47a2 2 0 0 0-1.34-2.23z\" />","shopping-cart":"<circle cx=\"8\" cy=\"21\" r=\"1\" /> <circle cx=\"19\" cy=\"21\" r=\"1\" /> <path d=\"M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12\" />","shuffle":"<path d=\"M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.7-1.1 2-1.7 3.3-1.7H22\" /> <path d=\"m18 2 4 4-4 4\" /> <path d=\"M2 6h1.9c1.5 0 2.9.9 3.6 2.2\" /> <path d=\"M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8\" /> <path d=\"m18 14 4 4-4 4\" />","siren":"<path d=\"M7 18v-6a5 5 0 1 1 10 0v6\" /> <path d=\"M5 21a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-1a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2z\" /> <path d=\"M21 12h1\" /> <path d=\"M18.5 4.5 18 5\" /> <path d=\"M2 12h1\" /> <path d=\"M12 2v1\" /> <path d=\"m4.929 4.929.707.707\" /> <path d=\"M12 12v6\" />","smile":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M8 14s1.5 2 4 2 4-2 4-2\" /> <line x1=\"9\" x2=\"9.01\" y1=\"9\" y2=\"9\" /> <line x1=\"15\" x2=\"15.01\" y1=\"9\" y2=\"9\" />","soup":"<path d=\"M12 21a9 9 0 0 0 9-9H3a9 9 0 0 0 9 9Z\" /> <path d=\"M7 21h10\" /> <path d=\"M19.5 12 22 6\" /> <path d=\"M16.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.73 1.62\" /> <path d=\"M11.25 3c.27.1.8.53.74 1.36-.05.83-.93 1.2-.98 2.02-.06.78.33 1.24.72 1.62\" /> <path d=\"M6.25 3c.27.1.8.53.75 1.36-.06.83-.93 1.2-1 2.02-.05.78.34 1.24.74 1.62\" />","sparkles":"<path d=\"M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z\" /> <path d=\"M20 3v4\" /> <path d=\"M22 5h-4\" /> <path d=\"M4 17v2\" /> <path d=\"M5 18H3\" />","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\" /> <path d=\"M12 2v2\" /> <path d=\"M12 20v2\" /> <path d=\"m4.93 4.93 1.41 1.41\" /> <path d=\"m17.66 17.66 1.41 1.41\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"m6.34 17.66-1.41 1.41\" /> <path d=\"m19.07 4.93-1.41 1.41\" />","tablet":"<rect width=\"16\" height=\"20\" x=\"4\" y=\"2\" rx=\"2\" ry=\"2\" /> <line x1=\"12\" x2=\"12.01\" y1=\"18\" y2=\"18\" />","theater":"<path d=\"M2 10s3-3 3-8\" /> <path d=\"M22 10s-3-3-3-8\" /> <path d=\"M10 2c0 4.4-3.6 8-8 8\" /> <path d=\"M14 2c0 4.4 3.6 8 8 8\" /> <path d=\"M2 10s2 2 2 5\" /> <path d=\"M22 10s-2 2-2 5\" /> <path d=\"M8 15h8\" /> <path d=\"M2 22v-1a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1\" /> <path d=\"M14 22v-1a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1\" />","trees":"<path d=\"M10 10v.2A3 3 0 0 1 8.9 16H5a3 3 0 0 1-1-5.8V10a3 3 0 0 1 6 0Z\" /> <path d=\"M7 16v6\" /> <path d=\"M13 19v3\" /> <path d=\"M12 19h8.3a1 1 0 0 0 .7-1.7L18 14h.3a1 1 0 0 0 .7-1.7L16 9h.2a1 1 0 0 0 .8-1.7L13 3l-1.4 1.5\" />","undo-2":"<path d=\"M9 14 4 9l5-5\" /> <path d=\"M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5a5.5 5.5 0 0 1-5.5 5.5H11\" />","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />","utensils":"<path d=\"M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2\" /> <path d=\"M7 2v20\" /> <path d=\"M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7\" />","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <path d=\"M16 9a5 5 0 0 1 0 6\" /> <path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\" />","waves":"<path d=\"M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" /> <path d=\"M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" /> <path d=\"M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1\" />","wind":"<path d=\"M12.8 19.6A2 2 0 1 0 14 16H2\" /> <path d=\"M17.5 8a2.5 2.5 0 1 1 2 4H2\" /> <path d=\"M9.8 4.4A2 2 0 1 1 11 8H2\" />","x":"<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />","bath":"<path d=\"M10 4 8 6\" /> <path d=\"M17 19v2\" /> <path d=\"M2 12h20\" /> <path d=\"M7 19v2\" /> <path d=\"M9 5 7.621 3.621A2.121 2.121 0 0 0 4 5v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5\" />","apple":"<path d=\"M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z\" /> <path d=\"M10 2c1 .5 2 2 2 5\" />","frown":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M16 16s-1.5-2-4-2-4 2-4 2\" /> <line x1=\"9\" x2=\"9.01\" y1=\"9\" y2=\"9\" /> <line x1=\"15\" x2=\"15.01\" y1=\"9\" y2=\"9\" />","dice-5":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" ry=\"2\" /> <path d=\"M16 8h.01\" /> <path d=\"M8 8h.01\" /> <path d=\"M8 16h.01\" /> <path d=\"M16 16h.01\" /> <path d=\"M12 12h.01\" />","sunrise":"<path d=\"M12 2v8\" /> <path d=\"m4.93 10.93 1.41 1.41\" /> <path d=\"M2 18h2\" /> <path d=\"M20 18h2\" /> <path d=\"m19.07 10.93-1.41 1.41\" /> <path d=\"M22 22H2\" /> <path d=\"m8 6 4-4 4 4\" /> <path d=\"M16 18a4 4 0 0 0-8 0\" />","check-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m9 12 2 2 4-4\" />","help-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />","x-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m15 9-6 6\" /> <path d=\"m9 9 6 6\" />","home":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />"};
+
+/* ================= DATOS DEL KIT (aprobados) ================= */
+var TYPES = {
+  necesidad: {
+    nombre: 'Necesidad no cubierta',
+    resumen: 'Cansancio, hambre, sueño o demasiados estímulos seguidos.',
+    dentro: 'Su cuerpo ya no puede más. Lo que parece el motivo (la chuchería, esperar dos minutos) es solo la gota que colma un vaso que llevaba horas llenándose.',
+    senales: ['Se frota los ojos o está más torpe de lo normal', 'Contesta peor y todo le molesta', 'Se pega más a ti o, al contrario, se dispersa y no para quieto'],
+    anticipar: 'Cuida que no se acumulen muchas horas sin comer ni descansar. Si lleva mucho rato de ruido, gente o actividad, busca una pausa antes de que el vaso se desborde.',
+    escenario: 'super'
+  },
+  limite: {
+    nombre: 'El límite',
+    resumen: 'Le dices que no a algo que quería con muchas ganas.',
+    dentro: 'Para ti el «no» es una frase de dos segundos. Para él o ella es la pérdida de algo que ya sentía suyo, y todavía no tiene cómo digerirlo con calma.',
+    senales: ['Hay noes que le cuestan más que otros: despedidas, cambios de actividad, que le quiten algo de las manos', 'Suele llegar en el instante mismo del «no», así que el patrón es lo que te ayuda a verlo venir'],
+    anticipar: 'Avisa con tiempo, en lugar de soltarlo de golpe. Cuando ya sabes qué límites le remueven más, puedes prepararle antes de que llegue el momento.',
+    escenario: 'parque'
+  },
+  desborde: {
+    nombre: 'El desborde',
+    resumen: 'Se ha estado conteniendo y estalla al sentirse segura.',
+    dentro: 'Ha pasado horas tranquilo y colaborador, y contigo, que eres su persona de confianza, por fin puede soltarlo todo. Es una muestra de que confía en ti.',
+    senales: ['Viene de varias horas de mucha exigencia o autocontrol: un día largo, una actividad nueva, mucha gente', 'Estalla por algo mínimo justo al reencontraros'],
+    anticipar: 'No se trata de evitarlo. Llega preparada: baja el ritmo, no le pidas nada más en ese primer momento y dale un espacio tranquilo para soltar lo que trae.',
+    escenario: 'escuela'
+  },
+  enfado: {
+    nombre: 'El enfado',
+    resumen: 'Algo le ha molestado o no ha salido como quería.',
+    dentro: 'Es un enfado de verdad y no tiene herramientas para gestionarlo, así que lo saca tal cual le sale. Para ti es «solo una torre»; para él o ella, una frustración enorme.',
+    senales: ['No consigue algo a la primera', 'Algo no sale como esperaba o le parece injusto', 'Suele ser bastante repentino, así que fíjate en qué situaciones lo disparan más'],
+    anticipar: 'En esas situaciones, estate un poco más cerca, sin resolverle la tarea, pero disponible por si el enfado aparece.',
+    escenario: 'enfado'
+  }
+};
+
+var QUESTIONS = [
+  { q: '¿Qué pasó justo antes de que estallara?', o: [
+    { t: 'Le dije que no a algo que quería, o que tocaba parar', s: { limite: 2 } },
+    { t: 'Algo no le salió como quería: se le cayó, se lo quitaron, no encajaba', s: { enfado: 2 } },
+    { t: 'Nada especial: llevaba un rato largo y estalló por una tontería', s: { necesidad: 1, desborde: 1 } },
+    { t: 'Acabábamos de reencontrarnos tras varias horas separados', s: { desborde: 2 } }
+  ]},
+  { q: '¿Cómo había sido su día hasta ese momento?', o: [
+    { t: 'Largo, con mucho ruido, mucha gente o poco descanso', s: { necesidad: 2 } },
+    { t: 'Muy tranquilo y colaborador, casi «modélico»', s: { desborde: 2 } },
+    { t: 'Normal, sin nada raro', s: { limite: 1, enfado: 1 } },
+    { t: 'Esperando algo concreto que le hacía mucha ilusión', s: { limite: 2 } }
+  ]},
+  { q: '¿Tenía hambre, sueño o llevaba mucho rato de estímulos?', o: [
+    { t: 'Sí, bastante probable', s: { necesidad: 2 } },
+    { t: 'Puede ser, no estoy segura', s: { necesidad: 1 } },
+    { t: 'No, estaba comido y descansado', s: { limite: 1, enfado: 1 } }
+  ]},
+  { q: '¿Qué era lo que más se notaba en él o ella?', o: [
+    { t: 'Pena y ganas de soltarlo todo, un llanto largo', s: { desborde: 2 } },
+    { t: 'Rabia: gritos, tirar cosas o pegar', s: { enfado: 2 } },
+    { t: 'Protesta insistente: «quiero, quiero, quiero»', s: { limite: 2 } },
+    { t: 'Irritable y torpe, todo le molestaba', s: { necesidad: 2 } }
+  ]}
+];
+
+var SCENARIOS = [
+  { id: 'ahora', label: 'Está pasando ahora mismo',
+    title: 'Está pasando ahora mismo',
+    que: 'Está desbordado y no puede razonar. Lo que más ayuda ahora es que estés cerca, no las palabras largas.',
+    sec: [
+      { t: 'Primero, tú', nota: 'Una respiración, aunque sea una, antes de decir nada. Bajas tú primero un poco y luego te acercas.', pausa: true },
+      { t: 'Acércate y quédate', nota: 'Ponte a su altura si puedes. Si quiere contacto, se lo das; si te aparta, te quedas a su lado sin irte.' },
+      { t: 'Ponle nombre a lo que siente', frases: ['Veo que estás muy enfadado.', 'Esto te ha dado mucha rabia, ¿verdad?'] },
+      { t: 'Sostén sin ceder', frases: ['Sé que querías esto ahora, y ahora mismo no puede ser.', 'Me quedo aquí contigo mientras esto te cuesta tanto.'] }
+    ],
+    evita: 'Sermones, explicaciones largas o «es que ya te dije que…». Ahora mismo no puede razonar: eso llega después, cuando baje la ola.' },
+  { id: 'super', label: 'Súper: está agotado',
+    title: 'En el súper, está agotado',
+    que: 'Suele ser cansancio y exceso de estímulos acumulados. Lo que parece el motivo es solo la gota que colma el vaso.',
+    sec: [
+      { t: 'Qué puedes preguntarle', frases: ['¿Estás cansado?', '¿Quieres que te coja en brazos?', '¿Nos vamos ya para casa?'], nota: 'No hace falta acertar a la primera: preguntarlo ya le dice que le estás viendo.' },
+      { t: 'Si puedes, busca un rincón', nota: 'Aunque sea junto a una estantería, lejos del ruido y la gente. Cógelo en brazos si te deja, o ponte a su altura y quédate un momento sin prisa por que se le pase.' },
+      { t: 'Y la compra sigue', frases: ['Vamos a terminar rápido y nos vamos a casa.'], nota: 'La compra es una necesidad de la familia: puedes acompañarle y terminar la tarea a la vez, despacito.' }
+    ],
+    evita: 'Convencerle de que «no es para tanto». Las miradas de los demás van a estar ahí; en este minuto lo importante es tu peque.' },
+  { id: 'parque', label: 'Parque: toca irnos',
+    title: 'En el parque, toca irse',
+    que: 'Despedirse de algo que le gusta cuesta, aunque lo vea venir. Avisar con tiempo ayuda, y aun así puede protestar: es normal.',
+    sec: [
+      { t: 'Antes: avisa con tiempo', frases: ['Oye, dentro de un poquito nos toca irnos a casa.'] },
+      { t: 'Dale un final que pueda contar', frases: ['Venga, te tiras tres veces más del tobogán y nos vamos.', 'Lanzas la pelota tres veces más y recogemos.'], nota: 'Contad juntos esas tres veces en voz alta.' },
+      { t: 'Si aun así estalla', frases: ['Ya sé que te apetecía quedarte más, y ahora toca irnos.', 'Vaya, te ha sabido a poco, ¿verdad? Vamos a ir despacito.'], nota: 'Bájate a su altura, aunque sea en el suelo del parque. El límite sigue siendo el límite; lo que cambia es cómo estás tú mientras lo vive.' }
+    ],
+    evita: 'Ceder con un «cinco minutos más» solo para que pare la escena. Tampoco hace falta explicar por qué os vais ni convencerle de que es lo mejor.' },
+  { id: 'casa', label: 'Casa: quiere otra galleta',
+    title: 'En casa, pide otra galleta',
+    que: 'Para ti el «no» es una frase de dos segundos; para él o ella, la pérdida de algo que ya sentía en las manos.',
+    sec: [
+      { t: 'Antes del no', frases: ['Te comes esta galleta y luego cenamos, que si no no te va a entrar la comida.'] },
+      { t: 'Un cierre con final claro', frases: ['Vale, un trocito más pequeño y ya guardamos el paquete.'] },
+      { t: 'Si llega el enfado', frases: ['Ya sé que querías otra, y ahora toca cenar.', 'Vaya, te ha sabido a poco, ¿verdad?'], nota: 'Bájate a su altura y sostén cerca, sin gritar y sin ceder, hasta que baje.' }
+    ],
+    evita: 'Ceder con un «vale, una más y ya» solo para que pare el conflicto, o intentar convencerle de que es lo mejor para él o ella.' },
+  { id: 'escuela', label: 'Estalla al recogerle',
+    title: 'Estalla al recogerle de la escuela',
+    que: 'Se ha contenido toda la mañana y contigo se siente lo bastante segura para soltarlo. Aunque incomode delante de otros, es una señal de que confía en ti.',
+    sec: [
+      { t: 'En el momento', frases: ['Ha sido un día largo, ¿verdad?', 'Estoy aquí, suéltalo.', 'Cuando quieras, me lo cuentas.'], nota: 'Ahora mismo te necesita mucho: se está desahogando. No busca un sermón, busca sentirte cerca.' },
+      { t: 'Baja el ritmo', nota: 'No le pidas nada más en ese primer momento, ni «va, que nos vamos ya». Dale un poco de espacio y calma antes de retomar la marcha.' }
+    ],
+    evita: 'Corregirle cómo se saluda o cómo se piden las cosas. Si hace falta, otro día.' },
+  { id: 'enfado', label: 'Se enfada porque algo no le sale',
+    title: 'Se enfada porque algo no le sale',
+    que: 'Es un enfado de verdad y todavía no tiene herramientas para gestionarlo: lo saca tal cual le sale.',
+    sec: [
+      { t: 'En el momento', frases: ['Te ha dado mucha rabia que se te cayera.', 'Vaya rabia que te quitaran el columpio, ¿verdad?'], nota: 'Quédate cerca. No hace falta que resuelvas tú la torre o el columpio ahora.' },
+      { t: 'Cuando se relaja y puede escuchar', frases: ['Se te ha caído porque la has puesto muy rápido, ¿la intentamos otra vez más despacito?', 'Estaba yo columpiándome, no me gusta que me empujen.'], nota: 'La última frase podéis decirla juntos al otro niño o niña: así le das una forma real de resolverlo.' }
+    ],
+    evita: 'Explicarle ahora por qué el otro niño también tiene derecho a jugar. Si hace falta, llega después.' },
+  { id: 'pega', label: 'Me pega o pega a otro niño',
+    title: 'Pega o empuja',
+    que: 'Es bastante común: con una rabia tan grande y sin herramientas para controlarla, el cuerpo a veces actúa antes que la intención. No significa que sea agresivo.',
+    sec: [
+      { t: 'En el momento: frena eso, sin sermón', frases: ['Lo siento, pero no me gusta que pegues.'], nota: 'Apártate un poco, retirando el contacto físico, sin irte tú ni alejarle a él o ella de golpe. Sin más explicación ahí mismo; sigue acompañando todo lo demás igual.' },
+      { t: 'Cuando pase la tormenta', frases: ['Pegar no puede ser. Cuando estés muy enfadado, puedes empujar un cojín o gritar en la almohada.'], nota: 'Ahora sí puedes explicarlo y ofrecerle una alternativa: empujar un cojín, apretar algo fuerte con las manos o gritar en una almohada.' }
+    ],
+    evita: 'Explicar por qué está mal en pleno desborde: ahora mismo no puede razonar.' }
+];
+
+var BREATH_PHRASES = [
+  'Mi peque no lo hace para fastidiarme.',
+  'Es una ola, y va a bajar.',
+  'No tengo que ganar, tengo que acompañar.',
+  'Estoy aquí. Con eso basta.',
+  'Puedo con esto, despacito.'
+];
+
+/* =========================================================
+   MOMENTOS DEL DÍA
+   ========================================================= */
+var MOMENTS = [
+  { id: 'escuela', label: 'Salida de la escuela',
+    porque: 'Sale con todo el día encima, y contigo por fin puede soltarlo.',
+    antes: 'Lleva la merienda y el agua preparadas. Si puedes, no encadenes recados justo después.',
+    durante: 'Recíbele con un abrazo o una sonrisa y pocas palabras. Las preguntas sobre el día, para más tarde.',
+    estalla: 'Ponte a su altura y quédate cerca: «Ha sido un día largo. Estoy aquí». No hace falta corregir cómo te ha saludado.' },
+  { id: 'comida', label: 'Comida',
+    porque: 'En la mesa se juntan hambre, cansancio y ganas de seguir jugando.',
+    antes: 'Avisa unos minutos antes: «Cuando acabe esta torre, a comer». Que no llegue con demasiada hambre.',
+    durante: 'Dale una pequeña tarea: poner la servilleta, llevar el pan. Sirve raciones pequeñas; siempre puede repetir.',
+    estalla: 'Pocas palabras y sin pelear por la comida: «Te está costando sentarte. Estoy aquí». Cuando se calme, seguís.' },
+  { id: 'bano', label: 'Baño',
+    porque: 'Lo difícil suele ser el cambio: dejar el juego para entrar y dejar el agua para salir.',
+    antes: 'Avisa con algo que pueda contar: «Dos vueltas más al circuito y al baño».',
+    durante: 'Deja que elija algo: el juguete, la toalla, quién abre el grifo. Avisa también antes de salir.',
+    estalla: 'Nombra lo que le cuesta y sostén: «Querías seguir jugando. Ahora toca baño. ¿Te llevas un coche?».' },
+  { id: 'cena', label: 'Cena',
+    porque: 'Es el momento de menos energía del día, para tu peque y para ti.',
+    antes: 'Baja estímulos desde media tarde. Si el día ha sido largo, que la cena sea sencilla.',
+    durante: 'Pide lo mínimo. Luz más suave, menos ruido y pantallas fuera.',
+    estalla: 'Casi siempre es cansancio: acompaña, que coma lo que pueda y adelantad la rutina de dormir.' },
+  { id: 'dormir', label: 'Dormir',
+    porque: 'Separarse de ti y del día cuesta, y más con sueño.',
+    antes: 'Una rutina siempre igual y en el mismo orden: baño, pijama, cuento, luz. Pantallas fuera un rato antes.',
+    durante: 'Ve sin prisa: si vas corriendo, lo nota. Dale a elegir dentro de la rutina: qué cuento, qué peluche.',
+    estalla: 'Quédate cerca con voz tranquila: «Tienes mucho sueño. Estoy aquí». La hora de dormir se mantiene.' },
+  { id: 'super', label: 'Súper',
+    porque: 'Ruido, luces, esperas y cosas que quiere: mucho para un cuerpo pequeño.',
+    antes: 'Ve después de que haya comido algo y avisa: «Hoy compramos lo de la lista».',
+    durante: 'Dale una misión: buscar los plátanos, elegir el pan, contar las manzanas.',
+    estalla: 'No hace falta abandonar la compra. Busca un rincón, acompaña y terminad despacito.' },
+  { id: 'parque', label: 'Parque',
+    porque: 'Irse de algo que le gusta es una despedida, aunque lo vea venir.',
+    antes: 'Avisa antes del final con algo que pueda contar: «Tres toboganes más y nos vamos».',
+    durante: 'Contad juntos los toboganes en voz alta. Cuando acaben, cumple lo dicho con calma.',
+    estalla: 'Valida y sostén: «Querías quedarte más. Nos vamos. ¿Andando o te llevo?». Sin «cinco minutos más».' },
+  { id: 'pantallas', label: 'Pantallas',
+    porque: 'Lo que pasa en la pantalla engancha mucho, y apagar a mitad es muy difícil.',
+    antes: 'Acordad cuándo termina, mejor con un final natural: «Al acabar este capítulo».',
+    durante: 'Avisa un poco antes del final y ten preparado lo que viene después: un juego, salir al balcón.',
+    estalla: 'Guarda la pantalla con calma y quédate cerca: «Querías ver otro. Hoy ya está». Sin negociar otro capítulo.' },
+  { id: 'vestirse', label: 'Vestirse',
+    porque: 'Quiere decidir, y muchas veces vamos con prisa.',
+    antes: 'Dejad la ropa elegida la noche antes, entre dos opciones. Cuenta con unos minutos más de lo normal.',
+    durante: 'Dale a elegir: «¿La camiseta azul o la verde?». Convertirlo en juego también ayuda.',
+    estalla: 'Respira aunque vayas justo. Ofrece ayuda sin imponerla: «¿Necesitas ayuda? ¿Te sujeto la manga?».' }
+];
+
+/* =========================================================
+   MI SEMANA: textos del informe (aprobados)
+   ========================================================= */
+var MOM_PARA = { escuela: 'la salida de la escuela', comida: 'la comida', bano: 'el baño', cena: 'la cena', dormir: 'la hora de dormir', super: 'el súper', parque: 'el parque', pantallas: 'las pantallas', vestirse: 'vestirse' };
+var TIPO_LABEL = { necesidad: 'necesidad no cubierta', limite: 'límite', desborde: 'desborde', enfado: 'enfado' };
+var FONDO = {
+  necesidad: 'con cansancio, hambre o mucho estímulo de fondo',
+  limite: 'con un límite de por medio',
+  desborde: 'con lo acumulado del día de fondo',
+  enfado: 'con enfado o frustración de por medio'
+};
+var TOOL_TIPO = {
+  necesidad: { intro: 'La mayoría de las rabietas de tu peque esta semana vinieron de algo del cuerpo: cansancio, hambre o demasiado ruido.',
+    items: ['Lleva algo de comer en los momentos de riesgo.', 'Los días de más cansancio, date margen: sal un poco antes de casa y ve sin correr. Tu calma le llega, y tu prisa también.', 'Fíjate en las señales de antes (se frota los ojos, se pone más torpe o más pegado a ti) y baja el ritmo ahí, no después.'] },
+  limite: { intro: 'La mayoría de las rabietas llegaron ante un «no» o algo que no podía tener. Es normal: está aprendiendo que los límites existen.',
+    items: ['Avisa antes del final («tres veces más y nos vamos») y cúmplelo.', 'Mismo límite, misma respuesta. Si unas veces es sí y otras no, va a seguir comprobando.', 'Da a elegir dentro del límite: «Nos vamos. ¿Andando o a caballito?»'] },
+  desborde: { intro: 'La mayoría fueron desbordes: explota por algo pequeño, pero lo que sale es todo lo acumulado.',
+    items: ['Después de la escuela o de un día intenso, primero conexión (abrazo, merienda tranquila) y después lo demás.', 'Pocas preguntas y pocos planes justo al salir.', 'Acompaña la emoción, no el motivo: no es por la galleta rota.'] },
+  enfado: { intro: 'La mayoría vinieron del enfado: algo no le salía, alguien le quitó algo o no le dejaron hacer lo que quería.',
+    items: ['Ponle nombre antes de que estalle: «Te está costando, y eso enfada».', 'Ofrece ayuda sin hacerlo por tu peque: «¿Lo sujeto yo y tú lo pones?»', 'Si pega, para en seco con una frase corta («No te dejo pegar») y repara cuando haya calma.'] },
+  mezcla: { intro: 'Esta semana las rabietas han venido de sitios distintos. Pasa mucho: a veces se mezclan, como un límite con cansancio de fondo.',
+    items: ['Antes de reaccionar, pregúntate: ¿qué hay debajo de esta rabieta?', 'Cuida primero lo del cuerpo (comer, descansar, menos ruido). Con el cuerpo cubierto, los límites se sostienen mejor.', 'Ante cualquier tipo, empieza igual: tú en calma, cerca, y poniendo nombre a lo que siente.'] }
+};
+var TOOL_MOMENTO = {
+  escuela: 'Sale con todo el día encima. Recíbele con un abrazo y algo de comer, y deja las preguntas para más tarde. Primero recargar, luego hablar.',
+  comida: 'En la mesa se juntan hambre, cansancio y ganas de jugar. Avisa unos minutos antes de comer y deja que participe: poner la servilleta, llevar el pan.',
+  bano: 'El problema suele ser el cambio, no el agua. Avisa antes de entrar y antes de salir, y da a elegir: «¿Con el barco o con la pelota?»',
+  cena: 'Es el momento de menos energía del día, para tu peque y para ti. Si puedes, adelanta la cena, baja estímulos desde media tarde y pide lo mínimo.',
+  dormir: 'Una rutina siempre igual, en el mismo orden, le da seguridad. Pantallas fuera un rato antes. Y si vas con prisa, lo nota.',
+  super: 'Ve sin hambre ni sueño (suyos). Dale una tarea: «Ayúdame a buscar los plátanos». Si estalla, no hace falta abandonar la compra: acompaña y termina.',
+  parque: 'Irse del parque cuesta. Avisa antes con algo que pueda contar («tres toboganes más») y cúmplelo con calma, aunque proteste.',
+  pantallas: 'Apagar a mitad de algo es muy difícil. Busca un final natural («cuando acabe el capítulo») y avisa antes. Si llora al apagar, es normal: sostén el límite y acompaña.',
+  vestirse: 'Da a elegir entre dos opciones («¿La camiseta azul o la verde?») y deja más tiempo del que crees. Convertirlo en juego también ayuda: «¿Quién se pone antes los calcetines?»'
+};
+var TOOL_NO = {
+  cedi: 'Cuando estás al límite, ceder es lo más humano. La rabieta para, pero aprende que funciona. Prueba a sostener el límite con cariño: «Entiendo que lo quieres. La respuesta es no. Estoy aquí».',
+  grite: 'Nos pasa a todos. El grito suma intensidad a la tormenta. Cuando te notes al límite, para un segundo y respira antes de hablar. Y después, repara: «Antes te grité y no estuvo bien».',
+  castigue: 'El castigo para la conducta un rato, pero no le enseña qué hacer con lo que siente. Mejor una consecuencia relacionada, avisada antes y cumplida sin sermón.',
+  explique: 'En plena rabieta, su cerebro no puede escuchar explicaciones. No es que no quiera: es que no puede. Pocas palabras durante y la explicación después, en calma.',
+  mefui: 'A veces alejarse es lo que necesitas para no explotar, y está bien. Díselo («Necesito un momento, vuelvo enseguida») y vuelve. Así no se queda sin nadie en mitad de la tormenta.'
+};
+var ANIMO = {
+  primera: 'Ya tienes tu primera semana mirada con calma. Es una primera foto: cada semana conocerás mejor a tu peque. Empieza por una sola herramienta.',
+  limites: 'Esta semana ha habido más rabietas, y a la vez has sostenido más límites. Es normal al principio: tu peque está comprobando si el límite se mantiene. Que lo compruebe es señal de que lo está aprendiendo.',
+  tranquila: 'Semana tranquila. Disfrútala. Y si vuelve una rabieta fuerte, no es un paso atrás: es parte del camino.',
+  mejor: 'Esta semana las rabietas han durado menos o han acabado mejor. No es casualidad: es lo que estás haciendo. Fíjate en lo que te ha funcionado y repítelo.',
+  dura: 'Ha sido una semana intensa. Que te hayas parado a mirarla ya dice mucho: estás mirando, no solo aguantando. Para la próxima, con probar una sola cosa nueva es suficiente.',
+  igual: 'Semana parecida a la anterior. Los cambios no llegan de un día para otro; lo que haces se va sumando aunque todavía no se vea.'
+};
+
+var PISTAS = [
+  { id: 'cansado', t: 'Estaba muy cansado o con sueño', s: ['necesidad'] },
+  { id: 'hambre', t: 'Tenía hambre', s: ['necesidad'] },
+  { id: 'ruido', t: 'Mucho ruido o mucha gente', s: ['necesidad'] },
+  { id: 'no', t: 'Le dije que no', s: ['limite'] },
+  { id: 'queria', t: 'Quería algo que no podía tener o hacer', s: ['limite'] },
+  { id: 'nosalia', t: 'Algo no le salía bien', s: ['enfado'] },
+  { id: 'otro', t: 'Otro niño le quitó algo o le molestó', s: ['enfado'] },
+  { id: 'pequeno', t: 'Explotaba por algo pequeño', s: ['desborde'] },
+  { id: 'intenso', t: 'Venía de un día intenso (escuela, visitas…)', s: ['desborde'] },
+  { id: 'cambio', t: 'Hubo un cambio de planes', s: ['limite', 'desborde'] }
+];
+var HICE_BIEN = [
+  { id: 'calma', t: 'Me calmé primero' },
+  { id: 'cerca', t: 'Me acerqué o le di contacto' },
+  { id: 'nombre', t: 'Le puse nombre a lo que sentía' },
+  { id: 'limite', t: 'Sostuve el límite' },
+  { id: 'espere', t: 'Esperé a que pasara' }
+];
+var HICE_TAMBIEN = [
+  { id: 'cedi', t: 'Cedí' },
+  { id: 'grite', t: 'Grité' },
+  { id: 'castigue', t: 'Castigué' },
+  { id: 'explique', t: 'Le expliqué en plena rabieta' },
+  { id: 'mefui', t: 'Me fui' }
+];
+var COMPARA = [
+  { id: 'mejor', t: 'Mejor: duraron menos o acabaron mejor' },
+  { id: 'igual', t: 'Más o menos igual' },
+  { id: 'peor', t: 'Peor: más rabietas o más fuertes' },
+  { id: 'tranquila', t: 'Tranquila: apenas hubo rabietas' },
+  { id: 'primera', t: 'Es la primera vez que lo miro' }
+];
+var ADULTO = [
+  { id: 'calma', t: 'Con calma' },
+  { id: 'cansancio', t: 'Con mucho cansancio' },
+  { id: 'enfado', t: 'Con enfado' },
+  { id: 'culpa', t: 'Con culpa' }
+];
+
+/* =========================================================
+   SIMULADOR: 18 escenarios
+   Cada decisión: [opción del vídeo, a medias, error], cada una [texto, explicación]
+   ========================================================= */
+var SIM = [
+  { n: 1, titulo: 'El súper', tipo: 'necesidad', momento: 'super', video: true,
+    escena: 'Son las siete de la tarde. Pasáis por el súper al salir del parque. Tu peque se cuelga del carro y, cuando le dices que no a las galletas, se tira al suelo llorando.',
+    tipoTxt: 'Necesidad no cubierta: hambre y cansancio de fondo, aunque parezca por las galletas.',
+    d: [
+      [['Respiras, te agachas a su altura y te quedas cerca.', 'Tu calma es lo primero que le llega. Desde ahí puedes acompañar.'],
+       ['Te acercas y le dices «ya está, no pasa nada».', 'Bien que te acerques. Pero «no pasa nada» le dice que lo que siente no cuenta.'],
+       ['Le dices que se levante, que la gente está mirando.', 'Llora más fuerte. Tu prisa suma tensión a la tormenta.']],
+      [['«Tienes hambre y mucho sueño. Las galletas no, pero en casa cenamos enseguida. Estoy aquí.»', 'Pones nombre a lo del cuerpo y sostienes el no sin enfado.'],
+       ['«Las galletas no. Levántate.»', 'El límite está bien, pero falta nombrar lo que siente.'],
+       ['«Siempre igual, ya sabía yo que no podíamos venir contigo.»', 'En caliente, las palabras pesan el doble.']],
+      [['Terminas la compra con calma, le das algo de comer en cuanto podáis y apuntas: súper a última hora, mejor con merienda.', 'Acompañas sin abandonar la compra y aprendes para la próxima.'],
+       ['Dejas la compra y os vais a casa.', 'Entendible si no puedes más, pero no hace falta: acompañando, se puede terminar.'],
+       ['En el coche le explicas que no se puede montar ese número.', 'Ya está en calma, pero el sermón le llega como reproche.']]
+    ] },
+  { n: 2, titulo: 'Cena tarde', tipo: 'necesidad', momento: 'cena',
+    escena: 'Son las nueve. Hoy cenáis tarde. Tu peque aparta el plato, dice que no le gusta (y es su comida favorita) y llora cuando le pides que se siente.',
+    tipoTxt: 'Necesidad no cubierta: el cansancio del día habla más que la comida.',
+    d: [
+      [['Bajas el ritmo: menos ruido, luz más suave, te sientas a su lado.', 'Un cuerpo agotado necesita menos, no más.'],
+       ['Le insistes con calma en que coma un poco.', 'La calma está bien, pero insistir añade presión.'],
+       ['Le dices que si no cena, no hay cuento.', 'La tensión sube y el cansancio no se va por amenazarlo.']],
+      [['«Hoy ha sido un día muy largo y tu cuerpo no puede más. Comemos un poquito juntos y a la cama.»', 'Le ayudas a entender lo que le pasa.'],
+       ['«Venga, que es tu comida favorita.»', 'Intentas animar, pero no ves lo que le pasa de verdad.'],
+       ['«Pues te quedas sin cenar.»', 'Hambre y cansancio juntos: la mezcla perfecta para otra rabieta.']],
+      [['Cena lo que puede, adelantáis la rutina de dormir y apuntas: los días largos, cena más sencilla.', 'Cuidas lo que había debajo.'],
+       ['Le dejas cenar con dibujos para que coma.', 'Come, pero con más estímulo le costará más dormir.'],
+       ['Al día siguiente le dices que anoche se portó fatal.', 'La etiqueta se queda; lo del cansancio, no.']]
+    ] },
+  { n: 3, titulo: 'Cumpleaños con mucho ruido', tipo: 'necesidad', momento: 'otro',
+    escena: 'Lleváis dos horas en un cumpleaños en un parque de bolas. Música alta, muchos niños. De repente tu peque empuja a otro niño y se tapa los oídos llorando.',
+    tipoTxt: 'Necesidad no cubierta: demasiado ruido y gente para su cuerpo.',
+    d: [
+      [['Le llevas con calma a un rincón tranquilo o fuera.', 'Menos estímulo es lo primero que necesita.'],
+       ['Te acercas y le hablas allí mismo.', 'Bien que vayas, pero con ese ruido no puede escucharte.'],
+       ['Le pides que pida perdón al otro niño ya.', 'Aún está en plena tormenta. Ahora no puede.']],
+      [['«Mucho ruido, ¿verdad? Aquí estamos más tranquilos. No te dejo empujar.»', 'Nombras, cuidas y pones el límite a la vez.'],
+       ['«Ya está, vuelve a jugar.»', 'Quieres que lo disfrute, pero su cuerpo necesita parar antes.'],
+       ['«Con lo bien que lo estabas pasando, ¿por qué haces esto?»', 'En caliente no sabe por qué. No puede responder.']],
+      [['En calma, le ayudas a ver que el otro niño se hizo daño y, si muestra un gesto, le ofreces pedir perdón para reparar. La próxima vez, os vais antes.', 'Repara entendiendo, no por obligación.'],
+       ['Os vais sin hablar de lo que pasó.', 'Cuidas su cuerpo, pero falta reparar con el otro niño.'],
+       ['Le dices que no vuelve a un cumpleaños si se porta así.', 'Una amenaza que no vas a cumplir no le enseña nada.']]
+    ] },
+  { n: 4, titulo: 'Viaje en coche con sueño', tipo: 'necesidad', momento: 'otro',
+    escena: 'Volvéis de casa de los abuelos y se ha pasado la hora de la siesta. En la silla del coche, tu peque grita, patalea y tira el agua al suelo.',
+    tipoTxt: 'Necesidad no cubierta: el sueño no le deja estar.',
+    d: [
+      [['Bajas la música y respiras antes de hablar. Si puedes, paras en un sitio seguro.', 'Primero tu calma, luego lo demás.'],
+       ['Le pones dibujos en el móvil para que se calme.', 'Puede funcionar un rato, pero tapa el sueño en vez de acompañarlo.'],
+       ['Le gritas desde delante que pare ya.', 'Grito y sin poder moverse: más tormenta.']],
+      [['«Tienes mucho sueño y la silla molesta. Lo sé. Falta poco, aquí estoy.»', 'Se siente acompañado aunque estés delante.'],
+       ['«Ya casi llegamos, ya casi llegamos.»', 'Calma, pero no nombra lo que siente.'],
+       ['«Como sigas, no volvemos a ver a los abuelos.»', 'Asusta y no lo vas a cumplir.']],
+      [['Al llegar le dejas descansar. La próxima vez salís antes de la siesta o con su peluche para dormir en el coche.', 'Anticipas lo que había debajo.'],
+       ['Al llegar le explicas que en el coche hay que portarse bien.', 'Ya hay calma, pero no toca el sueño, que era lo de fondo.'],
+       ['Le quitas el parque de la tarde como castigo.', 'Un castigo sin relación no le enseña nada.']]
+    ] },
+  { n: 5, titulo: 'Irse del parque', tipo: 'limite', momento: 'parque', video: true,
+    escena: 'Lleváis una hora en el parque. Le avisaste: «tres toboganes más y nos vamos». Ya ha tirado los tres. Dices «nos vamos» y se tira al suelo gritando «¡no quiero!».',
+    tipoTxt: 'Límite: quiere seguir jugando y el límite no le gusta.',
+    d: [
+      [['Respiras y te agachas a su altura.', 'Desde tu calma puedes sostener el límite sin pelea.'],
+       ['Le recuerdas que ya le avisaste.', 'Es verdad, pero en plena rabieta no puede razonarlo.'],
+       ['«Vale, cinco minutos más.»', 'La rabieta para, pero aprende que el aviso no va en serio.']],
+      [['«Querías quedarte más, lo sé. Ya han sido los tres toboganes. Nos vamos. ¿Andando o te llevo?»', 'Nombras, cumples y le das a elegir el cómo.'],
+       ['«Nos vamos, venga.»', 'El límite se sostiene, pero sin nombrar lo que siente.'],
+       ['«Pues ya no volvemos al parque nunca más.»', 'Una amenaza que no vas a cumplir le enseña que tus palabras no valen.']],
+      [['Os vais aunque proteste. Ya en calma, le dices: «Te costó irte. La próxima vez avisamos igual».', 'Mismo patrón siempre: así lo aprende.'],
+       ['En casa no se habla del tema.', 'Bien no sermonear, pero nombrarlo en calma le ayuda a entenderlo.'],
+       ['Le dices que se ha portado fatal y que no se merece el parque.', 'Se queda con la etiqueta, no con lo aprendido.']]
+    ] },
+  { n: 6, titulo: 'Dejar de jugar para el baño', tipo: 'limite', momento: 'bano', video: true,
+    escena: 'Está jugando con sus coches en el salón. Es la hora del baño y le avisaste hace un rato. Cuando le dices «al baño», tira los coches y grita «¡no!».',
+    tipoTxt: 'Límite: dejar algo que le gusta cuesta.',
+    d: [
+      [['Te acercas, te pones a su altura y esperas a que te mire.', 'Conectar antes de pedir hace que el límite llegue.'],
+       ['Repites «al baño» desde la cocina, más alto.', 'La instrucción es clara, pero de lejos no te siente cerca.'],
+       ['Le coges en brazos y le llevas sin decir nada.', 'Llega al baño, pero en plena tormenta y sin entender qué pasa.']],
+      [['«Te lo estabas pasando genial. Dos vueltas más al circuito y los coches nos esperan aquí. ¿Te llevas uno al baño?»', 'Aviso que puede contar, límite claro y algo que elegir.'],
+       ['«Los coches luego, ahora al baño.»', 'Firme, pero falta nombrar lo que siente.'],
+       ['«Si no vienes ya, te quito los coches.»', 'La amenaza sube la tensión y no le ayuda a dejar el juego.']],
+      [['En el baño juega con su coche y se calma. Mañana avisarás igual, con el mismo «dos vueltas más».', 'El mismo patrón en el parque y en casa le da seguridad.'],
+       ['Mañana le dejas jugar un poco más para evitar la rabieta.', 'Comprensible, pero mover el límite para evitar el enfado le hace comprobar más.'],
+       ['Le dices que mañana no hay coches.', 'Un castigo sin relación no le enseña a dejar el juego.']]
+    ] },
+  { n: 7, titulo: 'Apagar la tablet', tipo: 'limite', momento: 'pantallas',
+    escena: 'Está viendo dibujos en la tablet. Acordasteis «al acabar el capítulo». Termina, apagas, y llora, golpea la tablet contra el sofá y grita «¡otro!».',
+    tipoTxt: 'Límite: soltar algo que engancha es muy difícil.',
+    d: [
+      [['Guardas la tablet con calma y te sientas a su lado.', 'Quitas lo que alimenta la tormenta y te quedas cerca.'],
+       ['Le explicas el acuerdo con la tablet aún en su mano.', 'La calma está bien, pero con la pantalla delante cuesta más soltar.'],
+       ['«Pues uno más, pero el último.»', 'Cedes, y la próxima vez llorará más para conseguir otro.']],
+      [['«Querías ver otro. Es difícil apagar cuando algo te gusta. Hoy ya está. ¿Hacemos un puzle o salimos al balcón?»', 'Nombras, sostienes y le das una salida.'],
+       ['«Ya se ha acabado, lo habíamos hablado.»', 'Recuerdas el acuerdo, pero falta el nombre de lo que siente.'],
+       ['«Como sigas llorando, mañana no hay tablet.»', 'Más tensión y una amenaza que no le enseña a soltar.']],
+      [['Cuando pasa, jugáis un rato juntos. Mañana avisas antes de que acabe el capítulo.', 'El aviso previo hace más fácil el corte.'],
+       ['Decides quitar la tablet unos días.', 'Puedes hacerlo, pero como castigo no le enseña a gestionar el final.'],
+       ['Le dices que siempre monta un drama con la tablet.', 'La etiqueta pesa y no cambia nada.']]
+    ] },
+  { n: 8, titulo: 'No quiere vestirse y llegáis tarde', tipo: 'limite', momento: 'vestirse',
+    escena: 'Son las 8:20 y tenéis que salir a las 8:30. Le das la ropa, dice «¡esa no!», se quita un calcetín y se esconde debajo de la mesa.',
+    tipoTxt: 'Límite: quiere decidir y el tiempo no le deja.',
+    d: [
+      [['Respiras, aunque tengas prisa, y te agachas junto a la mesa.', 'Tu prisa le llega. Tu calma, también.'],
+       ['Le dices rápido que no hay tiempo para esto.', 'Es verdad, pero la prisa sube la tensión.'],
+       ['Le sacas de debajo de la mesa tirando del brazo.', 'Sale, pero la rabieta crece y llegáis peor.']],
+      [['«Querías elegir tú. Hoy vamos con prisa: ¿la camiseta azul o la verde? Elige tú.»', 'Le das el control que busca dentro de lo posible.'],
+       ['«Venga, que llegamos tarde.»', 'Explicas, pero no le ayuda a moverse.'],
+       ['«Pues vas en pijama a la escuela.»', 'Una amenaza que asusta o que no vas a cumplir.']],
+      [['Esa noche dejáis juntos dos opciones de ropa preparadas para mañana.', 'Anticipar le da su momento de elegir sin prisa.'],
+       ['Mañana le vistes directamente para ir más rápido.', 'Ganas tiempo, pero le quitas la elección que necesita.'],
+       ['En el coche le dices que por su culpa llegáis tarde.', 'La culpa no le ayuda mañana.']]
+    ] },
+  { n: 9, titulo: 'Quiere un juguete en la tienda', tipo: 'limite', momento: 'super',
+    escena: 'En la tienda ve un juguete y lo quiere. Le dices que hoy no compráis juguetes. Se agarra a la estantería llorando y grita «¡es mío!».',
+    tipoTxt: 'Límite: querer algo y no poder tenerlo.',
+    d: [
+      [['Te agachas a su lado y respiras, sin estar pendiente de quien mira.', 'Lo que piensen otros no es tu tarea ahora; tu peque, sí.'],
+       ['Le prometes que lo pediréis para su cumpleaños.', 'Puede calmar, pero esquiva lo que siente ahora.'],
+       ['Se lo compras para salir de ahí.', 'La rabieta para y aprende que funciona.']],
+      [['«Te encanta, ¿verdad? Es difícil querer algo y no poder tenerlo. Hoy no lo compramos. ¿Le hacemos una foto?»', 'Validas el deseo y sostienes el no. La foto es una salida sin ceder.'],
+       ['«No se puede tener todo.»', 'Es cierto, pero suena a sermón y no nombra lo que siente.'],
+       ['«Siempre quieres todo.»', 'La etiqueta duele y no enseña.']],
+      [['Os vais con la foto. Y antes de entrar en otra tienda, avisas: «Hoy miramos, no compramos».', 'El aviso previo prepara la próxima vez.'],
+       ['Evitas entrar en tiendas con tu peque.', 'Comprensible, pero se pierde la ocasión de practicar el límite.'],
+       ['Le dices que si se porta así no vuelve contigo de compras.', 'Una amenaza que no le enseña qué hacer.']]
+    ] },
+  { n: 10, titulo: 'Salida de la escuela', tipo: 'desborde', momento: 'escuela', video: true,
+    escena: 'Le recoges a las cinco. Corre hacia ti, pero al ver la merienda que llevas se tira al suelo llorando y te empuja.',
+    tipoTxt: 'Desborde: lo que sale es todo lo que ha aguantado durante el día.',
+    d: [
+      [['Te agachas, respiras y te quedas cerca.', 'Después de un día largo, necesita un sitio seguro donde soltar.'],
+       ['Le ofreces otra merienda rápido.', 'Bien intencionado, pero no es por la merienda.'],
+       ['Le dices que no empuje, que hay gente mirando.', 'Pones el foco en los demás, no en lo que le pasa.']],
+      [['«Ha sido un día largo, ¿verdad? Aquí estoy. No te dejo empujarme, pero puedes llorar.»', 'Nombras, paras el empujón y dejas que suelte.'],
+       ['«¿Qué te ha pasado hoy en la escuela?»', 'Quieres entender, pero ahora no puede explicarlo.'],
+       ['«Con lo que te quiero y me recibes así.»', 'Le cargas con tu emoción en su peor momento.']],
+      [['Un abrazo y caminar sin prisa. Las preguntas, más tarde. Mañana, su merienda favorita y menos planes al salir.', 'Primero recargar, luego hablar.'],
+       ['Nada más llegar a casa le preguntas qué le pasó.', 'Bien hablarlo, pero mejor cuando haya descansado.'],
+       ['Le dices a su maestra, delante de tu peque, que hoy viene insoportable.', 'Una etiqueta delante de otros pesa mucho.']]
+    ] },
+  { n: 11, titulo: 'La galleta se ha roto', tipo: 'desborde', momento: 'comida',
+    escena: 'Merendáis en casa. Le das una galleta, se parte en dos y tu peque grita «¡está rota!», tira los trozos y llora sin consuelo.',
+    tipoTxt: 'Desborde: el motivo es pequeño; lo acumulado, no.',
+    d: [
+      [['Te acercas con calma, sin darle importancia a la galleta.', 'No es por la galleta: tu calma ayuda a que salga lo de debajo.'],
+       ['Le das otra galleta entera enseguida.', 'Puede que pare, pero la próxima vez será otra cosa.'],
+       ['«¡Por una galleta! No es para tanto.»', 'Para tu peque, en ese momento, sí lo es.']],
+      [['«Querías la galleta entera y se ha roto. Qué rabia. Estoy aquí.»', 'Pones nombre a lo que siente sin discutir el motivo.'],
+       ['«Mira, ahora tienes dos galletas.»', 'Ingenioso, pero salta lo que siente.'],
+       ['«Si sigues así, no hay más galletas.»', 'Amenazas una emoción que necesita salir.']],
+      [['Merendáis juntos y te preguntas qué hay detrás: ¿cansancio?, ¿un día intenso?', 'Mirar lo de debajo te ayuda a anticipar.'],
+       ['Desde hoy le das las galletas ya partidas.', 'Evitas esta rabieta, pero no lo acumulado.'],
+       ['Le cuentas a la familia, delante de tu peque, el drama de la galleta.', 'Le da vergüenza y no aprende nada.']]
+    ] },
+  { n: 12, titulo: 'Vuelta a casa después de un cumpleaños', tipo: 'desborde', momento: 'otro',
+    escena: 'Volvéis de un cumpleaños donde se lo ha pasado genial. Al llegar le pides que se quite los zapatos y explota: grita, llora y tira la mochila.',
+    tipoTxt: 'Desborde: mucha emoción, aunque sea buena, también se acumula.',
+    d: [
+      [['Dejas los zapatos para luego y te quedas cerca, con calma.', 'Ahora no es momento de pedir nada.'],
+       ['Le dices «pero si te lo has pasado genial».', 'Es verdad, pero no le ayuda a entender lo que siente.'],
+       ['Le mandas a su cuarto hasta que se calme.', 'Se queda con la tormenta sin nadie.']],
+      [['«Ha sido una tarde de muchas emociones. Tu cuerpo está lleno. Vamos a descansar un poco.»', 'Le das palabras para lo que no sabe explicar.'],
+       ['«Venga, quítate los zapatos y ya está.»', 'Insistir ahora suma más.'],
+       ['«La próxima vez no vamos al cumple.»', 'Una amenaza que no tiene que ver con lo que pasa.']],
+      [['Baño tranquilo, luz suave y a dormir un poco antes. Para el próximo cumple, planeas una vuelta tranquila.', 'Anticipas la bajada después de mucha emoción.'],
+       ['Le preguntas por qué se ha puesto así.', 'No sabe responderlo; mejor nombrarlo tú.'],
+       ['Le reprochas que, con lo bien que lo ha pasado, termine así.', 'El reproche no le ayuda a entender su cuerpo.']]
+    ] },
+  { n: 13, titulo: 'Domingo por la tarde tras visita familiar', tipo: 'desborde', momento: 'otro',
+    escena: 'Domingo por la tarde. Los primos y los abuelos se acaban de ir después de pasar todo el día en casa. Le pides que recoja un juguete y se tira al suelo gritando que no.',
+    tipoTxt: 'Desborde: un día intenso y una despedida pesan.',
+    d: [
+      [['Respiras y te sientas cerca, sin insistir con el juguete.', 'Primero bajar la intensidad; el juguete puede esperar.'],
+       ['Recoges tú el juguete para que no vaya a más.', 'Evitas el choque, pero no acompañas lo que siente.'],
+       ['Le dices que si no lo recoge, lo tiras a la basura.', 'Una amenaza en plena tormenta solo suma.']],
+      [['«Ha sido un día con mucha gente y ahora se han ido. A lo mejor les echas de menos. Ven, estoy aquí.»', 'Nombras el día y la despedida.'],
+       ['«Ya vendrán otro día, no pasa nada.»', 'Consuela, pero no deja que lo sienta.'],
+       ['«Con todo lo que has jugado hoy, y ahora esto.»', 'El reproche no le ayuda a calmarse.']],
+      [['Tarde tranquila, sin más planes. Recogéis el juguete juntos cuando haya calma. Y el próximo domingo con visita, una tarde más suave.', 'Cierras el límite sin pelea y anticipas.'],
+       ['Lo dejas pasar y hoy no se recoge.', 'Bien no forzar en caliente, pero recogerlo juntos después cierra el límite.'],
+       ['Le dices que los primos no vuelven si se porta así.', 'Asusta y no le enseña nada.']]
+    ] },
+  { n: 14, titulo: 'Le quitan la pala en el parque y pega', tipo: 'enfado', momento: 'parque', video: true,
+    escena: 'En el arenero, otro niño le quita la pala. Tu peque grita, le da un golpe y empieza a llorar de rabia.',
+    tipoTxt: 'Enfado: le han quitado algo suyo.',
+    d: [
+      [['Te acercas rápido y paras el golpe con calma: «No te dejo pegar».', 'Frase corta y firme, sin explicar ahora.'],
+       ['Le dices desde el banco que no se pega.', 'El mensaje es bueno, pero de lejos no lo para.'],
+       ['Le das un azote para que aprenda.', 'Le enseñas justo lo contrario: que pegar resuelve.']],
+      [['«Te ha quitado la pala y eso te ha enfadado mucho. No te dejo pegar.»', 'Validas la emoción y paras la conducta.'],
+       ['«Hay que compartir.»', 'Era suya y se la quitaron: compartir no es lo que toca ahora.'],
+       ['«Pide perdón ahora mismo.»', 'En plena tormenta no puede entenderlo. Obligar no repara.']],
+      [['Cuando se relaja, le ayudas a ver que el otro niño se hizo daño y le das una alternativa: «Cuando te quiten algo, puedes decir ¡es mío! o venir a buscarme».', 'Repara y aprende qué hacer la próxima vez.'],
+       ['Recuperas la pala y seguís jugando sin hablarlo.', 'Se resuelve, pero no aprende otra forma.'],
+       ['Os vais del parque como castigo.', 'Un castigo no le enseña qué hacer en su lugar.']]
+    ] },
+  { n: 15, titulo: 'Pega a su hermano/a por un juguete', tipo: 'enfado', momento: 'otro',
+    escena: 'En casa, su hermano/a pequeño/a coge su juguete favorito. Tu peque se lo arranca y le pega en el brazo. El pequeño llora.',
+    tipoTxt: 'Enfado: alguien ha tocado lo que más quiere.',
+    d: [
+      [['Te pones entre los dos, paras el golpe («No te dejo pegar») y atiendes al que llora.', 'Proteges a los dos: a uno del golpe y al otro de seguir pegando.'],
+       ['Atiendes solo al que llora, sin mirar a tu peque.', 'Es lógico, pero tu peque también necesita que le pares y le acompañes.'],
+       ['Gritas «¡así no se trata a tu hermano!».', 'El grito suma tormenta y no le enseña qué hacer.']],
+      [['«Te ha cogido tu juguete favorito y te has enfadado. No te dejo pegar. Vamos a ver cómo está.»', 'Nombras, paras y le acercas a reparar.'],
+       ['«Es pequeño, déjaselo.»', 'Le pides que ceda lo suyo sin ver lo que siente.'],
+       ['«Como le vuelvas a pegar, te quedas sin juguete.»', 'La amenaza no le enseña otra forma de defender lo suyo.']],
+      [['En calma, le ayudas a ver que su hermano/a se hizo daño y, si hay un gesto, le ofreces reparar. Después buscáis juntos un sitio para sus juguetes especiales.', 'Repara entendiendo y anticipas la próxima.'],
+       ['Separas los juguetes y no se habla más.', 'Previenes, pero falta reparar.'],
+       ['Le obligas a dar un beso a su hermano/a.', 'Forzar no repara: reparar nace de entender.']]
+    ] },
+  { n: 16, titulo: 'La torre se cae una y otra vez', tipo: 'enfado', momento: 'otro',
+    escena: 'Está haciendo una torre de bloques. Se cae por tercera vez. Grita, tira los bloques por el suelo y dice «¡no sé hacerlo!».',
+    tipoTxt: 'Enfado: frustración porque algo no le sale.',
+    d: [
+      [['Te sientas a su lado, sin tocar la torre.', 'Tu presencia calma y la torre sigue siendo suya.'],
+       ['Le dices «no pasa nada, vuelve a intentarlo».', 'Animas, pero te saltas lo que siente.'],
+       ['Le haces tú la torre para que pare.', 'Para, pero aprende que no puede hacerlo.']],
+      [['«Se ha caído otra vez y eso enfada mucho. Te está costando.»', 'Poner nombre a la frustración la hace más llevadera.'],
+       ['«Tienes que poner los grandes abajo.»', 'Buen consejo, pero en caliente no puede escucharlo.'],
+       ['«Si tiras los bloques, te los quito.»', 'Amenazar en plena frustración suma enfado.']],
+      [['Cuando se calma: «¿Necesitas ayuda? ¿Sujeto yo y tú pones los bloques?». La ayuda la elige tu peque.', 'Le ayudas sin quitarle el logro.'],
+       ['Le dices que la próxima vez le saldrá mejor.', 'Anima, pero no le da una forma de hacerlo.'],
+       ['Guardas los bloques porque «no sabe jugar con ellos».', 'La etiqueta le quita las ganas de intentarlo.']]
+    ] },
+  { n: 17, titulo: 'No le salen los zapatos', tipo: 'enfado', momento: 'vestirse',
+    escena: 'Quiere ponerse los zapatos sin ayuda. El pie no entra, tira el zapato contra la puerta y llora gritando «¡zapato tonto!».',
+    tipoTxt: 'Enfado: quiere hacerlo solo/a y no le sale.',
+    d: [
+      [['Respiras y te sientas cerca, aunque vayáis justos.', 'Tu calma le ayuda a bajar la frustración.'],
+       ['Le dices que se lo pones tú y acabas antes.', 'Rápido, pero le quitas lo que quería: hacerlo solo/a.'],
+       ['Gritas «¡las cosas no se tiran!».', 'El grito suma tormenta a la frustración.']],
+      [['«Querías ponértelo tú y no entra. Qué rabia.»', 'Nombras lo que siente y lo que quería.'],
+       ['«Es fácil, mira.»', 'Para tu peque, ahora mismo, no lo es.'],
+       ['«Si no sabes, déjame a mí.»', 'Le dice que no es capaz.']],
+      [['Cuando se calma: «¿Necesitas ayuda? Yo abro el zapato y tú metes el pie». Y otro día, salís con un poco más de margen.', 'Ayuda elegida y tiempo para practicar.'],
+       ['Le dices que ya aprenderá cuando sea mayor.', 'Bien intencionado, pero le aleja de intentarlo ahora.'],
+       ['Le recuerdas que tirar el zapato está muy mal.', 'El sermón llega tarde y no le enseña a pedir ayuda.']]
+    ] },
+  { n: 18, titulo: 'Pierde en un juego', tipo: 'enfado', momento: 'otro',
+    escena: 'Jugáis a las cartas. Pierde, tira las cartas al suelo y grita «¡haces trampa!».',
+    tipoTxt: 'Enfado: perder cuesta mucho a esta edad.',
+    d: [
+      [['Respiras y paras el juego un momento, sin recoger aún las cartas.', 'Dejas sitio a lo que siente antes de seguir.'],
+       ['Piensas dejarle ganar la próxima para que no se enfade.', 'Evitas el enfado, pero no aprende a perder.'],
+       ['«Así no se juega, se acabó», y recoges.', 'Cortas el juego sin acompañar lo que siente.']],
+      [['«Querías ganar y has perdido. Perder enfada. No he hecho trampa, y aquí sigo.»', 'Nombras, pones la verdad con calma y te quedas.'],
+       ['«Es solo un juego.»', 'Para tu peque no lo es: le quitas importancia a lo que siente.'],
+       ['«Si te enfadas, no juego más contigo.»', 'Le dice que su enfado aleja a las personas.']],
+      [['Recogéis las cartas juntos y, si quiere, jugáis otra. Podéis practicar frases para perder: «¡Otra vez será!».', 'Aprende a perder jugando.'],
+       ['Durante un tiempo evitáis juegos de ganar y perder.', 'Evitas el mal rato, pero también la ocasión de aprender.'],
+       ['Le dices que no sabe perder.', 'La etiqueta se queda.']]
+    ] }
+];
+var DECISIONES = ['¿Qué haces primero?', '¿Qué le dices?', 'Ya ha pasado. ¿Y ahora?'];
+var FB_TITLE = ['Esto es lo que ayuda.', 'Vas por buen camino, pero falta algo.', 'Pasa mucho, y es humano.'];
+var TIPO_CORTO = { necesidad: 'Necesidad', limite: 'Límite', desborde: 'Desborde', enfado: 'Enfado' };
+
+/* ================= ICONOS Y MAPAS ================= */
+var MOM_ICON = { escuela: 'school', comida: 'utensils', bano: 'bath', cena: 'soup', dormir: 'moon', super: 'shopping-cart', parque: 'trees', pantallas: 'tablet', vestirse: 'shirt', otro: 'ellipsis' };
+var TIPO_ICON = { necesidad: 'battery-low', limite: 'octagon', desborde: 'waves', enfado: 'flame', mezcla: 'shuffle' };
+var SC_ICON = { ahora: 'siren', super: 'shopping-cart', parque: 'trees', casa: 'cookie', escuela: 'school', enfado: 'flame', pega: 'hand' };
+var PISTA_ICON = { cansado: 'moon', hambre: 'apple', ruido: 'volume-2', no: 'x-circle', queria: 'gift', nosalia: 'puzzle', otro: 'users', pequeno: 'cookie', intenso: 'calendar', cambio: 'shuffle' };
+var HICE_ICON = { calma: 'wind', cerca: 'heart', nombre: 'message-circle', limite: 'octagon', espere: 'hourglass', cedi: 'undo-2', grite: 'volume-2', castigue: 'lock', explique: 'message-square', mefui: 'door-open' };
+var COMPARA_ICON = { mejor: 'sun', igual: 'cloud', peor: 'cloud-rain', tranquila: 'sparkles', primera: 'flag' };
+var ADULTO_ICON = { calma: 'smile', cansancio: 'battery-low', enfado: 'flame', culpa: 'frown' };
+var MOM_LABEL = {}; MOMENTS.forEach(function (m) { MOM_LABEL[m.id] = m.label; });
+
+/* ================= ESTADO ================= */
+function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+var mem = { tipo: store('rk-tipo'), sims: store('rk-sims') || [], semana: store('rk-semana'), moms: store('rk-moms') || [] };
+function save() { store('rk-tipo', mem.tipo); store('rk-sims', mem.sims); store('rk-semana', mem.semana); store('rk-moms', mem.moms); }
+function icon(n) { return '<svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[n] || '') + '</svg>'; }
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function sc(id) { return SCENARIOS.filter(function (s) { return s.id === id; })[0]; }
+function sim(n) { return SIM.filter(function (s) { return s.n === n; })[0]; }
+
+/* ================= NAVEGACIÓN ================= */
+var tab = 'inicio';
+var NAV = [['inicio', 'Inicio', 'home'], ['frases', 'Frases', 'message-circle'], ['momentos', 'Momentos', 'clock'], ['practicar', 'Practicar', 'theater']];
+function renderNav() {
+  document.getElementById('nav').innerHTML = NAV.map(function (n) {
+    return '<button data-tab="' + n[0] + '"' + (tab === n[0] ? ' aria-current="page"' : '') + '><span class="nic">' + icon(n[2]) + '</span>' + n[1] + '</button>';
+  }).join('');
+  document.querySelectorAll('#nav button').forEach(function (b) { b.onclick = function () { go(b.getAttribute('data-tab')); }; });
+}
+function go(t) { tab = t; render(); window.scrollTo({ top: 0 }); }
+function render() { renderNav(); ({ inicio: renderHome, frases: renderFrases, momentos: renderMomentos, practicar: renderPracticar })[tab](); }
+function header() { return '<div class="top"><div class="brand">' + LOGO + 'Método Synesis</div><span class="pill">Rabietas</span></div>'; }
+
+/* ================= INICIO ================= */
+function nextStep() { if (!mem.tipo) return 1; if (!mem.moms.length) return 2; if (!mem.sims.length) return 3; return 4; }
+function renderHome() {
+  var app = document.getElementById('app'), nx = nextStep(), T = mem.tipo ? TYPES[mem.tipo] : null;
+  var hero = T
+    ? '<div class="hero"><p class="k">Sus rabietas suelen ser de tipo</p><h2>' + T.nombre + '</h2><div class="meta"><button class="btn" data-act="frases-tipo">Ver frases para este tipo</button></div></div>'
+    : '<div class="hero"><p class="k">Empieza aquí</p><h2>¿Qué tipo de rabieta es la de tu peque?</h2><div class="meta"><button class="btn" data-act="test">Descubrirlo ' + icon('arrow-right') + '</button><span>1 minuto</span></div></div>';
+  var steps = [
+    [1, 'search', 'Entender qué tipo es', T ? T.nombre : '4 preguntas rápidas', 'test', !!T],
+    [2, 'clock', 'Preparar sus momentos difíciles', mem.moms.length ? mem.moms.length + ' momentos vistos' : 'Antes, durante y si estalla', 'momentos', mem.moms.length > 0],
+    [3, 'theater', 'Practicar una escena', mem.sims.length ? mem.sims.length + ' de ' + SIM.length + ' practicadas' : 'Decide qué harías, en frío', 'practicar', mem.sims.length > 0],
+    [4, 'calendar-check', 'Mirar tu semana', mem.semana ? 'Última vez: ' + mem.semana : 'Cada domingo, 2 minutos', 'semana', !!mem.semana]
+  ];
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Hola. Estamos contigo.</h1><p class="screen-sub">Para el momento difícil y para prepararte antes de que llegue.</p>' +
+    '<button class="sos" data-act="ahora"><span class="ic">' + icon('siren') + '</span><span><b>¿Está pasando ahora?</b><small>Qué hacer y qué decir, paso a paso</small></span><span class="go">' + icon('chevron-right') + '</span></button>' +
+    '<div style="height:14px"></div>' + hero +
+    '<p class="label">Tu camino</p><div class="path">' + steps.map(function (s) {
+      return '<button class="step' + (s[5] ? ' done' : '') + (s[0] === nx ? ' next' : '') + '" data-act="' + s[4] + '"><span class="ic">' + icon(s[5] ? 'check' : s[1]) + '</span><span><b>' + s[2] + (s[0] === nx ? '<span class="badge-next">Ahora</span>' : '') + '</b><small>' + s[3] + '</small></span><span class="go">' + icon('chevron-right') + '</span></button>';
+    }).join('') + '</div>' +
+    '<p class="label">Para ti</p><button class="step" data-act="pausa"><span class="ic" style="background:var(--terra-soft);color:var(--terra)">' + icon('wind') + '</span><span><b>Una pausa para ti</b><small>Respiración guiada de 1 minuto</small></span><span class="go">' + icon('chevron-right') + '</span></button>';
+  app.querySelectorAll('[data-act]').forEach(function (b) {
+    b.onclick = function () {
+      var a = b.getAttribute('data-act');
+      if (a === 'ahora') openFrases('ahora');
+      else if (a === 'test') openTest();
+      else if (a === 'frases-tipo') openFrases(TYPES[mem.tipo].escenario);
+      else if (a === 'semana') openSemana();
+      else if (a === 'pausa') openPausa();
+      else go(a);
+    };
+  });
+}
+
+/* ================= FRASES ================= */
+function renderFrases() {
+  var app = document.getElementById('app');
+  app.innerHTML = header() +
+    '<h1 class="screen-title">¿Qué está pasando?</h1><p class="screen-sub">Elige la situación. Te lo doy paso a paso, con frases para decir.</p>' +
+    '<div class="path">' + SCENARIOS.map(function (s) {
+      var urgent = s.id === 'ahora';
+      return '<button class="step' + (urgent ? ' urgent' : '') + '" data-sc="' + s.id + '"><span class="ic">' + icon(SC_ICON[s.id]) + '</span><span><b>' + s.label + '</b><small>' + s.que.split('. ')[0] + '.</small></span><span class="go">' + icon('chevron-right') + '</span></button>';
+    }).join('') + '</div>';
+  app.querySelectorAll('[data-sc]').forEach(function (b) { b.onclick = function () { openFrases(b.getAttribute('data-sc')); }; });
+}
+
+/* ================= MOMENTOS ================= */
+function renderMomentos() {
+  var app = document.getElementById('app');
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Sus momentos difíciles</h1><p class="screen-sub">Toca uno para ver cómo prepararlo, cómo llevarlo y qué hacer si estalla.</p>' +
+    '<div class="box"><div class="tiles" style="padding-top:14px">' + MOMENTS.map(function (m) {
+      var seen = mem.moms.indexOf(m.id) > -1;
+      return '<button class="tile' + (seen ? ' in' : '') + '" data-m="' + m.id + '"><span class="ti">' + icon(MOM_ICON[m.id]) + '</span><span>' + m.label + '</span></button>';
+    }).join('') + '</div></div>';
+  app.querySelectorAll('[data-m]').forEach(function (b) { b.onclick = function () { openMoment(b.getAttribute('data-m')); }; });
+}
+function openMoment(id) {
+  var m = MOMENTS.filter(function (x) { return x.id === id; })[0];
+  if (mem.moms.indexOf(id) === -1) { mem.moms.push(id); save(); }
+  var sims = SIM.filter(function (s) { return s.momento === id; });
+  sheet('<div class="sheet-head"><span class="ti">' + icon(MOM_ICON[id]) + '</span><span><small>Momento del día</small><h3>' + m.label + '</h3></span></div>' +
+    '<p style="color:var(--muted);margin:0 0 6px">' + m.porque + '</p>' +
+    '<div class="mblock"><p class="mk">' + icon('sunrise') + ' Antes</p><p>' + m.antes + '</p></div>' +
+    '<div class="mblock"><p class="mk">' + icon('play') + ' Durante</p><p>' + m.durante + '</p></div>' +
+    '<div class="mblock burst"><p class="mk">' + icon('siren') + ' Si estalla</p><p>' + m.estalla + '</p></div>' +
+    (sims.length ? '<p class="block-k" style="margin-top:20px">Practica este momento</p><div style="display:grid;gap:10px">' + sims.map(function (s) { return '<button class="btn ghost block" data-sim="' + s.n + '">' + icon('theater') + ' ' + s.titulo + '</button>'; }).join('') + '</div>' : '') +
+    '<button class="btn block" style="margin-top:14px" id="sh-ok">Entendido</button>');
+  document.getElementById('sh-ok').onclick = function () { closeSheet(); render(); };
+  document.querySelectorAll('.sheet [data-sim]').forEach(function (b) { b.onclick = function () { closeSheet(); openSim(Number(b.getAttribute('data-sim'))); }; });
+}
+
+/* ================= PRACTICAR ================= */
+var simFilter = 'todos';
+function renderPracticar() {
+  var app = document.getElementById('app');
+  var list = SIM.filter(function (s) { return simFilter === 'todos' || s.tipo === simFilter; });
+  var F2 = [['todos', 'Todas'], ['necesidad', 'Necesidad'], ['limite', 'Límite'], ['desborde', 'Desborde'], ['enfado', 'Enfado']];
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Practica en frío</h1><p class="screen-sub">Una escena real y tres decisiones. Sin notas: repítelas las veces que quieras.</p>' +
+    '<div class="prog-row"><span class="big-num">' + mem.sims.length + ' <small>de ' + SIM.length + ' practicadas</small></span><button class="btn sage" id="rand">' + icon('dice-5') + ' Una al azar</button></div>' +
+    '<div class="filters">' + F2.map(function (f) { return '<button class="fchip" data-f="' + f[0] + '" aria-pressed="' + (simFilter === f[0]) + '">' + f[1] + '</button>'; }).join('') + '</div>' +
+    '<div class="stack">' + list.map(function (s) {
+      var d = mem.sims.indexOf(s.n) > -1;
+      return '<button class="scene-card" data-n="' + s.n + '"><span style="min-width:0"><span class="where">' + TIPO_CORTO[s.tipo] + (s.momento !== 'otro' ? ' · ' + MOM_LABEL[s.momento] : '') + (s.video ? ' · como en el vídeo' : '') + '</span><b>' + s.titulo + '</b><span class="ex">' + s.escena + '</span></span><span class="ok' + (d ? ' done' : '') + '">' + icon(d ? 'check' : 'play') + '</span></button>';
+    }).join('') + '</div>';
+  app.querySelectorAll('[data-f]').forEach(function (b) { b.onclick = function () { simFilter = b.getAttribute('data-f'); renderPracticar(); }; });
+  app.querySelectorAll('[data-n]').forEach(function (b) { b.onclick = function () { openSim(Number(b.getAttribute('data-n'))); }; });
+  document.getElementById('rand').onclick = function () {
+    var pool = list.filter(function (s) { return mem.sims.indexOf(s.n) === -1; }); if (!pool.length) pool = list;
+    openSim(pool[Math.floor(Math.random() * pool.length)].n);
+  };
+}
+
+/* ================= HOJA INFERIOR ================= */
+function closeSheet() { document.getElementById('sheet-root').innerHTML = ''; if (!document.querySelector('.flow')) document.body.classList.remove('locked'); }
+function sheet(html) {
+  document.body.classList.add('locked');
+  document.getElementById('sheet-root').innerHTML = '<div class="sheet-bg" id="sheet-bg"></div><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-in"><div class="grab"></div>' + html + '</div></div>';
+  document.getElementById('sheet-bg').onclick = closeSheet;
+}
+
+/* ================= MOTOR DE FLUJOS ================= */
+var F = null;
+function flow(o) {
+  if (F && F.onClose) F.onClose();
+  F = o; document.body.classList.add('locked');
+  document.getElementById('flow-root').innerHTML = '<div class="flow" role="dialog" aria-modal="true"><div class="flow-bar"><button class="icon-btn" id="f-back" aria-label="Atrás">' + icon('arrow-left') + '</button><div class="bar"><i id="f-bar"></i></div><button class="icon-btn" id="f-close" aria-label="Cerrar">' + icon('x') + '</button></div><div class="flow-body" id="f-body"><div class="flow-in" id="f-in"></div></div><div class="flow-foot" id="f-foot"></div></div>';
+  document.getElementById('f-close').onclick = closeFlow;
+  document.getElementById('f-back').onclick = function () { if (F.back) F.back(); };
+  F.draw();
+}
+function closeFlow() { if (F && F.onClose) F.onClose(); document.getElementById('flow-root').innerHTML = ''; F = null; document.body.classList.remove('locked'); render(); }
+function paint(p, inner, foot, canBack) {
+  document.getElementById('f-bar').style.width = Math.round(p * 100) + '%';
+  document.getElementById('f-in').innerHTML = inner;
+  document.getElementById('f-foot').innerHTML = foot || '';
+  document.getElementById('f-back').style.visibility = canBack ? 'visible' : 'hidden';
+  document.getElementById('f-body').scrollTop = 0;
+}
+function optsHtml(opts, pressed, multi) {
+  return '<div class="opts">' + opts.map(function (o) {
+    var on = multi ? pressed.indexOf(o.id) > -1 : pressed === o.id;
+    return '<button class="opt" data-id="' + o.id + '" aria-pressed="' + on + '">' + (o.i ? '<span class="oi">' + icon(o.i) + '</span>' : '') + '<span>' + o.t + '</span></button>';
+  }).join('') + '</div>';
+}
+function dots(n, cur) { return '<div class="dots">' + Array.apply(null, Array(n)).map(function (_, i) { return '<i class="' + (i === cur ? 'on' : '') + '"></i>'; }).join('') + '</div>'; }
+
+/* ---------- Frases paso a paso ---------- */
+function openFrases(id) {
+  var s = sc(id), st = { p: 0 };
+  var pages = s.sec.length + 1;
+  flow({
+    back: function () { if (st.p > 0) { st.p--; F.draw(); } },
+    draw: function () {
+      var html, last = st.p === pages - 1;
+      if (!last) {
+        var sec = s.sec[st.p];
+        html = '<div class="center-page"><p class="q-kicker">' + icon(SC_ICON[s.id]) + ' ' + s.title + '</p>' +
+          (st.p === 0 ? '<p class="q-help" style="color:var(--text);font-size:17px">' + s.que + '</p>' : '') +
+          '<div class="step-k"><span class="num">' + (st.p + 1) + '</span>' + sec.t + '</div>' +
+          (sec.frases ? sec.frases.map(function (f) { return '<div class="phrase-card">«' + f + '»</div>'; }).join('') : '') +
+          (sec.nota ? '<p class="nota">' + sec.nota + '</p>' : '') +
+          (sec.pausa ? '<button class="btn sage block" style="margin-top:16px" id="to-pausa">' + icon('wind') + ' Respirar ahora</button>' : '') + '</div>';
+      } else {
+        html = '<div class="center-page"><div class="big-card terra"><p class="k" style="color:var(--terra)">' + icon('info') + ' No hace falta</p><p>' + s.evita + '</p></div></div>';
+      }
+      paint((st.p + 1) / pages, html, dots(pages, st.p) + '<button class="btn block" id="f-next">' + (last ? 'Listo' : 'Siguiente') + '</button>', st.p > 0);
+      document.getElementById('f-next').onclick = function () { if (last) closeFlow(); else { st.p++; F.draw(); } };
+      var tp = document.getElementById('to-pausa'); if (tp) tp.onclick = function () { openPausa(); };
+    }
+  });
+}
+
+/* ---------- Test de tipo ---------- */
+function openTest() {
+  var st = { i: 0, picks: [], res: null, page: 0 };
+  function compute() {
+    var sc2 = { necesidad: 0, limite: 0, desborde: 0, enfado: 0 };
+    st.picks.forEach(function (o) { Object.keys(o.s).forEach(function (k) { sc2[k] += o.s[k]; }); });
+    var order = Object.keys(sc2).sort(function (a, b) { return sc2[b] - sc2[a]; });
+    var mixed = sc2[order[1]] > 0 && sc2[order[0]] - sc2[order[1]] <= 1;
+    return { main: order[0], second: mixed ? order[1] : null };
+  }
+  var TOTAL = QUESTIONS.length + 4;
+  flow({
+    back: function () { if (st.res) { if (st.page > 0) st.page--; else { st.res = null; st.i = QUESTIONS.length - 1; st.picks.pop(); } } else if (st.i > 0) { st.i--; st.picks.pop(); } F.draw(); },
+    draw: function () {
+      if (!st.res) {
+        var Q = QUESTIONS[st.i];
+        paint((st.i + 1) / TOTAL, '<p class="q-kicker">Pregunta ' + (st.i + 1) + ' de ' + QUESTIONS.length + '</p><h2 class="q">' + Q.q + '</h2><p class="q-help">Piensa en la última rabieta, o en la que más se repite.</p>' + optsHtml(Q.o.map(function (o, k) { return { id: String(k), t: o.t }; }), null), '', st.i > 0);
+        document.querySelectorAll('#f-in .opt').forEach(function (b) {
+          b.onclick = function () {
+            b.setAttribute('aria-pressed', 'true');
+            st.picks.push(Q.o[Number(b.getAttribute('data-id'))]);
+            setTimeout(function () { if (st.i < QUESTIONS.length - 1) st.i++; else { st.res = compute(); st.page = 0; mem.tipo = st.res.main; save(); } F.draw(); }, 160);
+          };
+        });
+        return;
+      }
+      var T = TYPES[st.res.main], key = st.res.main;
+      var pages = [
+        '<div class="big-card sage"><p class="k">' + (st.res.second ? 'Parece una mezcla, sobre todo de' : 'Parece una rabieta de tipo') + '</p><p class="quote" style="font-style:normal;font-weight:700">' + T.nombre + '</p><p style="margin-top:12px;font-size:17px">' + T.resumen + '</p><span class="chip">' + icon(TIPO_ICON[key]) + TIPO_CORTO[key] + '</span></div>',
+        '<div class="big-card"><h3>Qué le pasa por dentro</h3><p>' + T.dentro + '</p>' + (st.res.second ? '<div class="soft-note">También hay pistas de «' + TYPES[st.res.second].nombre + '». Es muy normal: muchas rabietas mezclan más de un motivo.</div>' : '') + '</div>',
+        '<div class="big-card"><h3>Señales para observar</h3>' + T.senales.map(function (s) { return '<div class="sign"><span class="si">' + icon('eye') + '</span><span>' + s + '</span></div>'; }).join('') + '</div>',
+        '<div class="big-card terra"><h3>Cómo anticiparte</h3><p>' + T.anticipar + '</p></div>'
+      ];
+      var last = st.page === pages.length - 1;
+      paint((QUESTIONS.length + st.page + 1) / TOTAL, '<div class="center-page">' + pages[st.page] + '</div>', dots(pages.length, st.page) + (last ? '<button class="btn block" id="f-next">Ver frases para este tipo ' + icon('arrow-right') + '</button>' : '<button class="btn block" id="f-next">Siguiente</button>'), true);
+      document.getElementById('f-next').onclick = function () { if (last) openFrases(T.escenario); else { st.page++; F.draw(); } };
+    }
+  });
+}
+
+/* ---------- Pausa ---------- */
+function openPausa() {
+  var st = { cycles: 3, running: false, t: null };
+  function stop() { clearTimeout(st.t); st.running = false; }
+  flow({
+    onClose: stop,
+    back: null,
+    draw: function () {
+      paint(0, '<div class="center-page" style="text-align:center"><h2 class="q">Una pausa para ti</h2><p class="q-help">Antes de acercarte, una respiración. Aunque sea una sola, ya cuenta.</p>' +
+        '<div class="cycles" role="group" aria-label="Respiraciones">' + [1, 3, 5].map(function (c) { return '<button class="fchip" data-c="' + c + '" aria-pressed="' + (st.cycles === c) + '">' + c + (c === 1 ? ' respiración' : ' respiraciones') + '</button>'; }).join('') + '</div>' +
+        '<div class="orb" id="orb" aria-hidden="true"></div><p class="breath-label" id="bl" aria-live="polite">Cuando quieras</p><p class="breath-phrase" id="bp"></p></div>',
+        '<button class="btn sage block" id="b-go">' + icon('play') + ' Empezar</button>', false);
+      var orb = document.getElementById('orb'), bl = document.getElementById('bl'), bp = document.getElementById('bp'), btn = document.getElementById('b-go');
+      document.querySelectorAll('[data-c]').forEach(function (b) { b.onclick = function () { stop(); st.cycles = Number(b.getAttribute('data-c')); F.draw(); }; });
+      btn.onclick = function () {
+        if (st.running) { stop(); F.draw(); return; }
+        st.running = true; btn.innerHTML = icon('pause') + ' Parar'; var c = 0;
+        (function step() {
+          if (!st.running) return;
+          if (c >= st.cycles) { st.running = false; orb.className = 'orb'; bl.textContent = 'Lista. Ahora, acércate.'; btn.innerHTML = icon('refresh-cw') + ' Repetir'; document.getElementById('f-foot').insertAdjacentHTML('beforeend', '<button class="btn ghost block" id="b-done">Volver</button>'); document.getElementById('b-done').onclick = closeFlow; return; }
+          bl.textContent = 'Inspira'; orb.className = 'orb in';
+          st.t = setTimeout(function () {
+            bl.textContent = 'Suelta despacio'; orb.className = 'orb out';
+            st.t = setTimeout(function () { bp.textContent = '«' + BREATH_PHRASES[c % BREATH_PHRASES.length] + '»'; c++; step(); }, 6000);
+          }, 4000);
+        })();
+      };
+    }
+  });
+}
+
+/* ---------- Escena ---------- */
+function openSim(n) {
+  var s = sim(n), st = { p: 0, pick: null, order: shuffle([0, 1, 2]) }, TOTAL = 5;
+  flow({
+    back: function () { if (st.p > 0) { st.p--; st.pick = null; st.order = shuffle([0, 1, 2]); F.draw(); } },
+    draw: function () {
+      if (st.p === 0) {
+        paint(1 / TOTAL, '<div class="center-page"><p class="q-kicker">' + icon(MOM_ICON[s.momento]) + ' Escena ' + s.n + (s.video ? ' · como en el vídeo 4' : '') + '</p><h2 class="q">' + s.titulo + '</h2><p class="scene-text">' + s.escena + '</p><div class="type-note"><span class="si">' + icon(TIPO_ICON[s.tipo]) + '</span><span>' + s.tipoTxt + '</span></div></div>', '<button class="btn block" id="f-next">¿Qué harías tú?</button>', false);
+      } else if (st.p < 4) {
+        var k = st.p - 1, opts = s.d[k];
+        var html = '<p class="q-kicker">Decisión ' + (k + 1) + ' de 3</p><h2 class="q">' + DECISIONES[k] + '</h2><div class="opts">' + st.order.map(function (j) {
+          var cls = 'opt' + (st.pick !== null ? (j === st.pick ? ' picked' : ' faded') : '');
+          return '<button class="' + cls + '" data-j="' + j + '"' + (st.pick !== null ? ' disabled' : '') + '><span>' + opts[j][0] + '</span></button>';
+        }).join('') + '</div>';
+        if (st.pick !== null) {
+          html += st.pick === 0
+            ? '<div class="fb good"><b>' + icon('check-circle') + ' Esto es lo que ayuda</b><p>' + opts[0][1] + '</p></div>'
+            : '<div class="fb other"><b>' + icon(st.pick === 1 ? 'arrow-up-right' : 'info') + (st.pick === 1 ? ' Vas por buen camino' : ' Pasa mucho') + '</b><p>' + opts[st.pick][1] + '</p><div class="better"><small>Lo que más ayuda</small><p><b style="display:inline;font-size:16px">' + opts[0][0] + '</b> ' + opts[0][1] + '</p></div></div>';
+        }
+        paint((st.p + 1) / TOTAL, html, st.pick !== null ? '<button class="btn block" id="f-next">' + (k < 2 ? 'Continuar' : 'Terminar') + '</button>' : '', true);
+        document.querySelectorAll('#f-in .opt').forEach(function (b) {
+          b.onclick = function () { st.pick = Number(b.getAttribute('data-j')); F.draw(); var fb = document.querySelector('.fb'); if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+        });
+      } else {
+        if (mem.sims.indexOf(s.n) === -1) { mem.sims.push(s.n); save(); }
+        paint(1, '<div style="text-align:center;margin:10px 0 18px"><div class="party"><div class="burst">' + icon('check') + '</div></div><h2 class="q">Escena practicada</h2><p class="q-help">Esto es lo que te llevas:</p></div>' +
+          '<div class="big-card">' + s.d.map(function (dd, i) { return '<div class="recap"><span class="num">' + (i + 1) + '</span><p><small>' + DECISIONES[i] + '</small>' + dd[0][0] + '</p></div>'; }).join('') + '</div>',
+          '<button class="btn block" id="f-fr">Ver frases para este tipo</button><button class="btn ghost block" id="f-other">' + icon('dice-5') + ' Otra escena</button>', false);
+        document.getElementById('f-fr').onclick = function () { openFrases(TYPES[s.tipo].escenario); };
+        document.getElementById('f-other').onclick = function () {
+          var pool = SIM.filter(function (x) { return x.n !== s.n && mem.sims.indexOf(x.n) === -1; }); if (!pool.length) pool = SIM.filter(function (x) { return x.n !== s.n; });
+          openSim(pool[Math.floor(Math.random() * pool.length)].n);
+        };
+        return;
+      }
+      var nx = document.getElementById('f-next');
+      if (nx) nx.onclick = function () { st.p++; st.pick = null; st.order = shuffle([0, 1, 2]); F.draw(); };
+    }
+  });
+}
+
+/* ---------- Mi semana ---------- */
+function deduceTipo(pistas) {
+  var s2 = { necesidad: 0, limite: 0, desborde: 0, enfado: 0 };
+  PISTAS.forEach(function (p) { if (pistas.indexOf(p.id) > -1) p.s.forEach(function (k) { s2[k]++; }); });
+  var order = Object.keys(s2).sort(function (a, b) { return s2[b] - s2[a]; });
+  if (s2[order[0]] === 0) return { main: 'mezcla', fondo: null, tie: null };
+  if (s2[order[0]] === s2[order[1]]) return { main: 'mezcla', fondo: null, tie: [order[0], order[1]] };
+  return { main: order[0], fondo: s2[order[1]] > 0 ? order[1] : null, tie: null };
+}
+function pickScenario(tipo, momento) {
+  var pool = SIM.filter(function (s) { return tipo === 'mezcla' || s.tipo === tipo; });
+  var exact = pool.filter(function (s) { return s.momento === momento; });
+  if (exact.length) return exact[0];
+  var byM = SIM.filter(function (s) { return s.momento === momento; });
+  if (tipo === 'mezcla' && byM.length) return byM[0];
+  return pool[0];
+}
+function openSemana() {
+  var st = { i: 0, a: { momento: null, pistas: [], hice: [], compara: null, adulto: null }, done: false };
+  var KEYS = ['momento', 'pistas', 'hice', 'compara', 'adulto'];
+  flow({
+    back: function () { if (st.done) st.done = false; else if (st.i > 0) st.i--; F.draw(); },
+    draw: function () {
+      if (st.done) return result();
+      var key = KEYS[st.i], html = '', foot = '', multi = false;
+      var kick = '<p class="q-kicker">Mi semana · ' + (st.i + 1) + ' de ' + KEYS.length + '</p>';
+      if (key === 'momento') html = kick + '<h2 class="q">¿Qué momento costó más esta semana?</h2><div class="tool-grid">' + MOMENTS.concat([{ id: 'otro', label: 'Otro momento' }]).map(function (m) { return '<button class="tile" data-id="' + m.id + '" aria-pressed="' + (st.a.momento === m.id) + '"><span class="ti">' + icon(MOM_ICON[m.id]) + '</span><span>' + m.label + '</span></button>'; }).join('') + '</div>';
+      if (key === 'pistas') { multi = true; html = kick + '<h2 class="q">¿Qué parecía haber detrás?</h2><p class="q-help">Marca todo lo que encaje. No hace falta acertar.</p>' + optsHtml(PISTAS.map(function (p) { return { id: p.id, t: p.t, i: PISTA_ICON[p.id] }; }), st.a.pistas, true); foot = '<button class="btn block" id="f-next">' + (st.a.pistas.length ? 'Siguiente' : 'No lo sé, seguir') + '</button>'; }
+      if (key === 'hice') { multi = true; html = kick + '<h2 class="q">¿Qué hiciste la mayoría de las veces?</h2><p class="q-help">Sin notas: lo que no sale bien también cuenta.</p><p class="group-label">Lo que enseñan los vídeos</p>' + optsHtml(HICE_BIEN.map(function (h) { return { id: h.id, t: h.t, i: HICE_ICON[h.id] }; }), st.a.hice, true) + '<p class="group-label">Lo que también pasa</p>' + optsHtml(HICE_TAMBIEN.map(function (h) { return { id: h.id, t: h.t, i: HICE_ICON[h.id] }; }), st.a.hice, true); foot = '<button class="btn block" id="f-next">Siguiente</button>'; }
+      if (key === 'compara') html = kick + '<h2 class="q">Comparado con la semana pasada, ¿cómo fue?</h2>' + optsHtml(COMPARA.map(function (c) { return { id: c.id, t: c.t, i: COMPARA_ICON[c.id] }; }), st.a.compara);
+      if (key === 'adulto') { html = kick + '<h2 class="q">¿Y tú, cómo terminas la semana?</h2><p class="q-help">Opcional, solo para ti.</p>' + optsHtml(ADULTO.map(function (c) { return { id: c.id, t: c.t, i: ADULTO_ICON[c.id] }; }), st.a.adulto); foot = '<button class="btn ghost block" id="f-skip">Saltar y ver mi semana</button>'; }
+      paint((st.i + 1) / (KEYS.length + 1), html, foot, st.i > 0);
+      document.querySelectorAll('#f-in [data-id]').forEach(function (b) {
+        b.onclick = function () {
+          var id = b.getAttribute('data-id');
+          if (multi) { var arr = st.a[key], i = arr.indexOf(id); if (i > -1) arr.splice(i, 1); else arr.push(id); F.draw(); return; }
+          st.a[key] = id; b.setAttribute('aria-pressed', 'true');
+          setTimeout(function () { if (st.i < KEYS.length - 1) st.i++; else finish(); F.draw(); }, 160);
+        };
+      });
+      var nx = document.getElementById('f-next'); if (nx) nx.onclick = function () { st.i++; F.draw(); };
+      var sk = document.getElementById('f-skip'); if (sk) sk.onclick = function () { st.a.adulto = null; finish(); F.draw(); };
+    }
+  });
+  function finish() { st.done = true; var d = new Date(); mem.semana = d.getDate() + '/' + (d.getMonth() + 1); save(); }
+  function result() {
+    var a = st.a, t = deduceTipo(a.pistas);
+    var animoKey = a.compara === 'peor' ? (a.hice.indexOf('limite') > -1 ? 'limites' : 'dura') : (a.compara || 'igual');
+    var noFue = ['cedi', 'grite', 'castigue', 'explique', 'mefui'].filter(function (k) { return a.hice.indexOf(k) > -1; })[0] || null;
+    var bien = HICE_BIEN.filter(function (h) { return a.hice.indexOf(h.id) > -1; });
+    var mom = MOMENTS.filter(function (m) { return m.id === a.momento; })[0] || null;
+    var rec = pickScenario(t.main, a.momento);
+    var patron;
+    if (t.main === 'mezcla' && t.tie) patron = 'Una mezcla de <b>' + TIPO_LABEL[t.tie[0]] + '</b> y <b>' + TIPO_LABEL[t.tie[1]] + '</b>.';
+    else if (t.main === 'mezcla') patron = 'Las rabietas parecen venir de sitios distintos.';
+    else patron = 'Sobre todo de <b>' + TIPO_LABEL[t.main] + '</b>' + (t.fondo ? ', ' + FONDO[t.fondo] : '') + '.';
+    var tool = TOOL_TIPO[t.main];
+    var html = '<div class="big-card sage"><p class="k">' + icon('calendar-check') + ' Tu semana</p><p style="font-size:19px;font-weight:500;line-height:1.45">' + ANIMO[animoKey] + '</p></div>' +
+      '<div class="big-card" style="margin-top:14px"><p class="k" style="color:var(--sage-deep)">Qué parece haber detrás</p><div style="display:flex;gap:14px;align-items:center"><span class="si big">' + icon(TIPO_ICON[t.main]) + '</span><p style="margin:0;font-size:18px">' + patron + '</p></div><div class="soft-note">Es un patrón para orientarte, no un diagnóstico. Tú conoces a tu peque mejor que nadie.</div>' +
+      (bien.length ? '<p class="k" style="color:var(--muted);margin-top:18px">Lo que ya estás haciendo</p>' + bien.map(function (b) { return '<div class="sign"><span class="si">' + icon('check') + '</span><span>' + b.t + '</span></div>'; }).join('') : '') + '</div>' +
+      '<h2 class="q" style="margin-top:28px;font-size:23px">Tus herramientas para la semana que viene</h2>' +
+      '<div class="big-card"><p class="k" style="color:var(--sage-deep)">' + icon(TIPO_ICON[t.main]) + ' Por el tipo de rabieta</p><p style="font-size:16px">' + tool.intro + '</p>' + tool.items.map(function (it, i) { return '<div class="sign"><span class="num">' + (i + 1) + '</span><span style="font-size:15.5px">' + it + '</span></div>'; }).join('') + '</div>' +
+      (mom ? '<div class="big-card" style="margin-top:14px"><p class="k" style="color:var(--sage-deep)">' + icon(MOM_ICON[mom.id]) + ' Para ' + MOM_PARA[mom.id] + '</p><p style="font-size:16px">' + TOOL_MOMENTO[mom.id] + '</p><button class="link" id="r-mom">Ver cómo preparar este momento</button></div>' : '') +
+      (noFue ? '<div class="big-card" style="margin-top:14px"><p class="k" style="color:var(--muted)">' + icon(HICE_ICON[noFue]) + ' Para lo que no salió como querías</p><p style="font-size:16px">' + TOOL_NO[noFue] + '</p></div>' : '');
+    if (a.adulto && a.adulto !== 'calma') {
+      var palabra = { cansancio: 'con mucho cansancio', enfado: 'con enfado', culpa: 'con culpa' }[a.adulto];
+      html += '<div class="big-card terra" style="margin-top:14px"><p class="k" style="color:var(--terra)">' + icon('heart') + ' Para ti</p><p style="font-size:16px">Esta semana terminas ' + palabra + '. Es normal: acompañar rabietas cansa. Cuidarte también es parte de acompañarle, así que respira un momento. Esto es solo lo que se ve; lo de fondo también se puede trabajar.</p><button class="btn sage" id="r-breath">' + icon('wind') + ' Respirar ahora</button></div>';
+    }
+    if (rec) html += '<button class="scene-card" id="r-sim" style="margin-top:14px"><span style="min-width:0"><span class="where">Practica esta escena</span><b>' + rec.titulo + '</b><span class="ex">' + rec.escena + '</span></span><span class="ok">' + icon('play') + '</span></button>';
+    html += '<p class="copy-msg" id="copy-msg" aria-live="polite"></p>';
+    paint(1, html, '<button class="btn ghost block" id="r-copy">' + icon('copy') + ' Copiar mis herramientas</button><button class="btn block" id="r-done">Hecho</button>', true);
+    document.getElementById('r-done').onclick = closeFlow;
+    var rm = document.getElementById('r-mom'); if (rm) rm.onclick = function () { closeFlow(); go('momentos'); openMoment(mom.id); };
+    var rb = document.getElementById('r-breath'); if (rb) rb.onclick = openPausa;
+    var rs = document.getElementById('r-sim'); if (rs) rs.onclick = function () { openSim(rec.n); };
+    document.getElementById('r-copy').onclick = function () {
+      var txt = 'Mis herramientas para esta semana (Kit de rabietas, Método Synesis)\n\n' + tool.intro + '\n' + tool.items.map(function (i) { return '- ' + i; }).join('\n') +
+        (mom ? '\n\n' + mom.label + ': ' + TOOL_MOMENTO[mom.id] : '') + (noFue ? '\n\n' + TOOL_NO[noFue] : '');
+      var msg = document.getElementById('copy-msg');
+      function fallback() {
+        msg.textContent = 'No se ha podido copiar solo. Selecciona el texto y cópialo:';
+        var ta = document.createElement('textarea'); ta.className = 'copy-fallback'; ta.id = 'copy-text'; ta.value = txt; msg.after(ta); ta.select();
+      }
+      try { navigator.clipboard.writeText(txt).then(function () { msg.textContent = 'Copiado. Pégalo en una nota o envíaselo a quien también acompaña a tu peque.'; msg.scrollIntoView({ block: 'nearest' }); }, fallback); } catch (e) { fallback(); }
+    };
+  }
+}
+
+/* ================= ARRANQUE ================= */
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (document.querySelector('.sheet')) closeSheet(); else if (F) closeFlow(); } });
+render();
+</script>
+
+</body></html>

@@ -1,3 +1,690 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Recurso · pega</title>
-<style>body{font-family:'DM Sans',system-ui,sans-serif;background:#F3EDE4;color:#3A3A3A;margin:0;display:grid;place-items:center;min-height:100vh;text-align:center;padding:24px}b{display:block;font-size:20px;margin-bottom:6px}</style></head>
-<body><div><b>Recurso en preparación</b>Aquí irá el recurso interactivo de Paloma.</div></body></html>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Kit Pega y muerde</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,500;1,9..40,600&display=swap" rel="stylesheet">
+<style>
+/* Layout: app móvil. Inicio con camino guiado; cada tarea se abre a pantalla completa con una sola cosa por pantalla; la caja es el objeto central; navegación inferior fija. */
+:root {
+  --bg: #F3EDE4;
+  --surface: #FFFDF9;
+  --soft: #E4EFE8;
+  --text: #3A3A3A;
+  --muted: #74746C;
+  --sage: #8FAF9A;
+  --sage-deep: #6D9278;
+  --on-sage: #22302A;
+  --terra: #D08770;
+  --terra-soft: #F7E6DF;
+  --line: rgba(58, 58, 58, 0.10);
+  --shadow: 0 1px 2px rgba(58, 58, 58, 0.05), 0 10px 30px rgba(58, 58, 58, 0.07);
+  --font: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --nav-h: 68px;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C211F; --surface: #252B28; --soft: #2C3832; --text: #EDE9E1; --muted: #AEB3AA;
+    --sage: #8FAF9A; --sage-deep: #A9C6B2; --on-sage: #17201B; --terra: #E3A08A; --terra-soft: #3B2D27;
+    --line: rgba(237, 233, 225, 0.12);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C211F; --surface: #252B28; --soft: #2C3832; --text: #EDE9E1; --muted: #AEB3AA;
+  --sage: #8FAF9A; --sage-deep: #A9C6B2; --on-sage: #17201B; --terra: #E3A08A; --terra-soft: #3B2D27;
+  --line: rgba(237, 233, 225, 0.12);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
+  color-scheme: dark;
+}
+html { -webkit-text-size-adjust: 100%; }
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+body.locked { overflow: hidden; }
+button { font-family: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--sage-deep); outline-offset: 2px; }
+svg.lucide { width: 22px; height: 22px; flex: none; }
+[hidden] { display: none !important; }
+
+.app { max-width: 520px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 18px calc(var(--nav-h) + 28px + env(safe-area-inset-bottom, 0px)); }
+
+/* Cabecera */
+.top { display: flex; align-items: center; justify-content: space-between; }
+.brand { display: flex; align-items: center; gap: 9px; font-weight: 600; font-size: 15px; }
+.brand svg { width: 28px; height: 28px; color: var(--sage); }
+.pill { font-size: 12px; font-weight: 600; color: var(--sage-deep); background: var(--soft); padding: 5px 11px; border-radius: 999px; }
+.screen-title { font-size: 30px; line-height: 1.12; font-weight: 700; letter-spacing: -0.025em; margin: 22px 0 6px; text-wrap: balance; }
+.screen-sub { color: var(--muted); margin: 0 0 18px; }
+
+/* Tarjetas */
+.card { background: var(--surface); border-radius: 24px; padding: 20px; box-shadow: var(--shadow); }
+.stack { display: grid; gap: 14px; }
+.label { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 26px 0 10px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font: 600 16px/1.2 var(--font); background: var(--text); color: var(--bg); border: 0; border-radius: 999px; padding: 15px 22px; cursor: pointer; min-height: 52px; }
+.btn.sage { background: var(--sage); color: var(--on-sage); }
+.btn.ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--line); }
+.btn.block { width: 100%; }
+.btn:disabled { opacity: .35; cursor: default; }
+.link { background: none; border: 0; padding: 0; font: 600 14px/1.4 var(--font); color: var(--sage-deep); cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* Hero de inicio */
+.hero { background: var(--sage); color: var(--on-sage); border-radius: 28px; padding: 24px 22px; position: relative; overflow: hidden; }
+.hero::after { content: ""; position: absolute; right: -40px; top: -40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(255,255,255,.14); }
+.hero .k { font-size: 13px; font-weight: 600; opacity: .85; margin: 0 0 8px; }
+.hero h2 { font-size: 24px; line-height: 1.2; letter-spacing: -0.015em; margin: 0 0 18px; font-weight: 700; text-wrap: balance; position: relative; }
+.hero blockquote { margin: 0 0 18px; font-size: 22px; line-height: 1.3; font-weight: 600; font-style: italic; text-wrap: balance; position: relative; }
+.hero .btn { background: var(--on-sage); color: #F3EDE4; position: relative; }
+.hero .meta { display: flex; align-items: center; gap: 14px; position: relative; }
+.hero .meta span { font-size: 14px; font-weight: 500; opacity: .85; }
+
+/* Camino */
+.path { display: grid; gap: 10px; }
+.step { display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 14px; width: 100%; text-align: left; background: var(--surface); border: 0; border-radius: 20px; padding: 14px 16px; cursor: pointer; box-shadow: var(--shadow); }
+.step .ic { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; background: var(--soft); color: var(--sage-deep); }
+.step.done .ic { background: var(--sage); color: var(--on-sage); }
+.step.next { box-shadow: var(--shadow), inset 0 0 0 2px var(--sage); }
+.step b { display: block; font-size: 16px; font-weight: 600; line-height: 1.3; }
+.step small { display: block; font-size: 13.5px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
+.step .go { color: var(--muted); }
+.badge-next { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--on-sage); background: var(--sage); padding: 2px 8px; border-radius: 999px; margin-left: 6px; vertical-align: 2px; }
+
+/* Mini caja en inicio */
+.mini-box { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; border: 0; text-align: left; cursor: pointer; }
+.mini-icons { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.mini-icons span { width: 30px; height: 30px; border-radius: 10px; display: grid; place-items: center; background: var(--bg); color: var(--muted); }
+.mini-icons span.in { background: var(--soft); color: var(--sage-deep); }
+.mini-icons span.star { background: var(--sage); color: var(--on-sage); }
+.mini-icons svg.lucide { width: 16px; height: 16px; }
+.big-num { font-size: 34px; font-weight: 700; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.big-num small { font-size: 15px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+
+/* Caja */
+.box { background: var(--surface); border-radius: 28px; box-shadow: var(--shadow); overflow: hidden; }
+.box-head { background: var(--sage-deep); color: #FFFDF9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+.box-head b { font-size: 15px; }
+.box-head span { font-size: 14px; font-variant-numeric: tabular-nums; opacity: .92; }
+.meter { height: 6px; background: rgba(255,255,255,.25); border-radius: 6px; margin: 0 20px; position: relative; top: -10px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: #FFFDF9; border-radius: 6px; transition: width .5s ease; }
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 8px 14px 16px; }
+.tile { position: relative; border: 0; border-radius: 18px; padding: 14px 6px 12px; background: var(--bg); cursor: pointer; display: grid; justify-items: center; gap: 8px; min-height: 96px; align-content: center; }
+.tile .ti { width: 40px; height: 40px; border-radius: 13px; display: grid; place-items: center; color: var(--muted); background: transparent; box-shadow: inset 0 0 0 1.5px var(--line); }
+.tile span { font-size: 12.5px; font-weight: 600; line-height: 1.2; text-align: center; color: var(--muted); }
+.tile.in { background: var(--soft); }
+.tile.in .ti { background: var(--surface); color: var(--sage-deep); box-shadow: none; }
+.tile.in span { color: var(--text); }
+.tile.star { background: var(--sage); }
+.tile.star .ti { background: rgba(255,255,255,.35); color: var(--on-sage); box-shadow: none; }
+.tile.star span { color: var(--on-sage); }
+.tile .st { position: absolute; top: 8px; right: 8px; width: 20px; height: 20px; border-radius: 50%; background: var(--terra); color: #fff; display: grid; place-items: center; }
+.tile .st svg.lucide { width: 12px; height: 12px; }
+.tile .rec { position: absolute; top: 9px; right: 9px; width: 9px; height: 9px; border-radius: 50%; background: var(--terra); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 13px; color: var(--muted); padding: 0 6px; margin-top: 12px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: 0; }
+
+/* Lista de escenas */
+.scene-card { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; width: 100%; text-align: left; border: 0; background: var(--surface); border-radius: 22px; padding: 18px; box-shadow: var(--shadow); cursor: pointer; }
+.scene-card .where { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--terra); }
+.scene-card b { display: block; font-size: 17px; margin: 2px 0 4px; }
+.scene-card q { display: block; font-size: 14.5px; font-style: italic; color: var(--muted); quotes: "«" "»"; line-height: 1.4; }
+.scene-card .ok { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); color: var(--muted); }
+.scene-card .ok.done { background: var(--sage); color: var(--on-sage); }
+
+/* Navegación inferior */
+.nav { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-top: 1px solid var(--line); padding: 8px max(12px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+.nav-in { max-width: 520px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); }
+.nav button { background: none; border: 0; cursor: pointer; display: grid; justify-items: center; gap: 3px; padding: 6px 0; font-size: 12px; font-weight: 600; color: var(--muted); }
+.nav button[aria-current="page"] { color: var(--text); }
+.nav button[aria-current="page"] .nic { background: var(--soft); color: var(--sage-deep); }
+.nav .nic { width: 54px; height: 30px; border-radius: 999px; display: grid; place-items: center; }
+
+/* Flujo a pantalla completa */
+.flow { position: fixed; inset: 0; z-index: 40; background: var(--bg); display: flex; flex-direction: column; padding-top: env(safe-area-inset-top, 0px); animation: up .28s ease; }
+@keyframes up { from { transform: translateY(24px); opacity: 0; } to { transform: none; opacity: 1; } }
+.flow-bar { flex: none; display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; gap: 10px; padding: 10px max(14px, env(safe-area-inset-right, 0px)) 10px max(14px, env(safe-area-inset-left, 0px)); max-width: 560px; width: 100%; margin: 0 auto; }
+.icon-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: var(--surface); display: grid; place-items: center; cursor: pointer; box-shadow: var(--shadow); }
+.bar { height: 6px; background: var(--line); border-radius: 6px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--sage); border-radius: 6px; transition: width .35s ease; }
+.flow-body { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.flow-in { max-width: 520px; margin: 0 auto; padding: 12px max(22px, env(safe-area-inset-right, 0px)) 24px max(22px, env(safe-area-inset-left, 0px)); }
+.flow-foot { flex: none; padding: 12px max(22px, env(safe-area-inset-right, 0px)) calc(14px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); max-width: 520px; width: 100%; margin: 0 auto; display: grid; gap: 10px; }
+.flow-foot:empty { display: none; }
+.q-kicker { font-size: 13px; font-weight: 600; color: var(--sage-deep); margin: 8px 0 8px; }
+.q { font-size: 27px; line-height: 1.18; font-weight: 700; letter-spacing: -0.02em; margin: 0 0 8px; text-wrap: balance; }
+.q-help { color: var(--muted); margin: 0 0 18px; font-size: 15px; }
+.opts { display: grid; gap: 10px; margin-top: 18px; }
+.opt { display: flex; align-items: center; gap: 12px; width: 100%; text-align: left; font: 500 16px/1.4 var(--font); background: var(--surface); border: 0; border-radius: 18px; padding: 16px 18px; cursor: pointer; box-shadow: var(--shadow); min-height: 60px; transition: transform .1s; }
+.opt:active { transform: scale(.985); }
+.opt .oi { width: 36px; height: 36px; border-radius: 12px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; flex: none; }
+.opt[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--sage-deep), var(--shadow); background: var(--soft); }
+.opt[aria-pressed="true"] .oi { background: var(--sage); color: var(--on-sage); }
+.opt.picked { box-shadow: inset 0 0 0 2px var(--sage-deep); background: var(--soft); }
+.opt.faded { opacity: .45; }
+.opt:disabled { cursor: default; }
+.group-label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 22px 0 -6px; }
+.tool-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 18px; }
+.tool-grid .tile { background: var(--surface); box-shadow: var(--shadow); }
+.tool-grid .tile[aria-pressed="true"] { background: var(--sage); }
+.tool-grid .tile[aria-pressed="true"] .ti { background: rgba(255,255,255,.35); color: var(--on-sage); box-shadow: none; }
+.tool-grid .tile[aria-pressed="true"] span { color: var(--on-sage); }
+
+/* Páginas de resultado */
+.dots { display: flex; justify-content: center; gap: 6px; }
+.dots i { width: 7px; height: 7px; border-radius: 7px; background: var(--line); transition: width .25s; }
+.dots i.on { width: 22px; background: var(--sage-deep); }
+.big-card { background: var(--surface); border-radius: 28px; padding: 26px 22px; box-shadow: var(--shadow); margin-top: 8px; }
+.big-card.sage { background: var(--sage); color: var(--on-sage); }
+.big-card.terra { background: var(--terra-soft); }
+.big-card .k { font-size: 13px; font-weight: 600; margin: 0 0 10px; opacity: .85; }
+.quote { font-size: 27px; line-height: 1.25; font-weight: 600; font-style: italic; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+.chip { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: rgba(255,255,255,.4); margin-top: 18px; }
+.big-card h3 { font-size: 22px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.01em; }
+.big-card p { margin: 0 0 12px; font-size: 17px; }
+.big-card p:last-child { margin-bottom: 0; }
+.center-page { min-height: calc(100vh - 230px); display: grid; align-content: center; }
+.center-page .big-card.sage { padding: 34px 26px; }
+.center-page .big-card.sage .quote { font-size: 31px; }
+.soft-note { font-size: 15px; color: var(--muted); background: var(--bg); border-radius: 16px; padding: 12px 14px; margin-top: 16px; }
+.sign { display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: center; padding: 12px 0; border-top: 1px solid var(--line); font-size: 16px; }
+.sign:first-of-type { border-top: 0; }
+.sign .si { width: 36px; height: 36px; border-radius: 12px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; }
+.num { width: 30px; height: 30px; border-radius: 50%; background: var(--text); color: var(--bg); display: grid; place-items: center; font-size: 14px; font-weight: 700; }
+
+/* Escenas */
+.voice-card { background: var(--terra-soft); border-radius: 28px; padding: 28px 24px; margin-top: 8px; }
+.voice-card .who { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--terra); margin-bottom: 14px; }
+.voice-card .quote { font-size: 28px; }
+.scene-text { font-size: 19px; line-height: 1.5; margin: 6px 0 0; }
+.fb { border-radius: 22px; padding: 18px; margin-top: 16px; animation: up .25s ease; }
+.fb.good { background: var(--sage); color: var(--on-sage); }
+.fb.other { background: var(--terra-soft); }
+.fb b { display: flex; align-items: center; gap: 8px; font-size: 17px; margin-bottom: 4px; }
+.fb p { margin: 0; font-size: 16px; }
+.fb .better { margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(58,58,58,.12); }
+.fb .better small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--terra); margin-bottom: 4px; }
+.recap { display: grid; grid-template-columns: 30px 1fr; gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); }
+.recap:first-of-type { border-top: 0; }
+.recap p { margin: 0; font-size: 15.5px; }
+.recap small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 2px; }
+
+/* Hoja inferior */
+.sheet-bg { position: fixed; inset: 0; z-index: 60; background: rgba(28, 33, 31, .38); animation: fade .2s ease; }
+@keyframes fade { from { opacity: 0; } }
+.sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 61; max-height: 88vh; overflow-y: auto; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px max(22px, env(safe-area-inset-right, 0px)) calc(22px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); animation: sheetUp .3s cubic-bezier(.2,.9,.3,1); }
+@keyframes sheetUp { from { transform: translateY(100%); } }
+.sheet-in { max-width: 520px; margin: 0 auto; }
+.grab { width: 40px; height: 5px; border-radius: 5px; background: var(--line); margin: 0 auto 16px; }
+.sheet-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.sheet-head .ti { width: 56px; height: 56px; border-radius: 18px; background: var(--soft); color: var(--sage-deep); display: grid; place-items: center; }
+.sheet-head .ti svg.lucide { width: 28px; height: 28px; }
+.sheet-head h3 { margin: 0; font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; }
+.sheet-head small { display: block; font-size: 13px; color: var(--muted); font-weight: 500; }
+.block-k { font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--sage-deep); margin: 0 0 6px; }
+.game { background: var(--bg); border-radius: 18px; padding: 16px; font-size: 16px; margin-bottom: 14px; }
+.say { background: var(--soft); border-radius: 18px; padding: 16px; font-size: 19px; font-weight: 600; font-style: italic; line-height: 1.35; margin-bottom: 18px; }
+.status-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.status-row span { flex: 1; text-align: center; font-size: 12.5px; font-weight: 600; padding: 8px 4px; border-radius: 12px; background: var(--bg); color: var(--muted); }
+.status-row span.on { background: var(--sage); color: var(--on-sage); }
+.party { text-align: center; padding: 6px 0 4px; }
+.party .burst { width: 84px; height: 84px; border-radius: 50%; background: var(--sage); color: var(--on-sage); display: grid; place-items: center; margin: 4px auto 14px; animation: pop .5s cubic-bezier(.2,1.6,.4,1); }
+.party .burst svg.lucide { width: 40px; height: 40px; }
+@keyframes pop { from { transform: scale(.3); opacity: 0; } }
+.party h3 { font-size: 24px; margin: 0 0 8px; }
+.party p { color: var(--muted); margin: 0 0 18px; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="app" id="app"></div>
+<nav class="nav" aria-label="Secciones"><div class="nav-in" id="nav"></div></nav>
+<div id="flow-root"></div>
+<div id="sheet-root"></div>
+
+<script>
+/* ================= DATOS ================= */
+var LOGO = '<svg viewBox="0 0 1280 1280" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="M595.0,1278.9C564.5,1276.2 551.5,1274.7 541.7,1273.0C535.5,1271.9 527.4,1270.5 523.6,1270.0C503.8,1267.1 464.8,1256.9 433.0,1246.3C416.0,1240.6 378.5,1225.5 368.3,1220.1C367.3,1219.6 360.9,1216.4 354.0,1213.0C301.3,1186.7 252.0,1152.8 209.0,1113.5C187.7,1094.0 159.3,1063.9 142.5,1043.0C62.4,943.3 14.9,827.2 2.8,700.9C-0.4,668.2 -0.4,612.1 2.8,579.5C8.9,515.9 24.1,454.7 48.5,395.1C58.5,370.6 72.9,342.0 89.7,313.0C103.1,289.7 132.9,248.0 149.8,228.6C152.2,225.8 156.8,220.6 159.9,217.0C175.7,198.8 214.7,160.0 217.1,160.0C217.6,160.0 217.0,162.1 215.9,164.8C197.2,207.9 186.7,263.6 186.7,319.5C186.6,384.3 200.9,440.7 230.8,493.5C250.0,527.5 278.6,560.4 316.1,591.5C322.8,597.1 346.1,613.9 352.2,617.5C353.1,618.0 357.6,621.0 362.2,624.1C370.6,629.7 372.4,630.8 383.9,637.7C387.4,639.8 391.0,642.0 391.9,642.5C399.9,647.4 414.8,655.9 432.5,665.5C436.4,667.6 441.8,670.5 444.5,672.0C468.8,685.3 545.9,723.7 580.5,739.7C605.7,751.4 643.7,768.8 658.0,775.3C672.4,781.8 692.4,791.1 717.5,802.8C762.4,823.8 814.9,851.6 835.5,865.3C881.8,896.2 915.3,940.3 930.8,990.5C935.8,1006.9 935.8,1006.9 939.4,1028.0C944.7,1059.7 942.4,1107.0 933.9,1140.4C925.9,1171.6 910.1,1204.3 893.0,1224.9C888.3,1230.6 887.8,1230.8 872.8,1236.7C837.2,1250.8 784.5,1265.9 756.4,1270.0C752.6,1270.5 744.5,1271.9 738.4,1273.0C728.1,1274.8 714.5,1276.3 684.0,1279.0C670.9,1280.1 607.8,1280.1 595.0,1278.9ZM1119.7,1061.5C1120.0,1059.8 1121.3,1052.7 1122.6,1045.5C1124.0,1038.3 1126.0,1021.9 1127.1,1009.0C1130.6,969.8 1128.8,919.4 1122.9,891.1C1121.8,885.8 1120.5,879.2 1120.0,876.3C1119.0,870.1 1112.0,846.0 1108.0,834.3C1099.9,810.9 1083.7,779.1 1069.5,758.8C1038.3,714.0 999.1,678.2 947.0,646.7C933.5,638.6 882.0,612.3 860.0,602.3C857.0,600.9 850.0,597.6 844.5,595.0C828.2,587.2 783.4,566.9 760.0,556.7C732.8,544.8 703.1,531.7 695.0,528.0C690.3,525.9 684.9,523.5 683.0,522.7C678.9,521.0 649.1,507.4 630.0,498.5C622.6,495.1 612.2,490.3 607.0,488.0C590.0,480.3 547.3,459.3 534.8,452.4C492.9,429.4 464.6,409.2 439.5,384.4C423.4,368.5 420.4,365.2 410.4,352.0C383.2,316.1 368.8,277.5 364.9,229.8C361.7,190.9 373.0,142.2 393.3,107.5C413.8,72.6 444.4,42.8 477.8,25.3C482.6,22.8 486.4,20.2 486.3,19.6C486.1,18.8 492.7,17.0 505.3,14.3C553.6,3.9 585.6,0.6 639.0,0.5C681.2,0.5 702.8,2.0 736.0,7.1C762.7,11.2 773.3,13.4 798.0,19.7C803.2,21.0 809.3,22.6 811.5,23.1C829.9,27.6 885.8,47.6 897.9,54.1C899.9,55.1 901.9,56.0 902.4,56.0C904.0,56.0 946.1,77.5 958.5,84.7C989.3,102.5 1027.2,129.0 1050.6,149.0C1053.3,151.4 1058.2,155.6 1061.5,158.4C1073.3,168.5 1094.8,189.3 1106.1,201.5C1120.8,217.5 1122.7,219.7 1131.4,230.0C1174.5,281.5 1211.1,343.0 1235.5,405.0C1252.4,448.2 1264.0,490.2 1271.5,535.5C1277.5,571.8 1279.4,596.0 1279.4,639.0C1279.5,667.5 1279.1,681.3 1277.7,696.5C1267.8,805.1 1231.6,907.8 1171.5,996.9C1157.4,1017.8 1135.5,1046.5 1123.6,1059.6C1119.3,1064.4 1119.2,1064.4 1119.7,1061.5Z"/></svg>';
+
+var MOTIVOS = {
+  rabia: { nombre: 'Rabia o frustración', icon: 'flame',
+    pega: 'Esto me da muchísima rabia y no sé dónde ponerla.', muerde: 'Tengo tanta rabia dentro que me sale por la boca.',
+    dentro: 'La emoción es más grande que su cuerpo y todavía no tiene otra salida.',
+    senales: [['hand', 'Aprieta los puños o los dientes'], ['volume-2', 'Grita o patalea justo antes'], ['x-circle', 'Algo no le sale o le has dicho que no']],
+    hacer: ['Para en seco con una frase corta: «No te dejo {verbo}».', 'Pon nombre a lo que siente: «Te ha dado mucha rabia».', 'Cuando baje, enséñale dónde sí puede poner la rabia.'],
+    tools: ['pisar', 'cojin', 'dragon'] },
+  impulso: { nombre: 'Impulso o mucha energía', icon: 'zap',
+    pega: 'Tengo el cuerpo a mil y mis manos van más rápido que yo.', muerde: 'Estoy tan emocionado que no sé qué hacer con tanto.',
+    dentro: 'No hay enfado: el cuerpo se adelanta a la cabeza. A esta edad, el freno todavía se está construyendo.',
+    senales: [['trending-up', 'El juego se pone cada vez más movido'], ['smile', 'Las risas suben y suben'], ['wind', 'Corre y salta sin parar']],
+    hacer: ['Baja el juego antes del pico, no después.', 'Ofrécele descargar el cuerpo de otra forma.', 'Frena con calma: no hubo mala intención, aunque sí daño.'],
+    tools: ['saltar', 'pared', 'manos'] },
+  nosabe: { nombre: 'No sabe decir lo que quiere', icon: 'message-circle',
+    pega: 'Es mío y no me salen las palabras.', muerde: 'Quiero eso y no sé cómo pedirlo.',
+    dentro: 'Su golpe o su mordisco es la forma más rápida que tiene de decir algo. Cuantas más palabras tenga, menos lo va a necesitar.',
+    senales: [['puzzle', 'Hay un juguete o un sitio en juego'], ['users', 'Pasa con otros niños o con hermanos'], ['hand-metal', 'Justo después coge lo que quería']],
+    hacer: ['Pon tú las palabras: «Querías la pala».', 'Dale frases cortas para que lo diga.', 'Acércate cuando veas venir el conflicto.'],
+    tools: ['esmio', 'para', 'ayuda'] },
+  conexion: { nombre: 'Busca tu atención', icon: 'heart',
+    pega: 'Mírame. Te necesito y no sé llamarte de otra forma.', muerde: 'Quiero estar contigo, aunque sea así.',
+    dentro: 'Ha aprendido que el golpe trae tu mirada enseguida. No es manipulación: es necesidad de ti.',
+    senales: [['smartphone', 'Estás con el móvil, con otro hijo o hablando'], ['eye', 'Después te mira, a ver qué haces']],
+    hacer: ['Frena con pocas palabras y sin espectáculo.', 'Dale un rato solo para los dos antes de que lo pida así.', 'Enséñale otra forma de llamarte.'],
+    tools: ['brazo', 'abrazo'] },
+  imitacion: { nombre: 'Lo ha visto hacer', icon: 'copy',
+    pega: 'Lo he visto hacer y estoy probando qué pasa.', muerde: 'Lo vi y quería probarlo.',
+    dentro: 'Aprende copiando lo que ve: otros niños, dibujos de peleas, juegos de luchas o un cachete en casa.',
+    senales: [['repeat', 'Repite un gesto que ha visto'], ['smile', 'A veces lo hace riendo, como un juego']],
+    hacer: ['Frena igual, con calma.', 'Mira qué está viendo: pantallas, juegos de pelea.', 'Tu ejemplo es su mejor herramienta: aprende de cómo gestionas tú el enfado.'],
+    tools: ['manos', 'para'] },
+  cansancio: { nombre: 'Cansancio o demasiado estímulo', icon: 'battery-low',
+    pega: 'Ya no puedo más con tanto.', muerde: 'Estoy lleno de todo lo de hoy.',
+    dentro: 'Su cuerpo está agotado o saturado de ruido y gente, y el freno es lo primero que se apaga.',
+    senales: [['moon', 'Final del día o se ha saltado la siesta'], ['volume-2', 'Mucho ruido o mucha gente'], ['frown', 'Todo le molesta y llora con facilidad']],
+    hacer: ['Baja estímulos antes de que llegue al límite.', 'Sácale del lío a un sitio tranquilo.', 'Frena, acompaña y descansad.'],
+    tools: ['rincon', 'abrazo'] }
+};
+
+var TOOLS = [
+  { id: 'pisar', nombre: 'Pisar fuerte', icon: 'footprints', motivo: 'rabia', juego: 'Jugad al elefante enfadado: andad por el pasillo pisando muy fuerte y diciendo «¡estoy muy enfadado!». Después, cada vez más suave, hasta acabar de puntillas.', frase: '¿Pisamos fuerte como el elefante?' },
+  { id: 'cojin', nombre: 'Apretar un cojín', icon: 'cloud', motivo: 'rabia', juego: 'Elegid juntos su cojín de la rabia. Por turnos, apretadlo fuerte contra la tripa mientras contáis hasta tres, poniendo la cara más enfadada que podáis.', frase: 'Toma tu cojín, apriétalo fuerte.' },
+  { id: 'dragon', nombre: 'Soplar como un dragón', icon: 'flame', motivo: 'rabia', juego: 'Sois dragones: coged aire por la nariz y soplad muy fuerte para echar el fuego. Probad a mover un papelito o a apagar una vela imaginaria.', frase: '¿Echamos el fuego como el dragón?' },
+  { id: 'saltar', nombre: 'Saltar y correr', icon: 'rabbit', motivo: 'impulso', juego: 'Jugad al semáforo: con verde corréis y saltáis todo lo que podáis, con rojo os quedáis quietos como estatuas. Suelta energía y practica el freno a la vez.', frase: '¿Hacemos diez saltos de canguro?' },
+  { id: 'pared', nombre: 'Empujar la pared', icon: 'brick-wall', motivo: 'impulso', juego: 'Jugad a mover la casa: los dos con las manos en la pared, empujad con todas vuestras fuerzas. Contad hasta cinco y soltad.', frase: 'Ven, vamos a empujar la pared.' },
+  { id: 'manos', nombre: 'Chocar las manos', icon: 'hand', motivo: 'impulso', juego: 'Pon las manos abiertas delante y que choque con las suyas lo más fuerte que pueda. Después, cada vez más suave, hasta casi rozarlas.', frase: '¡Choca aquí, fuerte!' },
+  { id: 'esmio', nombre: 'Decir «¡es mío!»', icon: 'message-circle', motivo: 'nosabe', juego: 'Con sus muñecos, uno le quita la pelota a otro. Tu peque pone la voz: «¡Es mío! ¡Devuélvemelo!». Repetidlo cambiando de muñeco.', frase: 'Dilo con palabras: ¡es mío!' },
+  { id: 'para', nombre: 'Decir «¡para!»', icon: 'octagon', motivo: 'nosabe', juego: 'Hazle cosquillas o tócale la torre. Cuando levante la mano y diga «¡para!», paras en seco. Así aprende que su palabra funciona.', frase: 'Levanta la mano y di: ¡para!' },
+  { id: 'ayuda', nombre: 'Pedir ayuda', icon: 'life-buoy', motivo: 'nosabe', juego: 'Esconde un juguete en un sitio alto. Cuando no llegue, enséñale a venir a buscarte: «¿Me ayudas?». Celebra cada vez que lo pida.', frase: 'Ven a buscarme, yo te ayudo.' },
+  { id: 'brazo', nombre: 'Señal secreta', icon: 'pointer', motivo: 'conexion', juego: 'Acordad una señal secreta: dos toquecitos en tu brazo. Haz como que estás ocupada y que la use. Cuando lo haga, mírale enseguida y sonríe.', frase: 'Toca mi brazo, así te veo.' },
+  { id: 'abrazo', nombre: 'Abrazo de oso', icon: 'heart', motivo: 'conexion', juego: 'Cuando diga «¡abrazo de oso!», le das un abrazo muy fuerte mientras contáis hasta cinco. Jugadlo también en momentos tranquilos.', frase: '¿Quieres un abrazo de oso?' },
+  { id: 'mordedor', nombre: 'Su mordedor', icon: 'circle-dot', motivo: 'mordiscos', juego: 'Elegid juntos su mordedor de la rabia: un mordedor o un juguete blando para morder. Practicad a morderlo muy fuerte con cara de león, y que sepa siempre dónde está.', frase: 'A las personas no. Esto sí lo puedes morder.' },
+  { id: 'rincon', nombre: 'Rincón de calma', icon: 'tent', motivo: 'cansancio', juego: 'Montad juntos un rincón con una manta, cojines y su peluche. Id a él en momentos tranquilos a leer un cuento, para que lo sienta suyo antes de necesitarlo.', frase: '¿Vamos a tu rincón un ratito?' }
+];
+var MOTIVO_TXT = { rabia: 'Para la rabia', impulso: 'Para el cuerpo a mil', nosabe: 'Para decirlo con palabras', conexion: 'Para llamarte', mordiscos: 'Para los mordiscos', cansancio: 'Para cuando no puede más' };
+
+var D_STEPS = [
+  { key: 'accion', q: 'Piensa en la última vez. ¿Qué hizo?', opts: [{ id: 'pega', t: 'Pegó, empujó o arañó', i: 'hand' }, { id: 'muerde', t: 'Mordió', i: 'circle-dot' }] },
+  { key: 'quien', q: '¿A quién?', opts: [{ id: 'nino', t: 'A otro niño o niña', i: 'users', s: { nosabe: 1 } }, { id: 'hermano', t: 'A su hermano o hermana', i: 'baby', s: { conexion: 1 } }, { id: 'adulto', t: 'A mí o a otro adulto de casa', i: 'home', s: { rabia: 1 } }] },
+  { key: 'antes', q: '¿Qué pasó justo antes?', opts: [
+    { id: 'quitaron', t: 'Le quitaron algo o no le dejaban hacer lo que quería', i: 'puzzle', s: { nosabe: 2, rabia: 1 } },
+    { id: 'nosalia', t: 'Algo no le salía o le dije que no', i: 'x-circle', s: { rabia: 2 } },
+    { id: 'movido', t: 'Jugaba muy movido, corriendo o riendo', i: 'zap', s: { impulso: 2 } },
+    { id: 'ocupada', t: 'Yo estaba con otra cosa: el móvil, otro hijo, hablando', i: 'smartphone', s: { conexion: 2 } },
+    { id: 'visto', t: 'Lo había visto hacer: a otro niño, en dibujos, en un juego', i: 'copy', s: { imitacion: 3 } },
+    { id: 'largo', t: 'Llevaba mucho rato: día largo, ruido o sueño', i: 'battery-low', s: { cansancio: 2 } }] },
+  { key: 'despues', q: '¿Y qué hizo justo después?', opts: [
+    { id: 'cogio', t: 'Cogió lo que quería o siguió con lo suyo', i: 'hand-metal', s: { nosabe: 2 } },
+    { id: 'miro', t: 'Me miró, a ver qué hacía yo', i: 'eye', s: { conexion: 2 } },
+    { id: 'rio', t: 'Se rió o siguió jugando como si nada', i: 'smile', s: { impulso: 1, imitacion: 1 } },
+    { id: 'lloro', t: 'Lloró o se enfadó todavía más', i: 'cloud-rain', s: { rabia: 1, cansancio: 1 } }] },
+  { key: 'cuerpo', q: '¿Cómo estaba su cuerpo ese rato?', opts: [
+    { id: 'activo', t: 'Muy activo, sin parar', i: 'zap', s: { impulso: 2 } },
+    { id: 'cansado', t: 'Cansado, irritable o con sueño', i: 'moon', s: { cansancio: 2 } },
+    { id: 'tenso', t: 'Tenso, con mucha rabia', i: 'flame', s: { rabia: 2 } },
+    { id: 'normal', t: 'Normal, tranquilo', i: 'sun', s: { nosabe: 1, conexion: 1, imitacion: 1 } }] }
+];
+
+var SIM = [
+  { n: 1, titulo: 'La pala del parque', donde: 'Parque · pega', motivo: 'nosabe', tool: 'esmio',
+    voz: 'Era MI pala. Él la cogió y mis manos fueron más rápidas que mis palabras.',
+    escena: 'En el arenero, otro niño le quita la pala. Tu peque le da un golpe en el brazo y el otro niño se pone a llorar.',
+    d: [
+      [['Te acercas rápido, le sujetas la mano con calma y dices: «No te dejo pegar».', 'Frase corta y firme. Paras el golpe sin asustar.'], ['Le dices desde el banco: «¡Eso no se hace!».', 'El mensaje es claro, pero de lejos no lo frena.'], ['Le das un cachete en la mano para que aprenda.', 'Le enseñas justo lo contrario: que pegar sirve para resolver.']],
+      [['Te agachas entre los dos. Al otro niño: «¿Estás bien?». A tu peque: «Te ha quitado la pala y te ha dado mucha rabia».', 'Cuidas al que ha recibido el golpe y pones nombre a lo que sintió tu peque.'], ['Atiendes solo al otro niño.', 'Es lógico, pero tu peque se queda solo con su rabia.'], ['«Pídele perdón ahora mismo.»', 'En plena tormenta no puede entenderlo. Forzar el perdón no repara.']],
+      [['Cuando se calma, le ayudas a ver que el niño lloraba y le das otra forma: «Si te quitan algo, di ¡es mío! o ven a buscarme».', 'Repara entendiendo y se lleva una herramienta nueva.'], ['Recuperas la pala y seguís jugando.', 'Se resuelve, pero no aprende otra forma de hacerlo.'], ['Os vais del parque como castigo.', 'El castigo no le enseña qué hacer la próxima vez.']]
+    ] },
+  { n: 2, titulo: 'Un mordisco en clase', donde: 'Escuela · muerde', motivo: 'cansancio', tool: 'mordedor',
+    voz: 'Había mucho ruido, él me empujaba para coger el tren y ya no podía más.',
+    escena: 'Al recogerle te cuentan que hoy ha mordido a un compañero en un rato de mucho ruido en clase. Tu peque te mira, esperando tu reacción.',
+    d: [
+      [['Le recibes con un abrazo y dejas el tema para cuando estéis tranquilos.', 'Lo que pasó ya está frenado. Ahora necesita saber que sigues ahí.'], ['Le preguntas allí mismo por qué lo ha hecho.', 'Quieres entender, pero en la puerta y en caliente no puede explicarlo.'], ['Le riñes allí mismo para que vea que lo tomas en serio.', 'La vergüenza no le enseña qué hacer la próxima vez.']],
+      [['Ya en calma: «Hoy había mucho ruido y te costó. Morder hace daño. Cuando no puedas más, aprieta tu mordedor o busca a la seño».', 'Nombras lo que le pasó, pones el límite y le das otra salida.'], ['«Morder está muy feo.»', 'El límite está, pero sin entender qué le pasó ni qué hacer en su lugar.'], ['«Si vuelves a morder, te muerdo yo para que veas lo que duele.»', 'Le enseña que morder sí vale si eres más grande.']],
+      [['En casa elegís juntos su mordedor y lo practicáis jugando.', 'Su caja tiene una herramienta más para los días de mucho ruido.'], ['Esperas a ver si vuelve a pasar.', 'Puede pasar otra vez, y sin una herramienta nueva lo tiene más difícil.'], ['Le dices que es un niño malo.', 'La etiqueta se queda y le hace sentir que el problema es él.']]
+    ] },
+  { n: 3, titulo: 'El hermano pequeño', donde: 'Casa · pega', motivo: 'conexion', tool: 'brazo',
+    voz: 'Tú estabas con el bebé todo el rato. Yo también te necesitaba.',
+    escena: 'Estás dando de comer al hermano pequeño. Tu peque se acerca, le da un manotazo al bebé y te mira.',
+    d: [
+      [['Pones tu mano entre los dos y dices con calma: «No te dejo pegar».', 'Proteges al pequeño sin montar un gran espectáculo.'], ['Gritas «¡al bebé no!» y te llevas al bebé lejos.', 'Proteges, pero tu peque vuelve a quedarse fuera.'], ['Le mandas a su cuarto.', 'Lo que buscaba era estar contigo, y se queda todavía más lejos.']],
+      [['«Querías que estuviera contigo, ¿verdad? Ven, siéntate a mi lado mientras termino.»', 'Escuchas lo que pedía su golpe y le das un sitio.'], ['«Tienes que querer a tu hermano.»', 'El cariño no se ordena. Antes necesita sentirse visto.'], ['«Ya eres mayor, no hagas cosas de bebé.»', 'Le pides que te necesite menos justo cuando más te necesita.']],
+      [['Buscáis un rato cada día solo para los dos y le enseñas la señal secreta: dos toquecitos en tu brazo.', 'Le das tu atención antes de que la pida pegando.'], ['Le compras un regalo para que no tenga celos.', 'Bien intencionado, pero lo que pide es tiempo contigo.'], ['Le vigilas cada vez que se acerca al bebé.', 'Se siente el malo de la casa y la tensión sube.']]
+    ] },
+  { n: 4, titulo: 'El juego de monstruos', donde: 'Con amigos · empuja', motivo: 'impulso', tool: 'saltar',
+    voz: 'Estábamos jugando a monstruos, me reía muchísimo y de repente mi mano le dio.',
+    escena: 'Ha venido una amiga a casa. Juegan a perseguirse, cada vez más rápido. De pronto tu peque le da un empujón y la amiga se cae.',
+    d: [
+      [['Paras el juego con calma: «Stop. Paramos un momento».', 'Frenas el pico antes de que vaya a más.'], ['Les dices «¡cuidado!» desde la cocina.', 'Avisas, pero el juego sigue subiendo.'], ['«¡Se acabó el juego para siempre!»', 'Un castigo enorme para algo que no fue con mala intención.']],
+      [['Ayudas a la amiga a levantarse. A tu peque: «Estabas con el cuerpo a mil y se te fue la mano. Empujar hace daño».', 'Nombras lo que pasó sin hacerle sentir malo.'], ['«No pasa nada, estáis jugando.»', 'Le quitas importancia, y la amiga se ha hecho daño.'], ['«Eres un bruto.»', 'La etiqueta le dice quién es, no qué hacer.']],
+      [['Les propones diez saltos de canguro y después un juego más tranquilo.', 'El cuerpo descarga y practica el freno.'], ['Les pones dibujos para que se calmen.', 'Se calman rápido, pero no aprende a frenar su cuerpo.'], ['Das la tarde por terminada y la amiga se va.', 'Acaba con vergüenza y sin aprender nada.']]
+    ] },
+  { n: 5, titulo: 'Un mordisco en brazos', donde: 'Contigo · muerde', motivo: 'rabia', tool: 'cojin',
+    voz: 'Me cogiste para irnos y yo no quería. Te mordí sin pensar.',
+    escena: 'Es hora de irse del parque. Le coges en brazos porque no quiere ir andando. Patalea y te muerde en el hombro.',
+    d: [
+      [['Le dejas en el suelo con cuidado y dices firme: «No te dejo morderme».', 'Te proteges y paras el mordisco sin devolver daño.'], ['Sigues andando con él en brazos, aguantando el dolor.', 'Te cuesta, y él no ve que ahí hay un límite.'], ['Le das un cachete por el dolor.', 'Es una reacción humana, pero le enseña que el daño se responde con daño.']],
+      [['Te agachas: «No querías irte y te ha dado mucha rabia. Lo sé. A mí me ha dolido».', 'Validas su enfado y le cuentas, sin culpa, lo que causa.'], ['«¡Me has hecho mucho daño!», con mucho enfado.', 'Es verdad, pero en caliente suma tormenta.'], ['«Ya no te llevo en brazos nunca más.»', 'Le hace sentir que pierde tu cariño.']],
+      [['En casa practicáis apretar su cojín cuando algo le enfade mucho. Y en el próximo parque avisas antes de iros.', 'Le das dónde poner la rabia y anticipas el momento.'], ['Le pides un beso para pedir perdón.', 'Forzar el gesto no repara.'], ['No le hablas en todo el camino.', 'El silencio le deja solo con lo que siente.']]
+    ] },
+  { n: 6, titulo: 'Golpes de superhéroe', donde: 'Con su primo · pega', motivo: 'imitacion', tool: 'manos',
+    voz: 'En los dibujos lo hacían y todos se reían. Yo también quería ser superhéroe.',
+    escena: 'Ha visto dibujos de superhéroes que se pelean. Después, jugando con su primo, le da golpes «de superhéroe» riéndose. El primo llora.',
+    d: [
+      [['Te acercas y paras el juego: «Para. Así hacemos daño de verdad».', 'Frenas con calma: no había mala intención, pero sí daño.'], ['«Jugad sin haceros daño.»', 'Bien dicho, pero no frena lo que está pasando.'], ['Le quitas la tablet una semana.', 'Un castigo lejano que no le enseña qué hacer ahora.']],
+      [['«En los dibujos parece divertido, pero tu primo se ha hecho daño. Vamos a ver cómo está.»', 'Le ayudas a ver la diferencia entre la pantalla y la vida real.'], ['«Eso es de mentira, no se hace.»', 'Tiene razón, pero falta mirar a su primo.'], ['«Eres malo, has hecho llorar a tu primo.»', 'La etiqueta pesa y no le enseña a reparar.']],
+      [['Jugáis a superhéroes que se saludan chocando las manos muy fuerte, y miras qué dibujos está viendo.', 'Le das otro modelo y cuidas lo que ve.'], ['Le prohíbes jugar a superhéroes.', 'Cortas el juego, pero no le das otra forma de jugarlo.'], ['Le dices al primo que le devuelva el golpe.', 'Le enseña que un golpe se arregla con otro golpe.']]
+    ] }
+];
+var DECISIONES = ['¿Qué haces primero?', '¿Qué le dices?', 'Y después, ¿qué?'];
+
+var HICE_BIEN = [{ id: 'pare', t: 'Le paré con calma', i: 'hand' }, { id: 'nombre', t: 'Puse nombre a lo que sentía', i: 'message-circle' }, { id: 'dos', t: 'Atendí a los dos', i: 'users' }, { id: 'reparar', t: 'Reparamos después', i: 'heart' }];
+var NO_FUE = {
+  grite: { t: 'Grité', i: 'volume-2', txt: 'Nos pasa a todos. La próxima vez, frase corta y voz firme. Y si gritas, repara después: «Antes te grité y no estuvo bien».' },
+  cachete: { t: 'Le di un cachete', i: 'hand', txt: 'Cuando duele o asusta, a veces respondemos igual. Pero le enseña que el golpe sirve. Repara: «Antes te di un cachete y no estuvo bien. Yo también estoy aprendiendo».' },
+  perdon: { t: 'Le obligué a pedir perdón', i: 'message-square', txt: 'El perdón obligado no repara. Primero ayúdale a ver que el otro se hizo daño y, si ves un gesto, ofrécele reparar.' },
+  castigue: { t: 'Castigué', i: 'lock', txt: 'El castigo para el golpe un rato, pero no llena su caja. Mejor una herramienta practicada en calma.' }
+};
+
+/* ================= ESTADO ================= */
+function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k)); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+var mem = { caja: store('pk-caja') || {}, det: store('pk-det'), sims: store('pk-sims') || [], semana: store('pk-semana') };
+function save() { store('pk-caja', mem.caja); store('pk-det', mem.det); store('pk-sims', mem.sims); store('pk-semana', mem.semana); }
+function tool(id) { return TOOLS.filter(function (t) { return t.id === id; })[0]; }
+function lvl(id) { return mem.caja[id] || 0; }
+function inBox() { return TOOLS.filter(function (t) { return lvl(t.id) >= 1; }).length; }
+function stars() { return TOOLS.filter(function (t) { return lvl(t.id) === 2; }).length; }
+var ICONS = {"arrow-left":"<path d=\"m12 19-7-7 7-7\" /> <path d=\"M19 12H5\" />","arrow-right":"<path d=\"M5 12h14\" /> <path d=\"m12 5 7 7-7 7\" />","arrow-up-right":"<path d=\"M7 7h10v10\" /> <path d=\"M7 17 17 7\" />","baby":"<path d=\"M9 12h.01\" /> <path d=\"M15 12h.01\" /> <path d=\"M10 16c.5.3 1.2.5 2 .5s1.5-.2 2-.5\" /> <path d=\"M19 6.3a9 9 0 0 1 1.8 3.9 2 2 0 0 1 0 3.6 9 9 0 0 1-17.6 0 2 2 0 0 1 0-3.6A9 9 0 0 1 12 3c2 0 3.5 1.1 3.5 2.5s-.9 2.5-2 2.5c-.8 0-1.5-.4-1.5-1\" />","battery-low":"<rect width=\"16\" height=\"10\" x=\"2\" y=\"7\" rx=\"2\" ry=\"2\" /> <line x1=\"22\" x2=\"22\" y1=\"11\" y2=\"13\" /> <line x1=\"6\" x2=\"6\" y1=\"11\" y2=\"13\" />","brick-wall":"<rect width=\"18\" height=\"18\" x=\"3\" y=\"3\" rx=\"2\" /> <path d=\"M12 9v6\" /> <path d=\"M16 15v6\" /> <path d=\"M16 3v6\" /> <path d=\"M3 15h18\" /> <path d=\"M3 9h18\" /> <path d=\"M8 15v6\" /> <path d=\"M8 3v6\" />","calendar-check":"<path d=\"M8 2v4\" /> <path d=\"M16 2v4\" /> <rect width=\"18\" height=\"18\" x=\"3\" y=\"4\" rx=\"2\" /> <path d=\"M3 10h18\" /> <path d=\"m9 16 2 2 4-4\" />","check":"<path d=\"M20 6 9 17l-5-5\" />","chevron-right":"<path d=\"m9 18 6-6-6-6\" />","circle-dot":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <circle cx=\"12\" cy=\"12\" r=\"1\" />","cloud":"<path d=\"M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z\" />","cloud-lightning":"<path d=\"M6 16.326A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 .5 8.973\" /> <path d=\"m13 12-3 5h4l-3 5\" />","cloud-rain":"<path d=\"M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242\" /> <path d=\"M16 14v6\" /> <path d=\"M8 14v6\" /> <path d=\"M12 16v6\" />","copy":"<rect width=\"14\" height=\"14\" x=\"8\" y=\"8\" rx=\"2\" ry=\"2\" /> <path d=\"M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2\" />","eye":"<path d=\"M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0\" /> <circle cx=\"12\" cy=\"12\" r=\"3\" />","flame":"<path d=\"M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z\" />","footprints":"<path d=\"M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z\" /> <path d=\"M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z\" /> <path d=\"M16 17h4\" /> <path d=\"M4 13h4\" />","frown":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M16 16s-1.5-2-4-2-4 2-4 2\" /> <line x1=\"9\" x2=\"9.01\" y1=\"9\" y2=\"9\" /> <line x1=\"15\" x2=\"15.01\" y1=\"9\" y2=\"9\" />","hand":"<path d=\"M18 11V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" /> <path d=\"M14 10V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v2\" /> <path d=\"M10 10.5V6a2 2 0 0 0-2-2a2 2 0 0 0-2 2v8\" /> <path d=\"M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />","hand-metal":"<path d=\"M18 12.5V10a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1.4\" /> <path d=\"M14 11V9a2 2 0 1 0-4 0v2\" /> <path d=\"M10 10.5V5a2 2 0 1 0-4 0v9\" /> <path d=\"m7 15-1.76-1.76a2 2 0 0 0-2.83 2.82l3.6 3.6C7.5 21.14 9.2 22 12 22h2a8 8 0 0 0 8-8V7a2 2 0 1 0-4 0v5\" />","heart":"<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\" />","info":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M12 16v-4\" /> <path d=\"M12 8h.01\" />","life-buoy":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m4.93 4.93 4.24 4.24\" /> <path d=\"m14.83 9.17 4.24-4.24\" /> <path d=\"m14.83 14.83 4.24 4.24\" /> <path d=\"m9.17 14.83-4.24 4.24\" /> <circle cx=\"12\" cy=\"12\" r=\"4\" />","lock":"<rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" /> <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />","message-circle":"<path d=\"M7.9 20A9 9 0 1 0 4 16.1L2 22Z\" />","message-square":"<path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\" />","moon":"<path d=\"M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z\" />","octagon":"<path d=\"M2.586 16.726A2 2 0 0 1 2 15.312V8.688a2 2 0 0 1 .586-1.414l4.688-4.688A2 2 0 0 1 8.688 2h6.624a2 2 0 0 1 1.414.586l4.688 4.688A2 2 0 0 1 22 8.688v6.624a2 2 0 0 1-.586 1.414l-4.688 4.688a2 2 0 0 1-1.414.586H8.688a2 2 0 0 1-1.414-.586z\" />","package":"<path d=\"M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z\" /> <path d=\"M12 22V12\" /> <path d=\"m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7\" /> <path d=\"m7.5 4.27 9 5.15\" />","play":"<polygon points=\"6 3 20 12 6 21 6 3\" />","pointer":"<path d=\"M22 14a8 8 0 0 1-8 8\" /> <path d=\"M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2\" /> <path d=\"M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1\" /> <path d=\"M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10\" /> <path d=\"M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15\" />","puzzle":"<path d=\"M15.39 4.39a1 1 0 0 0 1.68-.474 2.5 2.5 0 1 1 3.014 3.015 1 1 0 0 0-.474 1.68l1.683 1.682a2.414 2.414 0 0 1 0 3.414L19.61 15.39a1 1 0 0 1-1.68-.474 2.5 2.5 0 1 0-3.014 3.015 1 1 0 0 1 .474 1.68l-1.683 1.682a2.414 2.414 0 0 1-3.414 0L8.61 19.61a1 1 0 0 0-1.68.474 2.5 2.5 0 1 1-3.014-3.015 1 1 0 0 0 .474-1.68l-1.683-1.682a2.414 2.414 0 0 1 0-3.414L4.39 8.61a1 1 0 0 1 1.68.474 2.5 2.5 0 1 0 3.014-3.015 1 1 0 0 1-.474-1.68l1.683-1.682a2.414 2.414 0 0 1 3.414 0z\" />","rabbit":"<path d=\"M13 16a3 3 0 0 1 2.24 5\" /> <path d=\"M18 12h.01\" /> <path d=\"M18 21h-8a4 4 0 0 1-4-4 7 7 0 0 1 7-7h.2L9.6 6.4a1 1 0 1 1 2.8-2.8L15.8 7h.2c3.3 0 6 2.7 6 6v1a2 2 0 0 1-2 2h-1a3 3 0 0 0-3 3\" /> <path d=\"M20 8.54V4a2 2 0 1 0-4 0v3\" /> <path d=\"M7.612 12.524a3 3 0 1 0-1.6 4.3\" />","repeat":"<path d=\"m17 2 4 4-4 4\" /> <path d=\"M3 11v-1a4 4 0 0 1 4-4h14\" /> <path d=\"m7 22-4-4 4-4\" /> <path d=\"M21 13v1a4 4 0 0 1-4 4H3\" />","search":"<circle cx=\"11\" cy=\"11\" r=\"8\" /> <path d=\"m21 21-4.3-4.3\" />","smartphone":"<rect width=\"14\" height=\"20\" x=\"5\" y=\"2\" rx=\"2\" ry=\"2\" /> <path d=\"M12 18h.01\" />","smile":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M8 14s1.5 2 4 2 4-2 4-2\" /> <line x1=\"9\" x2=\"9.01\" y1=\"9\" y2=\"9\" /> <line x1=\"15\" x2=\"15.01\" y1=\"9\" y2=\"9\" />","star":"<path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />","sun":"<circle cx=\"12\" cy=\"12\" r=\"4\" /> <path d=\"M12 2v2\" /> <path d=\"M12 20v2\" /> <path d=\"m4.93 4.93 1.41 1.41\" /> <path d=\"m17.66 17.66 1.41 1.41\" /> <path d=\"M2 12h2\" /> <path d=\"M20 12h2\" /> <path d=\"m6.34 17.66-1.41 1.41\" /> <path d=\"m19.07 4.93-1.41 1.41\" />","tent":"<path d=\"M3.5 21 14 3\" /> <path d=\"M20.5 21 10 3\" /> <path d=\"M15.5 21 12 15l-3.5 6\" /> <path d=\"M2 21h20\" />","theater":"<path d=\"M2 10s3-3 3-8\" /> <path d=\"M22 10s-3-3-3-8\" /> <path d=\"M10 2c0 4.4-3.6 8-8 8\" /> <path d=\"M14 2c0 4.4 3.6 8 8 8\" /> <path d=\"M2 10s2 2 2 5\" /> <path d=\"M22 10s-2 2-2 5\" /> <path d=\"M8 15h8\" /> <path d=\"M2 22v-1a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1\" /> <path d=\"M14 22v-1a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1\" />","trending-up":"<polyline points=\"22 7 13.5 15.5 8.5 10.5 2 17\" /> <polyline points=\"16 7 22 7 22 13\" />","users":"<path d=\"M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2\" /> <circle cx=\"9\" cy=\"7\" r=\"4\" /> <path d=\"M22 21v-2a4 4 0 0 0-3-3.87\" /> <path d=\"M16 3.13a4 4 0 0 1 0 7.75\" />","volume-2":"<path d=\"M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z\" /> <path d=\"M16 9a5 5 0 0 1 0 6\" /> <path d=\"M19.364 18.364a9 9 0 0 0 0-12.728\" />","wind":"<path d=\"M12.8 19.6A2 2 0 1 0 14 16H2\" /> <path d=\"M17.5 8a2.5 2.5 0 1 1 2 4H2\" /> <path d=\"M9.8 4.4A2 2 0 1 1 11 8H2\" />","x":"<path d=\"M18 6 6 18\" /> <path d=\"m6 6 12 12\" />","zap":"<path d=\"M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z\" />","check-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m9 12 2 2 4-4\" />","help-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3\" /> <path d=\"M12 17h.01\" />","x-circle":"<circle cx=\"12\" cy=\"12\" r=\"10\" /> <path d=\"m15 9-6 6\" /> <path d=\"m9 9 6 6\" />","home":"<path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" /> <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />"};
+function icon(n) { return '<svg class="lucide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICONS[n] || '') + '</svg>'; }
+function drawIcons() {}
+function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+function recTools() { if (!mem.det) return []; var t = MOTIVOS[mem.det.motivo].tools.slice(); if (mem.det.accion === 'muerde' && t.indexOf('mordedor') === -1) t.unshift('mordedor'); return t.slice(0, 3); }
+
+/* ================= NAVEGACIÓN PRINCIPAL ================= */
+var tab = 'inicio';
+var NAV = [['inicio', 'Inicio', 'home'], ['caja', 'Su caja', 'package'], ['escenas', 'Practicar', 'theater']];
+function renderNav() {
+  document.getElementById('nav').innerHTML = NAV.map(function (n) {
+    return '<button data-tab="' + n[0] + '"' + (tab === n[0] ? ' aria-current="page"' : '') + '><span class="nic">' + icon(n[2]) + '</span>' + n[1] + '</button>';
+  }).join('');
+  document.querySelectorAll('#nav button').forEach(function (b) { b.onclick = function () { go(b.getAttribute('data-tab')); }; });
+}
+function go(t) { tab = t; render(); window.scrollTo({ top: 0 }); }
+function render() { renderNav(); ({ inicio: renderHome, caja: renderCaja, escenas: renderEscenas })[tab](); drawIcons(); }
+
+function header() { return '<div class="top"><div class="brand">' + LOGO + 'Método Synesis</div><span class="pill">Pega y muerde</span></div>'; }
+
+/* ================= INICIO ================= */
+function nextStep() {
+  if (!mem.det) return 1;
+  if (inBox() === 0) return 2;
+  if (!mem.sims.length) return 3;
+  return 4;
+}
+function renderHome() {
+  var app = document.getElementById('app'), det = mem.det, nx = nextStep();
+  var hero = det
+    ? '<div class="hero"><p class="k">Su golpe te está diciendo</p><blockquote>«' + MOTIVOS[det.motivo][det.accion] + '»</blockquote><div class="meta"><button class="btn" data-act="detector">Hacerlo con otra situación</button></div></div>'
+    : '<div class="hero"><p class="k">Empieza aquí</p><h2>¿Qué te está diciendo con su golpe o su mordisco?</h2><div class="meta"><button class="btn" data-act="detector">Descubrirlo ' + icon('arrow-right') + '</button><span>2 minutos</span></div></div>';
+  var steps = [
+    [1, 'search', 'Entender su golpe', det ? MOTIVOS[det.motivo].nombre : '5 preguntas rápidas', 'detector', !!det],
+    [2, 'package', 'Llenar su caja', inBox() ? inBox() + ' herramientas practicadas' : 'Juegos de 5 minutos, en calma', 'caja', inBox() > 0],
+    [3, 'theater', 'Practicar una escena', mem.sims.length ? mem.sims.length + ' de ' + SIM.length + ' practicadas' : 'Decide qué harías, en frío', 'escenas', mem.sims.length > 0],
+    [4, 'calendar-check', 'Mirar tu semana', mem.semana ? 'Última vez: ' + mem.semana : 'Cada domingo, 2 minutos', 'semana', !!mem.semana]
+  ];
+  var mini = TOOLS.map(function (t) { var l = lvl(t.id); return '<span class="' + (l === 2 ? 'star' : l ? 'in' : '') + '">' + icon(t.icon) + '</span>'; }).join('');
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Hola. Vamos paso a paso.</h1><p class="screen-sub">Entiende qué te dice, enséñale otra forma de decirlo y mira cómo la empieza a usar.</p>' +
+    hero +
+    '<p class="label">Tu camino</p><div class="path">' + steps.map(function (s) {
+      return '<button class="step' + (s[5] ? ' done' : '') + (s[0] === nx ? ' next' : '') + '" data-act="' + s[4] + '"><span class="ic">' + icon(s[5] ? 'check' : s[1]) + '</span><span><b>' + s[2] + (s[0] === nx ? '<span class="badge-next">Ahora</span>' : '') + '</b><small>' + s[3] + '</small></span><span class="go">' + icon('chevron-right') + '</span></button>';
+    }).join('') + '</div>' +
+    '<p class="label">Su caja</p><button class="card mini-box" data-act="caja"><span style="flex:1"><span class="big-num">' + inBox() + ' <small>de ' + TOOLS.length + ' herramientas · ' + stars() + ' usadas por su cuenta</small></span><span class="mini-icons">' + mini + '</span></span><span class="go">' + icon('chevron-right') + '</span></button>';
+  app.querySelectorAll('[data-act]').forEach(function (b) {
+    b.onclick = function () {
+      var a = b.getAttribute('data-act');
+      if (a === 'detector') openDetector(); else if (a === 'semana') openSemana(); else go(a);
+    };
+  });
+}
+
+/* ================= CAJA ================= */
+function renderCaja() {
+  var rec = recTools(), n = inBox();
+  var app = document.getElementById('app');
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Su caja de herramientas</h1><p class="screen-sub">Toca una herramienta para ver su juego. Practicadla en calma y entrará en la caja.</p>' +
+    '<div class="box"><div class="box-head"><b>' + n + ' de ' + TOOLS.length + '</b><span>' + icon('star') + ' ' + stars() + '</span></div>' +
+    '<div class="meter"><i style="width:' + Math.round(n / TOOLS.length * 100) + '%"></i></div>' +
+    '<div class="tiles">' + TOOLS.map(function (t) {
+      var l = lvl(t.id);
+      return '<button class="tile' + (l === 2 ? ' star' : l ? ' in' : '') + '" data-tool="' + t.id + '">' +
+        (l === 2 ? '<span class="st">' + icon('star') + '</span>' : (!l && rec.indexOf(t.id) > -1 ? '<span class="rec" aria-label="Recomendada"></span>' : '')) +
+        '<span class="ti">' + icon(t.icon) + '</span><span>' + t.nombre + '</span></button>';
+    }).join('') + '</div></div>' +
+    '<div class="legend"><span><i style="background:var(--soft);box-shadow:inset 0 0 0 1.5px var(--sage)"></i>Practicada</span><span><i style="background:var(--sage)"></i>La usa por su cuenta</span>' + (rec.length ? '<span><i style="background:var(--terra)"></i>Recomendada</span>' : '') + '</div>' +
+    (mem.det ? '' : '<div class="card" style="margin-top:18px;display:flex;gap:14px;align-items:center"><span style="flex:1"><b>¿No sabes por cuál empezar?</b><br><span style="color:var(--muted);font-size:14.5px">Descubre qué le dice su golpe y te las marcamos.</span></span><button class="btn sage" data-act="detector">Descubrir</button></div>');
+  app.querySelectorAll('[data-tool]').forEach(function (b) { b.onclick = function () { openTool(b.getAttribute('data-tool')); }; });
+  var d = app.querySelector('[data-act="detector"]'); if (d) d.onclick = openDetector;
+}
+
+/* ================= HOJA DE HERRAMIENTA ================= */
+function closeSheet() { document.getElementById('sheet-root').innerHTML = ''; if (!document.querySelector('.flow')) document.body.classList.remove('locked'); }
+function sheet(html) {
+  document.body.classList.add('locked');
+  document.getElementById('sheet-root').innerHTML = '<div class="sheet-bg" id="sheet-bg"></div><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-in"><div class="grab"></div>' + html + '</div></div>';
+  document.getElementById('sheet-bg').onclick = closeSheet;
+  drawIcons();
+}
+function openTool(id, party) {
+  var t = tool(id), l = lvl(id);
+  if (party) {
+    sheet('<div class="party"><div class="burst">' + icon('star') + '</div><h3>¡Lo ha usado por su cuenta!</h3><p>Díselo con una sonrisa: «¡Lo has conseguido! Has usado tu herramienta». Eso es justo lo que estáis construyendo.</p><button class="btn block" id="sh-ok">Seguir</button></div>');
+    document.getElementById('sh-ok').onclick = function () { closeSheet(); render(); };
+    return;
+  }
+  var cta = l === 0 ? '<button class="btn block" id="sh-a">' + icon('check') + ' La hemos practicado jugando</button>'
+    : l === 1 ? '<button class="btn sage block" id="sh-a">' + icon('star') + ' ¡La ha usado por su cuenta!</button>' : '';
+  sheet('<div class="sheet-head"><span class="ti">' + icon(t.icon) + '</span><span><small>' + MOTIVO_TXT[t.motivo] + '</small><h3>' + t.nombre + '</h3></span></div>' +
+    '<div class="status-row"><span class="' + (l >= 1 ? 'on' : '') + '">1 · Practicada</span><span class="' + (l === 2 ? 'on' : '') + '">2 · La usa sola</span></div>' +
+    '<p class="block-k">Juego de 5 minutos</p><div class="game">' + t.juego + '</div>' +
+    '<p class="block-k">En el momento, díselo así</p><div class="say">«' + t.frase + '»</div>' +
+    '<div style="display:grid;gap:10px">' + cta + (l ? '<button class="link" id="sh-r" style="justify-self:center">Quitar de la caja</button>' : '') + '</div>');
+  var a = document.getElementById('sh-a');
+  if (a) a.onclick = function () { mem.caja[id] = l + 1; save(); if (l + 1 === 2) openTool(id, true); else { closeSheet(); render(); } };
+  var r = document.getElementById('sh-r');
+  if (r) r.onclick = function () { mem.caja[id] = 0; save(); closeSheet(); render(); };
+}
+
+/* ================= ESCENAS ================= */
+function renderEscenas() {
+  var app = document.getElementById('app');
+  app.innerHTML = header() +
+    '<h1 class="screen-title">Ponte en sus zapatos</h1><p class="screen-sub">Cada escena empieza por lo que siente tu peque. Luego decides qué harías. Sin notas.</p>' +
+    '<div class="stack">' + SIM.map(function (s) {
+      var d = mem.sims.indexOf(s.n) > -1;
+      return '<button class="scene-card" data-n="' + s.n + '"><span><span class="where">' + s.donde + '</span><b>' + s.titulo + '</b><q>' + s.voz + '</q></span><span class="ok' + (d ? ' done' : '') + '">' + icon(d ? 'check' : 'play') + '</span></button>';
+    }).join('') + '</div>' +
+    '<p style="text-align:center;color:var(--muted);font-size:13px;margin-top:18px">Prototipo con 6 escenas de muestra. La versión final tendrá unas 16.</p>';
+  app.querySelectorAll('[data-n]').forEach(function (b) { b.onclick = function () { openSim(Number(b.getAttribute('data-n'))); }; });
+}
+
+/* ================= MOTOR DE FLUJOS ================= */
+var F = null;
+function flow(o) {
+  F = o; document.body.classList.add('locked');
+  var root = document.getElementById('flow-root');
+  root.innerHTML = '<div class="flow" role="dialog" aria-modal="true"><div class="flow-bar"><button class="icon-btn" id="f-back" aria-label="Atrás">' + icon('arrow-left') + '</button><div class="bar"><i id="f-bar"></i></div><button class="icon-btn" id="f-close" aria-label="Cerrar">' + icon('x') + '</button></div><div class="flow-body" id="f-body"><div class="flow-in" id="f-in"></div></div><div class="flow-foot" id="f-foot"></div></div>';
+  document.getElementById('f-close').onclick = closeFlow;
+  document.getElementById('f-back').onclick = function () { if (F.back) F.back(); };
+  F.draw();
+}
+function closeFlow() { document.getElementById('flow-root').innerHTML = ''; F = null; document.body.classList.remove('locked'); render(); }
+function paint(p, inner, foot, canBack) {
+  document.getElementById('f-bar').style.width = Math.round(p * 100) + '%';
+  document.getElementById('f-in').innerHTML = inner;
+  document.getElementById('f-foot').innerHTML = foot || '';
+  document.getElementById('f-back').style.visibility = canBack ? 'visible' : 'hidden';
+  document.getElementById('f-body').scrollTop = 0;
+  drawIcons();
+}
+function optsHtml(opts, pressed, multi) {
+  return '<div class="opts">' + opts.map(function (o) {
+    var on = multi ? pressed.indexOf(o.id) > -1 : pressed === o.id;
+    return '<button class="opt" data-id="' + o.id + '" aria-pressed="' + on + '">' + (o.i ? '<span class="oi">' + icon(o.i) + '</span>' : '') + '<span>' + o.t + '</span></button>';
+  }).join('') + '</div>';
+}
+
+/* ---------- Detector ---------- */
+function openDetector() {
+  var st = { i: 0, a: {}, page: 0, res: null };
+  function score() {
+    var sc = { rabia: 0, impulso: 0, nosabe: 0, conexion: 0, imitacion: 0, cansancio: 0 };
+    D_STEPS.forEach(function (S) { var o = S.opts.filter(function (x) { return x.id === st.a[S.key]; })[0]; if (o && o.s) Object.keys(o.s).forEach(function (k) { sc[k] += o.s[k]; }); });
+    return Object.keys(sc).sort(function (a, b) { return sc[b] - sc[a]; })[0];
+  }
+  flow({
+    back: function () { if (st.res) { if (st.page > 0) st.page--; else { st.res = null; st.i = D_STEPS.length - 1; } } else if (st.i > 0) st.i--; F.draw(); },
+    draw: function () {
+      if (!st.res) {
+        var S = D_STEPS[st.i];
+        paint((st.i + 1) / (D_STEPS.length + 5), '<p class="q-kicker">Pregunta ' + (st.i + 1) + ' de ' + D_STEPS.length + '</p><h2 class="q">' + S.q + '</h2>' + optsHtml(S.opts, st.a[S.key]), '', st.i > 0);
+        document.querySelectorAll('#f-in .opt').forEach(function (b) {
+          b.onclick = function () {
+            st.a[S.key] = b.getAttribute('data-id'); b.setAttribute('aria-pressed', 'true');
+            setTimeout(function () {
+              if (st.i < D_STEPS.length - 1) st.i++;
+              else { st.res = { motivo: score(), accion: st.a.accion }; st.page = 0; mem.det = st.res; save(); }
+              F.draw();
+            }, 160);
+          };
+        });
+        return;
+      }
+      var M = MOTIVOS[st.res.motivo], acc = st.res.accion, verbo = acc === 'muerde' ? 'morder' : 'pegar', rec = recTools();
+      var pages = [
+        '<div class="big-card sage"><p class="k">Cuando ' + (acc === 'muerde' ? 'muerde' : 'pega') + ' así, en realidad te está diciendo</p><p class="quote">«' + M[acc] + '»</p><span class="chip">' + icon(M.icon) + M.nombre + '</span></div>',
+        '<div class="big-card"><h3>Qué le pasa por dentro</h3><p>' + M.dentro + '</p><div class="soft-note">' + (acc === 'muerde' ? 'Morder' : 'Pegar') + ' a esta edad es frecuente. No significa que sea agresivo: su caja de herramientas todavía tiene pocas.</div></div>',
+        '<div class="big-card"><h3>Cómo verlo venir</h3>' + M.senales.map(function (s) { return '<div class="sign"><span class="si">' + icon(s[0]) + '</span><span>' + s[1] + '</span></div>'; }).join('') + '</div>',
+        '<div class="big-card"><h3>Qué hacer en el momento</h3>' + M.hacer.map(function (h, i) { return '<div class="sign"><span class="num">' + (i + 1) + '</span><span>' + h.replace('{verbo}', verbo) + '</span></div>'; }).join('') + '</div>',
+        '<div class="big-card terra"><h3>Lo que necesita su caja</h3><p style="font-size:15.5px;color:var(--muted)">Empieza por estas. Cada una tiene un juego de 5 minutos.</p><div class="tool-grid">' + rec.map(function (id) { var t = tool(id); return '<div class="tile in"><span class="ti">' + icon(t.icon) + '</span><span>' + t.nombre + '</span></div>'; }).join('') + '</div></div>' +
+          '<p style="text-align:center;margin-top:18px"><button class="link" id="pro">¿Cuándo conviene consultarlo?</button></p>'
+      ];
+      var last = st.page === pages.length - 1;
+      var dots = '<div class="dots">' + pages.map(function (_, i) { return '<i class="' + (i === st.page ? 'on' : '') + '"></i>'; }).join('') + '</div>';
+      paint((D_STEPS.length + st.page + 1) / (D_STEPS.length + 5), '<div class="center-page">' + pages[st.page] + '</div>', dots + (last ? '<button class="btn block" id="f-next">Ver los juegos en su caja ' + icon('arrow-right') + '</button>' : '<button class="btn block" id="f-next">Siguiente</button>'), true);
+      document.getElementById('f-next').onclick = function () { if (last) { closeFlow(); go('caja'); } else { st.page++; F.draw(); } };
+      var p = document.getElementById('pro');
+      if (p) p.onclick = function () { sheet('<h3 style="font-size:22px;margin:0 0 10px">Cuándo conviene consultarlo</h3><p>Coméntalo con su pediatra si los golpes o mordiscos son muy frecuentes y van a más con el tiempo, si hace daño intenso a menudo, o si te preocupan otras cosas de su desarrollo.</p><p style="color:var(--muted)">Pedir otra mirada también es acompañar.</p><button class="btn block" id="sh-ok">Entendido</button>'); document.getElementById('sh-ok').onclick = closeSheet; };
+    }
+  });
+}
+
+/* ---------- Escena ---------- */
+function openSim(n) {
+  var s = SIM.filter(function (x) { return x.n === n; })[0];
+  var st = { p: 0, pick: null, order: shuffle([0, 1, 2]) };
+  var TOTAL = 6;
+  flow({
+    back: function () { if (st.p > 0) { st.p--; st.pick = null; st.order = shuffle([0, 1, 2]); F.draw(); } },
+    draw: function () {
+      if (st.p === 0) {
+        paint(1 / TOTAL, '<p class="q-kicker">' + s.donde + '</p><div class="voice-card"><div class="who">' + icon('heart') + ' Lo que siente tu peque</div><p class="quote">«' + s.voz + '»</p></div>', '<button class="btn block" id="f-next">Ver qué pasó</button>', false);
+      } else if (st.p === 1) {
+        paint(2 / TOTAL, '<p class="q-kicker">La escena</p><h2 class="q">' + s.titulo + '</h2><p class="scene-text">' + s.escena + '</p>', '<button class="btn block" id="f-next">¿Qué harías tú?</button>', true);
+      } else if (st.p < 5) {
+        var k = st.p - 2, opts = s.d[k];
+        var html = '<p class="q-kicker">Decisión ' + (k + 1) + ' de 3</p><h2 class="q">' + DECISIONES[k] + '</h2><div class="opts">' + st.order.map(function (j) {
+          var cls = 'opt' + (st.pick !== null ? (j === st.pick ? ' picked' : ' faded') : '');
+          return '<button class="' + cls + '" data-j="' + j + '"' + (st.pick !== null ? ' disabled' : '') + '><span>' + opts[j][0] + '</span></button>';
+        }).join('') + '</div>';
+        if (st.pick !== null) {
+          html += st.pick === 0
+            ? '<div class="fb good"><b>' + icon('check-circle') + ' Esto es lo que ayuda</b><p>' + opts[0][1] + '</p></div>'
+            : '<div class="fb other"><b>' + icon(st.pick === 1 ? 'arrow-up-right' : 'info') + (st.pick === 1 ? ' Vas por buen camino' : ' Pasa mucho') + '</b><p>' + opts[st.pick][1] + '</p><div class="better"><small>Lo que más ayuda</small><p><b style="display:inline;font-size:16px">' + opts[0][0] + '</b> ' + opts[0][1] + '</p></div></div>';
+        }
+        paint((st.p + 1) / TOTAL, html, st.pick !== null ? '<button class="btn block" id="f-next">' + (k < 2 ? 'Continuar' : 'Terminar') + '</button>' : '', true);
+        document.querySelectorAll('#f-in .opt').forEach(function (b) {
+          b.onclick = function () { st.pick = Number(b.getAttribute('data-j')); F.draw(); var fb = document.querySelector('.fb'); if (fb) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); };
+        });
+      } else {
+        var T = tool(s.tool);
+        if (mem.sims.indexOf(s.n) === -1) { mem.sims.push(s.n); save(); }
+        paint(1, '<div style="text-align:center;margin:10px 0 18px"><div class="party"><div class="burst">' + icon('check') + '</div></div><h2 class="q">Escena practicada</h2><p class="q-help">Esto es lo que te llevas:</p></div>' +
+          '<div class="big-card">' + s.d.map(function (dd, i) { return '<div class="recap"><span class="num">' + (i + 1) + '</span><p><small>' + DECISIONES[i] + '</small>' + dd[0][0] + '</p></div>'; }).join('') + '</div>' +
+          '<div class="big-card terra" style="display:flex;align-items:center;gap:14px"><span class="tile in" style="min-height:0;padding:10px;flex:none"><span class="ti">' + icon(T.icon) + '</span></span><span><small style="color:var(--muted);font-weight:600;font-size:13px">Herramienta de esta escena</small><br><b style="font-size:17px">' + T.nombre + '</b></span></div>',
+          '<button class="btn block" id="f-tool">Ver su juego</button><button class="btn ghost block" id="f-done">Volver a las escenas</button>', false);
+        document.getElementById('f-tool').onclick = function () { closeFlow(); go('caja'); openTool(s.tool); };
+        document.getElementById('f-done').onclick = function () { closeFlow(); go('escenas'); };
+        return;
+      }
+      var nx = document.getElementById('f-next');
+      if (nx) nx.onclick = function () { st.p++; st.pick = null; st.order = shuffle([0, 1, 2]); F.draw(); };
+    }
+  });
+}
+
+/* ---------- Mi semana ---------- */
+function openSemana() {
+  var st = { i: 0, a: { veces: null, motivo: null, uso: [], hice: [] }, done: false };
+  var STEPS = ['veces', 'motivo', 'uso', 'hice'];
+  function active() { return st.a.veces === '0' ? ['veces', 'uso'] : STEPS; }
+  flow({
+    back: function () { if (st.done) st.done = false; else if (st.i > 0) st.i--; F.draw(); },
+    draw: function () {
+      var steps = active();
+      if (!st.done) {
+        var key = steps[st.i], html, foot = '', multi = false;
+        var prog = (st.i + 1) / (steps.length + 1);
+        if (key === 'veces') html = '<p class="q-kicker">Mi semana</p><h2 class="q">¿Cuántas veces pegó o mordió esta semana?</h2>' + optsHtml([{ id: '0', t: 'Ninguna', i: 'sun' }, { id: '1', t: '1 o 2 veces', i: 'cloud' }, { id: '3', t: 'De 3 a 5 veces', i: 'cloud-rain' }, { id: '6', t: 'Más de 5 veces', i: 'cloud-lightning' }], st.a.veces);
+        if (key === 'motivo') html = '<p class="q-kicker">Mi semana</p><h2 class="q">¿Qué parecía haber detrás?</h2><p class="q-help">La mayoría de las veces.</p>' + optsHtml(Object.keys(MOTIVOS).map(function (k) { return { id: k, t: MOTIVOS[k].nombre, i: MOTIVOS[k].icon }; }).concat([{ id: 'nose', t: 'No lo sé', i: 'help-circle' }]), st.a.motivo);
+        if (key === 'uso') { multi = true; html = '<p class="q-kicker">Mi semana</p><h2 class="q">¿Usó alguna herramienta por su cuenta?</h2><p class="q-help">Aunque solo fuera una vez. Toca todas las que usó.</p><div class="tool-grid">' + TOOLS.map(function (t) { return '<button class="tile" data-id="' + t.id + '" aria-pressed="' + (st.a.uso.indexOf(t.id) > -1) + '"><span class="ti">' + icon(t.icon) + '</span><span>' + t.nombre + '</span></button>'; }).join('') + '</div>'; foot = '<button class="btn block" id="f-next">' + (st.a.uso.length ? 'Siguiente' : 'Todavía ninguna') + '</button>'; }
+        if (key === 'hice') { multi = true; html = '<p class="q-kicker">Mi semana</p><h2 class="q">¿Y tú, qué hiciste?</h2><p class="q-help">Sin notas: lo que no sale bien también cuenta.</p><p class="group-label">Lo que enseña el mini-curso</p>' + optsHtml(HICE_BIEN, st.a.hice, true) + '<p class="group-label">Lo que también pasa</p>' + optsHtml(Object.keys(NO_FUE).map(function (k) { return { id: k, t: NO_FUE[k].t, i: NO_FUE[k].i }; }), st.a.hice, true); foot = '<button class="btn block" id="f-next">Ver mi semana</button>'; }
+        if (key === 'uso' && steps.length === 2) foot = '<button class="btn block" id="f-next">Ver mi semana</button>';
+        paint(prog, html, foot, st.i > 0);
+        document.querySelectorAll('#f-in [data-id]').forEach(function (b) {
+          b.onclick = function () {
+            var id = b.getAttribute('data-id');
+            if (multi) { var arr = st.a[key], i = arr.indexOf(id); if (i > -1) arr.splice(i, 1); else arr.push(id); F.draw(); return; }
+            st.a[key] = id; b.setAttribute('aria-pressed', 'true');
+            setTimeout(function () { st.i++; F.draw(); }, 160);
+          };
+        });
+        var nx = document.getElementById('f-next');
+        if (nx) nx.onclick = function () { if (st.i < steps.length - 1) st.i++; else { st.done = true; finish(); } F.draw(); };
+        return;
+      }
+      drawResult();
+    }
+  });
+  function finish() {
+    st.a.uso.forEach(function (id) { mem.caja[id] = 2; });
+    var d = new Date(); mem.semana = d.getDate() + '/' + (d.getMonth() + 1); save();
+  }
+  function drawResult() {
+    var a = st.a, M = a.motivo && a.motivo !== 'nose' ? MOTIVOS[a.motivo] : null;
+    var html = '';
+    if (a.uso.length) html += '<div class="big-card sage"><p class="k">' + icon('star') + ' Esta semana ha usado por su cuenta</p><div class="tool-grid" style="margin-top:6px">' + a.uso.map(function (id) { var t = tool(id); return '<div class="tile star"><span class="ti">' + icon(t.icon) + '</span><span>' + t.nombre + '</span></div>'; }).join('') + '</div><p style="margin-top:14px;font-size:16px">Cada vez que elige una herramienta en lugar del golpe, aprende otra forma de decir lo que siente.</p></div>';
+    var animo = a.veces === '0' ? 'Una semana sin golpes ni mordiscos. Disfrútala. Si vuelve a pasar, no es un paso atrás.'
+      : a.veces === '1' ? 'Una o dos veces en una semana es más común de lo que parece a esta edad. Lo que más cuenta es lo que pasa después.'
+      : 'Ha sido una semana intensa. No dice nada malo de tu peque ni de ti: su caja todavía tiene pocas herramientas. Empieza por una.';
+    html += '<h2 class="q" style="margin-top:' + (a.uso.length ? '24px' : '8px') + '">' + (a.veces === '0' ? 'Semana tranquila' : 'Tu semana') + '</h2><p class="q-help" style="font-size:17px;color:var(--text)">' + animo + '</p>';
+    if (M) html += '<div class="big-card" style="margin-top:16px"><p class="k" style="color:var(--sage-deep)">Su golpe parece decir</p><p class="quote" style="font-size:22px">«' + M.pega + '»</p></div>';
+    var pool = M ? M.tools : ['pisar', 'esmio', 'brazo'];
+    var next = pool.filter(function (id) { return lvl(id) === 0; })[0] || pool.filter(function (id) { return lvl(id) < 2; })[0] || pool[0];
+    var T = tool(next);
+    html += '<div class="big-card terra" style="margin-top:14px"><p class="k" style="color:var(--terra)">Para la semana que viene</p><div style="display:flex;gap:14px;align-items:center"><span class="tile in" style="min-height:0;padding:10px;flex:none"><span class="ti">' + icon(T.icon) + '</span></span><span><b style="font-size:18px">' + T.nombre + '</b><br><span style="color:var(--muted);font-size:14.5px">Un juego de 5 minutos para practicarla.</span></span></div><button class="btn block" style="margin-top:16px" id="r-tool">Ver el juego</button></div>';
+    var no = ['cachete', 'grite', 'perdon', 'castigue'].filter(function (k) { return a.hice.indexOf(k) > -1; })[0];
+    if (no) html += '<div class="big-card" style="margin-top:14px"><p class="k" style="color:var(--muted)">Para lo que no salió como querías</p><p style="font-size:16px">' + NO_FUE[no].txt + '</p></div>';
+    var sc = M ? SIM.filter(function (x) { return x.motivo === a.motivo; })[0] : null;
+    if (sc) html += '<button class="scene-card" id="r-sim" style="margin-top:14px"><span><span class="where">Practica esta escena</span><b>' + sc.titulo + '</b><q>' + sc.voz + '</q></span><span class="ok">' + icon('play') + '</span></button>';
+    paint(1, html, '<button class="btn block" id="r-done">Hecho</button>', true);
+    document.getElementById('r-done').onclick = closeFlow;
+    document.getElementById('r-tool').onclick = function () { closeFlow(); go('caja'); openTool(next); };
+    var rs = document.getElementById('r-sim'); if (rs) rs.onclick = function () { closeFlow(); openSim(sc.n); };
+  }
+}
+
+/* ================= ARRANQUE ================= */
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { if (document.querySelector('.sheet')) closeSheet(); else if (F) closeFlow(); } });
+render();
+</script>
+
+</body></html>
