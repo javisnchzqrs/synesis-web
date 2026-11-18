@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Lo que hablamos · Método Synesis</title>
 <meta property="og:title" content="Lo que hablamos, para verlo con calma">
-<meta property="og:description" content="Tu caso, el método y los programas. De Paloma, Método Synesis.">
+<meta property="og:description" content="Tu caso, el método y el programa. De Paloma, Método Synesis.">
 <meta property="og:image" content="https://app.metodosynesis.com/media/fotos/paloma-recurso.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#F3EDE4">
@@ -21,7 +21,7 @@
 <body>
 <div id="m"><div class="punto" aria-hidden="true"></div><p>Abriendo…</p></div>
 <script>
-/* Enlace corto: /i/?codigo → pide el caso y abre «Lo que hablamos» (/info/) */
+/* Enlace corto: /i/?codigo → pide el caso y abre «Lo que hablamos»: el recurso de la llamada en modo familia (/llamada/?f=1) */
 (function(){
   var codigo=(location.search.slice(1).split('&')[0]||'').replace(/[^a-z0-9]/gi,'').toLowerCase();
   function fallo(){
@@ -34,7 +34,7 @@
     body:JSON.stringify({p_codigo:codigo})
   }).then(function(r){return r.ok?r.json():null}).then(function(c){
     if(!c)return fallo();
-    location.replace('/info/?c='+c);
+    location.replace('/llamada/?c='+c+'&f=1');
   }).catch(fallo);
 })();
 </script>

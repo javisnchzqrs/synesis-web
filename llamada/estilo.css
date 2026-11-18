@@ -555,3 +555,53 @@ body{background:
   .prog-col{padding:14px 18px}
 }
 @media (max-width:900px){.termo-host{height:62vh}}
+
+/* ── modo familia ── */
+.familia .tools,.familia #notas,.familia #editor{display:none!important}
+.filo-sub{margin-top:14px;font-size:clamp(17px,1.5vw,20px);line-height:1.4;color:var(--muted);max-width:30ch}
+.btn.wa{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.btn.wa svg{width:22px;height:22px}
+.fam-nota{margin-top:12px;font-size:15px;color:var(--muted)}
+
+/* ── móvil ── */
+@media (max-width:900px){
+  .filo{display:flex;flex-direction:column;gap:0}
+  .filo-txt{display:contents}
+  .filo .eyebrow{order:1}.filo .h2{order:2;max-width:none}.filo-sub{order:3;margin-top:8px;font-size:16px}
+  .filo-seg{order:4;margin-top:14px;width:100%;display:flex}.filo-seg button{flex:1}
+  .termo-host{order:5;width:100%;height:46vh;min-height:330px;max-height:440px;margin-top:14px;border-radius:22px}
+  .filo .intentos,.filo div.solo-syn{order:6}
+  .intentos{grid-template-columns:repeat(3,1fr);max-width:none;margin-top:12px;gap:6px}
+  .intento{flex-direction:column;justify-content:center;gap:4px;font-size:15px;padding:8px 6px;text-align:center}
+  .intento:hover{transform:none}
+  .intento .cn,.capas-t .cn{width:26px;height:26px;font-size:13px}
+  .solo-syn .btn{margin-top:12px;width:100%;justify-content:center}
+  .capas-t{grid-template-columns:1fr 1fr;gap:4px 10px;margin-top:12px;max-width:none}
+  .capas-t li{padding:4px 0;gap:8px;align-items:flex-start}
+  .capas-t b{font-size:15px}.capas-t small{font-size:12.5px}
+  .t-frase{white-space:normal;text-align:center;width:max-content;max-width:92%;font-size:16px;bottom:12px;padding:7px 14px}
+  .t-nombre{font-size:14px;padding:5px 11px}
+  .t-tu b{font-size:24px}.t-tu small{font-size:8px}
+  .t-esc{font-size:10px}
+  .bgrid{grid-template-columns:1fr;gap:10px;margin-top:18px}
+  .bcard{padding:14px 16px}
+  .bcard h3{margin-top:10px;font-size:19px}
+  .bcard p{margin-top:4px}
+  .bprecio{padding-top:10px}
+  .btotal{flex-wrap:wrap;justify-content:center;gap:4px 12px;padding:10px 20px;border-radius:22px}
+  .btotal span{font-size:14px}.btotal s{font-size:17px}.btotal b{font-size:22px}
+  .meses .h2{max-width:none}
+  .kpi{min-width:0;width:100%}
+  .grafica{padding:8px 6px 2px;border-radius:18px}
+  .acciones .btn.wa{width:100%;justify-content:center}
+}
+@media (max-width:900px){
+  .filo .h2{font-size:clamp(28px,8vw,36px)}
+  .filo-sub{font-size:15px}
+  .termo-host{height:clamp(240px,calc(100svh - 500px),440px);min-height:0}
+  .familia .termo-host{height:clamp(240px,calc(100svh - 570px),420px)}
+}
+@media (max-width:900px){
+  .capas-t small{display:none}
+  .capas-t li{align-items:center}
+}

@@ -99,6 +99,10 @@ function leerEnlace(){
 }
 const CLAVE=(()=>{const c=new URLSearchParams(location.search).get('c');if(!c)return 'synesis-caso-v2';
   let h=0;for(let i=0;i<c.length;i++)h=(h*31+c.charCodeAt(i))|0;return 'synesis-caso-c'+(h>>>0).toString(36);})();
+/* modo familia (?f=1): el enlace que Paloma manda después de la llamada */
+const FAM=new URLSearchParams(location.search).get('f')==='1';
+const WHATSAPP='34644623164';
+if(FAM)document.documentElement.classList.add('familia');
 let C=null;
 try{C=JSON.parse(localStorage.getItem(CLAVE))||null}catch(e){C=null}
 if(!C||!C.hijo)C=leerEnlace();
@@ -115,6 +119,7 @@ const dec=n=>n.toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDi
 const lunes=()=>{const d=new Date();const add=((8-d.getDay())%7)||7;d.setDate(d.getDate()+add);return d};
 const mezcla=(a,b,t)=>{const h=x=>[1,3,5].map(i=>parseInt(x.substr(i,2),16));const A=h(a),B=h(b);return '#'+A.map((v,i)=>Math.round(v+(B[i]-v)*t).toString(16).padStart(2,'0')).join('')};
 const ico={
+  wa:'<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.6.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2s.2-1.1.2-1.2-.2-.2-.4-.3z"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg>',
   flecha:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 12h15m-6-6 6 6-6 6"/></svg>'};
 
@@ -155,7 +160,7 @@ function paginas(){
       <div class="rev"><div class="portrait"><img src="/media/fotos/paloma-recurso.jpg" alt="Paloma Robles"></div>
       <p class="firma"><b>Paloma Robles</b>Educadora infantil y guía familiar</p></div>
       <div><p class="hola rev" style="--r:.15s">Hola, ${p}.</p>
-      <h1 class="h1 rev" style="--r:.3s">Hoy decidimos qué pasa con <em>${h}</em>.</h1></div></div>`,
+      <h1 class="h1 rev" style="--r:.3s">${FAM?`Lo que hablamos sobre <em>${h}</em>.`:`Hoy decidimos qué pasa con <em>${h}</em>.`}</h1></div></div>`,
    n:{dice:`Hola ${C.padre}. Esta llamada es para que salgas sabiendo exactamente qué hacer con ${C.hijo}. Antes de nada, cuéntame: ¿cómo ha ido esta semana?`,
       l:['Deja que hable. Apunta sus palabras exactas: las vas a usar al final.','No expliques el método todavía.','Si es escueta: «¿Y cómo te está afectando a ti, más allá de lo que hace?»']}},
 
@@ -229,7 +234,7 @@ function paginas(){
       <h2 class="h2 rev" style="--r:.1s">${PROGRAMA.nombre}</h2>
       <div class="inv-bajo">${S.precio?invRes(d):`<button class="btn prim xl rev" style="--r:.4s" data-act="precio">Ver la inversión</button>`}</div></div>`,
    n:{dice:`Todo esto tiene un valor de ${valorTotal()} €. La inversión es de ${PROGRAMA.precio} €. Si lo prefieres, en 3 plazos sin intereses con Klarna: 3 de 165,67 €.`,
-      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha la forma de pago que elija: queda en el cierre.','Si Klarna rechaza: 3 pagos de 175 € directamente con nosotros.','Sesión extra fuera del programa: 69 €, siempre.','La garantía no se dice aquí. Solo si duda (mira las notas del cierre).']}},
+      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha la forma de pago que elija: queda en el cierre.','Si Klarna rechaza: 3 plazos con nosotros, 198,80 € + 173,95 € + 124,25 € (enlace «Synesis 12 · 3 plazos»).','Sesión extra fuera del programa: 69 €, siempre.','La garantía no se dice aquí. Solo si duda (mira las notas del cierre).']}},
 
   {t:'Cierre',html:cierreHTML(d,inicio),
    n:{dice:`${C.padre}, ${S.hoy!==null&&S.meta!==null?`de ${S.hoy} a ${S.meta}. `:''}¿Empezamos hoy?`,
@@ -291,6 +296,7 @@ function filosofiaHTML(d){
     <div class="filo-txt"><p class="eyebrow rev">La filosofía</p>
       <h2 class="h2 rev solo-hab" style="--r:.1s">Lo habitual: <span class="alarma">bajar el número.</span></h2>
       <h2 class="h2 rev solo-syn" style="--r:.1s">El termostato <em>${d.v('eres tú','sois vosotros')}.</em></h2>
+      ${FAM?`<p class="filo-sub rev solo-hab" style="--r:.15s">Lo que hace ${h} es como un termómetro: marca la temperatura de casa. Prueba a bajar el número.</p><p class="filo-sub rev solo-syn" style="--r:.15s">Cuando cambias la temperatura, el número baja solo. Y se queda.</p>`:''}
       <div class="seg filo-seg rev" style="--r:.2s" role="group"><button data-act="filo" data-v="hab" class="${hab?'on':''}">Lo habitual</button><button data-act="filo" data-v="syn" class="${hab?'':'on'}">Con Synesis</button></div>
       <div class="solo-hab intentos rev" style="--r:.3s">${['Premios','Castigos','Trucos'].map((t,i)=>`<button class="intento" data-act="termo" data-v="${i}"><span class="cn">${i+1}</span>${t}</button>`).join('')}</div>
       <div class="solo-syn rev" style="--r:.3s"><button class="btn prim" data-act="ajustar">Ajustar el termostato</button>
@@ -306,7 +312,8 @@ function cicloDe(n){
 function mesesHTML(d){
   const hay=S.hoy!==null&&S.meta!==null;
   const a=S.hoy??3,b=Math.max(S.meta??8,a);
-  const W=1000,H=270,L=34,Rr=16,T=22,B=46;
+  const movil=innerWidth<=900;
+  const W=movil?540:1000,H=movil?320:270,L=34,Rr=16,T=22,B=46;
   const x=w=>L+w/12*(W-L-Rr),y=v=>T+(1-v/10)*(H-T-B);
   const f=w=>a+(b-a)*(1-Math.pow(1-w/12,1.6));
   let dpath='';for(let w=0;w<=12.001;w+=.25)dpath+=(w?'L':'M')+x(w).toFixed(1)+' '+y(f(w)).toFixed(1);
@@ -352,6 +359,11 @@ function invRes(d){
     <div class="planes pagos">${PROGRAMA.pagos.map(x=>`<button class="plan ${x.id===S.pago?'on':''}" data-act="pago" data-v="${x.id}"><small>${x.nombre}</small><b>${x.precio}<i>€</i></b><span>${x.det}</span></button>`).join('')}</div>
     <p class="plazas">Plazas limitadas: las sesiones las hace Paloma personalmente.</p></div>`;
 }
+function waFam(){
+  const quien=C.padre&&C.padre!=='—'?`, soy ${C.padre}`:'';
+  const de=C.hijo&&C.hijo!=='—'?` sobre ${C.hijo}`:'';
+  return `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(`Hola Paloma${quien}. Ya he visto lo que hablamos${de}.`)}`;
+}
 function cierreHTML(d,inicio){
   const dia=inicio.getDate(),{h,p}=d;
   const deseo=C.deseo?`<p class="deseo-l rev">${d.v('Lo que me dijiste','Lo que me contasteis')}</p><div class="burbuja rev" style="--r:.1s"><p>${esc(C.deseo)}</p><span class="burbuja-meta" aria-hidden="true">✓✓</span></div>`:'';
@@ -375,7 +387,8 @@ function cierreHTML(d,inicio){
   return `<div class="wrap centro">${deseo}
       ${(S.hoy!==null&&S.meta!==null)?`<p class="kpi-cierre rev" style="--r:.25s">${d.v('Tu','Vuestro')} objetivo <span><i class="a">${S.hoy}</i>${ico.flecha}<i class="b">${S.meta}</i></span></p>`:''}
       <h2 class="h2 cierre-q rev" style="--r:.35s">${p}, ¿empezamos hoy?</h2>
-      <div class="acciones rev" style="--r:.55s"><button class="btn prim xl" data-act="si">Sí, empezamos</button><button class="btn sec xl" data-act="duda0">Tengo una duda</button></div></div>`;
+      ${FAM?`<div class="acciones rev" style="--r:.55s"><a class="btn prim xl wa" href="${esc(waFam())}" target="_blank" rel="noopener">${ico.wa}<span>Hablar con Paloma</span></a></div><p class="fam-nota rev" style="--r:.7s">Te contesto yo, por WhatsApp.</p>`
+        :`<div class="acciones rev" style="--r:.55s"><button class="btn prim xl" data-act="si">Sí, empezamos</button><button class="btn sec xl" data-act="duda0">Tengo una duda</button></div>`}</div>`;
 }
 
 /* ───────────── render ───────────── */
@@ -492,8 +505,8 @@ document.addEventListener('keydown',e=>{
   if(e.target.closest('input,textarea,select'))return;
   if(e.key==='ArrowRight'||e.key==='PageDown'||(e.key===' '?!e.target.closest('button'):false)){e.preventDefault();go(cur+1);}
   else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
-  else if(e.key==='n'||e.key==='N')toggle('#notas');
-  else if(e.key==='e'||e.key==='E'){llenarForm();toggle('#editor');}
+  else if(!FAM&&(e.key==='n'||e.key==='N'))toggle('#notas');
+  else if(!FAM&&(e.key==='e'||e.key==='E')){llenarForm();toggle('#editor');}
   else if(e.key==='Escape')document.querySelectorAll('.drawer.abierto').forEach(x=>x.classList.remove('abierto'));
 });
 
@@ -517,6 +530,7 @@ document.querySelectorAll('[data-cerrar]').forEach(b=>b.onclick=()=>b.closest('.
 $('#bt-notas').onclick=()=>toggle('#notas');
 $('#bt-editar').onclick=()=>{llenarForm();toggle('#editor');};
 function notas(){
+  if(FAM)return;
   const s=P[cur];if(!s)return;
   $('#notas-t').textContent=`${cur+1}. ${s.t}`;
   $('#notas-b').innerHTML=`<p class="aviso">Si compartes esta pestaña, abre las notas solo cuando no la compartas. Tecla N.</p>${C.rol==='ambos'?'<p class="aviso plural">Vienen los dos: habla en plural (vosotros).</p>':''}<p class="nota-t">Dile</p><p class="nota-dice">${esc(s.n.dice)}</p><p class="nota-t">Ten en cuenta</p><ul class="nota-l">${s.n.l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`;

@@ -66,7 +66,7 @@ const luego=(ms,f)=>timers.push(setTimeout(f,ms));
 const temp=o=>{T.add(o);temporales.push(o);return o;};
 const C_A=new THREE.Color('#C4785D'),C_B=new THREE.Color('#4C6E57');
 
-function frase(h){if(!ov.frase)return;const e=ov.frase;e.style.opacity=0;clearTimeout(e._t);e._t=setTimeout(()=>{e.innerHTML=h;e.style.opacity=1},220);}
+function frase(h){if(!ov.frase)return;const e=ov.frase,vacio=h==='&nbsp;';e.style.opacity=0;clearTimeout(e._t);e._t=setTimeout(()=>{e.innerHTML=h;e.style.visibility=vacio?'hidden':'visible';e.style.opacity=vacio?0:1},220);}
 function setOcupado(b){ocupado=b;if(host)host.closest('.slide')?.querySelectorAll('[data-act=termo]').forEach(x=>x.disabled=b);}
 function limpiar(){tareas=[];timers.forEach(clearTimeout);timers=[];temporales.forEach(o=>T.remove(o));temporales=[];setOcupado(false);}
 function capas(k){host?.closest('.slide')?.querySelectorAll('[data-capa]').forEach(e=>e.classList.toggle('on',k>=+e.dataset.capa/4-.02));}
@@ -157,15 +157,18 @@ function overlays(){
 function encaja(){
   if(!host)return;const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;
   R.setSize(w,h);cam.aspect=w/h;
-  const t2=2*Math.tan(15*Math.PI/180);
-  cam.position.z=Math.max(7.9/t2,(modo==='syn'?8.2:4.8)/cam.aspect/t2);
+  const t2=2*Math.tan(15*Math.PI/180),vertical=cam.aspect<.95;
+  /* en vertical (móvil) el termostato va más pequeño y pegado al termómetro */
+  if(modo==='syn'){T.position.x=vertical?-.95:-.4;D.position.x=vertical?1.55:2.75;D.scale.setScalar(vertical?.7:1);miraX=vertical?.3:1.1;}
+  else{T.position.x=0;miraX=0;}
+  cam.position.z=Math.max(7.9/t2,(modo==='syn'?(vertical?5.6:8.2):4.8)/cam.aspect/t2);
   cam.updateProjectionMatrix();
 }
 const ro=new ResizeObserver(encaja);
 function ponModo(m){
   modo=m;limpiar();ajustando=false;
   nivel=objetivo=BASE;vel=0;K=14;AM=3.2;v=V_INI;vPintado=-1;
-  T.position.x=m==='syn'?-.4:0;D.visible=m==='syn';miraX=m==='syn'?1.1:0;
+  D.visible=m==='syn';
   if(ov.tu)ov.tu.style.display=m==='syn'?'':'none';
   encaja();pintaDial();
   frase('&nbsp;');
