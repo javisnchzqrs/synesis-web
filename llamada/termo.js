@@ -67,9 +67,11 @@ const temp=o=>{T.add(o);temporales.push(o);return o;};
 const C_A=new THREE.Color('#C4785D'),C_B=new THREE.Color('#4C6E57');
 
 function frase(h){if(!ov.frase)return;const e=ov.frase,vacio=h==='&nbsp;';e.style.opacity=0;clearTimeout(e._t);e._t=setTimeout(()=>{e.innerHTML=h;e.style.visibility=vacio?'hidden':'visible';e.style.opacity=vacio?0:1},220);}
-function setOcupado(b){ocupado=b;if(host)host.closest('.slide')?.querySelectorAll('[data-act=termo]').forEach(x=>x.disabled=b);}
+/* contenedor: la diapositiva en /llamada/, la sección en /info/ */
+const raiz=()=>host?(host.closest('.slide')||host.closest('section')||document):document;
+function setOcupado(b){ocupado=b;if(host)raiz().querySelectorAll('[data-act=termo]').forEach(x=>x.disabled=b);}
 function limpiar(){tareas=[];timers.forEach(clearTimeout);timers=[];temporales.forEach(o=>T.remove(o));temporales=[];setOcupado(false);}
-function capas(k){host?.closest('.slide')?.querySelectorAll('[data-capa]').forEach(e=>e.classList.toggle('on',k>=+e.dataset.capa/4-.02));}
+function capas(k){if(host)raiz().querySelectorAll('[data-capa]').forEach(e=>e.classList.toggle('on',k>=+e.dataset.capa/4-.02));}
 
 function pintaDial(){
   if(Math.abs(v-vPintado)<.004)return;vPintado=v;
@@ -165,6 +167,9 @@ function encaja(){
   cam.updateProjectionMatrix();
 }
 const ro=new ResizeObserver(encaja);
+/* en una página con scroll (/info/) solo se pinta mientras se ve */
+let aLaVista=false;
+const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEach(x=>{aLaVista=x.isIntersecting;}),{threshold:.05}):null;
 function ponModo(m){
   modo=m;limpiar();ajustando=false;
   nivel=objetivo=BASE;vel=0;K=14;AM=3.2;v=V_INI;vPintado=-1;
@@ -177,7 +182,7 @@ const API={
   montar(h){
     const nuevo=host!==h;host=h;
     if(R.domElement.parentNode!==h)h.prepend(R.domElement);
-    if(nuevo||!h.querySelector('.t-ov')){ro.disconnect();ro.observe(h);overlays();}
+    if(nuevo||!h.querySelector('.t-ov')){ro.disconnect();ro.observe(h);if(io){io.disconnect();io.observe(h);}else aLaVista=true;overlays();}
     ov.nombre.textContent=h.dataset.nombre||'Tu peque';
     ponModo(h.dataset.modo==='syn'?'syn':'hab');
   },
@@ -196,7 +201,9 @@ let tPrev=reloj();
 function bucle(){
   requestAnimationFrame(bucle);
   const t=reloj(),dt=Math.min(.05,t-tPrev);tPrev=t;
-  if(!host||!host.isConnected||!host.closest('.slide.on'))return;
+  if(!host||!host.isConnected)return;
+  const diapo=host.closest('.slide');
+  if(diapo?!diapo.classList.contains('on'):!aLaVista)return;
   for(let i=tareas.length-1;i>=0;i--){const a=tareas[i],e=Math.min(1,(t-a.t0)/a.dur);a.f(e,t);if(e>=1){tareas.splice(i,1);a.fin&&a.fin();}}
   if(modo==='syn'){pintaDial();const k=Math.max(0,(v-V_INI)/(1-V_INI));K=3.2;AM=3.4;objetivo=BASE-(BASE-.2)*k;D.rotation.y=Math.sin(t*.5)*.04;D.position.y=.45+Math.sin(t*1.1)*.02;}
   vel+=(K*(objetivo-nivel)-AM*vel)*dt;nivel+=vel*dt;
@@ -206,7 +213,9 @@ function bucle(){
   T.rotation.y=Math.sin(t*.35)*.05;
   MIRA.x=miraX;cam.position.x=miraX+Math.sin(t*.2)*.3;cam.position.y=.3;cam.lookAt(MIRA);
   const wp=p=>T.localToWorld(p.clone());
-  pon(ov.nombre,wp(new THREE.Vector3(-1.5,Y0-.22,.3)));
+  /* en vertical con termostato no hay sitio a la izquierda: la etiqueta va bajo el bulbo */
+  const bajo=modo==='syn'&&cam.aspect<.95;
+  pon(ov.nombre,wp(bajo?new THREE.Vector3(0,Y0-.95,.3):new THREE.Vector3(-1.5,Y0-.22,.3)));
   pon(ov.alta,wp(new THREE.Vector3(.62,Y0+ALTO*.95,-.1)));
   pon(ov.baja,wp(new THREE.Vector3(.62,Y0+ALTO*.05,-.1)));
   if(modo==='syn')pon(ov.tu,D.position.clone().add(new THREE.Vector3(0,0,.3)));

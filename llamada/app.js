@@ -4,28 +4,17 @@
 const PROGRAMA={
   familias:'+150',
   semanas:12,
-  nombre:'3 meses de acompañamiento 1:1 con Paloma',
-  precio:497,
-  /* [nombre, detalle, valor en €] */
-  incluye:[
-    ['Diagnóstico inicial','Un cuestionario por adulto + la 1.ª sesión'],
-    ['6 sesiones 1 a 1 con Paloma','3 el primer mes, 2 el segundo y 1 el tercero. Con la pareja, si quiere.',414],
-    ['Un plan después de cada sesión','Para saber qué hacer hasta la siguiente'],
-    ['Tu área personal','Con tu evolución, paso a paso']],
-  bonos:[
-    {ico:'chat',n:'Seguimiento por WhatsApp',d:'Audio y texto. Respuesta en 24 h laborables.',badge:'3 meses + mes 4',valor:120},
-    {ico:'play',n:'Formación en vídeo',d:'Para entender qué pasa en cada situación.',badge:'15 meses',valor:197},
-    {ico:'mano',n:'6 recursos interactivos',lista:['Semáforo emocional','Un momento para ti','Plan de regulación','Viaje a tu infancia','La carta que nadie te escribió','El reloj del niño'],valor:90}],
-  pagos:[
-    {id:'unico',nombre:'Pago único',precio:'497',det:'De una vez'},
-    {id:'klarna',nombre:'3 plazos sin intereses',precio:'3 × 165,67',det:'Con Klarna'}],
-  /* testimonios en vídeo: para activar el de Alba, pega su URL en src */
+  /* la oferta vive en /comun/oferta.js (la comparte «Lo que hablamos») */
+  nombre:OFERTA.nombre,
+  precio:OFERTA.precio,
+  incluye:OFERTA.incluye,
+  bonos:OFERTA.bonos,
+  pagos:OFERTA.pagos.filter(x=>!x.siRechaza),
   videos:[
     {n:'Paula',h:'niño de 4 años',src:'/media/videos/testimonio-paula.mp4'},
     {n:'Alba',h:'niño de 3 años',src:'/media/videos/testimonio-alba.mp4'}
   ],
-  /* semanas con sesión (3 el 1.er mes, 2 el 2.º, 1 el 3.º): confirmar con Paloma */
-  sesionesEn:[1,2,4,6,8,11],
+  sesionesEn:OFERTA.sesionesEn,
   /* vídeos del formato (horizontales, en bucle y sin sonido): pega la URL del de sesiones cuando lo tengas */
   formatoVideos:{
     vid:'/media/videos/plataforma.mov',
@@ -101,7 +90,7 @@ const CLAVE=(()=>{const c=new URLSearchParams(location.search).get('c');if(!c)re
   let h=0;for(let i=0;i<c.length;i++)h=(h*31+c.charCodeAt(i))|0;return 'synesis-caso-c'+(h>>>0).toString(36);})();
 /* modo familia (?f=1): el enlace que Paloma manda después de la llamada */
 const FAM=new URLSearchParams(location.search).get('f')==='1';
-const WHATSAPP='34644623164';
+const WHATSAPP=OFERTA.whatsapp;
 if(FAM)document.documentElement.classList.add('familia');
 let C=null;
 try{C=JSON.parse(localStorage.getItem(CLAVE))||null}catch(e){C=null}
@@ -233,8 +222,8 @@ function paginas(){
       <p class="eyebrow rev">La inversión</p>
       <h2 class="h2 rev" style="--r:.1s">${PROGRAMA.nombre}</h2>
       <div class="inv-bajo">${S.precio?invRes(d):`<button class="btn prim xl rev" style="--r:.4s" data-act="precio">Ver la inversión</button>`}</div></div>`,
-   n:{dice:`Todo esto tiene un valor de ${valorTotal()} €. La inversión es de ${PROGRAMA.precio} €. Si lo prefieres, en 3 plazos sin intereses con Klarna: 3 de 165,67 €.`,
-      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha la forma de pago que elija: queda en el cierre.','Si Klarna rechaza: 3 plazos con nosotros, 198,80 € + 173,95 € + 124,25 € (enlace «Synesis 12 · 3 plazos»).','Sesión extra fuera del programa: 69 €, siempre.','La garantía no se dice aquí. Solo si duda (mira las notas del cierre).']}},
+   n:{dice:`Todo esto tiene un valor de ${valorTotal()} €. La inversión es de ${PROGRAMA.precio} €. Si lo prefieres, en 3 plazos sin intereses con Klarna: 3 de ${OFERTA.cuotaKlarna} €.`,
+      l:['Pulsa «Ver la inversión» tú, sin esperar a que pregunte.','Di el precio con seguridad. Luego CALLA.','Si hay silencio: «¿Ves sentido en empezar ahora?»','Pincha la forma de pago que elija: queda en el cierre.',`Si Klarna rechaza: 3 plazos con nosotros, ${OFERTA.cuotasPropias} (enlace «Synesis 12 · 3 plazos»).`,`Sesión extra fuera del programa: ${OFERTA.sesionExtra} €, siempre.`,'La garantía no se dice aquí. Solo si duda (mira las notas del cierre).']}},
 
   {t:'Cierre',html:cierreHTML(d,inicio),
    n:{dice:`${C.padre}, ${S.hoy!==null&&S.meta!==null?`de ${S.hoy} a ${S.meta}. `:''}¿Empezamos hoy?`,
@@ -352,7 +341,7 @@ function bonosHTML(d){
       <div class="bprecio"><s>${x.valor} €</s><b>Gratis</b></div></article>`).join('')}</div>
     <div class="btotal rev" style="--r:.65s"><span>Valor de los bonos</span><s>${vb} €</s><b>Gratis</b></div></div>`;
 }
-const valorTotal=()=>PROGRAMA.incluye.reduce((a,x)=>a+(x[2]||0),0)+PROGRAMA.bonos.reduce((a,x)=>a+x.valor,0);
+const valorTotal=OFERTA.valorTotal;
 function invRes(d){
   return `<div class="inv-res2 aparece">
     <div class="precio"><s>${num(valorTotal())} €</s><strong>${PROGRAMA.precio}<i>€</i></strong></div>
@@ -376,9 +365,9 @@ function cierreHTML(d,inicio){
   }
   if(S.cierre==='duda'){
     const D=[['dinero','El dinero'],['pareja','Hablarlo con mi pareja'],['tiempo','El tiempo'],['funciona',`Si funcionará con ${C.hijo}`]].filter(x=>!(d.amb?x[0]==='pareja':false));
-    const R={dinero:`Se puede pagar en 3 plazos sin intereses: 3 de 165,67 €. Y empezamos igual hoy.`,
+    const R={dinero:`Se puede pagar en 3 plazos sin intereses: 3 de ${OFERTA.cuotaKlarna} €. Y empezamos igual hoy.`,
       pareja:'Perfecto, esto se decide en equipo. Además, puede venir a las sesiones. ¿Qué crees que te va a preguntar? Lo resolvemos ahora.',
-      tiempo:'Son unos 20 minutos a la semana. Menos de lo que os quita una tarde mala.',
+      tiempo:'Las sesiones las cuadramos contigo. Y el plan de cada semana va dentro de lo que ya vivís en casa, no aparte.',
       funciona:`Por eso trabajamos el caso de ${C.hijo}, no uno genérico. En sesiones 1 a 1 con Paloma.`};
     return `<div class="wrap centro aparece"><p class="eyebrow">Es normal dudar</p><h2 class="h2">¿Qué ${d.v('te','os')} frena?</h2>
       <div class="dudas">${D.map(([k,t])=>`<button data-act="duda" data-v="${k}" class="${S.duda===k?'on':''}">${esc(t)}</button>`).join('')}</div>
