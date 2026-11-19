@@ -735,6 +735,33 @@
   }
   leerUTMs();
 
+  /* ── API de Conversiones de Meta: lo que solo sabe el navegador (se guarda en la sesión) ── */
+  function leerMeta() {
+    let fbclid = '', url = '';
+    try { fbclid = new URLSearchParams(window.location.search).get('fbclid') || ''; } catch (e) {}
+    try { if (fbclid) sessionStorage.setItem('synesis_fbclid', fbclid); else fbclid = sessionStorage.getItem('synesis_fbclid') || ''; } catch (e) {}
+    try {
+      url = sessionStorage.getItem('synesis_url_entrada') || '';
+      if (!url) { url = window.location.href; sessionStorage.setItem('synesis_url_entrada', url); }
+    } catch (e) { if (!url) { try { url = window.location.href; } catch (e2) {} } }
+    return { fbclid: fbclid, url_entrada: url };
+  }
+  leerMeta();
+  // Cookie del píxel (solo existe si aceptó marketing en el banner)
+  function leerFbp() {
+    try { const m = document.cookie.match(/(?:^|; )_fbp=([^;]*)/); return m ? decodeURIComponent(m[1]) : ''; } catch (e) { return ''; }
+  }
+  // Id del evento compartido por el píxel y el servidor, para que Meta no lo cuente doble
+  function idMeta(prefijo) {
+    let id = '';
+    try { if (window.crypto && crypto.randomUUID) id = crypto.randomUUID().replace(/-/g, ''); } catch (e) {}
+    if (!id) {
+      try { const b = new Uint8Array(16); crypto.getRandomValues(b); id = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); } catch (e) {}
+    }
+    if (!id) id = Date.now().toString(16) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);
+    return prefijo + id;
+  }
+
 
   /* ── EDAD DEL PEQUE (fuera de 2-6 no cuenta como conversión en Meta) ── */
   let edadRango = '';
@@ -784,11 +811,14 @@
     btn.disabled = true;
     btn.textContent = 'Enviando...';
 
+    const metaEid = idMeta('lead_');
+    const meta = Object.assign({ fbp: leerFbp(), meta_eid: metaEid }, leerMeta());
+
     try {
       const response = await fetch('https://n8n.metodosynesis.com/webhook/captacion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, edad_rango: edadRango, problema_otro: problemaOtro, sesion: sesionSelector, timestamp: new Date().toISOString() }, leerUTMs()))
+        body: JSON.stringify(Object.assign({ nombre, email, telefono, angulo: ANGULO, edad_rango: edadRango, problema_otro: problemaOtro, sesion: sesionSelector, timestamp: new Date().toISOString() }, leerUTMs(), meta))
       });
       // Una respuesta HTTP correcta confirma aceptación por el endpoint.
       // No confirma por sí sola que todo el escenario de Make haya terminado.
@@ -813,7 +843,7 @@
     const temporizador = setTimeout(irAL2, 2000);
     try {
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({
+      const evento = {
         // Fuera de 2-6 años: otro evento, para que Meta no lo cuente como lead
         event: enEdad() ? 'synesis_registro_completado' : 'synesis_registro_fuera_edad',
         edad_rango: edadRango,
@@ -823,7 +853,10 @@
           irAL2();
         },
         eventTimeout: 1500
-      });
+      };
+      // Mismo id que recibe el servidor (deduplicación del Lead en Meta)
+      if (enEdad()) evento.event_id = metaEid;
+      window.dataLayer.push(evento);
     } catch (err) {
       // Un fallo de medición no debe impedir acceder al análisis.
       clearTimeout(temporizador);

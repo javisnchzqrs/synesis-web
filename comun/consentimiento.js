@@ -43,7 +43,23 @@
     window.dataLayer.push({ event: 'synesis_consentimiento', consent_analitica: actual.analitica, consent_marketing: actual.marketing });
   }
 
-  function aplicar(e) {
+  // Registro anónimo de la decisión (sin cookies ni identificadores), como visita.js
+  var URL_RPC = 'https://oggfczwarbznrtzloivk.supabase.co/rest/v1/rpc/registrar_consentimiento';
+  var CLAVE = 'sb_publishable_LSk6Pp0nj-xM-tZ-DJaJOw_GKGknq2p';
+  function registrar(decision, e) {
+    try {
+      var ruta = location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+      var pagina = location.hostname.indexOf('app.') === 0 ? ruta.replace(/[-/]/g, '_') : (ruta === '' ? 'home' : '');
+      fetch(URL_RPC, {
+        method: 'POST', keepalive: true,
+        headers: { 'Content-Type': 'application/json', apikey: CLAVE },
+        body: JSON.stringify({ p_pagina: pagina || null, p_decision: decision, p_analitica: !!e.analitica, p_marketing: !!e.marketing, p_ua: navigator.userAgent, p_version: VERSION })
+      }).catch(function () { /* no es crítico */ });
+    } catch (err) { /* no es crítico */ }
+  }
+
+  function aplicar(e, decision) {
+    registrar(decision, e);
     guardar(e);
     gtag('consent', 'update', estadoGoogle(e));
     window.dataLayer.push({ event: 'synesis_consentimiento', consent_analitica: e.analitica, consent_marketing: e.marketing });
@@ -95,10 +111,10 @@
       '</div>';
     raiz.addEventListener('click', function (ev) {
       var a = ev.target.getAttribute && ev.target.getAttribute('data-a');
-      if (a === 'todo') aplicar({ analitica: true, marketing: true });
-      else if (a === 'nada') aplicar({ analitica: false, marketing: false });
+      if (a === 'todo') aplicar({ analitica: true, marketing: true }, 'aceptar');
+      else if (a === 'nada') aplicar({ analitica: false, marketing: false }, 'rechazar');
       else if (a === 'config') abrir(true);
-      else if (a === 'guardar') aplicar({ analitica: document.getElementById('ck-an').checked, marketing: document.getElementById('ck-mk').checked });
+      else if (a === 'guardar') aplicar({ analitica: document.getElementById('ck-an').checked, marketing: document.getElementById('ck-mk').checked }, 'guardar');
     });
     document.body.appendChild(raiz);
   }

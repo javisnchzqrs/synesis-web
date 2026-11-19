@@ -543,6 +543,16 @@
   }
 
   // ── ENVÍO ──
+  // Id del evento compartido por el píxel y el servidor, para que Meta no lo cuente doble
+  function idMeta(prefijo) {
+    let id = '';
+    try { if (window.crypto && crypto.randomUUID) id = crypto.randomUUID().replace(/-/g, ''); } catch (e) {}
+    if (!id) {
+      try { const b = new Uint8Array(16); crypto.getRandomValues(b); id = Array.prototype.map.call(b, function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); } catch (e) {}
+    }
+    if (!id) id = Date.now().toString(16) + Math.random().toString(16).slice(2) + Math.random().toString(16).slice(2);
+    return prefijo + id;
+  }
   async function enviarCuestionario() {
     const deseo = document.getElementById('q_deseo');
     if (!deseo.value.trim()) { markError(deseo); return; }
@@ -552,7 +562,9 @@
     datos.email = email.value.trim();
     try { localStorage.setItem('synesis_email', datos.email); } catch (e) {}
     datos.tipo = "auditoria";
-    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_cuestionario_enviado', angulo: anguloActual }); } catch (e) {}
+    const metaEid = idMeta('cuest_');
+    datos.meta_eid = metaEid;
+    try { window.dataLayer = window.dataLayer || []; window.dataLayer.push({ event: 'synesis_cuestionario_enviado', angulo: anguloActual, event_id: metaEid }); } catch (e) {}
     datos.angulo = anguloActual;
 
     // Construir ID y URL predecible
